@@ -1,5 +1,5 @@
 ---
-title: "parallelly - Querying, Killing, and Cloning Local and Remote Parallel Workers"
+title: "parallelly - Querying, Killing and Cloning Parallel Workers Running Locally or Remotely"
 slug: "parallelly-managing-workers"
 date: 2023-07-01 15:00:00 +0200
 categories:
