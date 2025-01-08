@@ -366,7 +366,7 @@ exclusive right to all cores.
 ### 4b. A shared computer
 
 In the academia and the industry, it is common that several users
-share the same compute server och set of compute nodes.  It might be
+share the same compute server or set of compute nodes.  It might be
 as simple as they SSH into a shared machine with many cores and large
 amounts of memory to run their analysis there.  On such setups, load
 balancing between users is often based on an honor system, where each
