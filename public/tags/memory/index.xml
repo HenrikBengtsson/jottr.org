@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>memory on JottR</title>
+    <link>https://www.jottr.org/tags/memory/</link>
+    <description>Recent content in memory on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Aug 2021 00:10:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/memory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>matrixStats: Consistent Support for Name Attributes via GSoC Project</title>
+      <link>https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/</guid>
+      <description>Author: Angelina Panagopoulou, GSoC student developer, undergraduate in the Department of Informatics &amp;amp; Telecommunications (DIT), University of Athens, Greece
+We are glad to announce recent CRAN releases of matrixStats with support for handling and returning name attributes. This feature is added to make matrixStats functions handle names in the same manner as the corresponding base R functions. In particular, the behavior of matrixStats functions is now the same as the apply() function in R, resolving previous lack of, or inconsistent, handling of row and column names.</description>
+    </item>
+    
+    <item>
+      <title>Performance: Avoid Coercing Indices To Doubles</title>
+      <link>https://www.jottr.org/2018/04/02/coercion-of-indices/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/02/coercion-of-indices/</guid>
+      <description>x[idxs + 1] or x[idxs + 1L]? That is the question.
+Assume that we have a vector $x$ of $n = 100,000$ random values, e.g.
+&amp;gt; n &amp;lt;- 100000 &amp;gt; x &amp;lt;- rnorm(n) and that we wish to calculate the $n-1$ first-order differences $y=(y_1, y_2, &amp;hellip;, y_{n-1})$ where $y_i=x_{i+1} - x_i$. In R, we can calculate this using the following vectorized form:
+&amp;gt; idxs &amp;lt;- seq_len(n - 1) &amp;gt; y &amp;lt;- x[idxs + 1] - x[idxs] We can certainly do better if we turn to native code, but is there a more efficient way to implement this using plain R code?</description>
+    </item>
+    
+    <item>
+      <title>matrixStats: Optimized Subsetted Matrix Calculations</title>
+      <link>https://www.jottr.org/2015/12/16/matrixstats-subsetting/</link>
+      <pubDate>Wed, 16 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/12/16/matrixstats-subsetting/</guid>
+      <description>The matrixStats package provides highly optimized functions for computing common summaries over rows and columns of matrices. In a previous blog post, I showed that, instead of using apply(X, MARGIN = 2, FUN = median), we can speed up calculations dramatically by using colMedians(X). In the most recent release (version 0.50.0), matrixStats has been extended to perform optimized calculations also on a subset of rows and/or columns specified via new arguments rows and cols, e.</description>
+    </item>
+    
+    <item>
+      <title>To Students: matrixStats for Google Summer of Code</title>
+      <link>https://www.jottr.org/2015/03/12/matrixstats-gsoc/</link>
+      <pubDate>Thu, 12 Mar 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/03/12/matrixstats-gsoc/</guid>
+      <description>We are pleased to announce our proposal &amp;lsquo;Subsetted and parallel computations in matrixStats&amp;rsquo; for Google Summer of Code. The project is aimed for a student with experience in R and C, it runs for three months, and the student gets paid 5500 USD by Google. Students from (almost) all over the world can apply. Application deadline is March 27, 2015. I, Henrik Bengtsson, and Héctor Corrada Bravo will be joint mentors.</description>
+    </item>
+    
+    <item>
+      <title>Package: matrixStats 0.13.1 - Methods that Apply to Rows and Columns of a Matrix (and Vectors)</title>
+      <link>https://www.jottr.org/2015/01/25/matrixstats-0.13.1/</link>
+      <pubDate>Sun, 25 Jan 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/01/25/matrixstats-0.13.1/</guid>
+      <description>A new release 0.13.1 of matrixStats is now on CRAN. The source code is available on GitHub.
+What does it do? The matrixStats package provides highly optimized functions for computing common summaries over rows and columns of matrices, e.g. rowQuantiles(). There are also functions that operate on vectors, e.g. logSumExp(). Their implementations strive to minimize both memory usage and processing time. They are often remarkably faster compared to good old apply() solutions.</description>
+    </item>
+    
+    <item>
+      <title>Pitfall: Did You Really Mean to Use matrix(nrow, ncol)?</title>
+      <link>https://www.jottr.org/2014/06/17/matrixna-wrong-way/</link>
+      <pubDate>Tue, 17 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2014/06/17/matrixna-wrong-way/</guid>
+      <description>Are you a good R citizen and preallocates your matrices? If you are allocating a numeric matrix in one of the following two ways, then you are doing it the wrong way!
+x &amp;lt;- matrix(nrow = 500, ncol = 100) or
+x &amp;lt;- matrix(NA, nrow = 500, ncol = 100) Why? Because it is counter productive. And why is that? In the above, x becomes a logical matrix, and not a numeric matrix as intended.</description>
+    </item>
+    
+  </channel>
+</rss>

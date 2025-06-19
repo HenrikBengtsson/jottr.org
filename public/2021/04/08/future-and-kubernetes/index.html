@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="This is a guest post by Chris Paciorek, Department of Statistics, University of California at Berkeley.
+In this post, I&rsquo;ll demonstrate that you can easily use the future package in R on a cluster of machines running in the cloud, specifically on a Kubernetes cluster.
+This allows you to easily doing parallel computing in R in the cloud. One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.">
+
+
+<meta property="og:description" content="This is a guest post by Chris Paciorek, Department of Statistics, University of California at Berkeley.
+In this post, I&rsquo;ll demonstrate that you can easily use the future package in R on a cluster of machines running in the cloud, specifically on a Kubernetes cluster.
+This allows you to easily doing parallel computing in R in the cloud. One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Kubernetes and the Future Package to Easily Parallelize R in the Cloud">
+<meta name="twitter:title" content="Using Kubernetes and the Future Package to Easily Parallelize R in the Cloud">
+<meta property="og:url" content="https://www.jottr.org/2021/04/08/future-and-kubernetes/">
+<meta property="twitter:url" content="https://www.jottr.org/2021/04/08/future-and-kubernetes/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="This is a guest post by Chris Paciorek, Department of Statistics, University of California at Berkeley.
+In this post, I&rsquo;ll demonstrate that you can easily use the future package in R on a cluster of machines running in the cloud, specifically on a Kubernetes cluster.
+This allows you to easily doing parallel computing in R in the cloud. One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.">
+<meta name="twitter:description" content="This is a guest post by Chris Paciorek, Department of Statistics, University of California at Berkeley.
+In this post, I&rsquo;ll demonstrate that you can easily use the future package in R on a cluster of machines running in the cloud, specifically on a Kubernetes cluster.
+This allows you to easily doing parallel computing in R in the cloud. One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2021-04-08T19:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-04-08T19:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="Kubernetes">
+    
+      <meta property="article:tag" content="Helm">
+    
+      <meta property="article:tag" content="Dask">
+    
+      <meta property="article:tag" content="Linux containers">
+    
+      <meta property="article:tag" content="Docker">
+    
+      <meta property="article:tag" content="Rocker">
+    
+      <meta property="article:tag" content="RStudio Server">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="Google Kubernetes Engine">
+    
+      <meta property="article:tag" content="GKE">
+    
+      <meta property="article:tag" content="cloud">
+    
+      <meta property="article:tag" content="guest post">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Using Kubernetes and the Future Package to Easily Parallelize R in the Cloud</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2021/04/08/future-and-kubernetes/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Using Kubernetes and the Future Package to Easily Parallelize R in the Cloud
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-04-08T19:00:00-07:00">
+        
+  April 8, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><em>This is a guest post by <a href="https://www.stat.berkeley.edu/~paciorek">Chris Paciorek</a>, Department of Statistics, University of California at Berkeley.</em></p>
+<p>In this post, I&rsquo;ll demonstrate that you can easily use the <strong><a href="https://cran.r-project.org/package=future">future</a></strong> package in R on a
+cluster of machines running in the cloud, specifically on a Kubernetes
+cluster.</p>
+<p>This allows you to easily doing parallel computing in R in the cloud.
+One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.</p>
+<h2 id="why-use-kubernetes-to-start-a-cluster-in-the-cloud">Why use Kubernetes to start a cluster in the cloud?</h2>
+<p>Kubernetes is a platform for managing containers. You
+can think of the containers as lightweight Linux machines on which you
+can do your computation. By using the Kubernetes service of a cloud
+provider such as Google Cloud Platform (GCP) or Amazon Web Services (AWS), you
+can easily start up a cluster of (virtual) machines.</p>
+<p>There have been (and are) approaches to starting up a cluster of
+machines on AWS easily from the command line on your
+laptop. Some tools that are no longer actively maintained are
+<a href="http://star.mit.edu/cluster">StarCluster</a> and <a href="https://cfncluster.readthedocs.io/en/latest">CfnCluster</a>. And there is now something called <a href="https://docs.aws.amazon.com/parallelcluster/latest/ug/getting_started.html">AWS
+ParallelCluster</a>.
+But doing it via Kubernetes allows you to build upon an industry
+standard platform that can be used on various cloud providers. A similar effort (which I heavily borrowed from in developing
+the setup described here) allows one to run a <a href="https://docs.dask.org/en/latest/setup/kubernetes-helm.html">Python Dask cluster</a> accessed via a
+Jupyter notebook.</p>
+<p>Many of the cloud providers have Kubernetes services (and it&rsquo;s also possible
+you&rsquo;d have access to a Kubernetes service running at your institution
+or company). In particular, I&rsquo;ve
+experimented with <a href="https://cloud.google.com/kubernetes-engine">Google Kubernetes Engine (GKE)</a> and <a href="https://aws.amazon.com/eks">Amazon&rsquo;s Elastic
+Kubernetes Service (EKS)</a>. This post will demonstrate setting up your
+cluster using Google&rsquo;s GKE, but see
+my GitHub <a href="https://github.com/paciorek/future-kubernetes">future-kubernetes</a> repository for details on
+doing it on Amazon&rsquo;s EKS. Note that while I&rsquo;ve gotten things
+to work on EKS, there have been
+<a href="https://github.com/paciorek/future-kubernetes#AWS-troubleshooting">various headaches</a>
+that I haven&rsquo;t encountered on GKE.</p>
+<p>I&rsquo;m not a Kubernetes expert, nor a GCP or AWS expert (that might
+explain the headaches I just mentioned), but one upside is that hopefully I&rsquo;ll
+go through all the details at a level someone who is not an expert can
+follow along. In fact, part of my goal in setting this up has been to
+learn more about Kubernetes, which I&rsquo;ve done, but note that there&rsquo;s <em>a lot</em> to it.</p>
+<p>More details about the setup, including how it was developed and
+troubleshooting tips can be found in my <a href="https://github.com/paciorek/future-kubernetes">future-kubernetes</a> repository.</p>
+<h2 id="how-it-works-briefly">How it works (briefly)</h2>
+<p>This diagram in Figure 1 outlines the pieces of the setup.</p>
+<!-- raw HTML omitted -->
+<p>Work on a Kubernetes cluster is divided amongst <em>pods</em>, which carry out
+the components of your work and can communicate with each other. A pod is
+basically a Linux container. (Strictly speaking a pod can contain multiple
+containers and shared resources for those containers, but for our purposes, it&rsquo;s simplest just to think of a pod
+as being a Linux container.) The pods run on the nodes in the Kubernetes
+cluster, where each Kubernetes node runs on a compute instance of the cloud provider. These instances are themselves virtual machines running on the cloud provider&rsquo;s actual hardware. (I.e., somewhere out there, behind all the layers of abstraction, there are actual real computers running on endless aisles of computer racks in some windowless warehouse!) One of the nice things about Kubernetes is that if a pod dies,
+Kubernetes will automatically restart it.</p>
+<p>The basic steps are:</p>
+<ol>
+<li>Start your Kubernetes cluster on the cloud provider&rsquo;s Kubernetes
+service</li>
+<li>Start the pods using Helm, the Kubernetes package manager</li>
+<li>Connect to the RStudio Server session running on the cluster from your browser</li>
+<li>Run your future-based computation</li>
+<li>Terminate the Kubernetes cluster</li>
+</ol>
+<p>We use the Kubernetes package manager, Helm, to run the pods of interest:</p>
+<ul>
+<li>one (scheduler) pod for a main process that runs RStudio Server and
+communicates with the workers</li>
+<li>multiple (worker) pods, each with one R worker process to act as the workers
+managed by the <strong>future</strong> package</li>
+</ul>
+<p>Helm manages the pods and related <em>services</em>. An example of a service
+is to open a port on the scheduler pod so the R worker processes can
+connect to that port, allowing the scheduler pod RStudio Server process to
+communicate with the worker R processes. I have a <a href="https://github.com/paciorek/future-helm-chart">Helm chart</a> that does this; it borrows heavily from the <a href="https://github.com/dask/helm-chart">Dask Helm chart</a> for the Dask package for Python.</p>
+<p>Each pod runs a Docker container. I use my own <a href="https://github.com/paciorek/future-kubernetes-docker">Docker container</a> that layers a bit on top of the <a href="https://rocker-project.org">Rocker</a> container that contains R and RStudio Server.</p>
+<h2 id="step-1-start-the-kubernetes-cluster">Step 1: Start the Kubernetes cluster</h2>
+<p>Here I assume you have already installed:</p>
+<ul>
+<li>the command line interface to Google Cloud,</li>
+<li>the <code>kubectl</code> interface for interacting with Kubernetes, and</li>
+<li><code>helm</code> for installing Helm charts (i.e., Kubernetes packages).</li>
+</ul>
+<p>Installation details can be found in the <a href="https://github.com/paciorek/future-kubernetes">future-kubernetes</a> repository.</p>
+<p>First we&rsquo;ll start our cluster (the first part of Step 1 in Figure 1):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>gcloud container clusters create <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --machine-type n1-standard-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --num-nodes <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --zone us-west1-a <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --cluster-version latest <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    my-cluster
+</span></span></code></pre></div><p>I&rsquo;ve asked for four virtual machines (nodes), using the basic (and
+cheap) <code>n1-standard-1</code> instance type (which has a single CPU per
+virtual machine) from Google Cloud Platform.</p>
+<p>You&rsquo;ll want to specify the total number of cores on the virtual
+machines to be equal to the number of R workers that you want to start
+and that you specify in the Helm chart (as discussed below). Here we
+ask for four one-cpu nodes, and our Helm chart starts four workers, so
+all is well. See the <a href="#modifications">Modifications section</a> below on how to start up a
+different number of workers.</p>
+<p>Since the RStudio Server process that you interact with wouldn&rsquo;t generally be doing heavy
+computation at the same time as the workers, it&rsquo;s OK that the RStudio
+scheduler pod and a worker pod would end up using the same virtual machine.</p>
+<h2 id="step-2-install-the-helm-chart-to-set-up-your-pods">Step 2: Install the Helm chart to set up your pods</h2>
+<p>Next we need to get our pods going by installing the Helm chart (i.e.,
+package) on the
+cluster; the installed chart is called a <em>release</em>. As discussed above, the Helm chart
+tells Kubernetes what pods to start and how they are configured.</p>
+<p>First we need to give our account permissions to perform administrative actions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl create clusterrolebinding cluster-admin-binding <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --clusterrole<span style="color:#f92672">=</span>cluster-admin
+</span></span></code></pre></div><p>Now let&rsquo;s install the release. This code assumes the use of Helm
+version 3 or greater (for older versions <a href="https://github.com/paciorek/future-kubernetes">see my full instructions</a>).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone https://github.com/paciorek/future-helm-chart   <span style="color:#75715e"># download the materials</span>
+</span></span><span style="display:flex;"><span>tar -czf future-helm.tgz -C future-helm-chart .           <span style="color:#75715e"># create a zipped archive (tarball) that `helm install` needs</span>
+</span></span><span style="display:flex;"><span>helm install --wait test ./future-helm.tgz                <span style="color:#75715e"># install (start the pods)</span>
+</span></span></code></pre></div><p>You&rsquo;ll need to name your release; I&rsquo;ve used &rsquo;test&rsquo; above.</p>
+<p>The <code>--wait</code> flag tells helm to wait until all the pods have started. Once that happens, you&rsquo;ll see a message about
+the release and how to connect to the RStudio interface, which we&rsquo;ll discuss further in the next section.</p>
+<p>We can check the pods are running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl get pods
+</span></span></code></pre></div><p>You should see something like this (the alphanumeric characters at the
+ends of the names will differ in your case):</p>
+<pre tabindex="0"><code>NAME                                READY   STATUS    RESTARTS   AGE
+future-scheduler-6476fd9c44-mvmz6   1/1     Running   0          116s
+future-worker-54db85cb7b-47qsd      1/1     Running   0          115s
+future-worker-54db85cb7b-4xf4x      1/1     Running   0          115s
+future-worker-54db85cb7b-rj6bj      1/1     Running   0          116s
+future-worker-54db85cb7b-wvp4n      1/1     Running   0          115s
+</code></pre><p>As expected, we have one scheduler and four workers.</p>
+<h2 id="step-3-connect-to-rstudio-server-running-in-the-cluster">Step 3: Connect to RStudio Server running in the cluster</h2>
+<p>Next we&rsquo;ll connect to the RStudio instance running via RStudio Server
+on our main (scheduler) pod, using the browser on our laptop  (Step 3 in Figure 1).</p>
+<p>After installing the Helm chart, you should have seen a printout with some instructions on how
+to do this. First you need to connect a port on your laptop to the
+RStudio port on the main pod (running of course in the cloud):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>export RSTUDIO_SERVER_IP<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;127.0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span>export RSTUDIO_SERVER_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">8787</span>
+</span></span><span style="display:flex;"><span>kubectl port-forward --namespace default svc/future-scheduler $RSTUDIO_SERVER_PORT:8787 &amp;
+</span></span></code></pre></div><p>You can now connect from your browser to the RStudio Server instance by going to the URL: <a href="http://127.0.0.1:8787">http://127.0.0.1:8787</a>.</p>
+<p>Enter <code>rstudio</code> as the username and <code>future</code> as the password to login
+to RStudio.</p>
+<p>What&rsquo;s happening is that port 8787 on your laptop is forwarding to the
+port on the main pod on which RStudio Server is listening (which is
+also port 8787). So you can
+just act as if RStudio Server is accessible directly on your laptop.</p>
+<p>One nice thing about this is that there is no public IP address for someone to maliciously use
+to connect to your cluster. Instead the access is handled securely entirely through <code>kubectl</code> running
+on your laptop. However, it also means that you couldn&rsquo;t easily share your cluster with a
+collaborator. For details on configuring things so there is a public IP, please see <a href="https://github.com/paciorek/future-kubernetes#connecting-to-the-rstudio-instance-when-starting-the-cluster-from-a-remote-machine">my repository</a>.</p>
+<p>Note that there is nothing magical about running your computation via RStudio. You could <a href="#connect-to-a-pod">connect to
+the main pod</a> and simply run R in it and then use the <strong>future</strong> package.</p>
+<h2 id="step-4-run-your-future-based-parallel-r-code">Step 4: Run your future-based parallel R code</h2>
+<p>Now we&rsquo;ll start up our future cluster and run our computation (Step 4 in Figure 1):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(cluster, manual <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>, quiet <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span></code></pre></div><p>The key thing is that we set <code>manual = TRUE</code> above. This ensures that the functions from the <strong>future</strong> package don&rsquo;t try to start R processes on the workers, as those R processes have already been started by Kubernetes and are waiting to connect to the main (RStudio Server) process.</p>
+<p>Note that we don&rsquo;t need to say how many future workers we want. This is because the Helm chart sets an environment variable in the scheduler pod&rsquo;s <code>Renviron</code> file based on the number of worker pod replicas. Since that variable is used by the <strong>future</strong> package (via <code>parallelly::availableCores()</code>) as the default number of future workers, this ensures that there are only as many future workers as you have worker pods. However, if you modify the number of worker pods after installing the Helm chart, you may need to set the <code>workers</code> argument to <code>plan()</code> manually. (And note that if you were to specify more future workers than R worker processes (i.e., pods) you would get an error and if you were to specify fewer, you wouldn&rsquo;t be using all the resources that you are paying for.)</p>
+<p>Now we can use the various tools in the <strong>future</strong> package as we would if
+on our own machine or working on a Linux cluster.</p>
+<p>Let&rsquo;s run our parallelized operations. I&rsquo;m going to do the
+world&rsquo;s least interesting calculation of calculating the mean of many
+(10 million)
+random numbers forty separate times in parallel. Not interesting, but
+presumably if you&rsquo;re reading this you have your own interesting
+computation in mind and hopefully know how to do it using future&rsquo;s
+tools such as <strong><a href="https://cran.r-project.org/package=future.apply">future.apply</a></strong> and <strong><a href="https://cran.r-project.org/package=foreach">foreach</a></strong> with <strong><a href="https://cran.r-project.org/package=doFuture">doFuture</a></strong>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future.apply)
+</span></span><span style="display:flex;"><span>output <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future_sapply</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">40</span>, <span style="color:#a6e22e">function</span>(i) <span style="color:#a6e22e">mean</span>(<span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">1e7</span>)), future.seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span></code></pre></div><p>Note that all of this assumes you&rsquo;re working interactively, but you can always reconnect to the RStudio Server instance after closing the browser, and any long-running code should continue running even if you close the browser.</p>
+<p>Figure 2 shows a screenshot of the RStudio interface.</p>
+<!-- raw HTML omitted -->
+<h3 id="working-with-files">Working with files</h3>
+<p>Note that <code>/home/rstudio</code> will be your default working directory in RStudio and the RStudio Server process will be running as the user <code>rstudio</code>.</p>
+<p>You can use <code>/tmp</code> and <code>/home/rstudio</code> for files, both within RStudio and within code running on the workers, but note that files (even in <code>/home/rstudio</code>) are not shared between workers nor between the workers and the RStudio Server pod.</p>
+<p>To make data available to your RStudio process or get output data back to your laptop, you can use <code>kubectl cp</code> to copy files between your laptop and the RStudio Server pod. Here&rsquo;s an example of copying to/from <code>/home/rstudio</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#75715e">## create a variable with the name of the scheduler pod</span>
+</span></span><span style="display:flex;"><span>export SCHEDULER<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pod --namespace default -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[?(@.metadata.labels.component==&#34;scheduler&#34;)].metadata.name}&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## copy a file to the scheduler pod</span>
+</span></span><span style="display:flex;"><span>kubectl cp my_laptop_file <span style="color:#e6db74">${</span>SCHEDULER<span style="color:#e6db74">}</span>:home/rstudio/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## copy a file from the scheduler pod</span>
+</span></span><span style="display:flex;"><span>kubectl cp <span style="color:#e6db74">${</span>SCHEDULER<span style="color:#e6db74">}</span>:home/rstudio/my_output_file .
+</span></span></code></pre></div><p>Of course you can also interact with the web from your RStudio process, so you could download data to the RStudio process from the internet.</p>
+<h2 id="step-5-cleaning-up">Step 5: Cleaning up</h2>
+<p>Make sure to shut down your Kubernetes cluster, so you don&rsquo;t keep getting
+charged.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>gcloud container clusters delete my-cluster --zone<span style="color:#f92672">=</span>us-west1-a
+</span></span></code></pre></div><h2 id="modifications">Modifications</h2>
+<p>You can modify the Helm chart in advance, before installing it. For
+example you might want to install other R packages for use in your
+parallel code or change the number of workers.</p>
+<p>To add additional R packages, go into the <code>future-helm-chart</code>
+directory (which you created using the directions above in Step 2) and edit the <a href="https://github.com/paciorek/future-helm-chart/blob/master/values.yaml">values.yaml</a> file. Simply modify the lines that look like
+this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#  - name: EXTRA_R_PACKAGES</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">#    value: data.table</span>
+</span></span></code></pre></div><p>by removing the &ldquo;#&rdquo; comment characters and putting the R packages you
+want installed in place of <code>data.table</code>, with the names of the
+packages separated by spaces, e.g.,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span>  <span style="color:#f92672">env</span>:
+</span></span><span style="display:flex;"><span>    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">EXTRA_R_PACKAGES</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">value</span>: <span style="color:#ae81ff">foreach doFuture</span>
+</span></span></code></pre></div><p>In many cases you may want these packages installed on both the scheduler
+pod (where RStudio Server runs) and on the workers. If so, make sure to modify the lines above in both the <code>scheduler</code> and <code>worker</code> stanzas.</p>
+<p>To modify the number of workers, modify the <code>replicas</code> line in the <code>worker</code> stanza of the <a href="https://github.com/paciorek/future-helm-chart/blob/master/values.yaml">values.yaml</a> file.</p>
+<p>Then rebuild the Helm chart:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>cd future-helm-chart  <span style="color:#75715e">## ensure you are in the directory containing `values.yaml`</span>
+</span></span><span style="display:flex;"><span>tar -czf ../future-helm.tgz .
+</span></span></code></pre></div><p>and install as done previously.</p>
+<p>Note that doing the above to increase the
+number of workers would probably only make sense if you also modify
+the number of virtual machines you start your Kubernetes cluster with
+such that the total number of cores across the cloud provider compute
+instances matches the number of worker replicas.</p>
+<p>You may also be able to modify a running cluster.
+For example you could use <code>gcloud container clusters resize</code>.
+I haven&rsquo;t experimented with this.</p>
+<p>To modify if your Helm chart is already installed (i.e., your release
+is running), one simple option
+is to reinstall the Helm chart as discussed below.
+You may also need to kill the <code>port-forward</code> process discussed in Step 3.</p>
+<p>For some changes, you can also also update a running release without uninstalling it by &ldquo;patching&rdquo; the running release or scaling resources. I won&rsquo;t go into details here.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Things can definitely go wrong in getting all the pods to start up and
+communicate with each other. Here are some suggestions for monitoring
+what is going on and troubleshooting.</p>
+<p>First, you can use <code>kubectl</code> to check the pods are running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl get pods
+</span></span></code></pre></div><h3 id="connect-to-a-pod">Connect to a pod</h3>
+<p>To connect to a pod, which allows you to check on installed software,
+check on what the pod is doing, and other troubleshooting, you can do
+the following</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>export SCHEDULER<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pod --namespace default -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[?(@.metadata.labels.component==&#34;scheduler&#34;)].metadata.name}&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>export WORKERS<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>kubectl get pod --namespace default -o jsonpath<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{.items[?(@.metadata.labels.component==&#34;worker&#34;)].metadata.name}&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## access the scheduler pod:</span>
+</span></span><span style="display:flex;"><span>kubectl exec -it <span style="color:#e6db74">${</span>SCHEDULER<span style="color:#e6db74">}</span>  -- /bin/bash
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## access a worker pod:</span>
+</span></span><span style="display:flex;"><span>echo $WORKERS
+</span></span><span style="display:flex;"><span>kubectl exec -it &lt;insert_name_of_a_worker&gt; -- /bin/bash
+</span></span></code></pre></div><p>Alternatively just determine the name of the pod with <code>kubectl get pods</code> and then run the <code>kubectl exec -it ...</code> invocation above.</p>
+<p>Note that once you are in a pod, you can install software in the usual
+fashion of a Linux machine (in this case using <code>apt</code> commands such as
+<code>apt-get install</code>).</p>
+<h3 id="connect-to-a-virtual-machine">Connect to a virtual machine</h3>
+<p>Or to connect directly to an underlying VM, you can first determine
+the name of the VM and then use the <code>gcloud</code> tools to connect to it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>kubectl get nodes
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## now, connect to one of the nodes, &#39;gke-my-cluster-default-pool-8b490768-2q9v&#39; in this case:</span>
+</span></span><span style="display:flex;"><span>gcloud compute ssh gke-my-cluster-default-pool-8b490768-2q9v --zone us-west1-a
+</span></span></code></pre></div><h3 id="check-your-running-code">Check your running code</h3>
+<p>To check that your code is actually running in parallel, one can run
+the following test and see that the result returns the names of
+distinct worker pods.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future.apply)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">future_sapply</span>(<span style="color:#a6e22e">seq_len</span>(<span style="color:#a6e22e">nbrOfWorkers</span>()), <span style="color:#a6e22e">function</span>(i) <span style="color:#a6e22e">Sys.info</span>()[[<span style="color:#e6db74">&#34;nodename&#34;</span>]])
+</span></span></code></pre></div><p>You should see something like this:</p>
+<pre tabindex="0"><code>[1] future-worker-54db85cb7b-47qsd future-worker-54db85cb7b-4xf4x
+[3] future-worker-54db85cb7b-rj6bj future-worker-54db85cb7b-wvp4n
+</code></pre><p>One can also connect to the pods or to the underlying virtual nodes
+(as discussed above) and run Unix commands such as <code>top</code> and <code>free</code> to understand CPU and memory usage.</p>
+<h3 id="reinstall-the-helm-release">Reinstall the Helm release</h3>
+<p>You can restart your release (i.e., restarting the pods, without
+restarting the whole Kubernetes cluster):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>helm uninstall test
+</span></span><span style="display:flex;"><span>helm install --wait test ./future-helm.tgz 
+</span></span></code></pre></div><p>Note that you may need to restart the entire Kubernetes cluster if
+you&rsquo;re having difficulties that reinstalling the release doesn&rsquo;t fix.</p>
+<h2 id="how-does-it-work">How does it work?</h2>
+<p>I&rsquo;ve provided many of the details of how it works in my <a href="https://github.com/paciorek/future-kubernetes">future-kubernetes</a> repository.</p>
+<p>The key pieces are:</p>
+<ol>
+<li>The <a href="https://github.com/paciorek/future-helm-chart">Helm chart</a> with the instructions for how to start the pods and
+any associated services.</li>
+<li>The <a href="https://github.com/paciorek/future-kubernetes-docker">Rocker-based Docker container(s)</a> that the pods run.</li>
+</ol>
+<p>That&rsquo;s all there is to it &hellip; plus <a href="https://github.com/paciorek/future-kubernetes">these instructions</a>.</p>
+<p>Briefly:</p>
+<ol>
+<li>Based on the Helm chart, Kubernetes starts up the &lsquo;main&rsquo; or
+&lsquo;scheduler&rsquo; pod running RStudio Server and
+multiple worker pods each running an R process. All of the pods
+are running the Rocker-based Docker container</li>
+<li>The RStudio Server main process and the workers use socket connections
+(via the R function <code>socketConnection()</code>) to communicate:
+<ul>
+<li>the worker processes start R processes that are instructed to
+regularly make a socket connection using a particular port on the
+main scheduler pod</li>
+<li>when you run <code>future::plan()</code> (which calls <code>makeClusterPSOCK()</code>) in RStudio, the RStudio Server process attempts to
+make socket connections to the workers using that same port</li>
+</ul>
+</li>
+<li>Once the socket connections are established, command of the
+RStudio session returns to you and you can run your future-based
+parallel R code.</li>
+</ol>
+<p>One thing I haven&rsquo;t had time to work through is how to easily scale
+the number of workers after the Kubernetes cluster is running and the
+Helm chart installed, or even how to auto-scale &ndash; starting up
+workers as needed based on the number of workers requested via
+<code>plan()</code>.</p>
+<h2 id="wrap-up">Wrap up</h2>
+<p>If you&rsquo;re interested in extending or improving this or collaborating in some fashion, please feel free to get in touch with me via the <a href="https://github.com/paciorek/future-kubernetes/issues">&lsquo;future-kubernetes&rsquo; issue tracker</a> or by email.</p>
+<p>And if you&rsquo;re interested in using R with Kubernetes, note that RStudio provides an integration of RStudio Server Pro with Kubernetes that should allow one to run future-based workflows in parallel.</p>
+<p>/Chris</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>
+<p>future-kubernetes repository:</p>
+<ul>
+<li>GitHub page: <a href="https://github.com/paciorek/future-kubernetes">https://github.com/paciorek/future-kubernetes</a></li>
+</ul>
+</li>
+<li>
+<p>future-kubernetes Helm chart:</p>
+<ul>
+<li>GitHub page: <a href="https://github.com/paciorek/future-helm-chart">https://github.com/paciorek/future-helm-chart</a></li>
+</ul>
+</li>
+<li>
+<p>future-kubernetes Docker container:</p>
+<ul>
+<li>GitHub page: <a href="https://github.com/paciorek/future-kubernetes-docker">https://github.com/paciorek/future-kubernetes-docker</a></li>
+</ul>
+</li>
+<li>
+<p>future package:</p>
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future">https://cran.r-project.org/package=future</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future">https://github.com/HenrikBengtsson/future</a></li>
+</ul>
+</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/kubernetes/">Kubernetes</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/helm/">Helm</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/dask/">Dask</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/linux-containers/">Linux containers</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/docker/">Docker</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/rocker/">Rocker</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/rstudio-server/">RStudio Server</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/google-kubernetes-engine/">Google Kubernetes Engine</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/gke/">GKE</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/cloud/">cloud</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/guest-post/">guest post</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/04/30/parallelly-1.25.0/" data-tooltip="parallelly 1.25.0: availableCores(omit=n) and, Finally, Built-in SSH Support for MS Windows 10 Users">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/" data-tooltip="future.BatchJobs - End-of-Life Announcement">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2021/04/08/future-and-kubernetes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2021/04/08/future-and-kubernetes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/04/30/parallelly-1.25.0/" data-tooltip="parallelly 1.25.0: availableCores(omit=n) and, Finally, Built-in SSH Support for MS Windows 10 Users">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/" data-tooltip="future.BatchJobs - End-of-Life Announcement">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2021/04/08/future-and-kubernetes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2021/04/08/future-and-kubernetes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2021%2F04%2F08%2Ffuture-and-kubernetes%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2021%2F04%2F08%2Ffuture-and-kubernetes%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &lt;- future.apply::future_lapply(...) or y &lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.">
+
+
+<meta property="og:description" content="A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &lt;- future.apply::future_lapply(...) or y &lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Parallelize a For-Loop by Rewriting it as an Lapply Call">
+<meta name="twitter:title" content="Parallelize a For-Loop by Rewriting it as an Lapply Call">
+<meta property="og:url" content="https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/">
+<meta property="twitter:url" content="https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &lt;- future.apply::future_lapply(...) or y &lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.">
+<meta name="twitter:description" content="A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &lt;- future.apply::future_lapply(...) or y &lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-01-11T12:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-01-11T12:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="foreach">
+    
+      <meta property="article:tag" content="doFuture">
+    
+      <meta property="article:tag" content="future.apply">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="for-loop">
+    
+      <meta property="article:tag" content="lapply">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Parallelize a For-Loop by Rewriting it as an Lapply Call</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Parallelize a For-Loop by Rewriting it as an Lapply Call
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-01-11T12:00:00-08:00">
+        
+  January 11, 2019
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>A commonly asked question in the R community is:</p>
+<blockquote>
+<p>How can I parallelize the following for-loop?</p>
+</blockquote>
+<p>The answer almost always involves rewriting the <code>for (...) { ... }</code> loop into something that looks like a <code>y &lt;- lapply(...)</code> call.  If you can achieve that, you can parallelize it via for instance <code>y &lt;- future.apply::future_lapply(...)</code> or <code>y &lt;- foreach::foreach() %dopar% { ... }</code>.</p>
+<p>For some for-loops it is straightforward to rewrite the code to make use of <code>lapply()</code> instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.  However, as long as the algorithm behind the for-loop is <em><a href="https://en.wikipedia.org/wiki/Embarrassingly_parallel">embarrassingly parallel</a></em>, it can be done.  Whether it should be parallelized in the first place, or it&rsquo;s worth parallelizing it, is a whole other discussion.</p>
+<p>Below are a few walk-through examples on how to transform a for-loop into an lapply call.</p>
+<p><img src="https://www.jottr.org/post/Honolulu_IFSS_Teletype1964.jpg" alt="Paper tape relay operation at US FAA&amp;rsquo;s Honolulu flight service station in 1964 showing a large number of punch tapes">
+<em>Run your loops in parallel.</em></p>
+<h1 id="example-1-a-well-behaving-for-loop">Example 1: A well-behaving for-loop</h1>
+<p>I will use very simple function calls throughout the examples, e.g. <code>sqrt(x)</code>.  For these code snippets to make sense, let us pretend that those functions take a long time to finish and by parallelizing multiple such calls we will shorten the overall processing time.</p>
+<p>First, consider the following example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(X)) {
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>  tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)  <span style="color:#75715e">## Assume this takes a long time</span>
+</span></span><span style="display:flex;"><span>  y[[ii]] <span style="color:#f92672">&lt;-</span> tmp
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When run, this will give us the following result:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">str</span>(y)
+</span></span><span style="display:flex;"><span>List of <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> <span style="color:#f92672">:</span> num <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> <span style="color:#f92672">:</span> num <span style="color:#ae81ff">1.41</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> <span style="color:#f92672">:</span> num <span style="color:#ae81ff">1.73</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> <span style="color:#f92672">:</span> num <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> <span style="color:#f92672">:</span> num <span style="color:#ae81ff">2.24</span>
+</span></span></code></pre></div><p>Because the result of each iteration in the for-loop is a single value (variable <code>tmp</code>) it is straightforward to turn this for-loop into an lapply call.  I&rsquo;ll first show a version that resembles the original for-loop as far as possible, with one minor but important change. I&rsquo;ll wrap up the &ldquo;iteration&rdquo; code inside <code>local()</code> to make sure it is evaluated in a <em>local environment</em> in order to prevent it from assigning values to the global environment.  It is only the &ldquo;result&rdquo; of <code>local()</code> call that I will allow updating <code>y</code>.  Here we go:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(X)) {
+</span></span><span style="display:flex;"><span>  y[[ii]] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">local</span>({
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>    tmp            <span style="color:#75715e">## same as return(tmp)</span>
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>By making these, apparently, small adjustments, we lower the risk for missing some critical side effects that may be used in some for-loops.  If those exists and we miss to adjust for them, then the for-loop is likely to give the wrong results.</p>
+<p>If this syntax is unfamiliar to you, run it first to convince yourself that it works.  How does it work?  The code inside <code>local()</code> will be evaluated in a local environment and it is only its last value (here <code>tmp</code>) that will be returned.  It is also neat that <code>x</code>, <code>tmp</code>, and any other created variables, will <em>not</em> clutter up the global environment.  Instead, they will vanish after each iteration just like local variables used inside functions.  Retry the above after <code>rm(x, tmp)</code> to see that this is really the case.</p>
+<p>Now we&rsquo;re in a really good position to turn the for-loop into an lapply call.  To share my train of thought, I&rsquo;ll start by showing how to do it in a way that best resembles the latter for-loop;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(<span style="color:#a6e22e">seq_along</span>(X), <span style="color:#a6e22e">function</span>(ii) {
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>  tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  tmp
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>Just like the for-loop with <code>local()</code>, it is the last value (here <code>tmp</code>) that is returned, and everything is evaluated in a local environment, e.g. variable <code>tmp</code> will <em>not</em> show up in our global environment.</p>
+<p>There is one more update that we can do, namely instead of passing the index <code>ii</code> as an argument and then extract element <code>x &lt;- X[[ii]]</code> inside the function, we can pass that element directly using:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(X, <span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>  tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  tmp
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>If we get this far and have <strong>confirmed that we get the expected results</strong>, then we&rsquo;re home.</p>
+<p>From here, there are few ways to parallelize the lapply call.  The <strong>parallel</strong> package provides the commonly known <code>mclapply()</code> and <code>parLapply()</code> functions, which are found in many examples and inside several R packages.  As the author of the <strong><a href="https://cran.r-project.org/package=future">future</a></strong> package, I claim that your life as a developer will be a bit easier if you instead use the future framework. It will also bring more power and options to the end user.  Below are a few options for parallelization.</p>
+<h2 id="futureapplyfuture_lapply">future.apply::future_lapply()</h2>
+<p>The parallelization update that takes the least amount of changes is provided by the <strong><a href="https://cran.r-project.org/package=future.apply">future.apply</a></strong> package.  All we have to do is to replace <code>lapply()</code> with <code>future_lapply()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future.apply)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession) <span style="color:#75715e">## =&gt; parallelize on your local computer</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future_lapply</span>(X, <span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>  tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  tmp
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>and we&rsquo;re done.</p>
+<h2 class=".." id="foreachforeach-dopar">foreach::foreach() %dopar%</h2>
+<p>If we wish to use the <strong><a href="https://cran.r-project.org/package=foreach">foreach</a></strong> framework, we can do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(doFuture)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">registerDoFuture</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">foreach</span>(x <span style="color:#f92672">=</span> X) <span style="color:#f92672">%dopar%</span> {
+</span></span><span style="display:flex;"><span>  tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  tmp
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Here I choose the <strong><a href="https://cran.r-project.org/package=doFuture">doFuture</a></strong> adaptor because it provides us with access to the future framework and the full range of parallel backends that comes with it (controlled via <code>plan()</code>).</p>
+<p>If there is only one thing you should remember from this post, it is the following:</p>
+<p><strong>It is a common misconception that <code>foreach()</code> works like a regular for-loop.  It is doesn&rsquo;t!  Instead, think of it as a version of <code>lapply()</code> with a few bells and whistles and always make sure to use it as <code>y &lt;- foreach(...) %dopar% { ... }</code>.</strong></p>
+<p>To clarify further, the following is <em>not</em> (I repeat: <em>not</em>) a working solution:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">foreach</span>(x <span style="color:#f92672">=</span> X) <span style="color:#f92672">%dopar%</span> {
+</span></span><span style="display:flex;"><span>  tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  y[[ii]] <span style="color:#f92672">&lt;-</span> tmp
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>No, it isn&rsquo;t.</p>
+<h2 id="additional-parallelization-options">Additional parallelization options</h2>
+<p>There are several more options available, which are conceptually very similar to the above lapply-like approaches, e.g. <code>y &lt;- furrr::future_map(X, ...)</code>, <code>y &lt;- plyr::llply(X, ..., .parallel = TRUE)</code> or <code>y &lt;- BiocParallel::bplapply(X, ..., BPPARAM = DoparParam())</code>.  For also the latter two to parallelize via one of the many future backends, we need to set <code>doFuture::registerDoFuture()</code>.  See also my blog post <a href="https://www.jottr.org/2017/06/05/many-faced-future/">The Many-Faced Future</a>.</p>
+<h1 id="example-2-a-slightly-complicated-for-loop">Example 2: A slightly complicated for-loop</h1>
+<p>Now, what do we do if the for-loop writes multiple results in each iteration?  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span>z <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(X)) {
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>  tmp1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  y[[ii]] <span style="color:#f92672">&lt;-</span> tmp1
+</span></span><span style="display:flex;"><span>  tmp2 <span style="color:#f92672">&lt;-</span> x^2
+</span></span><span style="display:flex;"><span>  z[[ii]] <span style="color:#f92672">&lt;-</span> tmp2
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The way to turn this into an lapply call, is to rewrite the code by gathering all the results at the very end of the iteration and then put them into a list;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>yz <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(X)) {
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>  tmp1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  tmp2 <span style="color:#f92672">&lt;-</span> x^2
+</span></span><span style="display:flex;"><span>  yz[[ii]] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>(y <span style="color:#f92672">=</span> tmp1, z <span style="color:#f92672">=</span> tmp2)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This one we know how to rewrite;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>yz <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(X, <span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>  tmp1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  tmp2 <span style="color:#f92672">&lt;-</span> x^2
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">list</span>(y <span style="color:#f92672">=</span> tmp1, z <span style="color:#f92672">=</span> tmp2)
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>which we in turn can parallelize with one of the above approaches.</p>
+<p>The only difference from the original for-loop is that the &lsquo;y&rsquo; and &lsquo;z&rsquo; results are no longer in two separate lists.  This makes it a bit harder to get a hold of the two elements.  In some cases, then downstream code can work with the new <code>yz</code> format as is but if not, we can always do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(yz, <span style="color:#a6e22e">function</span>(t) t<span style="color:#f92672">$</span>y)
+</span></span><span style="display:flex;"><span>z <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(yz, <span style="color:#a6e22e">function</span>(t) t<span style="color:#f92672">$</span>z)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rm</span>(yz)
+</span></span></code></pre></div><h1 id="example-3-a-somewhat-complicated-for-loop">Example 3: A somewhat complicated for-loop</h1>
+<p>Another, somewhat complicated, for-loop is when, say, one column of a matrix is updated per iteration.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#ae81ff">0</span>, nrow <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, ncol <span style="color:#f92672">=</span> <span style="color:#a6e22e">length</span>(X))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rownames</span>(Y) <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;sqrt&#34;</span>, <span style="color:#e6db74">&#34;square&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(X)) {
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>  Y[, ii] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#a6e22e">sqrt</span>(x), x^2)   <span style="color:#75715e">## assume this takes a long time</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>which gives</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> Y
+</span></span><span style="display:flex;"><span>       [,<span style="color:#ae81ff">1</span>]     [,<span style="color:#ae81ff">2</span>]     [,<span style="color:#ae81ff">3</span>] [,<span style="color:#ae81ff">4</span>]      [,<span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>sqrt      <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1.414214</span> <span style="color:#ae81ff">1.732051</span>    <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">2.236068</span>
+</span></span><span style="display:flex;"><span>square    <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">4.000000</span> <span style="color:#ae81ff">9.000000</span>   <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">25.000000</span>
+</span></span></code></pre></div><p>To turn this into an lapply call, the approach is the same as in Example 2 - we rewrite the for-loop to assign to a list and only afterward we worry about putting those values into a matrix.  To keep it simple, this can be done using something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(X, <span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">c</span>(<span style="color:#a6e22e">sqrt</span>(x), x^2)  <span style="color:#75715e">## assume this takes a long time</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">matrix</span>(<span style="color:#ae81ff">0</span>, nrow <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, ncol <span style="color:#f92672">=</span> <span style="color:#a6e22e">length</span>(X))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rownames</span>(Y) <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;sqrt&#34;</span>, <span style="color:#e6db74">&#34;square&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(tmp)) {
+</span></span><span style="display:flex;"><span>  Y[, ii] <span style="color:#f92672">&lt;-</span> tmp[[ii]]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">rm</span>(tmp)
+</span></span></code></pre></div><p>To parallelize this, all we have to do is to rewrite the lapply call as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future_lapply</span>(X, <span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">c</span>(<span style="color:#a6e22e">sqrt</span>(x), x^2)
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><h1 id="example-4-a-non-embarrassingly-parallel-for-loop">Example 4: A non-embarrassingly parallel for-loop</h1>
+<p>Now, if our for-loop is such that one iteration depends on the previous iterations, things becomes much more complicated.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span>y[[1]] <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#ae81ff">2</span><span style="color:#f92672">:</span><span style="color:#a6e22e">length</span>(X)) {
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>  tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  y[[ii]] <span style="color:#f92672">&lt;-</span> y[[ii <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]] <span style="color:#f92672">+</span> tmp
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>does <em>not</em> use an embarrassingly parallel for-loop.  This code cannot be rewritten as an lapply call and therefore it cannot be parallelized.</p>
+<h1 id="summary">Summary</h1>
+<p>To parallelize a for-loop:</p>
+<ol>
+<li>Rewrite your for-loop such that each iteration is done inside a <code>local()</code> call (most of the work is done here)</li>
+<li>Rewrite this new for-loop as an lapply call (straightforward)</li>
+<li>Replace the lapply call with a parallel implementation of your choice (straightforward)</li>
+</ol>
+<p><em>Happy futuring!</em></p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/">Maintenance Updates of Future Backends and doFuture</a>, 2019-01-07</li>
+<li><a href="https://www.jottr.org/2018/07/23/output-from-the-future/">future 1.9.0 - Output from The Future</a>, 2018-07-23</li>
+<li><a href="https://www.jottr.org/2018/06/23/future.apply_1.0.0/">future.apply - Parallelize Any Base R Apply Function</a>, 2018-06-23</li>
+<li><a href="https://www.jottr.org/2018/06/18/future-erum2018-slides/">Delayed Future(Slides from eRum 2018)</a>, 2018-06-19</li>
+<li><a href="https://www.jottr.org/2018/04/12/future-results/">future 1.8.0: Preparing for a Shiny Future</a>, 2018-04-12</li>
+<li><a href="https://www.jottr.org/2017/06/05/many-faced-future/">The Many-Faced Future</a>, 2017-06-05</li>
+<li><a href="https://www.jottr.org/2017/02/19/future-rng/">future 1.3.0: Reproducible RNGs, future_lapply() and More</a>, 2017-02-19</li>
+<li><a href="https://www.jottr.org/2016/10/22/future-hpc/">High-Performance Compute in R Using Futures</a>, 2016-10-22</li>
+<li><a href="https://www.jottr.org/2016/10/11/future-remotes/">Remote Processing Using Futures</a>, 2016-10-11</li>
+<li><a href="http://127.0.0.1:4321/2016/07/02/future-user2016-slides/">A Future for R: Slides from useR 2016</a>, 2016-07-02</li>
+</ul>
+<h1 id="appendix">Appendix</h1>
+<h2 id="a-regular-for-loop-with-futurefuture">A regular for-loop with future::future()</h2>
+<p>In order to lower the risk for mistakes, and because I think the for-loop-to-lapply approach is the one that the works out of the box in the most cases, I decided to not mention the following approach in the main text above, but if you&rsquo;re interested, here it is.  With the core building blocks of the Future API, we can actually do parallel processing using a regular for-loop.  Have a look at that second code snippet in Example 1 where we use a for-loop together with <code>local()</code>.  All we need to do is to replace <code>local()</code> with <code>future()</code> and make sure to &ldquo;collect&rdquo; the values after the for-loop;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(X)) {
+</span></span><span style="display:flex;"><span>  y[[ii]] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>({
+</span></span><span style="display:flex;"><span>    x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>    tmp
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">values</span>(y)  <span style="color:#75715e">## collect values</span>
+</span></span></code></pre></div><p>Note that this approach does <em>not</em> perform load balancing*.  That is, contrary to the above mentioned lapply-like options, it will not chunk up the elements in <code>X</code> into equally-sized portions for each parallel worker to process.  Instead, it will call each worker multiple times, which can bring some significant overhead, especially if there are many elements to iterate over.</p>
+<p>However, one neat feature of this bare-bones approach is that we have full control of the iteration.  For instance, we can initiate each iteration using a bit of sequential code before we use parallel code.  This can be particularly useful for subsetting large objects to avoid passing them to each worker, which otherwise can be costly.  For example, we can rewrite the above as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(X)) {
+</span></span><span style="display:flex;"><span>  x <span style="color:#f92672">&lt;-</span> X[[ii]]
+</span></span><span style="display:flex;"><span>  y[[ii]] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>({
+</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>    tmp
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">values</span>(y)
+</span></span></code></pre></div><p>This is just one example.  I&rsquo;ve run into several other use cases in my large-scale genomics research, where I found it extremely useful to be able to perform the beginning of an iteration sequentially in the main processes before passing on the remaining part to be processed in parallel by the workers.</p>
+<p>(*) I do have some ideas on how to get the above code snippet to do automatic workload balancing &ldquo;under the hood&rdquo;, but that is quite far into the future of the future framework.</p>
+<p>UPDATE 2022-12-11: Update examples that used the deprecated <code>multiprocess</code> future backend alias to use the <code>multisession</code> backend.</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/foreach/">foreach</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/dofuture/">doFuture</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.apply/">future.apply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/for-loop/">for-loop</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/lapply/">lapply</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/03/07/future-satrdayparis2019-slides/" data-tooltip="SatRday Paris 2019 Slides on Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/" data-tooltip="Maintenance Updates of Future Backends and doFuture">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/03/07/future-satrdayparis2019-slides/" data-tooltip="SatRday Paris 2019 Slides on Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/" data-tooltip="Maintenance Updates of Future Backends and doFuture">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2019%2F01%2F11%2Fparallelize-a-for-loop-by-rewriting-it-as-an-lapply-call%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2019%2F01%2F11%2Fparallelize-a-for-loop-by-rewriting-it-as-an-lapply-call%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

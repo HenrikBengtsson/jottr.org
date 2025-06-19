@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C on JottR</title>
+    <link>https://www.jottr.org/tags/c/</link>
+    <description>Recent content in C on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 05 Jun 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Performance: Calling R_CheckUserInterrupt() Every 256 Iteration is Actually Faster than Every 1,000,000 Iteration</title>
+      <link>https://www.jottr.org/2015/06/05/checkuserinterrupt/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/06/05/checkuserinterrupt/</guid>
+      <description>If your native code takes more than a few seconds to finish, it is a nice courtesy to the user to check for user interrupts (Ctrl-C) once in a while, say, every 1,000 or 1,000,000 iteration. The C-level API of R provides R_CheckUserInterrupt() for this (see &amp;lsquo;Writing R Extensions&amp;rsquo; for more information on this function). Here&amp;rsquo;s what the code would typically look like:
+for (int ii = 0; ii &amp;lt; n; ii++) { /* Some computational expensive code */ if (ii % 1000 == 0) R_CheckUserInterrupt() } This uses the modulo operator % and tests when it is zero, which happens every 1,000 iteration.</description>
+    </item>
+    
+  </channel>
+</rss>

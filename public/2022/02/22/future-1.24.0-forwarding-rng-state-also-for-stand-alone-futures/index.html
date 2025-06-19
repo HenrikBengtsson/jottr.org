@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
+int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
+future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
+
+
+<meta property="og:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
+int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
+future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
+<meta property="og:type" content="article">
+<meta property="og:title" content="future 1.24.0: Forwarding RNG State also for Stand-Alone Futures">
+<meta name="twitter:title" content="future 1.24.0: Forwarding RNG State also for Stand-Alone Futures">
+<meta property="og:url" content="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/">
+<meta property="twitter:url" content="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
+int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
+future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
+<meta name="twitter:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
+int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
+future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2022-02-22T13:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-02-22T13:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallel-processing">
+    
+      <meta property="article:tag" content="rng">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>future 1.24.0: Forwarding RNG State also for Stand-Alone Futures</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      future 1.24.0: Forwarding RNG State also for Stand-Alone Futures
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-02-22T13:00:00-08:00">
+        
+  February 22, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><strong><a href="https://future.futureverse.org">future</a></strong> 1.24.0 is on CRAN.  It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to <code>plan()</code> and <code>tweaks()</code>, and some bug fixes.  Below are the most important changes.</p>
+<!-- raw HTML omitted -->
+<p>int getRandomNumber()
+{
+return 4;  // chosen by fair dice roll.
+// guaranteed to be random.
+}
+&ldquo;/&gt;</p>
+<!-- raw HTML omitted -->
+<h2 id="future-seed--true-updates-rng-state">future(&hellip;, seed = TRUE) updates RNG state</h2>
+<p>In <strong>future</strong> (&lt; 1.24.0), using <a href="https://future.futureverse.org/reference/future.html"><code>future(..., seed = TRUE)</code></a> would <em>not</em> forward the state of the random number generator (RNG).  For example, if we generated random numbers in individual futures this way, they would become <em>identical</em>, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">rnorm</span>(n <span style="color:#f92672">=</span> <span style="color:#ae81ff">1L</span>), seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] -1.424997</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">rnorm</span>(n <span style="color:#f92672">=</span> <span style="color:#ae81ff">1L</span>), seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] -1.424997</span>
+</span></span></code></pre></div><p>This was a deliberate, conservative design, because it is not obvious exactly how the RNG state should be forwarded in this case, especially if we consider random numbers may be generated also in the main R session.
+The more I dug into the problem, the further down I ended up in a rabbit hole.  Because of this, I have held back on addressing this problem and leaving it to the developer to solve it, i.e. they had to roll their own RNG streams designed for parallel processing, and populate each future with a unique seed from those RNG streams, i.e. <code>future(..., seed = &lt;seed&gt;)</code>. This is how <strong><a href="https://future.apply.futureverse.org">future.apply</a></strong> and <strong><a href="https://furrr.futureverse.org">furrr</a></strong> already do it internally.</p>
+<p>However, I understand that design was confusing, and if not understood, it could silently lead to RNG mistakes and correlated, and even identical random numbers.  I also sometimes got confused about this when I needed to do something quickly with individual futures and random numbers.  I even considered making <code>seed = TRUE</code> an error until resolved, and, looking back, maybe I should have done so.</p>
+<p>Anyway, because it is rather tedious to roll your own  L&rsquo;Ecuyer-CMRG RNG streams, I decided to update <code>future(..., seed = TRUE)</code> to provide a good-enough solution internally, where it forwards the RNG state and then provides the future with an RNG substream based on the updated RNG state.  In <strong>future</strong> (&gt;= 1.24.0), we now get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">rnorm</span>(n <span style="color:#f92672">=</span> <span style="color:#ae81ff">1L</span>), seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(v)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] -1.424997</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">rnorm</span>(n <span style="color:#f92672">=</span> <span style="color:#ae81ff">1L</span>), seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(v)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] -1.985136</span>
+</span></span></code></pre></div><p>This update only affects code that currently uses <code>future(..., seed = TRUE)</code>.  It does <em>not</em> affect code that relies on <strong>future.apply</strong> or <strong>furrr</strong>, which already worked correctly. That is, you can keep using <code>y &lt;- future_lapply(..., future.seed = TRUE)</code> and <code>y &lt;- future_map(..., .options = furrr_options(seed = TRUE))</code>.</p>
+<h2 id="deprecating-future-strategies-transparent-and-remote">Deprecating future strategies &rsquo;transparent&rsquo; and &lsquo;remote&rsquo;</h2>
+<p>It&rsquo;s on the <a href="https://futureverse.org/roadmap.html">roadmap</a> to provide mechanisms for the developer to declare what resources a particular future needs and for the end-user to specify multiple parallel-backend alternatives, so that the future can be processed on a worker that best can meet its resource requirements.  In order to support this, we need to restrict the future backend API further, which has been in the works over the last couple of years in collaboration with existing package developers.</p>
+<p>In this release, I am formally deprecating future strategies <code>transparent</code> and <code>remote</code>.  When used, they now produce an informative warning. The <code>transparent</code> strategy is deprecated in favor of using <code>sequential</code> with argument <code>split = TRUE</code> set. If you still use <code>remote</code>, please migrate to <code>cluster</code>, which since a long time can achieve everything that <code>remote</code> can do.</p>
+<p>On a related note, if you are still using <code>multiprocess</code>, which is deprecated in <strong>future</strong> (&gt;= 1.20.0) since 2020-11-03, please migrate to <code>multisession</code> so you won&rsquo;t get surprised when <code>multiprocess</code> becomes defunct.</p>
+<p>For the other updates, please see the <a href="https://future.futureverse.org/news/index.html">NEWS</a>.</p>
+<p>Happy futuring!</p>
+<p>Henrik</p>
+<h2 id="other-posts-on-random-numbers-in-parallel-processing">Other posts on random numbers in parallel processing</h2>
+<ul>
+<li>
+<p><a href="https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/">future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing</a>, 2020-09-22</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/">Detect When the Random Number Generator Was Used</a>, 2020-09-21</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2017/02/19/future-rng/">future 1.3.0: Reproducible RNGs, future_lapply() and More</a>, 2017-02-19</p>
+</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a>, <a href="https://future.futureverse.org">pkgdown</a></li>
+<li><strong>future.apply</strong> package: <a href="https://cran.r-project.org/package=future.apply">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future.apply">GitHub</a>, <a href="https://future.apply.futureverse.org">pkgdown</a></li>
+<li><strong>furrr</strong> package: <a href="https://cran.r-project.org/package=furrr">CRAN</a>, <a href="https://github.com/HenrikBengtsson/furrr">GitHub</a>, <a href="https://furrr.futureverse.org">pkgdown</a></li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel-processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/rng/">rng</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/04/22/parallelly-1.31.1/" data-tooltip="parallelly 1.31.1: Better at Inferring Number of CPU Cores with Cgroups and Linux Containers">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/01/07/future-during-2021/" data-tooltip="Future Improvements During 2021">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/04/22/parallelly-1.31.1/" data-tooltip="parallelly 1.31.1: Better at Inferring Number of CPU Cores with Cgroups and Linux Containers">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/01/07/future-during-2021/" data-tooltip="Future Improvements During 2021">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2022%2F02%2F22%2Ffuture-1.24.0-forwarding-rng-state-also-for-stand-alone-futures%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2022%2F02%2F22%2Ffuture-1.24.0-forwarding-rng-state-also-for-stand-alone-futures%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>future.apply on JottR</title>
+    <link>https://www.jottr.org/tags/future.apply/</link>
+    <description>Recent content in future.apply on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 04 Nov 2020 14:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/future.apply/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trust the Future</title>
+      <link>https://www.jottr.org/2020/11/04/trust-the-future/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/04/trust-the-future/</guid>
+      <description>Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&amp;rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&amp;rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&amp;rsquo;m sure I forgot something:</description>
+    </item>
+    
+    <item>
+      <title>future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing</title>
+      <link>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</link>
+      <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
+      <description>After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
+    </item>
+    
+    <item>
+      <title>future and future.apply - Some Recent Improvements</title>
+      <link>https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/</link>
+      <pubDate>Sat, 11 Jul 2020 22:15:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/</guid>
+      <description>There are new versions of future and future.apply - your friends in the parallelization business - on CRAN. These updates are mostly maintenance updates with bug fixes, some improvements, and preparations for upcoming changes. It&amp;rsquo;s been some time since I blogged about these packages, so here is the summary of the main updates this far since early 2020:
+future:
+values() for lists and other containers was renamed to value() to simplify the API [future 1.</description>
+    </item>
+    
+    <item>
+      <title>future 1.15.0 - Lazy Futures are Now Launched if Queried</title>
+      <link>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</link>
+      <pubDate>Sat, 09 Nov 2019 11:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
+      <description>No dogs were harmed while making this release
+future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
+Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+    </item>
+    
+    <item>
+      <title>Parallelize a For-Loop by Rewriting it as an Lapply Call</title>
+      <link>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</link>
+      <pubDate>Fri, 11 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</guid>
+      <description>A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &amp;lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &amp;lt;- future.apply::future_lapply(...) or y &amp;lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.</description>
+    </item>
+    
+    <item>
+      <title>Maintenance Updates of Future Backends and doFuture</title>
+      <link>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</guid>
+      <description>New versions of the following future backends are available on CRAN:
+future.callr - parallelization via callr, i.e. on the local machine future.batchtools - parallelization via batchtools, i.e. on a compute cluster with job schedulers (SLURM, SGE, Torque/PBS, etc.) but also on the local machine future.BatchJobs - (maintained for legacy reasons) parallelization via BatchJobs, which is the predecessor of batchtools These releases fix a few small bugs and inconsistencies that were identified with help of the future.</description>
+    </item>
+    
+    <item>
+      <title>future 1.8.0: Preparing for a Shiny Future</title>
+      <link>https://www.jottr.org/2018/04/12/future-results/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/12/future-results/</guid>
+      <description>future 1.8.0 is available on CRAN.
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more. These features are not yet available out of the box, but thanks to this release we will be able to make some headway on many of the feature requests related to this - hopefully already by the next release.
+For shiny users following Joe Cheng&amp;rsquo;s efforts on extending Shiny with asynchronous processing using futures, future 1.</description>
+    </item>
+    
+  </channel>
+</rss>

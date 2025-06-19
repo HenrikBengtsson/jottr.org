@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="parallelly 1.32.0 is on CRAN. This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused makeClusterPSOCK(), and therefore also future::plan(&quot;multisession&quot;), to fail with an error. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.">
+
+
+<meta property="og:description" content="parallelly 1.32.0 is on CRAN. This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused makeClusterPSOCK(), and therefore also future::plan(&quot;multisession&quot;), to fail with an error. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="parallelly 1.32.0: makeClusterPSOCK() Didn&#39;t Work with Chinese and Korean Locales">
+<meta name="twitter:title" content="parallelly 1.32.0: makeClusterPSOCK() Didn&#39;t Work with Chinese and Korean Locales">
+<meta property="og:url" content="https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/">
+<meta property="twitter:url" content="https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="parallelly 1.32.0 is on CRAN. This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused makeClusterPSOCK(), and therefore also future::plan(&quot;multisession&quot;), to fail with an error. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.">
+<meta name="twitter:description" content="parallelly 1.32.0 is on CRAN. This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused makeClusterPSOCK(), and therefore also future::plan(&quot;multisession&quot;), to fail with an error. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2022-06-08T14:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-06-08T14:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallelly">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="parallel-processing">
+    
+      <meta property="article:tag" content="locale">
+    
+      <meta property="article:tag" content="i18n">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>parallelly 1.32.0: makeClusterPSOCK() Didn&#39;t Work with Chinese and Korean Locales</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      parallelly 1.32.0: makeClusterPSOCK() Didn&#39;t Work with Chinese and Korean Locales
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-06-08T14:00:00-07:00">
+        
+  June 8, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p><strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> 1.32.0 is on CRAN.  This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused <code>makeClusterPSOCK()</code>, and therefore also <code>future::plan(&quot;multisession&quot;)</code>, to fail with an error.  For other updates, please see <a href="https://parallelly.futureverse.org/news/index.html">NEWS</a>.</p>
+<p>The <strong>parallelly</strong> package enhances the <strong>parallel</strong> package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, <strong>parallelly</strong> provides the things that you would otherwise expect to find in the <strong>parallel</strong> package.  The <strong><a href="https://future.futureverse.org">future</a></strong> package relies on the <strong>parallelly</strong> package internally for local and remote parallelization.</p>
+<h2 id="important-bug-fix-for-chinese-and-korean-users">Important bug fix for Chinese and Korean users</h2>
+<p>It turns out that <a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html"><code>makeClusterPSOCK()</code></a> has never<!-- raw HTML omitted -->[1]<!-- raw HTML omitted --> worked for users that have their computers set to use a Korean (<code>LANGUAGE=ko</code>), a Simplified Chinese (<code>LANGUAGE=zh_CN</code>), or a Traditional Chinese (Taiwan) (<code>LANGUAGE=zh_TW</code>) locale.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">Sys.setLanguage</span>(<span style="color:#e6db74">&#34;zh_CN&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallelly)
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 错误: ‘node$session_info$process$pid == pid’ is not TRUE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 此外: Warning message:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; In add_cluster_session_info(cl[ii]) : 强制改变过程中产生了NA</span>
+</span></span></code></pre></div><p>The workaround was to pass <code>validate = FALSE</code>, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">2</span>, validate <span style="color:#f92672">=</span> <span style="color:#66d9ef">FALSE</span>)
+</span></span></code></pre></div><p>This bug was because of an internal assertion that made incorrect assumptions about what <code>print()</code> for <code>SOCK0node</code> and <code>SOCKnode</code> object would output. It worked with most locales, but not with the above three.  I have fixed this in the most recent release of <strong>parallelly</strong>.</p>
+<p>Since the &lsquo;multisession&rsquo; strategy of the <strong><a href="https://future.futureverse.org">future</a></strong> framework relies on <code>makeClusterPSOCK()</code>, this bug affected also the <strong>future</strong> package, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">Sys.setLanguage</span>(<span style="color:#e6db74">&#34;ko&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 에러: &#39;node$session_info$process$pid == pid&#39; is not TRUE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 추가정보: 경고메시지(들): </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; add_cluster_session_info(cl[ii])에서: 강제형변환에 의해 생성된 NA 입니다</span>
+</span></span></code></pre></div><p>So, if you run into these errors, upgrade to the latest version of <strong>parallelly</strong>, e.g. <code>update.packages()</code>, restart R, and it will work as you would expect.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>To prevent this from happening again, I am now making sure to always check the package with also these locales, in addition to English.  CRAN already checks packages <a href="https://cran.r-project.org/web/checks/check_flavors.html">with different English and German locales</a>.</p>
+<p>I am sorry, 对不起, 미안해요, about this.  Hopefully, it&rsquo;ll work smoother from now on.</p>
+<p>Happy parallelization!</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>parallelly</strong> package: <a href="https://cran.r-project.org/package=parallelly">CRAN</a>, <a href="https://github.com/HenrikBengtsson/parallelly">GitHub</a>, <a href="https://parallelly.futureverse.org">pkgdown</a></li>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a>, <a href="https://future.futureverse.org">pkgdown</a></li>
+</ul>
+<p><!-- raw HTML omitted -->[1]<!-- raw HTML omitted --> The last time it worked was with <strong>future</strong> 1.4.0 (2017-03-13), when this function was still part of the <strong>future</strong> package.</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallelly/">parallelly</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel-processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/locale/">locale</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/i18n/">i18n</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/06/09/parallelly-support-for-fujitsu-technical-computing-suite-high-performance-compute-hpc-environments/" data-tooltip="parallelly: Support for Fujitsu Technical Computing Suite High-Performance Compute (HPC) Environments">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/06/03/progressr-0.10.1/" data-tooltip="progressr 0.10.1: Plyr Now Supports Progress Updates also in Parallel">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/06/09/parallelly-support-for-fujitsu-technical-computing-suite-high-performance-compute-hpc-environments/" data-tooltip="parallelly: Support for Fujitsu Technical Computing Suite High-Performance Compute (HPC) Environments">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/06/03/progressr-0.10.1/" data-tooltip="progressr 0.10.1: Plyr Now Supports Progress Updates also in Parallel">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2022%2F06%2F08%2Fparallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2022%2F06%2F08%2Fparallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

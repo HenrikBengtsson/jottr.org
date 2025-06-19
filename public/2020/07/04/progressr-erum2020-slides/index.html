@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
+Abstract HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (starts at 00h49m58s) I am grateful for everyone involved who made e-Rum 2020 possible. I cannot imagine having to cancel the on-site Milano conference that had planned for more than a year and then start over to re-organize and create a fabulous online experience for ~1,500 participants in such short notice.">
+
+
+<meta property="og:description" content="I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
+Abstract HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (starts at 00h49m58s) I am grateful for everyone involved who made e-Rum 2020 possible. I cannot imagine having to cancel the on-site Milano conference that had planned for more than a year and then start over to re-organize and create a fabulous online experience for ~1,500 participants in such short notice.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="e-Rum 2020 Slides on Progressr">
+<meta name="twitter:title" content="e-Rum 2020 Slides on Progressr">
+<meta property="og:url" content="https://www.jottr.org/2020/07/04/progressr-erum2020-slides/">
+<meta property="twitter:url" content="https://www.jottr.org/2020/07/04/progressr-erum2020-slides/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
+Abstract HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (starts at 00h49m58s) I am grateful for everyone involved who made e-Rum 2020 possible. I cannot imagine having to cancel the on-site Milano conference that had planned for more than a year and then start over to re-organize and create a fabulous online experience for ~1,500 participants in such short notice.">
+<meta name="twitter:description" content="I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
+Abstract HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (starts at 00h49m58s) I am grateful for everyone involved who made e-Rum 2020 possible. I cannot imagine having to cancel the on-site Milano conference that had planned for more than a year and then start over to re-organize and create a fabulous online experience for ~1,500 participants in such short notice.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-07-04T17:30:00">
+  
+  
+    <meta property="article:modified_time" content="2020-07-04T17:30:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="progressr">
+    
+      <meta property="article:tag" content="progress updates">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="eRum 2020">
+    
+      <meta property="article:tag" content="talk">
+    
+      <meta property="article:tag" content="presentation">
+    
+      <meta property="article:tag" content="slides">
+    
+      <meta property="article:tag" content="video">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>e-Rum 2020 Slides on Progressr</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2020/07/04/progressr-erum2020-slides/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      e-Rum 2020 Slides on Progressr
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-07-04T17:30:00-07:00">
+        
+  July 4, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p>I presented <em>Progressr: An Inclusive, Unifying API for Progress Updates</em> (15 minutes; 20 slides) at <a href="https://2020.erum.io/">e-Rum 2020</a>, on June 17, 2020:</p>
+<ul>
+<li><a href="https://www.jottr.org/presentations/eRum2020/BengtssonH_20200617-progressr-An_Inclusive,_Unifying_API_for_Progress_Updates.abstract.txt">Abstract</a></li>
+<li><a href="https://docs.google.com/presentation/d/11RymPwL90rPc0dQwpNCnw5KQC_76tuDK7uB7rq26oIg/present#slide=id.g88962cfdb7_0_0">HTML</a> (incremental Google Slides; requires online access)</li>
+<li><a href="https://www.jottr.org/presentations/eRum2020/BengtssonH_20200617-progressr-An_Inclusive,_Unifying_API_for_Progress_Updates.pdf">PDF</a> (flat slides)</li>
+<li><a href="https://www.youtube.com/watch?v=NwVOvfpGq4o&amp;t=3001s">Video</a> (starts at 00h49m58s)</li>
+</ul>
+<p>I am grateful for everyone involved who made e-Rum 2020 possible.  I cannot imagine having to cancel the on-site Milano conference that had planned for more than a year and then start over to re-organize and create a fabulous online experience for ~1,500 participants in such short notice. Your contribution to the R Community in these times is invaluable - thank you soo much.</p>
+<p>As a speaker, I found it a bit of a challenge. It was my first presentation at an all online conference, so I wasn&rsquo;t sure what to expect and how it would go. As others said, it is indeed a bit unusual to present to an audience you know is there but that you cannot see or interact with during the talk. I gave my presentation a bit before seven o&rsquo;clock in the morning my time, and halfway through, my mind tried to convince me that it would be ok to get up and pour myself another cup of coffee - hehe - I certainly did not expect that one.</p>
+<p>Now, let&rsquo;s make some progress in this world!</p>
+<p>- Henrik</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>e-Rum 2020:
+<ul>
+<li>Conference site: <a href="https://2020.erum.io/">https://2020.erum.io/</a></li>
+</ul>
+</li>
+<li>Packages useful for understanding this talk (in order of appearance):
+<ul>
+<li><strong>progressr</strong> package: <a href="https://cran.r-project.org/package=progressr">CRAN</a>, <a href="https://github.com/HenrikBengtsson/progressr">GitHub</a></li>
+<li><strong>progress</strong> package: <a href="https://cran.r-project.org/package=progress">CRAN</a>, <a href="https://github.com/r-lib/progress">GitHub</a></li>
+<li><strong>beepr</strong> package: <a href="https://cran.r-project.org/package=beepr">CRAN</a>, <a href="https://github.com/rasmusab/beepr">GitHub</a></li>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a></li>
+</ul>
+</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/progressr/">progressr</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/progress-updates/">progress updates</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/erum-2020/">eRum 2020</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/talk/">talk</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/presentation/">presentation</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/slides/">slides</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/video/">video</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/" data-tooltip="future and future.apply - Some Recent Improvements">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/" data-tooltip="rstudio::conf 2020 Slides on Futures">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2020/07/04/progressr-erum2020-slides/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2020/07/04/progressr-erum2020-slides/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/" data-tooltip="future and future.apply - Some Recent Improvements">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/" data-tooltip="rstudio::conf 2020 Slides on Futures">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2020/07/04/progressr-erum2020-slides/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2020/07/04/progressr-erum2020-slides/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2020%2F07%2F04%2Fprogressr-erum2020-slides%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2020%2F07%2F04%2Fprogressr-erum2020-slides%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

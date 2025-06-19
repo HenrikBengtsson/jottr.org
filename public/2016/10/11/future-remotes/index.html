@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="A new version of the future package has been released and is available on CRAN. With futures, it is easy to write R code once, which later the user can choose to parallelize using whatever resources s/he has available, e.g. a local machine, a set of local notebooks, a set of remote machines, or a high-end compute cluster.
+The future provides comfortable and friendly long-distance interactions.
+The new version, future 1.">
+
+
+<meta property="og:description" content="A new version of the future package has been released and is available on CRAN. With futures, it is easy to write R code once, which later the user can choose to parallelize using whatever resources s/he has available, e.g. a local machine, a set of local notebooks, a set of remote machines, or a high-end compute cluster.
+The future provides comfortable and friendly long-distance interactions.
+The new version, future 1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Remote Processing Using Futures">
+<meta name="twitter:title" content="Remote Processing Using Futures">
+<meta property="og:url" content="https://www.jottr.org/2016/10/11/future-remotes/">
+<meta property="twitter:url" content="https://www.jottr.org/2016/10/11/future-remotes/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="A new version of the future package has been released and is available on CRAN. With futures, it is easy to write R code once, which later the user can choose to parallelize using whatever resources s/he has available, e.g. a local machine, a set of local notebooks, a set of remote machines, or a high-end compute cluster.
+The future provides comfortable and friendly long-distance interactions.
+The new version, future 1.">
+<meta name="twitter:description" content="A new version of the future package has been released and is available on CRAN. With futures, it is easy to write R code once, which later the user can choose to parallelize using whatever resources s/he has available, e.g. a local machine, a set of local notebooks, a set of remote machines, or a high-end compute cluster.
+The future provides comfortable and friendly long-distance interactions.
+The new version, future 1.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2016-10-11T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2016-10-11T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="presentation">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="remote evaluation">
+    
+      <meta property="article:tag" content="remote graphics">
+    
+      <meta property="article:tag" content="interactive graphics">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Remote Processing Using Futures</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2016/10/11/future-remotes/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Remote Processing Using Futures
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2016-10-11T00:00:00Z">
+        
+  October 11, 2016
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>A new version of the <a href="https://cran.r-project.org/package=future">future</a> package has been released and is available on CRAN.  With futures, it is easy to <em>write R code once</em>, which later <em>the user can choose</em> to parallelize using whatever resources s/he has available, e.g. a local machine, a set of local notebooks, a set of remote machines, or a high-end compute cluster.</p>
+<p><img src="https://www.jottr.org/post/early_days_video_call.jpg" alt="Postcard from 1900 showing how people in the year 2000 will communicate using audio and projected video">
+<em>The future provides comfortable and friendly long-distance interactions.</em></p>
+<p>The new version, future 1.1.1, provides:</p>
+<ul>
+<li>
+<p><strong>Much easier usage of remote computers / clusters</strong></p>
+<ul>
+<li>If you can SSH to the machine, then you can also use it to resolve R expressions remotely.</li>
+<li>Firewall configuration and port forwarding are no longer needed.</li>
+</ul>
+</li>
+<li>
+<p><strong>Improved identification of global variables</strong></p>
+<ul>
+<li>Corner cases where the package previously failed to identify and
+export global variables are now also handled.  For instance,
+variable <code>x</code> is now properly identified as a global variable in
+expressions such as <code>x$a &lt;- 3</code> and <code>x[1, 2, 4] &lt;- 3</code> as well as
+in formulas such as <code>y ~ x | z</code>.</li>
+<li>Global variables are by default identified automatically, but can
+now also be specified manually, either by their names (as a
+character vector) or by their names and values (as a named list).</li>
+</ul>
+</li>
+</ul>
+<p>For full details on updates, please see the <a href="https://cran.r-project.org/package=future">NEWS</a> file.  The future package installs out-of-the-box on all operating systems.</p>
+<h2 id="example-remote-graphics-rendered-locally">Example: Remote graphics rendered locally</h2>
+<p>To illustrate how simple and powerful remote futures can be, I will show how to (i) set up locally stored data, (ii) generate <a href="https://cran.r-project.org/package=plotly">plotly</a>-enhanced <a href="https://cran.r-project.org/package=ggplot2">ggplot2</a> graphics based on these data using a remote machine, and then (iii) render these plotly graphics in the local web browser for interactive exploration of data.</p>
+<p>Before starting, all we need to do is to verify that we have SSH access to the remote machine, let&rsquo;s call it <code>remote.server.org</code>, and that it has R installed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#f92672">{</span>local<span style="color:#f92672">}</span>: ssh remote.server.org
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>remote<span style="color:#f92672">}</span>: Rscript --version
+</span></span><span style="display:flex;"><span>R scripting front-end version 3.3.1 <span style="color:#f92672">(</span>2016-06-21<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>remote<span style="color:#f92672">}</span>: exit
+</span></span><span style="display:flex;"><span><span style="color:#f92672">{</span>local<span style="color:#f92672">}</span>: exit
+</span></span></code></pre></div><p>Note, it is highly recommended to use <a href="https://en.wikipedia.org/wiki/Secure_Shell#Key_management">SSH-key pair authentication</a> so that login credentials do not have to be entered manually.</p>
+<p>After having made sure that the above works, we are ready for our remote future demo.  The following code is based on an online <a href="https://plot.ly/ggplot2/">plotly example</a> where only a few minor modifications have been done:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(<span style="color:#e6db74">&#34;plotly&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(<span style="color:#e6db74">&#34;future&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## %&lt;-% assignments will be resolved remotely</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(remote, workers <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;remote.server.org&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Set up data (locally)</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">set.seed</span>(<span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">&lt;-</span> diamonds<span style="color:#a6e22e">[sample</span>(<span style="color:#a6e22e">nrow</span>(diamonds), <span style="color:#ae81ff">1000</span>), ]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Generate ggplot2 graphics and plotly-fy (remotely)</span>
+</span></span><span style="display:flex;"><span>gg <span style="color:#f92672">%&lt;-%</span> {
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">ggplot</span>(data <span style="color:#f92672">=</span> d, <span style="color:#a6e22e">aes</span>(x <span style="color:#f92672">=</span> carat, y <span style="color:#f92672">=</span> price)) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">geom_point</span>(<span style="color:#a6e22e">aes</span>(text <span style="color:#f92672">=</span> <span style="color:#a6e22e">paste</span>(<span style="color:#e6db74">&#34;Clarity:&#34;</span>, clarity)), size <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">+</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">geom_smooth</span>(<span style="color:#a6e22e">aes</span>(colour <span style="color:#f92672">=</span> cut, fill <span style="color:#f92672">=</span> cut)) <span style="color:#f92672">+</span> <span style="color:#a6e22e">facet_wrap</span>(<span style="color:#f92672">~</span> cut)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">ggplotly</span>(p)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Display graphics in browser (locally)</span>
+</span></span><span style="display:flex;"><span>gg
+</span></span></code></pre></div><p>The above renders the plotly-compiled ggplot2 graphics in our local browser.  See below screenshot for an example.</p>
+<p>This might sound like magic, but all that is going behind the scenes is a carefully engineered utilization of the <a href="https://cran.r-project.org/package=globals">globals</a> and the parallel packages, which is then encapsulated in the unified API provided by the future package.
+First, a future assignment (<code>%&lt;-%</code>) is used for <code>gg</code>, instead of a regular assignment (<code>&lt;-</code>).  That tells R to use a future to evaluate the expression on the right-hand side (everything within <code>{ ... }</code>).
+Second, since we specified that we want to use the remote machine <code>remote.server.org</code> to resolve our futures, that is where the future expression is evaluated.
+Third, necessary data is automatically communicated between our local and remote machines.  That is, any global variables (<code>d</code>) and functions are automatically identified and exported to the remote machine and required packages (<code>ggplot2</code> and <code>plotly</code>) are loaded remotely.  When resolved, the value of the expression is automatically transferred back to our local machine afterward and is available as the value of future variable <code>gg</code>, which was formally set up as a promise.</p>
+<p><img src="https://www.jottr.org/post/future_1.1.1-example_plotly.png" alt="Screenshot of a plotly-rendered panel of ggplot2 graphs">
+<em>An example of remote futures: This ggplot2 + plotly figure was generated on a remote machine and then rendered in the local web browser where it is can be interacted with dynamically.</em></p>
+<p><em>What&rsquo;s next?</em> Over the summer, I have received tremendous feedback from several people, such as (in no particular order) <a href="https://github.com/krlmlr">Kirill Müller</a>, <a href="https://github.com/gdevailly">Guillaume Devailly</a>, <a href="https://github.com/clarkfitzg">Clark Fitzgerald</a>, <a href="https://github.com/michaelsbradleyjr">Michael Bradley</a>, <a href="https://github.com/thomasp85">Thomas Lin Pedersen</a>, <a href="https://github.com/alexvorobiev">Alex Vorobiev</a>, <a href="https://github.com/hrbrmstr">Bob Rudis</a>, <a href="https://github.com/RebelionTheGrey">RebelionTheGrey</a>, <a href="https://github.com/wrathematics">Drew Schmidt</a> and <a href="https://github.com/gaborcsardi">Gábor Csárdi</a> (sorry if I missed anyone, please let me know).  This feedback contributed to some of the new features found in future 1.1.1.  However, there&rsquo;re many great <a href="https://github.com/HenrikBengtsson/future/issues">suggestions and wishes</a> that didn&rsquo;t make it in for this release - I hope to be able to work on those next.  Thank you all.</p>
+<p>Happy futuring!</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>future package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future">https://cran.r-project.org/package=future</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future">https://github.com/HenrikBengtsson/future</a></li>
+</ul>
+</li>
+<li>future.BatchJobs package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.BatchJobs">https://cran.r-project.org/package=future.BatchJobs</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.BatchJobs">https://github.com/HenrikBengtsson/future.BatchJobs</a></li>
+</ul>
+</li>
+<li>doFuture package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=doFuture">https://cran.r-project.org/package=doFuture</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/doFuture">https://github.com/HenrikBengtsson/doFuture</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://www.jottr.org/2016/07/a-future-for-r-slides-from-user-2016.html">A Future for R: Slides from useR 2016</a>, 2016-07-02</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/presentation/">presentation</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/remote-evaluation/">remote evaluation</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/remote-graphics/">remote graphics</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/interactive-graphics/">interactive graphics</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/10/22/future-hpc/" data-tooltip="High-Performance Compute in R Using Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/07/02/future-user2016-slides/" data-tooltip="A Future for R: Slides from useR 2016">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2016/10/11/future-remotes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2016/10/11/future-remotes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/10/22/future-hpc/" data-tooltip="High-Performance Compute in R Using Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/07/02/future-user2016-slides/" data-tooltip="A Future for R: Slides from useR 2016">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2016/10/11/future-remotes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2016/10/11/future-remotes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2016%2F10%2F11%2Ffuture-remotes%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2016%2F10%2F11%2Ffuture-remotes%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

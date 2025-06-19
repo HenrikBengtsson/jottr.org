@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>name attributes on JottR</title>
+    <link>https://www.jottr.org/tags/name-attributes/</link>
+    <description>Recent content in name attributes on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 23 Aug 2021 00:10:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/name-attributes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>matrixStats: Consistent Support for Name Attributes via GSoC Project</title>
+      <link>https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/</guid>
+      <description>Author: Angelina Panagopoulou, GSoC student developer, undergraduate in the Department of Informatics &amp;amp; Telecommunications (DIT), University of Athens, Greece
+We are glad to announce recent CRAN releases of matrixStats with support for handling and returning name attributes. This feature is added to make matrixStats functions handle names in the same manner as the corresponding base R functions. In particular, the behavior of matrixStats functions is now the same as the apply() function in R, resolving previous lack of, or inconsistent, handling of row and column names.</description>
+    </item>
+    
+  </channel>
+</rss>

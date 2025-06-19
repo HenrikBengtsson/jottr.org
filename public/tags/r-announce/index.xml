@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R-announce on JottR</title>
+    <link>https://www.jottr.org/tags/r-announce/</link>
+    <description>Recent content in R-announce on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Apr 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/r-announce/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>This Day in History (1997-04-01)</title>
+      <link>https://www.jottr.org/2013/04/01/history-r-help/</link>
+      <pubDate>Mon, 01 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2013/04/01/history-r-help/</guid>
+      <description>Today it&amp;rsquo;s 16 years ago and 367,496 messages later since Martin Mächler started the R-help (321,119 msgs), R-devel (45,830 msgs) and R-announce (547 msgs) mailing lists [1] - a great benefit to all of us. Special thanks to Martin and also thanks to everyone else contributing to these forums.
+[1] https://stat.ethz.ch/pipermail/r-help/1997-April/001490.html</description>
+    </item>
+    
+  </channel>
+</rss>

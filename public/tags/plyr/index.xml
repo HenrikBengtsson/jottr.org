@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>plyr on JottR</title>
+    <link>https://www.jottr.org/tags/plyr/</link>
+    <description>Recent content in plyr on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 03 Jun 2022 13:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/plyr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>progressr 0.10.1: Plyr Now Supports Progress Updates also in Parallel</title>
+      <link>https://www.jottr.org/2022/06/03/progressr-0.10.1/</link>
+      <pubDate>Fri, 03 Jun 2022 13:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/06/03/progressr-0.10.1/</guid>
+      <description>progressr 0.10.1 is on CRAN. I dedicate this release to all plyr users and developers out there.
+The progressr package provides a minimal API for reporting progress updates in R. The design is to separate the representation of progress updates from how they are presented. What type of progress to signal is controlled by the developer. How these progress updates are rendered is controlled by the end user. For instance, some users may prefer visual feedback, such as a horizontal progress bar in the terminal, whereas others may prefer auditory feedback.</description>
+    </item>
+    
+    <item>
+      <title>The Many-Faced Future</title>
+      <link>https://www.jottr.org/2017/06/05/many-faced-future/</link>
+      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/06/05/many-faced-future/</guid>
+      <description>The future package defines the Future API, which is a unified, generic, friendly API for parallel processing. The Future API follows the principle of write code once and run anywhere - the developer chooses what to parallelize and the user how and where.
+The nature of a future is such that it lends itself to be used with several of the existing map-reduce frameworks already available in R. In this post, I&amp;rsquo;ll give an example of how to apply a function over a set of elements concurrently using plain sequential R, the parallel package, the future package alone, as well as future in combination of the foreach, the plyr, and the purrr packages.</description>
+    </item>
+    
+  </channel>
+</rss>

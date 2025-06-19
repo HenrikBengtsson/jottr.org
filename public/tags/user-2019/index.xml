@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>useR 2019 on JottR</title>
+    <link>https://www.jottr.org/tags/user-2019/</link>
+    <description>Recent content in useR 2019 on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 12 Jul 2019 16:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/user-2019/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>useR! 2019 Slides on Futures</title>
+      <link>https://www.jottr.org/2019/07/12/future-user2019-slides/</link>
+      <pubDate>Fri, 12 Jul 2019 16:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2019/07/12/future-user2019-slides/</guid>
+      <description>Below are the slides for my Future: Simple Parallel and Distributed Processing in R that I presented at the useR! 2019 conference in Toulouse, France on July 9-12, 2019.
+My talk (25 slides; ~15+3 minutes):
+Title: Future: Simple Parallel and Distributed Processing in R HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (official recording) I want to send out a big thank you to everyone making the useR!</description>
+    </item>
+    
+  </channel>
+</rss>

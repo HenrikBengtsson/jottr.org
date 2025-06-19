@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&rsquo;m sure I forgot something:">
+
+
+<meta property="og:description" content="Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&rsquo;m sure I forgot something:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Trust the Future">
+<meta name="twitter:title" content="Trust the Future">
+<meta property="og:url" content="https://www.jottr.org/2020/11/04/trust-the-future/">
+<meta property="twitter:url" content="https://www.jottr.org/2020/11/04/trust-the-future/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&rsquo;m sure I forgot something:">
+<meta name="twitter:description" content="Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&rsquo;m sure I forgot something:">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-11-04T14:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-11-04T14:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="future.apply">
+    
+      <meta property="article:tag" content="doFuture">
+    
+      <meta property="article:tag" content="furrr">
+    
+      <meta property="article:tag" content="future.batchtools">
+    
+      <meta property="article:tag" content="future.callr">
+    
+      <meta property="article:tag" content="future.tests">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallelly">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="parallel-processing">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="testing">
+    
+      <meta property="article:tag" content="validation">
+    
+      <meta property="article:tag" content="CRAN">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Trust the Future</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2020/11/04/trust-the-future/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Trust the Future
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-11-04T14:00:00-08:00">
+        
+  November 4, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p>Each time we use R to analyze data, we rely on the assumption that functions used produce correct results.  If we can&rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail.  Luckily, we don&rsquo;t have to do this.  There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R.  Here are some I could think of while writing this blog post - I&rsquo;m sure I forgot something:</p>
+<ul>
+<li>
+<p>R is a functional language with few side effects (&ldquo;just like mathematical functions&rdquo;)</p>
+</li>
+<li>
+<p>R, and its predecessor S, has undergone lots of real-world validation over the last two-three decades</p>
+</li>
+<li>
+<p>Millions of users and developers use and vet R regularly, which increases the chances for detecting mistakes and bugs</p>
+</li>
+<li>
+<p>R has one established, agreed-upon framework for validating an R package: <code>R CMD check</code></p>
+</li>
+<li>
+<p>The majority of R packages are distributed through a single repository (CRAN)</p>
+</li>
+<li>
+<p>CRAN requires that all R packages pass checks on past, current, and upcoming R versions, across operating systems (MS Windows, Linux, macOS, and Solaris), and on different compilers</p>
+</li>
+<li>
+<p>New checks are continuously added to <code>R CMD check</code> causing the quality of new and existing R packages to improve over time</p>
+</li>
+<li>
+<p>CRAN asserts that package updates do not break reverse package dependencies</p>
+</li>
+<li>
+<p>R developers spend a substantial amount of time validating their packages</p>
+</li>
+<li>
+<p>R has users and developers with various backgrounds and areas of expertise</p>
+</li>
+<li>
+<p>R has a community that actively engages in discussions on best practices, troubleshooting, bug fixes, testing, and language development</p>
+</li>
+<li>
+<p>There are many third-party contributed tools for developing and testing R packages</p>
+</li>
+</ul>
+<p>I think <a href="https://twitter.com/j_v_66">Jan Vitek</a> summarized it well in the &lsquo;Why R?&rsquo; panel discussion on <a href="https://youtu.be/uiEhmKN1RJo?t=1917">&lsquo;Performance in R&rsquo;</a> on 2020-09-26:</p>
+<blockquote>
+<p>R is an ecosystem.  It is not a language.  The language is the little bit on top.  You come for the ecosystem - the books, all of the questions and answers, the snippets of code, the quality of CRAN. &hellip; The quality assurance that CRAN brings &hellip; we don&rsquo;t have that in any other language that I know of.</p>
+</blockquote>
+<p>Without the above technical and social ecosystem, I believe the quality of my own R packages would have been substantially lower.  Regardless of how many unit tests I would write, I could never achieve the same amount of validation that the full R ecosystem brings to the table.</p>
+<p>When you use the <a href="https://cran.r-project.org/package=future">future framework for parallel and distributed processing</a>, it is essential that it delivers a corresponding level of correctness and reproducibility to that you get when implementing the same task sequentially.   Because of this, validation is a <em>top priority</em> and part of the design and implementation throughout the future ecosystem.  Below, I summarize how it is validated:</p>
+<ul>
+<li>
+<p>All the essential core packages part of the future framework,
+<strong><a href="https://cran.r-project.org/package=future">future</a></strong>, <strong><a href="https://CRAN.R-Project.org/package=globals">globals</a></strong>, <strong><a href="https://CRAN.R-Project.org/package=listenv">listenv</a></strong>, and <strong><a href="https://cran.r-project.org/package=parallelly">parallelly</a></strong>, implement a rich set of package tests.
+These are validated regularly across the wide-range of operating
+systems (Linux, Solaris, macOS, and MS Windows) and R versions available
+on CRAN, on continuous integration (CI) services (<a href="https://github.com/features/actions">GitHub Actions</a>, <a href="https://travis-ci.org/">Travis CI</a>,
+and <a href="https://www.appveyor.com/">AppVeyor CI</a>), an on <a href="https://builder.r-hub.io/">R-hub</a>.</p>
+</li>
+<li>
+<p>For each new release, these packages undergo full reverse-package
+dependency checks using <strong><a href="https://github.com/r-lib/revdepcheck">revdepcheck</a></strong>.
+As of October 2020, the <strong>future</strong> package is tested against more than 140
+direct reverse-package dependencies available on CRAN and Bioconductor,
+including packages <strong><a href="https://cran.r-project.org/package=future.apply">future.apply</a></strong>, <strong><a href="https://cran.r-project.org/package=furrr">furrr</a></strong>, <strong><a href="https://cran.r-project.org/package=doFuture">doFuture</a></strong>,
+<strong><a href="https://cran.r-project.org/package=drake">drake</a></strong>, <strong><a href="https://cran.r-project.org/package=googleComputeEngineR">googleComputeEngineR</a></strong>, <strong><a href="https://cran.r-project.org/package=mlr3">mlr3</a></strong>, <strong><a href="https://cran.r-project.org/package=plumber">plumber</a></strong>,
+<strong><a href="https://cran.r-project.org/package=promises">promises</a></strong> (used by <strong><a href="https://cran.r-project.org/package=shiny">shiny</a></strong>), and <strong><a href="https://cran.r-project.org/package=Seurat">Seurat</a></strong>.
+These checks are performed on Linux with both the default settings and
+when forcing tests to use multisession workers (SOCK clusters), which further
+validates that globals and packages are identified correctly.</p>
+</li>
+<li>
+<p>A suite of <em>Future API conformance tests</em> available in the
+<strong><a href="https://cran.r-project.org/package=future.tests">future.tests</a></strong> package validates the
+correctness of all future backends.  Any new future backend developed must
+pass these tests to comply with the <em>Future API</em>.
+By conforming to this API, the end-user can trust that the backend will
+produce the same correct and reproducible results as any other backend,
+including the ones that the developer have tested on.
+Also, by making it the responsibility of the developer to assert that their
+new future backend conforms to the <em>Future API</em>, we relieve other
+developers from having to test that their future-based software works on all
+backends.
+It would be a daunting task for a developer to validate the correctness of
+their software with all existing backends. Even if they would achieve that,
+there may be additional third-party future backends that they are not aware
+of, that they do not have the possibility to test with, or that are yet to be developed.
+The <strong>future.tests</strong> framework was sponsored by an <a href="https://www.r-consortium.org/projects/awarded-projects">R Consortium ISC grant</a>.</p>
+</li>
+<li>
+<p>Since <strong><a href="https://CRAN.R-Project.org/package=foreach">foreach</a></strong> is used by a large number of essential
+CRAN packages, it provides an excellent opportunity for supplementary
+validation. Specifically, I dynamically tweak the examples of
+<strong><a href="https://CRAN.R-Project.org/package=foreach">foreach</a></strong> and popular CRAN packages <strong><a href="https://CRAN.R-Project.org/package=caret">caret</a></strong>, <strong><a href="https://CRAN.R-Project.org/package=glmnet">glmnet</a></strong>, <strong><a href="https://CRAN.R-Project.org/package=NMF">NMF</a></strong>,
+<strong><a href="https://CRAN.R-Project.org/package=plyr">plyr</a></strong>, and <strong><a href="https://CRAN.R-Project.org/package=TSP">TSP</a></strong> to use the <strong><a href="https://cran.r-project.org/package=doFuture">doFuture</a></strong> adaptor.
+This allows me to run these examples with a variety of future backends to
+validate that the examples produce no run-time errors, which indirectly
+validates the backends and the <em>Future API</em>.
+In the past, these types of tests helped to identify and resolve corner cases
+where automatic identification of global variables would fail.
+As a side note, several of these foreach-based examples fail when using a
+parallel foreach adaptor because they do not properly export globals or
+declare package dependencies.  The exception is when using the sequential
+<em>doSEQ</em> adaptor (default), fork-based ones such as <strong><a href="https://CRAN.R-Project.org/package=doMC">doMC</a></strong>, or
+the generic <strong><a href="https://cran.r-project.org/package=doFuture">doFuture</a></strong>, which supports any future backend and
+relies on the future framework for handling globals and packages.</p>
+</li>
+<li>
+<p>Analogously to above reverse-dependency checks of each new release,
+CRAN and Bioconductor continuously run checks on all these direct, but
+also indirect, reverse dependencies, which further increases the validation
+of the <em>Future API</em> and the future ecosystem at large.</p>
+</li>
+</ul>
+<p>May the future be with you!</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a></li>
+<li><strong>future.tests</strong> package: <a href="https://cran.r-project.org/package=future.tests">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future.tests">GitHub</a></li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.apply/">future.apply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/dofuture/">doFuture</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/furrr/">furrr</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.batchtools/">future.batchtools</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.callr/">future.callr</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.tests/">future.tests</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallelly/">parallelly</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel-processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/testing/">testing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/validation/">validation</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/cran/">CRAN</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/" data-tooltip="parallelly, future - Cleaning Up Around the House">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/" data-tooltip="future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2020/11/04/trust-the-future/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2020/11/04/trust-the-future/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/" data-tooltip="parallelly, future - Cleaning Up Around the House">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/" data-tooltip="future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2020/11/04/trust-the-future/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2020/11/04/trust-the-future/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2020%2F11%2F04%2Ftrust-the-future%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2020%2F11%2F04%2Ftrust-the-future%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

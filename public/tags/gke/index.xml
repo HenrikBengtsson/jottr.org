@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GKE on JottR</title>
+    <link>https://www.jottr.org/tags/gke/</link>
+    <description>Recent content in GKE on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 08 Apr 2021 19:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/gke/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Kubernetes and the Future Package to Easily Parallelize R in the Cloud</title>
+      <link>https://www.jottr.org/2021/04/08/future-and-kubernetes/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2021/04/08/future-and-kubernetes/</guid>
+      <description>This is a guest post by Chris Paciorek, Department of Statistics, University of California at Berkeley.
+In this post, I&amp;rsquo;ll demonstrate that you can easily use the future package in R on a cluster of machines running in the cloud, specifically on a Kubernetes cluster.
+This allows you to easily doing parallel computing in R in the cloud. One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.</description>
+    </item>
+    
+  </channel>
+</rss>

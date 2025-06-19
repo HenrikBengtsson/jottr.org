@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>%dopar% on JottR</title>
+    <link>https://www.jottr.org/tags/dopar/</link>
+    <description>Recent content in %dopar% on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 26 Jun 2023 19:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/dopar/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>%dofuture% - a Better foreach() Parallelization Operator than %dopar%</title>
+      <link>https://www.jottr.org/2023/06/26/dofuture/</link>
+      <pubDate>Mon, 26 Jun 2023 19:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2023/06/26/dofuture/</guid>
+      <description>doFuture 1.0.0 is on CRAN since March 2023. It introduces a new foreach operator %dofuture%, which makes it even easier to use foreach() to parallelize via the future ecosystem. This new operator is designed to be an alternative to the existing %dopar% operator for foreach() - an alternative that works in similar ways but better. If you already use foreach() together with futures, or plan on doing so, I recommend using %dofuture% instead of %dopar%.</description>
+    </item>
+    
+  </channel>
+</rss>

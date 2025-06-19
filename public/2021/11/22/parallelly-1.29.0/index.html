@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="parallelly 1.29.0 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package rely on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly five months ago, the parallelly package had some bugs fixed, and it gained a few new features;">
+
+
+<meta property="og:description" content="parallelly 1.29.0 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package rely on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly five months ago, the parallelly package had some bugs fixed, and it gained a few new features;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="parallelly 1.29.0: New Skills and Less Communication Latency on Linux">
+<meta name="twitter:title" content="parallelly 1.29.0: New Skills and Less Communication Latency on Linux">
+<meta property="og:url" content="https://www.jottr.org/2021/11/22/parallelly-1.29.0/">
+<meta property="twitter:url" content="https://www.jottr.org/2021/11/22/parallelly-1.29.0/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="parallelly 1.29.0 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package rely on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly five months ago, the parallelly package had some bugs fixed, and it gained a few new features;">
+<meta name="twitter:description" content="parallelly 1.29.0 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package rely on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly five months ago, the parallelly package had some bugs fixed, and it gained a few new features;">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2021-11-22T21:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-11-22T21:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallelly">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="parallel-processing">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>parallelly 1.29.0: New Skills and Less Communication Latency on Linux</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2021/11/22/parallelly-1.29.0/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      parallelly 1.29.0: New Skills and Less Communication Latency on Linux
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-11-22T21:00:00-08:00">
+        
+  November 22, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p><strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> 1.29.0 is on CRAN.  The <strong>parallelly</strong> package enhances the <strong>parallel</strong> package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, <strong>parallelly</strong> provides the things that you would otherwise expect to find in the <strong>parallel</strong> package.  The <strong><a href="https://future.futureverse.org">future</a></strong> package rely on the <strong>parallelly</strong> package internally for local and remote parallelization.</p>
+<p>Since my <a href="https://www.jottr.org/2021/06/10/parallelly-1.26.0/">previous post on <strong>parallelly</strong></a> five months ago, the <strong>parallelly</strong> package had some bugs fixed, and it gained a few new features;</p>
+<ul>
+<li>
+<p>new <code>isForkedChild()</code> to test if R runs in a forked process,</p>
+</li>
+<li>
+<p>new <code>isNodeAlive()</code> to test if one or more cluster-node processes are running,</p>
+</li>
+<li>
+<p><code>availableCores()</code> now respects also Bioconductor settings,</p>
+</li>
+<li>
+<p><code>makeClusterPSOCK(..., rscript = &quot;*&quot;)</code> automatically expands to the proper Rscript executable,</p>
+</li>
+<li>
+<p><code>makeClusterPSOCK(…, rscript_envs = c(UNSET_ME = NA_character_))</code> unsets environment variables on cluster nodes, and</p>
+</li>
+<li>
+<p><code>makeClusterPSOCK()</code> sets up clusters with less communication latency on Unix.</p>
+</li>
+</ul>
+<p>Below is a detailed description of these new features.</p>
+<h2 id="new-function-isforkedchild">New function isForkedChild()</h2>
+<p>If you run R on Unix and macOS, you can parallelize code using so called <em>forked</em> parallel processing.  It is a very convenient way of parallelizing code, especially since forking is implemented at the core of the operating system and there is very little extra you have to do at the R level to get it to work.  Compared with other parallelization solutions, forked processing has often less overhead, resulting in shorter turnaround times.  To date, the most famous method for parallelizing using forks is <code>mclapply()</code> of the <strong>parallel</strong> package.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallel)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">mclapply</span>(X, some_slow_fcn, mc.cores <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>)
+</span></span></code></pre></div><p>works just like <code>lapply(X, some_slow_fcn)</code> but will perform the same tasks in parallel using four (4) CPU cores.  MS Windows does not support <a href="https://en.wikipedia.org/wiki/Fork_(system_call)">forked processing</a>; any attempt to use <code>mclapply()</code> there will cause it to silently fall back to a sequential <code>lapply()</code> call.</p>
+<p>In the <strong>future</strong> ecosystem, you get forked parallelization with the <code>multicore</code> backend, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future.apply)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multicore, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future_lapply</span>(X, some_slow_fcn)
+</span></span></code></pre></div><p>Unfortunately, we cannot parallelize all types of code using forks.  If done, you might get an error, but in the worst case you crash (segmentation fault) your R process.  For example, some graphical user interfaces (GUIs) do not play well with forked processing, e.g. the RStudio Console, but also other GUIs.  Multi-threaded parallelization has also been reported to cause problems when run within forked parallelization.  We sometime talk about <em>non-fork-safe code</em>, in contrast to <em>fork-safe</em> code, to refer to code that risks crashing the software if run in forked processes.</p>
+<p>Here is what R-core developer Simon Urbanek and author of <code>mclapply()</code> wrote in the R-devel thread <a href="https://stat.ethz.ch/pipermail/r-devel/2020-April/079384.html">&lsquo;mclapply returns NULLs on MacOS when running GAM&rsquo;</a> on 2020-04-28:</p>
+<blockquote>
+<p>Do NOT use <code>mcparallel()</code> in packages except as a non-default option that user can set for the reasons &hellip; explained [above]. Multicore is intended for HPC applications that need to use many cores for computing-heavy jobs, but it does not play well with RStudio and more importantly you don&rsquo;t know the resource available so only the user can tell you when it is safe to use. Multi-core machines are often shared so using all detected cores is a very bad idea. The user should be able to explicitly enable it, but it should not be enabled by default.</p>
+</blockquote>
+<p>It is not always obvious to know whether a certain function call in R is fork safe, especially not if we haven&rsquo;t written all the code ourselves.  Because of this, it is more of a trial and error so see if works.  However, when we know that a certain function call is <em>not</em> fork safe, it is useful to protect against using it in forked parallelization.  In <strong>parallelly</strong> (&gt;= 1.28.0), we can use function <a href="https://parallelly.futureverse.org/reference/isForkedChild.html"><code>isForkedChild()</code></a> test whether or not R runs in a forked child process.  For example, the author of <code>some_slow_fcn()</code> above, could protect against mistakes by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>some_slow_fcn <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">if </span>(parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">isForkedChild</span>()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">stop</span>(<span style="color:#e6db74">&#34;This function must not be used in *forked* parallel processing&#34;</span>)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">non_fork_safe_code</span>(x)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>or, if they have an alternative, less preferred, non-fork-safe implementation, they could run that conditionally on R being executed in a forked child process:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>some_slow_fcn <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">if </span>(parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">isForkedChild</span>()) {
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">fork_safe_code</span>(x)
+</span></span><span style="display:flex;"><span>  } else {
+</span></span><span style="display:flex;"><span>    y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">alternative_code</span>(x)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="new-function-isnodealive">New function isNodeAlive()</h2>
+<p>The new function <a href="https://parallelly.futureverse.org/reference/isNodeAlive.html"><code>isNodeAlive()</code></a> checks whether one or more nodes are alive.  For instance,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallelly)
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] TRUE TRUE TRUE</span>
+</span></span></code></pre></div><p>Imagine the second parallel worker crashes, which we can emulate with</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">clusterEvalQ</span>(cl[2], tools<span style="color:#f92672">::</span><span style="color:#a6e22e">pskill</span>(<span style="color:#a6e22e">Sys.getpid</span>()))
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; Error in unserialize(node$con) : error reading from connection</span>
+</span></span></code></pre></div><p>then we get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1]  TRUE FALSE  TRUE</span>
+</span></span></code></pre></div><p>The <code>isNodeAlive()</code> function works by querying the operating system to
+see if those processes are still running, based their process IDs
+(PIDs) recorded by <code>makeClusterPSOCK()</code> when launched.  If the
+workers&rsquo; PIDs are unknown, then <code>NA</code> is returned instead.  For
+instance, contrary to <code>parallelly::makeClusterPSOCK()</code>,
+<code>parallel::makeCluster()</code> does not record the PIDs and we get missing
+values as the result;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallelly)
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">makeCluster</span>(<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] NA NA NA</span>
+</span></span></code></pre></div><p>Similarly, if one of the parallel workers runs on a remote machine, we
+cannot easily query the remote machine for the PID existing or not.
+In such cases, <code>NA</code> is returned.  Maybe we will be
+able to query also remote machines in a future version of
+<strong>parallelly</strong>, but for now, it is not possible.</p>
+<h2 id="availablecores-respects-bioconductor-settings">availableCores() respects Bioconductor settings</h2>
+<p>Function <a href="https://parallelly.futureverse.org/reference/availableCores.html"><code>availableCores()</code></a> queries the hardware and the system
+environment to find out how many CPU cores it may run on.  It does
+this by checking system settings, environment variables, and R options
+that may be set by the end-user, the system administrator, the parent
+R process, the operating system, a job scheduler, and so on.  When you
+use <code>availableCores()</code>, you don&rsquo;t have to worry about using more CPU
+resources than you were assigned, which helps guarantee that it
+runs nicely together with everything else on the same machine.</p>
+<p>In <strong>parallelly</strong> (&gt;= 1.29.0), <code>availableCores()</code> is now also agile to
+Bioconductor-specific settings.  For example, <strong><a href="https://bioconductor.org/packages/BiocParallel">BiocParallel</a></strong>
+1.27.2 introduced environment variable <code>BIOCPARALLEL_WORKER_NUMBER</code>,
+which sets the default number of parallel workers when using
+<strong>BiocParallel</strong> for parallelization.  Similarly, on Bioconductor
+check servers, they set environment variable <code>BBS_HOME</code>, which
+<strong>BiocParallel</strong> uses to limit the number of cores to four (4).  Now
+<code>availableCores()</code> reflects also those settings, which, in turn, means
+that <strong>future</strong> settings like <code>plan(multisession)</code> will also
+automatically respect the Bioconductor settings.</p>
+<p>Function <a href="https://parallelly.futureverse.org/reference/availableWorkers.html"><code>availableWorkers()</code></a>, which relies on <code>availableCores()</code> as a
+fallback, is therefore also agile to these Bioconductor environment
+variables.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h2 id="makeclusterpsock-rscript--">makeClusterPSOCK(&hellip;, rscript = &ldquo;*&rdquo;)</h2>
+<p>Argument <code>rscript</code> of <code>makeClusterPSOCK()</code> can be used to control
+exactly which <code>Rscript</code> executable is used to launch the parallel
+workers, and also how that executable is launched.  The default
+settings is often sufficient, but if you want to launch a worker, say,
+within a Linux container you can do so by adjusting <code>rscript</code>.  The
+help page for <a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html"><code>makeClusterPSOCK()</code></a> has several examples of this.  It
+may also be used for other setups.  For example, to launch two
+parallel workers on a remote Linux machine, such that their CPU
+priority is less than other processing running on that machine, we can
+use (*):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>workers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">rep</span>(<span style="color:#e6db74">&#34;remote.example.org&#34;</span>, times <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(workers, rscript <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;nice&#34;</span>, <span style="color:#e6db74">&#34;Rscript&#34;</span>))
+</span></span></code></pre></div><p>This causes the two R workers to be launched using <code>nice Rscript ...</code>.
+The Unix command <code>nice</code> is what makes <code>Rscript</code> to run with a lower
+CPU priority.  By running at a lower priority, we decrease the risk
+for our parallel tasks to have a negative impact on other software
+running on that machine, e.g. someone might use that machine for
+interactive work without us knowing.  We can do the same thing on our
+local machine via:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">2L</span>,
+</span></span><span style="display:flex;"><span>        rscript <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;nice&#34;</span>, <span style="color:#a6e22e">file.path</span>(<span style="color:#a6e22e">R.home</span>(<span style="color:#e6db74">&#34;bin&#34;</span>), <span style="color:#e6db74">&#34;Rscript&#34;</span>)))
+</span></span></code></pre></div><p>Here we specified the absolute path to <code>Rscript</code> to make sure we run
+the same version of R as the main R session, and not another
+<code>Rscript</code> that may be on the system <code>PATH</code>.</p>
+<p>Starting with <strong>parallelly</strong> 1.29.0, we can replace the Rscript
+specification in the above two examples with <code>&quot;*&quot;</code>, as in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>workers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">rep</span>(<span style="color:#e6db74">&#34;remote-machine.example.org, times = 2L)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">cl &lt;- makeClusterPSOCK(workers, rscript = c(&#34;</span>nice<span style="color:#e6db74">&#34;, &#34;</span><span style="color:#f92672">*</span><span style="color:#e6db74">&#34;</span><span style="color:#960050;background-color:#1e0010">))</span>
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">2L</span>, rscript <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;nice&#34;</span>, <span style="color:#e6db74">&#34;*&#34;</span>))
+</span></span></code></pre></div><p>When used, <code>makeClusterPSOCK()</code> will expand <code>&quot;*&quot;</code> to the proper
+Rscript specification depending on running remotely or not.  To
+further emphasize the convenience of this, consider:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>workers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;localhost&#34;</span>, <span style="color:#e6db74">&#34;remote-machine.example.org&#34;</span>)
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(workers, rscript <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;nice&#34;</span>, <span style="color:#e6db74">&#34;*&#34;</span>))
+</span></span></code></pre></div><p>which launches two parallel workers - one running on local machine
+and one running on the remote machine.</p>
+<p>Note that, when using <strong><a href="https://future.futureverse.org">future</a></strong>, we can pass <code>rscript</code> to
+<code>plan(multisession)</code> and <code>plan(cluster)</code> to achieve the same thing, as
+in</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(cluster, workers <span style="color:#f92672">=</span> workers, rscript <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;nice&#34;</span>, <span style="color:#e6db74">&#34;*&#34;</span>))
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2L</span>, rscript <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;nice&#34;</span>, <span style="color:#e6db74">&#34;*&#34;</span>))
+</span></span></code></pre></div><p>(*) Here we use <code>nice</code> as an example, because it is a simple way to
+illustrate how <code>rscript</code> can be used.  As a matter of fact, there is
+already an <a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html">argument
+<code>renice</code></a>,
+which we can use to achieve the same without using the <code>rscript</code>
+argument.</p>
+<h2 id="makeclusterpsock-rscript_envs--cunset_me--na_character_">makeClusterPSOCK(&hellip;, rscript_envs = c(UNSET_ME = NA_character_))</h2>
+<p>Argument <code>rscript_envs</code> of <code>makeClusterPSOCK()</code> can be used to set
+environment variables on cluster nodes, or copy existing ones from the
+main R session to the cluster nodes.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">2</span>, rscript_envs <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(PI <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;3.14&#34;</span>, <span style="color:#e6db74">&#34;MY_EMAIL&#34;</span>))
+</span></span></code></pre></div><p>will, during startup, set environment variable <code>PI</code> on each of the two
+cluster nodes to have value <code>3.14</code>.  It will also set <code>MY_EMAIL</code> on
+them to the value of <code>Sys.getenv(&quot;MY_EMAIL&quot;)</code> in the current R
+session.</p>
+<p>Starting with <strong>parallelly</strong> 1.29.0, we can now also <em>unset</em>
+environment variables, in case they are set on the cluster nodes.  Any
+named element with a missing value causes the corresponding
+environment variable to be unset, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">2</span>, rscript_envs <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(_R_CHECK_LENGTH_1_CONDITION_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">NA_character_</span>))
+</span></span></code></pre></div><p>This results in passing <code>-e 'Sys.unsetenv(&quot;_R_CHECK_LENGTH_1_CONDITION_&quot;)'</code> to <code>Rscript</code> when
+launching each worker.</p>
+<h2 id="makeclusterpsock-sets-up-clusters-with-less-communication-latency-on-unix">makeClusterPSOCK() sets up clusters with less communication latency on Unix</h2>
+<p>It turns out that, in R <em>on Unix</em>, there is <a href="https://stat.ethz.ch/pipermail/r-devel/2020-November/080060.html">a significant <em>latency</em> in
+the communication between the parallel workers and the main R
+session</a>
+(**).  Starting in R (&gt;= 4.1.0), it is possible to decrease this
+latency by setting a dedicated R option <em>on each of the workers</em>, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>rscript_args <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;-e&#34;</span>, <span style="color:#a6e22e">shQuote</span>(<span style="color:#e6db74">&#34;options(socketOptions = &#39;no-delay&#39;)&#34;</span>)
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">makeCluster</span>(workers, rscript_args <span style="color:#f92672">=</span> rscript_args))
+</span></span></code></pre></div><p>This is quite verbose, so I&rsquo;ve made this the new default in
+<strong>parallelly</strong> (&gt;= 1.29.0), i.e. you can keep using:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">makeClusterPSOCK</span>(workers)
+</span></span></code></pre></div><p>to benefit from the above.  See help for <a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html"><code>makeClusterPSOCK()</code></a> for options on how to change this new default.</p>
+<p>Here is an example that illustrates the difference in latency with and without the new settings;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl_parallel   <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">makeCluster</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>cl_parallelly <span style="color:#f92672">&lt;-</span> parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>res <span style="color:#f92672">&lt;-</span> bench<span style="color:#f92672">::</span><span style="color:#a6e22e">mark</span>(iterations <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000L</span>,
+</span></span><span style="display:flex;"><span>    parallel <span style="color:#f92672">=</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">clusterEvalQ</span>(cl_parallel, iris),
+</span></span><span style="display:flex;"><span>  parallelly <span style="color:#f92672">=</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">clusterEvalQ</span>(cl_parallelly, iris)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>res[, <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">9</span>)]
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; # A tibble: 2 × 5</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt;   expression      min   median `itr/sec` total_time</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;   &lt;bch:tm&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 1 parallel      277µs     44ms      22.5      44.4s</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 2 parallelly    380µs    582µs    1670.     598.3ms</span>
+</span></span></code></pre></div><p>From this, we see that the total latency overhead for 1,000 parallel
+tasks went from 44 seconds down to 0.60 seconds, which is ~75 times
+less on average.  Does this mean your parallel code will run faster?
+No, it is just the communication <em>latency</em> that has decreased.  But,
+why waste time on <em>waiting</em> on your results when you don&rsquo;t have to?
+This is why I changed the defaults in <strong>parallelly</strong>.  It will also
+bring the experience on Unix on par with MS Windows and macOS.</p>
+<p>Note that the relatively high latency affects only Unix.  MS Windows
+and macOS do not suffer from this extra latency.  For example, on MS
+Windows 10 that runs in a virtual machine on the same Linux computer
+as above, I get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#75715e">#&gt; # A tibble: 2 × 5</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt;   expression      min   median `itr/sec` total_time</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt;   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt;   &lt;bch:tm&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 1 parallel      191us    314us     2993.      333ms</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 2 parallelly    164us    311us     3227.      310ms</span>
+</span></span></code></pre></div><p>If you&rsquo;re using <strong><a href="https://future.futureverse.org">future</a></strong> with <code>plan(multisession)</code> or
+<code>plan(cluster)</code>, you&rsquo;re already benefitting from the performance gain,
+because those rely on <code>parallelly::makeClusterPSOCK()</code> internally.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>(**) <em>Technical details</em>: Options <code>socketOptions</code> sets the default
+value of argument <code>options</code> of <code>base::socketConnection()</code>.  The
+default is <code>NULL</code>, but if we set it to <code>&quot;no-delay&quot;</code>, the created TCP
+socket connections are configured to use the <code>TCP_NODELAY</code> flag.  When
+using <code>TCP_NODELAY</code>, a TCP connection will no longer use the so called
+<a href="https://www.wikipedia.org/wiki/Nagle%27s_algorithm">Nagle&rsquo;s algorithm</a>, which otherwise is used to reduces the number of
+TCP packets needed to be sent over the network by making sure TCP
+fills up each packet before sending it off. When using the new
+<code>&quot;no-delay&quot;</code>, this buffering is disabled and packets are sent as soon
+as data come in.  Credits for this improvement should go to Jeff
+Keller, who identified and <a href="https://stat.ethz.ch/pipermail/r-devel/2020-November/080060.html">reported the problem to
+R-devel</a>,
+to Iñaki Úcar who pitched in, and to Simon Urbanek, who implemented
+<a href="https://github.com/wch/r-source/commit/82369f73fc297981e64cac8c9a696d05116f0797">support for <code>socketConnection(..., options = &quot;no-delay&quot;)</code></a>
+for R 4.1.0.</p>
+<h2 id="bug-fixes">Bug fixes</h2>
+<p>Finally, the most important bug fixes since <strong>parallelly</strong> 1.26.0 are:</p>
+<ul>
+<li>
+<p><code>availableCores()</code> would produce an error on Linux systems without
+<code>nproc</code> installed.</p>
+</li>
+<li>
+<p><code>makeClusterPSOCK()</code> failed with &ldquo;Error in freePort(port) : Unknown value
+on argument ‘port’: &lsquo;auto&rsquo;&rdquo; if environment variable <code>R_PARALLEL_PORT</code> was
+set to a port number.</p>
+</li>
+<li>
+<p>In R environments not supporting <code>setup_strategy = &quot;parallel&quot;</code>,
+<code>makeClusterPSOCK()</code> failed to fall back to <code>setup_strategy = &quot;sequential&quot;</code>.</p>
+</li>
+</ul>
+<p>For all other bug fixes and updates, please see <a href="https://parallelly.futureverse.org/news/index.html">NEWS</a>.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Over and out!</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>parallelly</strong> package: <a href="https://cran.r-project.org/package=parallelly">CRAN</a>, <a href="https://github.com/HenrikBengtsson/parallelly">GitHub</a>, <a href="https://parallelly.futureverse.org">pkgdown</a></li>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a>, <a href="https://future.futureverse.org">pkgdown</a></li>
+<li><strong>future.apply</strong> package: <a href="https://cran.r-project.org/package=future.apply">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future.apply">GitHub</a>, <a href="https://future.apply.futureverse.org">pkgdown</a></li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallelly/">parallelly</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel-processing</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/01/07/future-during-2021/" data-tooltip="Future Improvements During 2021">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/" data-tooltip="matrixStats: Consistent Support for Name Attributes via GSoC Project">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2021/11/22/parallelly-1.29.0/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2021/11/22/parallelly-1.29.0/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/01/07/future-during-2021/" data-tooltip="Future Improvements During 2021">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/" data-tooltip="matrixStats: Consistent Support for Name Attributes via GSoC Project">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2021/11/22/parallelly-1.29.0/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2021/11/22/parallelly-1.29.0/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2021%2F11%2F22%2Fparallelly-1.29.0%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2021%2F11%2F22%2Fparallelly-1.29.0%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

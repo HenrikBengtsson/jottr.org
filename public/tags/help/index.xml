@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>help on JottR</title>
+    <link>https://www.jottr.org/tags/help/</link>
+    <description>Recent content in help on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 22 Oct 2012 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/help/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Force R Help HTML Server to Always Use the Same URL Port</title>
+      <link>https://www.jottr.org/2012/10/22/config-help-start/</link>
+      <pubDate>Mon, 22 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2012/10/22/config-help-start/</guid>
+      <description>The below code shows how to configure the help.ports option in R such that the built-in R help server always uses the same URL port. Just add it to the .Rprofile file in your home directory (iff missing, create it). For more details, see help(&amp;quot;Startup&amp;quot;).
+# Force the URL of the help to http://127.0.0.1:21510 options(help.ports = 21510) A slighter fancier version is to use a environment variable to set the port(s):</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cloud on JottR</title>
+    <link>https://www.jottr.org/tags/cloud/</link>
+    <description>Recent content in cloud on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 08 Apr 2021 19:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/cloud/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Using Kubernetes and the Future Package to Easily Parallelize R in the Cloud</title>
+      <link>https://www.jottr.org/2021/04/08/future-and-kubernetes/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2021/04/08/future-and-kubernetes/</guid>
+      <description>This is a guest post by Chris Paciorek, Department of Statistics, University of California at Berkeley.
+In this post, I&amp;rsquo;ll demonstrate that you can easily use the future package in R on a cluster of machines running in the cloud, specifically on a Kubernetes cluster.
+This allows you to easily doing parallel computing in R in the cloud. One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.</description>
+    </item>
+    
+    <item>
+      <title>future 1.15.0 - Lazy Futures are Now Launched if Queried</title>
+      <link>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</link>
+      <pubDate>Sat, 09 Nov 2019 11:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
+      <description>No dogs were harmed while making this release
+future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
+Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+    </item>
+    
+    <item>
+      <title>future 1.8.0: Preparing for a Shiny Future</title>
+      <link>https://www.jottr.org/2018/04/12/future-results/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/12/future-results/</guid>
+      <description>future 1.8.0 is available on CRAN.
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more. These features are not yet available out of the box, but thanks to this release we will be able to make some headway on many of the feature requests related to this - hopefully already by the next release.
+For shiny users following Joe Cheng&amp;rsquo;s efforts on extending Shiny with asynchronous processing using futures, future 1.</description>
+    </item>
+    
+    <item>
+      <title>The Many-Faced Future</title>
+      <link>https://www.jottr.org/2017/06/05/many-faced-future/</link>
+      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/06/05/many-faced-future/</guid>
+      <description>The future package defines the Future API, which is a unified, generic, friendly API for parallel processing. The Future API follows the principle of write code once and run anywhere - the developer chooses what to parallelize and the user how and where.
+The nature of a future is such that it lends itself to be used with several of the existing map-reduce frameworks already available in R. In this post, I&amp;rsquo;ll give an example of how to apply a function over a set of elements concurrently using plain sequential R, the parallel package, the future package alone, as well as future in combination of the foreach, the plyr, and the purrr packages.</description>
+    </item>
+    
+    <item>
+      <title>doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000&#43; Packages</title>
+      <link>https://www.jottr.org/2017/03/18/dofuture/</link>
+      <pubDate>Sat, 18 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/03/18/dofuture/</guid>
+      <description>doFuture 0.4.0 is available on CRAN. The doFuture package provides a universal foreach adaptor enabling any future backend to be used with the foreach() %dopar% { ... } construct. As shown below, this will allow foreach() to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+1,300+ R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.</description>
+    </item>
+    
+    <item>
+      <title>future 1.3.0: Reproducible RNGs, future_lapply() and More</title>
+      <link>https://www.jottr.org/2017/02/19/future-rng/</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/02/19/future-rng/</guid>
+      <description>future 1.3.0 is available on CRAN. With futures, it is easy to write R code once, which the user can choose to evaluate in parallel using whatever resources s/he has available, e.g. a local machine, a set of local machines, a set of remote machines, a high-end compute cluster (via future.BatchJobs and soon also future.batchtools), or in the cloud (e.g. via googleComputeEngineR).
+Futures makes it easy to harness any resources at hand.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>vignette on JottR</title>
+    <link>https://www.jottr.org/tags/vignette/</link>
+    <description>Recent content in vignette on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 21 Feb 2015 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/vignette/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>How to: Package Vignettes in Plain LaTeX</title>
+      <link>https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/</link>
+      <pubDate>Sat, 21 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/</guid>
+      <description>Ever wanted to include a plain-LaTeX vignette in your package and have it compiled into a PDF? The R.rsp package provides a four-line solution for this.
+But, first, what&amp;rsquo;s R.rsp? R.rsp is an R package that implements a compiler for the RSP markup language. RSP can be used to embed dynamic R code in any text-based source document to be compiled into a final document, e.g. RSP-embedded LaTeX into PDF, RSP-embedded Markdown into HTML, RSP-embedded HTML into HTML and so on.</description>
+    </item>
+    
+  </channel>
+</rss>

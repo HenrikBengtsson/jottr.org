@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>for-loop on JottR</title>
+    <link>https://www.jottr.org/tags/for-loop/</link>
+    <description>Recent content in for-loop on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Jan 2019 12:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/for-loop/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Parallelize a For-Loop by Rewriting it as an Lapply Call</title>
+      <link>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</link>
+      <pubDate>Fri, 11 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</guid>
+      <description>A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &amp;lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &amp;lt;- future.apply::future_lapply(...) or y &amp;lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.</description>
+    </item>
+    
+  </channel>
+</rss>

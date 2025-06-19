@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Renviron on JottR</title>
+    <link>https://www.jottr.org/tags/renviron/</link>
+    <description>Recent content in Renviron on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 May 2019 21:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/renviron/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>startup - run R startup files once per hour, day, week, ...</title>
+      <link>https://www.jottr.org/2019/05/26/startup-sometimes/</link>
+      <pubDate>Sun, 26 May 2019 21:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2019/05/26/startup-sometimes/</guid>
+      <description>New release: startup 0.12.0 is now on CRAN. This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month. See below for two examples.
+startup::startup() is cross platform.
+The startup package makes it easy to split up a long, complicated .Rprofile startup file into multiple, smaller files in a .Rprofile.d/ folder. For instance, setting R option repos in a separate file ~/.</description>
+    </item>
+    
+    <item>
+      <title>Startup with Secrets - A Poor Man&#39;s Approach</title>
+      <link>https://www.jottr.org/2018/03/30/startup-secrets/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/03/30/startup-secrets/</guid>
+      <description>New release: startup 0.10.0 is now on CRAN.
+If your R startup files (.Renviron and .Rprofile) get long and windy, or if you want to make parts of them public and other parts private, then you can use the startup package to split them up in separate files and directories under .Renviron.d/ and .Rprofile.d/. For instance, the .Rprofile.d/repos.R file can be solely dedicated to setting in the repos option, which specifies from which web servers R packages are installed from.</description>
+    </item>
+    
+    <item>
+      <title>Start Me Up</title>
+      <link>https://www.jottr.org/2016/12/22/startup/</link>
+      <pubDate>Thu, 22 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2016/12/22/startup/</guid>
+      <description>The startup package makes it easy to control your R startup processes and to share part of your startup settings with others (e.g. as a public Git repository) while keeping secret parts to yourself. Instead of having long and windy .Renviron and .Rprofile startup files, you can split them up into short specific files under corresponding .Renviron.d/ and .Rprofile.d/ directories. For example,
+# Environment variables # (one name=value per line) .</description>
+    </item>
+    
+  </channel>
+</rss>

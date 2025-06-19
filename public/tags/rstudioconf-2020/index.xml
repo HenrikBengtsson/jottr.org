@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rstudio::conf 2020 on JottR</title>
+    <link>https://www.jottr.org/tags/rstudioconf-2020/</link>
+    <description>Recent content in rstudio::conf 2020 on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Feb 2020 19:30:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/rstudioconf-2020/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>rstudio::conf 2020 Slides on Futures</title>
+      <link>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</link>
+      <pubDate>Sat, 01 Feb 2020 19:30:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</guid>
+      <description>I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
+HTML (incremental Google Slides; requires online access) PDF (flat slides) Video with closed captions (official rstudio::conf recording) First of all, a big thank you goes out to Dan LaBar (@embiggenData) for proposing and contributing the original design of the future hex sticker.</description>
+    </item>
+    
+  </channel>
+</rss>

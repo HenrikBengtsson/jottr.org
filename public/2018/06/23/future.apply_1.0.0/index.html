@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using plan(multisession) it&rsquo;ll run in parallel.">
+
+
+<meta property="og:description" content="Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using plan(multisession) it&rsquo;ll run in parallel.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="future.apply - Parallelize Any Base R Apply Function">
+<meta name="twitter:title" content="future.apply - Parallelize Any Base R Apply Function">
+<meta property="og:url" content="https://www.jottr.org/2018/06/23/future.apply_1.0.0/">
+<meta property="twitter:url" content="https://www.jottr.org/2018/06/23/future.apply_1.0.0/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using plan(multisession) it&rsquo;ll run in parallel.">
+<meta name="twitter:description" content="Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using plan(multisession) it&rsquo;ll run in parallel.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2018-06-23T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2018-06-23T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="apply">
+    
+      <meta property="article:tag" content="lapply">
+    
+      <meta property="article:tag" content="mapply">
+    
+      <meta property="article:tag" content="sapply">
+    
+      <meta property="article:tag" content="tapply">
+    
+      <meta property="article:tag" content="vapply">
+    
+      <meta property="article:tag" content="Map">
+    
+      <meta property="article:tag" content="replicate">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="compute clusters">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="RNG">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>future.apply - Parallelize Any Base R Apply Function</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2018/06/23/future.apply_1.0.0/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      future.apply - Parallelize Any Base R Apply Function
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-06-23T00:00:00Z">
+        
+  June 23, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><img src="https://www.jottr.org/post/future.apply_1.0.0-htop_32cores.png" alt="0% to 100% utilization">
+<em>Got compute?</em></p>
+<p><a href="https://cran.r-project.org/package=future.apply">future.apply</a> 1.0.0 - <em>Apply Function to Elements in Parallel using Futures</em> - is on CRAN.  With this milestone release, all<!-- raw HTML omitted -->*<!-- raw HTML omitted --> base R apply functions now have corresponding futurized implementations.  This makes it easier than ever before to parallelize your existing <code>apply()</code>, <code>lapply()</code>, <code>mapply()</code>, &hellip; code - just prepend <code>future_</code> to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using <code>plan(multisession)</code> it&rsquo;ll run in parallel.</p>
+<!-- raw HTML omitted -->
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->apply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>Apply Functions Over Array Margins</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->lapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>Apply a Function over a List or Vector</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->sapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>- &quot; -</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->vapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>- &quot; -</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->replicate()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>- &quot; -</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->mapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>Apply a Function to Multiple List or Vector Arguments</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->Map()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>- &quot; -</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->eapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>Apply a Function Over Values in an Environment</td>
+</tr>
+<tr>
+<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->tapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td>Apply a Function Over a Ragged Array</td>
+</tr>
+</tbody>
+</table>
+<p><!-- raw HTML omitted -->*<!-- raw HTML omitted --> <!-- raw HTML omitted -->future_<!-- raw HTML omitted -->rapply()<!-- raw HTML omitted --><!-- raw HTML omitted --> - Recursively Apply a Function to a List - is yet to be implemented.</p>
+<h2 id="a-motivating-example">A Motivating Example</h2>
+<p>In the <strong>parallel</strong> package there is an example - in <code>?clusterApply</code> - showing how to perform bootstrap simulations in parallel.  After some small modifications to clarify the steps, it looks like the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallel)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(boot)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>run1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(<span style="color:#66d9ef">...</span>) {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">library</span>(boot)
+</span></span><span style="display:flex;"><span>   cd4.rg <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(data, mle) MASS<span style="color:#f92672">::</span><span style="color:#a6e22e">mvrnorm</span>(<span style="color:#a6e22e">nrow</span>(data), mle<span style="color:#f92672">$</span>m, mle<span style="color:#f92672">$</span>v)
+</span></span><span style="display:flex;"><span>   cd4.mle <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>(m <span style="color:#f92672">=</span> <span style="color:#a6e22e">colMeans</span>(cd4), v <span style="color:#f92672">=</span> <span style="color:#a6e22e">var</span>(cd4))
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">boot</span>(cd4, corr, R <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>, sim <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;parametric&#34;</span>,
+</span></span><span style="display:flex;"><span>        ran.gen <span style="color:#f92672">=</span> cd4.rg, mle <span style="color:#f92672">=</span> cd4.mle)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeCluster</span>(<span style="color:#ae81ff">4</span>) <span style="color:#75715e">## Parallelize using four cores</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">clusterSetRNGStream</span>(cl, <span style="color:#ae81ff">123</span>)
+</span></span><span style="display:flex;"><span>cd4.boot <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">do.call</span>(c, <span style="color:#a6e22e">parLapply</span>(cl, <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">4</span>, run1))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">boot.ci</span>(cd4.boot, type <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;norm&#34;</span>, <span style="color:#e6db74">&#34;basic&#34;</span>, <span style="color:#e6db74">&#34;perc&#34;</span>),
+</span></span><span style="display:flex;"><span>                  conf <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span>, h <span style="color:#f92672">=</span> atanh, hinv <span style="color:#f92672">=</span> tanh)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">stopCluster</span>(cl)
+</span></span></code></pre></div><p>The script defines a function <code>run1()</code> that produces 500 bootstrap samples, and then it calls this function four times, combines the four replicated samples into one <code>cd4.boot</code>, and at the end it uses <code>boot.ci()</code> to summarize the results.</p>
+<p>The corresponding sequential implementation would look something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(boot)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>run1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(<span style="color:#66d9ef">...</span>) {
+</span></span><span style="display:flex;"><span>   cd4.rg <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(data, mle) MASS<span style="color:#f92672">::</span><span style="color:#a6e22e">mvrnorm</span>(<span style="color:#a6e22e">nrow</span>(data), mle<span style="color:#f92672">$</span>m, mle<span style="color:#f92672">$</span>v)
+</span></span><span style="display:flex;"><span>   cd4.mle <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>(m <span style="color:#f92672">=</span> <span style="color:#a6e22e">colMeans</span>(cd4), v <span style="color:#f92672">=</span> <span style="color:#a6e22e">var</span>(cd4))
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">boot</span>(cd4, corr, R <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>, sim <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;parametric&#34;</span>,
+</span></span><span style="display:flex;"><span>        ran.gen <span style="color:#f92672">=</span> cd4.rg, mle <span style="color:#f92672">=</span> cd4.mle)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">set.seed</span>(<span style="color:#ae81ff">123</span>)
+</span></span><span style="display:flex;"><span>cd4.boot <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">do.call</span>(c, <span style="color:#a6e22e">lapply</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">4</span>, run1))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">boot.ci</span>(cd4.boot, type <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;norm&#34;</span>, <span style="color:#e6db74">&#34;basic&#34;</span>, <span style="color:#e6db74">&#34;perc&#34;</span>),
+</span></span><span style="display:flex;"><span>                  conf <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span>, h <span style="color:#f92672">=</span> atanh, hinv <span style="color:#f92672">=</span> tanh)
+</span></span></code></pre></div><p>We notice a few things about these two code snippets.  First of all, in the parallel code, there are two <code>library(boot)</code> calls; one in the main code and one inside the <code>run1()</code> function.  The reason for this is to make sure that the <strong>boot</strong> package is also attached in the parallel, background R session when <code>run1()</code> is called there.  The <strong>boot</strong> package defines the <code>boot.ci()</code> function, as well as the <code>boot()</code> function and the <code>cd4</code> data.frame - both used inside <code>run1()</code>.  If <strong>boot</strong> is not attached inside the function, we would get an error on <code>&quot;object 'cd4' not found&quot;</code> when running the parallel code.  In contrast, we do not need to do this in the sequential code.  Also, if we later would turn our parallel script into a package, then <code>R CMD check</code> would complain if we kept the <code>library(boot)</code> call inside the <code>run1()</code> function.</p>
+<p>Second, the example uses <code>MASS::mvrnorm()</code> in <code>run1()</code>.  The reason for this is related to the above - if we use only <code>mvrnorm()</code>, we need to attach the <strong>MASS</strong> package using <code>library(MASS)</code> and also do so inside <code>run1()</code>.  Since there is only one <strong>MASS</strong> function called, it&rsquo;s easier and neater to use the form <code>MASS::mvrnorm()</code>.</p>
+<p>Third, the random-seed setup differs between the sequential and the parallel approach.</p>
+<p>In summary, in order to turn the sequential script into a script that parallelizes using the <strong>parallel</strong> package, we would have to not only rewrite parts of the code but also be aware of important differences in order to avoid getting run-time errors due to missing packages or global variables.</p>
+<p>One of the objectives of the <strong>future.apply</strong> package, and the <strong>future</strong> ecosystem in general, is to make transitions from writing sequential code to writing parallel code as simple and frictionless as possible.</p>
+<p>Here is the same example parallelized using the <strong>future.apply</strong> package:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future.apply)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>) <span style="color:#75715e">## Parallelize using four cores</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(boot)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>run1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(<span style="color:#66d9ef">...</span>) {
+</span></span><span style="display:flex;"><span>   cd4.rg <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(data, mle) MASS<span style="color:#f92672">::</span><span style="color:#a6e22e">mvrnorm</span>(<span style="color:#a6e22e">nrow</span>(data), mle<span style="color:#f92672">$</span>m, mle<span style="color:#f92672">$</span>v)
+</span></span><span style="display:flex;"><span>   cd4.mle <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>(m <span style="color:#f92672">=</span> <span style="color:#a6e22e">colMeans</span>(cd4), v <span style="color:#f92672">=</span> <span style="color:#a6e22e">var</span>(cd4))
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">boot</span>(cd4, corr, R <span style="color:#f92672">=</span> <span style="color:#ae81ff">500</span>, sim <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;parametric&#34;</span>,
+</span></span><span style="display:flex;"><span>        ran.gen <span style="color:#f92672">=</span> cd4.rg, mle <span style="color:#f92672">=</span> cd4.mle)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">set.seed</span>(<span style="color:#ae81ff">123</span>)
+</span></span><span style="display:flex;"><span>cd4.boot <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">do.call</span>(c, <span style="color:#a6e22e">future_lapply</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">4</span>, run1, future.seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">boot.ci</span>(cd4.boot, type <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;norm&#34;</span>, <span style="color:#e6db74">&#34;basic&#34;</span>, <span style="color:#e6db74">&#34;perc&#34;</span>),
+</span></span><span style="display:flex;"><span>                  conf <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.9</span>, h <span style="color:#f92672">=</span> atanh, hinv <span style="color:#f92672">=</span> tanh)
+</span></span></code></pre></div><p>The difference between the sequential base-R implementation and the <strong>future.apply</strong> implementation is minimal.  The <strong>future.apply</strong> package is attached, the parallel plan of four workers is set up, and the <code>apply()</code> function is replaced by <code>future_apply()</code>, where we specify <code>future.seed = TRUE</code> to get statistical sound and numerically reproducible parallel random number generation (RNG).
+More importantly, notice how there is no need to worry about which packages need to be attached on the workers and which global variables need to be exported.  That is all taken care of automatically by the <strong>future</strong> framework.</p>
+<h2 id="qa">Q&amp;A</h2>
+<p>Q. <em>What are my options for parallelization?</em><!-- raw HTML omitted -->
+A. Everything in <strong>future.apply</strong> is processed through the <a href="https://cran.r-project.org/package=future">future</a> framework.  This means that all parallelization backends supported by the <strong>parallel</strong> package are supported out of the box, e.g. on your <strong>local machine</strong>, and on <strong>local</strong> or <strong>remote</strong> ad-hoc <strong>compute clusters</strong> (also in the <strong>cloud</strong>). Additional parallelization and distribution schemas are provided by backends such as <strong><a href="https://cran.r-project.org/package=future.callr">future.callr</a></strong> (parallelization on your local machine) and <strong><a href="https://cran.r-project.org/package=future.batchtools">future.batchtools</a></strong> (large-scale parallelization via <strong>HPC job schedulers</strong>).  For other alternatives, see the CRAN Page for the <strong><a href="https://cran.r-project.org/package=future">future</a></strong> package and the <a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html">High-Performance and Parallel Computing with R</a> CRAN Task View.</p>
+<p>Q. <em>Righty-oh, so how do I specify which parallelization backend to use?</em><!-- raw HTML omitted -->
+A. A fundamental design pattern of the future framework is that <em>the end user decides <strong>how and where</strong> to parallelize</em> while <em>the developer decides <strong>what</strong> to parallelize</em>.  This means that you do <em>not</em> specify the backend via some argument to the <code>future_nnn()</code> functions.  Instead, the backend is specified by the <code>plan()</code> function - you can almost think of it as a global option that the end user controls.  For example, <code>plan(multisession)</code> will parallelize on the local machine, so will <code>plan(future.callr::callr)</code>, whereas <code>plan(cluster, workers = c(&quot;n1&quot;, &quot;n2&quot;, &quot;remote.server.org&quot;))</code> will parallelize on two local machines and one remote machine. Using <code>plan(future.batchtools::batchtools_sge)</code> will distribute the processing on your SGE-supported compute cluster.  BTW, you can also have <a href="https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html">nested parallelization strategies</a>, e.g. <code>plan(list(tweak(cluster, workers = nodes), multisession))</code> where <code>nodes = c(&quot;n1&quot;, &quot;n2&quot;, &quot;remote.server.org&quot;)</code>.</p>
+<p>Q. <em>What about load balancing?</em><!-- raw HTML omitted -->
+A. The default behavior of all functions is to distribute <strong>equally-sized chunks</strong> of elements to each available background worker - such that each worker process exactly one chunk (= one future).  If the processing times vary significantly across chunks, you can increase the average number of chunks processed by each worker, e.g. to have them process two chunks on average, specify <code>future.scheduling = 2.0</code>.  Alternatively, you can specify the number of elements processed per chunk, e.g. <code>future.chunk.size = 10L</code> (an analog to the <code>chunk.size</code> argument added to the <strong>parallel</strong> package in R 3.5.0).</p>
+<p>Q. <em>What about random number generation (RNG)? I&rsquo;ve heard it&rsquo;s tricky to get right when running in parallel.</em><!-- raw HTML omitted -->
+A. Just add <code>future.seed = TRUE</code> and you&rsquo;re good. This will use <strong>parallel safe</strong> and <strong>statistical sound</strong> <strong>L&rsquo;Ecuyer-CMRG RNG</strong>, which is a well-established parallel RNG algorithm and used by the <strong>parallel</strong> package.  The <strong>future.apply</strong> functions use this in a way that is also <strong>invariant to</strong> the future backend and the amount of &ldquo;chunking&rdquo; used.  To produce numerically reproducible results, set <code>set.seed(123)</code> before (as in the above example), or simply use <code>future.seed = 123</code>.</p>
+<p>Q. <em>What about global variables? Whenever I&rsquo;ve tried to parallelize code before, I often ran into errors on &ldquo;this or that variable is not found&rdquo;.</em><!-- raw HTML omitted -->
+A. This is very rarely a problem when using the <a href="https://cran.r-project.org/package=future">future</a> framework - things work out of the box.  <strong>Global variables and packages</strong> needed are <strong>automatically identified</strong> from static code inspection and passed on to the workers - even when the workers run on remote computers or in the cloud.</p>
+<p><em>Happy futuring!</em></p>
+<p>UPDATE 2022-12-11: Update examples that used the deprecated <code>multiprocess</code> future backend alias to use the <code>multisession</code> backend.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>future.apply package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.apply">https://cran.r-project.org/package=future.apply</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.apply">https://github.com/HenrikBengtsson/future.apply</a></li>
+</ul>
+</li>
+<li>future package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future">https://cran.r-project.org/package=future</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future">https://github.com/HenrikBengtsson/future</a></li>
+</ul>
+</li>
+<li>future.batchtools package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.batchtools">https://cran.r-project.org/package=future.batchtools</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.batchtools">https://github.com/HenrikBengtsson/future.batchtools</a></li>
+</ul>
+</li>
+<li>doFuture package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=doFuture">https://cran.r-project.org/package=doFuture</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/doFuture">https://github.com/HenrikBengtsson/doFuture</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://www.jottr.org/2018/06/18/future-erum2018-slides/">Delayed Future(Slides from eRum 2018)</a>, 2018-06-19</li>
+<li><a href="https://www.jottr.org/2018/04/12/future-results/">future 1.8.0: Preparing for a Shiny Future</a>, 2018-04-12</li>
+<li><a href="https://www.jottr.org/2017/06/05/many-faced-future/">The Many-Faced Future</a>, 2017-06-05</li>
+<li><a href="https://www.jottr.org/2017/02/19/future-rng/">future 1.3.0 Reproducible RNGs, future_lapply() and More</a>, 2017-02-19</li>
+<li><a href="https://www.jottr.org/2016/10/22/future-hpc/">High-Performance Compute in R Using Futures</a>, 2016-10-22</li>
+<li><a href="https://www.jottr.org/2016/10/11/future-remotes/">Remote Processing Using Futures</a>, 2016-10-11</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/apply/">apply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/lapply/">lapply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/mapply/">mapply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/sapply/">sapply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/tapply/">tapply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/vapply/">vapply</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/map/">Map</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/replicate/">replicate</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/compute-clusters/">compute clusters</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/rng/">RNG</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/07/21/suppressgraphics/" data-tooltip="R.devices - Into the Void">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/06/18/future-erum2018-slides/" data-tooltip="Delayed Future(Slides from eRum 2018)">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/06/23/future.apply_1.0.0/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/06/23/future.apply_1.0.0/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/07/21/suppressgraphics/" data-tooltip="R.devices - Into the Void">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/06/18/future-erum2018-slides/" data-tooltip="Delayed Future(Slides from eRum 2018)">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/06/23/future.apply_1.0.0/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/06/23/future.apply_1.0.0/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2018%2F06%2F23%2Ffuture.apply_1.0.0%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2018%2F06%2F23%2Ffuture.apply_1.0.0%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

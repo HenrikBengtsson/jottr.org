@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="JottR - Some Jotter on R">
+
+
+<meta property="og:description" content="JottR - Some Jotter on R">
+<meta property="og:type" content="website">
+<meta property="og:title" content="R">
+<meta name="twitter:title" content="R">
+<meta property="og:url" content="https://www.jottr.org/categories/r/">
+<meta property="twitter:url" content="https://www.jottr.org/categories/r/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="JottR - Some Jotter on R">
+<meta name="twitter:description" content="JottR - Some Jotter on R">
+<meta property="og:locale" content="en-us">
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>R</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+      <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.jottr.org/categories/r/index.xml">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/categories/r/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="1">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="1">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+        
+
+      
+      <div id="main" data-behavior="1"
+        class="
+               hasCoverMetaIn
+               ">
+        
+          <section class="postShorten-group main-content-wrap">
+            
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2023/07/01/parallelly-managing-workers/">
+          parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2023-07-01T18:00:00&#43;02:00">
+        
+  July 1, 2023
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        parallelly 1.36.0 is on CRAN since May 2023. The parallelly package is part of the Futureverse and enhances the parallel package of base R, e.g. it adds several features you&rsquo;d otherwise expect to see in parallel. The parallelly package is one of the internal work horses for the future package, but it can also be used outside of the future ecosystem.
+In this most recent release, parallelly gained several new skills in how cluster nodes (a.
+      
+      <p>
+        <a href="https://www.jottr.org/2023/07/01/parallelly-managing-workers/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2023/06/26/dofuture/">
+          %dofuture% - a Better foreach() Parallelization Operator than %dopar%
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2023-06-26T19:00:00&#43;02:00">
+        
+  June 26, 2023
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        doFuture 1.0.0 is on CRAN since March 2023. It introduces a new foreach operator %dofuture%, which makes it even easier to use foreach() to parallelize via the future ecosystem. This new operator is designed to be an alternative to the existing %dopar% operator for foreach() - an alternative that works in similar ways but better. If you already use foreach() together with futures, or plan on doing so, I recommend using %dofuture% instead of %dopar%.
+      
+      <p>
+        <a href="https://www.jottr.org/2023/06/26/dofuture/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/">
+          Edmonton R User Group Meetup: Futureverse - A Unifying Parallelization Framework in R for Everyone
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2023-05-22T18:00:00-07:00">
+        
+  May 22, 2023
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+         Below are the slides from my presentation at the Edmonton R User Group Meetup (YEGRUG) on May 22, 2023:
+Title: Futureverse - A Unifying Parallelization Framework in R for Everyone
+Speaker: Henrik Bengtsson
+Slides: HTML, PDF (46 slides)
+Video: official recording (~60 minutes)
+Thank you Péter Sólymos and the YEGRUG for the invitate and the opportunity!
+/Henrik
+Links YEGRUG: https://yegrug.github.io/ Futureverse website: https://www.futureverse.org/ future package CRAN, GitHub, pkgdown 
+      
+      <p>
+        <a href="https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/">
+          parallelly 1.34.0: Support for CGroups v2, Killing Parallel Workers, and more
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2023-01-18T14:00:00-08:00">
+        
+  January 18, 2023
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        With the recent releases of parallelly 1.33.0 (2022-12-13) and 1.34.0 (2023-01-13), availableCores() and availableWorkers() gained better support for Linux CGroups, options for avoiding running out of R connections when setting up parallel-style clusters, and killNode() for forcefully terminating one or more parallel workers. I summarize these updates below. For other updates, please see the NEWS.
+Added support for CGroups v2 availableCores() and availableWorkers() gained support for Linux Control Groups v2 (CGroups v2), besides CGroups v1, which has been supported since parallelly 1.
+      
+      <p>
+        <a href="https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2023/01/10/progressr-0.13.0/">
+          progressr 0.13.0: cli &#43; progressr = ♥
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2023-01-10T19:00:00-08:00">
+        
+  January 10, 2023
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        progressr 0.13.0 is on CRAN. In the recent releases, progressr gained support for using cli to generate progress bars. Vice versa, cli can now report on progress via the progressr framework. Here are the details. For other updates to progressr, see NEWS.
+The progressr package, part of the futureverse, provides a minimal API for reporting progress updates in R. The design is to separate the representation of progress updates from how they are presented.
+      
+      <p>
+        <a href="https://www.jottr.org/2023/01/10/progressr-0.13.0/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/12/05/avoid-detectcores/">
+          Please Avoid detectCores() in your R Packages
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-12-05T21:00:00-08:00">
+        
+  December 5, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.
+      
+      <p>
+        <a href="https://www.jottr.org/2022/12/05/avoid-detectcores/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/06/23/future-user2022-slides/">
+          useR! 2022: My &#39;Futureverse: Profile Parallel Code&#39; Slides
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-06-23T17:00:00-07:00">
+        
+  June 23, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+Title: Futureverse: Profile Parallel Code
+Speaker: Henrik Bengtsson
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
+Slides: HTML, PDF (24 slides)
+Video: official recording (27m30s long starting at 42m10s)
+Abstract:
+&ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.
+      
+      <p>
+        <a href="https://www.jottr.org/2022/06/23/future-user2022-slides/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/06/09/parallelly-support-for-fujitsu-technical-computing-suite-high-performance-compute-hpc-environments/">
+          parallelly: Support for Fujitsu Technical Computing Suite High-Performance Compute (HPC) Environments
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-06-09T13:00:00-07:00">
+        
+  June 9, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        parallelly 1.32.0 is now on CRAN. One of the major updates is that availableCores() and availableWorkers(), and therefore also the future framework, gained support for the &lsquo;Fujitsu Technical Computing Suite&rsquo; job scheduler. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package.
+      
+      <p>
+        <a href="https://www.jottr.org/2022/06/09/parallelly-support-for-fujitsu-technical-computing-suite-high-performance-compute-hpc-environments/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/">
+          parallelly 1.32.0: makeClusterPSOCK() Didn&#39;t Work with Chinese and Korean Locales
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-06-08T14:00:00-07:00">
+        
+  June 8, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        parallelly 1.32.0 is on CRAN. This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused makeClusterPSOCK(), and therefore also future::plan(&quot;multisession&quot;), to fail with an error. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.
+      
+      <p>
+        <a href="https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/06/03/progressr-0.10.1/">
+          progressr 0.10.1: Plyr Now Supports Progress Updates also in Parallel
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-06-03T13:00:00-07:00">
+        
+  June 3, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        progressr 0.10.1 is on CRAN. I dedicate this release to all plyr users and developers out there.
+The progressr package provides a minimal API for reporting progress updates in R. The design is to separate the representation of progress updates from how they are presented. What type of progress to signal is controlled by the developer. How these progress updates are rendered is controlled by the end user. For instance, some users may prefer visual feedback, such as a horizontal progress bar in the terminal, whereas others may prefer auditory feedback.
+      
+      <p>
+        <a href="https://www.jottr.org/2022/06/03/progressr-0.10.1/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/04/22/parallelly-1.31.1/">
+          parallelly 1.31.1: Better at Inferring Number of CPU Cores with Cgroups and Linux Containers
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-04-22T11:00:00-07:00">
+        
+  April 22, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        parallelly 1.31.1 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package relies on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly in November 2021, I&rsquo;ve fixed a few bugs and added some new features to the package;
+      
+      <p>
+        <a href="https://www.jottr.org/2022/04/22/parallelly-1.31.1/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/">
+          future 1.24.0: Forwarding RNG State also for Stand-Alone Futures
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-02-22T13:00:00-08:00">
+        
+  February 22, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
+int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
+future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).
+      
+      <p>
+        <a href="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2022/01/07/future-during-2021/">
+          Future Improvements During 2021
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-01-07T14:00:00-08:00">
+        
+  January 7, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        Happy New Year! I made some updates to the future framework during 2021 that involve overall improvements and essential preparations to go forward with some exciting new features that I&rsquo;m keen to work on during 2022.
+The future framework makes it easy to parallelize existing R code - often with only a minor change of code. The goal is to lower the barriers so that anyone can quickly and safely speed up their existing R code in a worry-free manner.
+      
+      <p>
+        <a href="https://www.jottr.org/2022/01/07/future-during-2021/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2021/11/22/parallelly-1.29.0/">
+          parallelly 1.29.0: New Skills and Less Communication Latency on Linux
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-11-22T21:00:00-08:00">
+        
+  November 22, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        parallelly 1.29.0 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package rely on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly five months ago, the parallelly package had some bugs fixed, and it gained a few new features;
+      
+      <p>
+        <a href="https://www.jottr.org/2021/11/22/parallelly-1.29.0/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/">
+          matrixStats: Consistent Support for Name Attributes via GSoC Project
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-08-23T00:10:00&#43;02:00">
+        
+  August 23, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        Author: Angelina Panagopoulou, GSoC student developer, undergraduate in the Department of Informatics &amp; Telecommunications (DIT), University of Athens, Greece
+We are glad to announce recent CRAN releases of matrixStats with support for handling and returning name attributes. This feature is added to make matrixStats functions handle names in the same manner as the corresponding base R functions. In particular, the behavior of matrixStats functions is now the same as the apply() function in R, resolving previous lack of, or inconsistent, handling of row and column names.
+      
+      <p>
+        <a href="https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2021/06/11/progressr-0.8.0/">
+          progressr 0.8.0: RStudio&#39;s Progress Bar, Shiny Progress Updates, and Absolute Progress
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-06-11T19:00:00-07:00">
+        
+  June 11, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        progressr 0.8.0 is on CRAN. It comes with some new features:
+A new &lsquo;rstudio&rsquo; handler that reports on progress via the RStudio job interface in RStudio withProgressShiny() now updates the detail part, instead of the message part In addition to signalling relative amounts of progress, it&rsquo;s now also possible to signal total amounts If you&rsquo;re curious what progressr is about, have a look at my e-Rum 2020 presentation.
+Progress updates in RStudio&rsquo;s job interface If you&rsquo;re using RStudio Console, you can now report on progress in the RStudio&rsquo;s job interface as long as the progress originates from a progressr-signalling function.
+      
+      <p>
+        <a href="https://www.jottr.org/2021/06/11/progressr-0.8.0/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2021/06/10/parallelly-1.26.0/">
+          parallelly 1.26.0: Fast, Concurrent Setup of Parallel Workers (Finally)
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-06-10T15:00:00-07:00">
+        
+  June 10, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        parallelly 1.26.0 is on CRAN. It comes with one major improvement and one new function:
+The setup of parallel workers is now much faster, which comes from using a concurrent, instead of sequential, setup strategy
+The new freePort() can be used to find a TCP port that is currently available
+Faster setup of local, parallel workers In R 4.0.0, which was released in May 2020, parallel::makeCluster(n) gained the power of setting up the n local cluster nodes all at the same time, which greatly reduces to total setup time.
+      
+      <p>
+        <a href="https://www.jottr.org/2021/06/10/parallelly-1.26.0/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2021/04/30/parallelly-1.25.0/">
+          parallelly 1.25.0: availableCores(omit=n) and, Finally, Built-in SSH Support for MS Windows 10 Users
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-04-30T15:00:00-07:00">
+        
+  April 30, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+You can now use availableCores(omit = n) to ask for all but n CPU cores
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
+availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
+ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.
+      
+      <p>
+        <a href="https://www.jottr.org/2021/04/30/parallelly-1.25.0/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2021/04/08/future-and-kubernetes/">
+          Using Kubernetes and the Future Package to Easily Parallelize R in the Cloud
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-04-08T19:00:00-07:00">
+        
+  April 8, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        This is a guest post by Chris Paciorek, Department of Statistics, University of California at Berkeley.
+In this post, I&rsquo;ll demonstrate that you can easily use the future package in R on a cluster of machines running in the cloud, specifically on a Kubernetes cluster.
+This allows you to easily doing parallel computing in R in the cloud. One advantage of doing this in the cloud is the ability to easily scale the number and type of (virtual) machines across which you run your parallel computation.
+      
+      <p>
+        <a href="https://www.jottr.org/2021/04/08/future-and-kubernetes/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/">
+          future.BatchJobs - End-of-Life Announcement
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-01-08T09:00:00-08:00">
+        
+  January 8, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        This is an announcement that future.BatchJobs - A Future API for Parallel and Distributed Processing using BatchJobs has been archived on CRAN. The package has been deprecated for years with a recommendation of using future.batchtools instead. The latter has been on CRAN since June 2017 and builds upon the batchtools package, which itself supersedes the BatchJobs package.
+To wrap up the three-and-a-half year long life of future.BatchJobs, the very last version, 0.
+      
+      <p>
+        <a href="https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+            
+  <div class="pagination-bar">
+    <ul class="pagination">
+      
+        
+        
+          <li class="pagination-next">
+            <a class="btn btn--default btn--small" href="https://www.jottr.org/categories/r/page/2/">
+              <span>OLDER POSTS</span>
+              <i class="fa fa-angle-right text-base icon-ml"></i>
+            </a>
+          </li>
+        
+      
+      <li class="pagination-number">page 1 of 4</li>
+    </ul>
+  </div>
+
+
+          </section>
+        
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,8 @@
+Title: Future: Simple, Extendable, Generic Framework for Parallel Processing in R
+Speaker: Henrik Bengtsson
+Where: European Bioconductor Meeting 2020 (https://eurobioc2020.bioconductor.org/)
+When: 2020-12-18
+Length: 35 minutes
+Abstract:
+
+The 'future' package aims at providing a minimal and unifying framework with atomic building blocks for asynchronous, parallel, and distributed computing in R. It is being used to run R code in parallel on the local computer, on remote machines, in the cloud, and on high-performance computing. Popular packages such as 'shiny', 'plumber', and 'drake' use futures internally. I will explain what futures are, and how they provide the necessary and sufficient foundation for constructing parallel map-reduce APIs such as 'future.apply', 'furrr', and 'doFuture' (a generic 'foreach' adaptor). I will also talk about how Bioconductor's 'BiocParallel' can fit into the future framework.

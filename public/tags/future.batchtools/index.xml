@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>future.batchtools on JottR</title>
+    <link>https://www.jottr.org/tags/future.batchtools/</link>
+    <description>Recent content in future.batchtools on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Jan 2021 09:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/future.batchtools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future.BatchJobs - End-of-Life Announcement</title>
+      <link>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</guid>
+      <description>This is an announcement that future.BatchJobs - A Future API for Parallel and Distributed Processing using BatchJobs has been archived on CRAN. The package has been deprecated for years with a recommendation of using future.batchtools instead. The latter has been on CRAN since June 2017 and builds upon the batchtools package, which itself supersedes the BatchJobs package.
+To wrap up the three-and-a-half year long life of future.BatchJobs, the very last version, 0.</description>
+    </item>
+    
+    <item>
+      <title>future 1.20.1 - The Future Just Got a Bit Brighter</title>
+      <link>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</link>
+      <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</guid>
+      <description>future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &amp;ldquo;tee&amp;rdquo;, any output produced by futures.
+The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.</description>
+    </item>
+    
+    <item>
+      <title>Trust the Future</title>
+      <link>https://www.jottr.org/2020/11/04/trust-the-future/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/04/trust-the-future/</guid>
+      <description>Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&amp;rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&amp;rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&amp;rsquo;m sure I forgot something:</description>
+    </item>
+    
+    <item>
+      <title>future 1.15.0 - Lazy Futures are Now Launched if Queried</title>
+      <link>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</link>
+      <pubDate>Sat, 09 Nov 2019 11:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
+      <description>No dogs were harmed while making this release
+future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
+Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+    </item>
+    
+    <item>
+      <title>Maintenance Updates of Future Backends and doFuture</title>
+      <link>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</guid>
+      <description>New versions of the following future backends are available on CRAN:
+future.callr - parallelization via callr, i.e. on the local machine future.batchtools - parallelization via batchtools, i.e. on a compute cluster with job schedulers (SLURM, SGE, Torque/PBS, etc.) but also on the local machine future.BatchJobs - (maintained for legacy reasons) parallelization via BatchJobs, which is the predecessor of batchtools These releases fix a few small bugs and inconsistencies that were identified with help of the future.</description>
+    </item>
+    
+    <item>
+      <title>future 1.8.0: Preparing for a Shiny Future</title>
+      <link>https://www.jottr.org/2018/04/12/future-results/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/12/future-results/</guid>
+      <description>future 1.8.0 is available on CRAN.
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more. These features are not yet available out of the box, but thanks to this release we will be able to make some headway on many of the feature requests related to this - hopefully already by the next release.
+For shiny users following Joe Cheng&amp;rsquo;s efforts on extending Shiny with asynchronous processing using futures, future 1.</description>
+    </item>
+    
+    <item>
+      <title>future 1.3.0: Reproducible RNGs, future_lapply() and More</title>
+      <link>https://www.jottr.org/2017/02/19/future-rng/</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/02/19/future-rng/</guid>
+      <description>future 1.3.0 is available on CRAN. With futures, it is easy to write R code once, which the user can choose to evaluate in parallel using whatever resources s/he has available, e.g. a local machine, a set of local machines, a set of remote machines, a high-end compute cluster (via future.BatchJobs and soon also future.batchtools), or in the cloud (e.g. via googleComputeEngineR).
+Futures makes it easy to harness any resources at hand.</description>
+    </item>
+    
+    <item>
+      <title>High-Performance Compute in R Using Futures</title>
+      <link>https://www.jottr.org/2016/10/22/future-hpc/</link>
+      <pubDate>Sat, 22 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2016/10/22/future-hpc/</guid>
+      <description>A new version of the future.BatchJobs package has been released and is available on CRAN. With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.
+Our different futures can easily be resolved on high-performance compute clusters.
+Requirements The future.BatchJobs package implements the Future API, as defined by the future package, on top of the API provided by the BatchJobs package.</description>
+    </item>
+    
+  </channel>
+</rss>

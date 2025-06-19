@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>microbenchmark on JottR</title>
+    <link>https://www.jottr.org/tags/microbenchmark/</link>
+    <description>Recent content in microbenchmark on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/microbenchmark/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Performance: Avoid Coercing Indices To Doubles</title>
+      <link>https://www.jottr.org/2018/04/02/coercion-of-indices/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/02/coercion-of-indices/</guid>
+      <description>x[idxs + 1] or x[idxs + 1L]? That is the question.
+Assume that we have a vector $x$ of $n = 100,000$ random values, e.g.
+&amp;gt; n &amp;lt;- 100000 &amp;gt; x &amp;lt;- rnorm(n) and that we wish to calculate the $n-1$ first-order differences $y=(y_1, y_2, &amp;hellip;, y_{n-1})$ where $y_i=x_{i+1} - x_i$. In R, we can calculate this using the following vectorized form:
+&amp;gt; idxs &amp;lt;- seq_len(n - 1) &amp;gt; y &amp;lt;- x[idxs + 1] - x[idxs] We can certainly do better if we turn to native code, but is there a more efficient way to implement this using plain R code?</description>
+    </item>
+    
+  </channel>
+</rss>

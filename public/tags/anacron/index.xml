@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>anacron on JottR</title>
+    <link>https://www.jottr.org/tags/anacron/</link>
+    <description>Recent content in anacron on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 May 2019 21:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/anacron/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>startup - run R startup files once per hour, day, week, ...</title>
+      <link>https://www.jottr.org/2019/05/26/startup-sometimes/</link>
+      <pubDate>Sun, 26 May 2019 21:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2019/05/26/startup-sometimes/</guid>
+      <description>New release: startup 0.12.0 is now on CRAN. This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month. See below for two examples.
+startup::startup() is cross platform.
+The startup package makes it easy to split up a long, complicated .Rprofile startup file into multiple, smaller files in a .Rprofile.d/ folder. For instance, setting R option repos in a separate file ~/.</description>
+    </item>
+    
+  </channel>
+</rss>

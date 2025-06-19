@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="New release: startup 0.10.0 is now on CRAN.
+If your R startup files (.Renviron and .Rprofile) get long and windy, or if you want to make parts of them public and other parts private, then you can use the startup package to split them up in separate files and directories under .Renviron.d/ and .Rprofile.d/. For instance, the .Rprofile.d/repos.R file can be solely dedicated to setting in the repos option, which specifies from which web servers R packages are installed from.">
+
+
+<meta property="og:description" content="New release: startup 0.10.0 is now on CRAN.
+If your R startup files (.Renviron and .Rprofile) get long and windy, or if you want to make parts of them public and other parts private, then you can use the startup package to split them up in separate files and directories under .Renviron.d/ and .Rprofile.d/. For instance, the .Rprofile.d/repos.R file can be solely dedicated to setting in the repos option, which specifies from which web servers R packages are installed from.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Startup with Secrets - A Poor Man&#39;s Approach">
+<meta name="twitter:title" content="Startup with Secrets - A Poor Man&#39;s Approach">
+<meta property="og:url" content="https://www.jottr.org/2018/03/30/startup-secrets/">
+<meta property="twitter:url" content="https://www.jottr.org/2018/03/30/startup-secrets/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="New release: startup 0.10.0 is now on CRAN.
+If your R startup files (.Renviron and .Rprofile) get long and windy, or if you want to make parts of them public and other parts private, then you can use the startup package to split them up in separate files and directories under .Renviron.d/ and .Rprofile.d/. For instance, the .Rprofile.d/repos.R file can be solely dedicated to setting in the repos option, which specifies from which web servers R packages are installed from.">
+<meta name="twitter:description" content="New release: startup 0.10.0 is now on CRAN.
+If your R startup files (.Renviron and .Rprofile) get long and windy, or if you want to make parts of them public and other parts private, then you can use the startup package to split them up in separate files and directories under .Renviron.d/ and .Rprofile.d/. For instance, the .Rprofile.d/repos.R file can be solely dedicated to setting in the repos option, which specifies from which web servers R packages are installed from.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2018-03-30T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2018-03-30T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="startup">
+    
+      <meta property="article:tag" content="Rprofile">
+    
+      <meta property="article:tag" content="Renviron">
+    
+      <meta property="article:tag" content="configuration">
+    
+      <meta property="article:tag" content="environment variables">
+    
+      <meta property="article:tag" content="options">
+    
+      <meta property="article:tag" content="secrets">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Startup with Secrets - A Poor Man&#39;s Approach</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2018/03/30/startup-secrets/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Startup with Secrets - A Poor Man&#39;s Approach
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-03-30T00:00:00Z">
+        
+  March 30, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>New release: <strong><a href="https://cran.r-project.org/package=startup">startup</a></strong> 0.10.0 is now on CRAN.</p>
+<p>If your R startup files (<code>.Renviron</code> and <code>.Rprofile</code>) get long and windy, or if you want to make parts of them public and other parts private, then you can use the <strong><a href="https://cran.r-project.org/package=startup">startup</a></strong> package to split them up in separate files and directories under <code>.Renviron.d/</code> and <code>.Rprofile.d/</code>.  For instance, the <code>.Rprofile.d/repos.R</code> file can be solely dedicated to setting in the <code>repos</code> option, which specifies from which web servers R packages are installed from. This makes it easy to find and easy to share with others (e.g. on GitHub).  To make use of <strong>startup</strong>, install the package and then call <code>startup::install()</code> once.  For an introduction, see <a href="https://www.jottr.org/2016/12/22/startup/">Start Me Up</a>.</p>
+<p><img src="https://www.jottr.org/post/startup_0.10.0-zxspectrum.gif" alt="ZX Spectrum animation">
+<em>startup::startup() is cross platform.</em></p>
+<p>Several R packages provide APIs for easier access to online services such as GitHub, GitLab, Twitter, Amazon AWS, Google GCE, etc.  These packages often rely on R options or environment variables to hold your secret credentials or tokens in order to provide more or less automatic, batch-friendly access to those services.  For convenience, it is common to set these secret options in <code>~/.Rprofile</code> or secret environment variables in <code>~/.Renviron</code> - or if you use the <strong><a href="https://cran.r-project.org/package=startup">startup</a></strong> package, in separate files.  For instance, by adding a file <code>~/.Renviron.d/private/github</code> containing:</p>
+<pre tabindex="0"><code>## GitHub token used by devtools
+GITHUB_PAT=db80a925a60ee5b57f323c7b3719bbaaf9f96b26
+</code></pre><p>then, when you start R, environment variable <code>GITHUB_PAT</code> will be accessible from within R as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">Sys.getenv</span>(<span style="color:#e6db74">&#34;GITHUB_PAT&#34;</span>)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;db80a925a60ee5b57f323c7b3719bbaaf9f96b26&#34;</span>
+</span></span></code></pre></div><p>which means that also <strong>devtools</strong> can make use of it.</p>
+<p><strong>IMPORTANT</strong>: If you&rsquo;re on a shared file system or a computer with multiple users, you want to make sure no one else can access your files holding &ldquo;secrets&rdquo;.  If you&rsquo;re on Linux or macOS, this can be done by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>$ chmod -R go-rwx ~/.Renviron.d/private/
+</span></span></code></pre></div><p>Also, <em>keeping &ldquo;secrets&rdquo; in options or environment variables is <strong>not</strong> super secure</em>.  For instance, <em>if your script or a third-party package dumps <code>Sys.getenv()</code> to a log file, that log file will contain your &ldquo;secrets&rdquo; too</em>.  Depending on your default settings on the machine / file system, that log file might be readable by others in your group or even by anyone on the file system.  And if you&rsquo;re not careful, you might even end up sharing that file with the public, e.g. on GitHub.</p>
+<p>Having said this, with the above setup we at least know that the secret token is only loaded when we run R and only when we run R as ourselves.  <strong>Starting with startup 0.10.0</strong> (*), we can customize the startup further such that secrets are only loaded conditionally on a certain environment variable.  For instance, if we instead of putting our secret files in a folder named:</p>
+<pre tabindex="0"><code>~/.Renviron.d/private/SECRET=develop/
+</code></pre><p>because then (i) that folder will not be visible to anyone else because we already restricted access to <code>~/.Renviron.d/private/</code> and (ii) the secrets defined by files of that folder will <em>only be loaded</em> during the R startup <em>if and only if</em> environment variable <code>SECRET</code> has value <code>develop</code>.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">$</span> SECRET<span style="color:#f92672">=</span>develop Rscript <span style="color:#f92672">-</span>e <span style="color:#e6db74">&#34;Sys.getenv(&#39;GITHUB_PAT&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;db80a925a60ee5b57f323c7b3719bbaaf9f96b26&#34;</span>
+</span></span></code></pre></div><p>will load the secrets, but none of:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">$</span> Rscript <span style="color:#f92672">-</span>e <span style="color:#e6db74">&#34;Sys.getenv(&#39;GITHUB_PAT&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">$</span> SECRET<span style="color:#f92672">=</span>runtime Rscript <span style="color:#f92672">-</span>e <span style="color:#e6db74">&#34;Sys.getenv(&#39;GITHUB_PAT&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;&#34;</span>
+</span></span></code></pre></div><p>In other words, with the above approach, you can avoid loading secrets by default and only load them when you really need them.  This lowers the risk of exposing them by mistake in log files or to R code you&rsquo;re not in control of.  Furthermore, if you only need <code>GITHUB_PAT</code> in <em>interactive</em> devtools sessions, name the folder:</p>
+<pre tabindex="0"><code>~/.Renviron.d/private/interactive=TRUE,SECRET=develop/
+</code></pre><p>and it will only be loaded in an interactive session, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">$</span> SECRET<span style="color:#f92672">=</span>develop Rscript <span style="color:#f92672">-</span>e <span style="color:#e6db74">&#34;Sys.getenv(&#39;GITHUB_PAT&#39;)&#34;</span>
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;&#34;</span>
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">$</span> SECRET<span style="color:#f92672">=</span>develop R <span style="color:#f92672">--</span>quiet
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">Sys.getenv</span>(<span style="color:#e6db74">&#39;GITHUB_PAT&#39;</span>)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;db80a925a60ee5b57f323c7b3719bbaaf9f96b26&#34;</span>
+</span></span></code></pre></div><p>To repeat what already been said above, <em>storing secrets in environment variables or R variables provides only very limited security</em>.  The above approach is meant to provide you with a bit more control if you are already storing credentials in <code>~/.Renviron</code> or <code>~/.Rprofile</code>.  For a more secure approach to store secrets, see the <strong><a href="https://cran.r-project.org/package=keyring">keyring</a></strong> package, which makes it easy to &ldquo;access the system credential store from R&rdquo; in a cross-platform fashion, provides a better alternative.</p>
+<h2 id="whats-new-in-startup-0100">What&rsquo;s new in startup 0.10.0?</h2>
+<ul>
+<li>
+<p>Renviron and Rprofile startup files that use <code>&lt;key&gt;=&lt;value&gt;</code> filters with non-declared keys are now(*) skipped (which makes the above possible).</p>
+</li>
+<li>
+<p><code>startup(debug = TRUE)</code> report on more details.</p>
+</li>
+<li>
+<p>A startup script can use <code>startup::is_debug_on()</code> to output message during the startup process conditionally on whether the user chooses to display debug message or not.</p>
+</li>
+<li>
+<p>Added <code>sysinfo()</code> flags <code>microsoftr</code>, <code>pqr</code>, <code>rstudioterm</code>, and <code>rtichoke</code>, which can be used in directory and file names to process them depending on in which environment R is running.</p>
+</li>
+<li>
+<p><code>restart()</code> works also in the RStudio Terminal.</p>
+</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li>
+<p><strong>startup</strong> package:</p>
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=startup">https://cran.r-project.org/package=startup</a> (<a href="https://cran.r-project.org/web/packages/startup/NEWS">NEWS</a>, <a href="https://cran.r-project.org/web/packages/startup/vignettes/startup-intro.html">vignette</a>)</li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/startup">https://github.com/HenrikBengtsson/startup</a></li>
+</ul>
+</li>
+<li>
+<p>Blog post <a href="https://www.jottr.org/2016/12/22/startup/">Start Me Up</a> on 2016-12-22.</p>
+</li>
+</ul>
+<p>(*) In <strong>startup</strong> (&lt; 0.10.0), <code>~/.Renviron.d/private/SECRET=develop/</code> would be processed not only when <code>SECRET</code> had value <code>develop</code> but also when it was <em>undefined</em>.  In <strong>startup</strong> (&gt;= 0.10.0), files with such <code>&lt;key&gt;=&lt;value&gt;</code> tags will now be skipped when that key variable is undefined.</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/startup/">startup</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/rprofile/">Rprofile</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/renviron/">Renviron</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/configuration/">configuration</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/environment-variables/">environment variables</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/options/">options</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/secrets/">secrets</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/04/02/coercion-of-indices/" data-tooltip="Performance: Avoid Coercing Indices To Doubles">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2017/06/05/many-faced-future/" data-tooltip="The Many-Faced Future">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/03/30/startup-secrets/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/03/30/startup-secrets/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/04/02/coercion-of-indices/" data-tooltip="Performance: Avoid Coercing Indices To Doubles">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2017/06/05/many-faced-future/" data-tooltip="The Many-Faced Future">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/03/30/startup-secrets/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/03/30/startup-secrets/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2018%2F03%2F30%2Fstartup-secrets%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2018%2F03%2F30%2Fstartup-secrets%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

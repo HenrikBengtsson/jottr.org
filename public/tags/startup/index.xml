@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>startup on JottR</title>
+    <link>https://www.jottr.org/tags/startup/</link>
+    <description>Recent content in startup on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 21 Sep 2020 18:45:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/startup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Detect When the Random Number Generator Was Used</title>
+      <link>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</guid>
+      <description>If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+if (interactive()) { invisible(addTaskCallback(local({ last &amp;lt;- .GlobalEnv$.Random.seed function(...) { curr &amp;lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &amp;lt;- &amp;#34;TRACKER: .Random.seed changed&amp;#34; if (requireNamespace(&amp;#34;crayon&amp;#34;, quietly=TRUE)) msg &amp;lt;- crayon::blurred(msg) message(msg) last &amp;lt;&amp;lt;- curr } TRUE } }), name = &amp;#34;RNG tracker&amp;#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .</description>
+    </item>
+    
+    <item>
+      <title>startup - run R startup files once per hour, day, week, ...</title>
+      <link>https://www.jottr.org/2019/05/26/startup-sometimes/</link>
+      <pubDate>Sun, 26 May 2019 21:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2019/05/26/startup-sometimes/</guid>
+      <description>New release: startup 0.12.0 is now on CRAN. This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month. See below for two examples.
+startup::startup() is cross platform.
+The startup package makes it easy to split up a long, complicated .Rprofile startup file into multiple, smaller files in a .Rprofile.d/ folder. For instance, setting R option repos in a separate file ~/.</description>
+    </item>
+    
+    <item>
+      <title>Startup with Secrets - A Poor Man&#39;s Approach</title>
+      <link>https://www.jottr.org/2018/03/30/startup-secrets/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/03/30/startup-secrets/</guid>
+      <description>New release: startup 0.10.0 is now on CRAN.
+If your R startup files (.Renviron and .Rprofile) get long and windy, or if you want to make parts of them public and other parts private, then you can use the startup package to split them up in separate files and directories under .Renviron.d/ and .Rprofile.d/. For instance, the .Rprofile.d/repos.R file can be solely dedicated to setting in the repos option, which specifies from which web servers R packages are installed from.</description>
+    </item>
+    
+    <item>
+      <title>Start Me Up</title>
+      <link>https://www.jottr.org/2016/12/22/startup/</link>
+      <pubDate>Thu, 22 Dec 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2016/12/22/startup/</guid>
+      <description>The startup package makes it easy to control your R startup processes and to share part of your startup settings with others (e.g. as a public Git repository) while keeping secret parts to yourself. Instead of having long and windy .Renviron and .Rprofile startup files, you can split them up into short specific files under corresponding .Renviron.d/ and .Rprofile.d/ directories. For example,
+# Environment variables # (one name=value per line) .</description>
+    </item>
+    
+    <item>
+      <title>Force R Help HTML Server to Always Use the Same URL Port</title>
+      <link>https://www.jottr.org/2012/10/22/config-help-start/</link>
+      <pubDate>Mon, 22 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2012/10/22/config-help-start/</guid>
+      <description>The below code shows how to configure the help.ports option in R such that the built-in R help server always uses the same URL port. Just add it to the .Rprofile file in your home directory (iff missing, create it). For more details, see help(&amp;quot;Startup&amp;quot;).
+# Force the URL of the help to http://127.0.0.1:21510 options(help.ports = 21510) A slighter fancier version is to use a environment variable to set the port(s):</description>
+    </item>
+    
+    <item>
+      <title>Set Package Repositories at Startup</title>
+      <link>https://www.jottr.org/2012/09/27/config-repos/</link>
+      <pubDate>Thu, 27 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2012/09/27/config-repos/</guid>
+      <description>The below code shows how to configure the repos option in R such that install.packages() etc. will locate the packages without having to explicitly specify the repository. Just add it to the .Rprofile file in your home directory (iff missing, create it). For more details, see help(&amp;quot;Startup&amp;quot;).
+local({ repos &amp;lt;- getOption(&amp;#34;repos&amp;#34;) # http://cran.r-project.org/ # For a list of CRAN mirrors, see getCRANmirrors(). repos[&amp;#34;CRAN&amp;#34;] &amp;lt;- &amp;#34;http://cran.stat.ucla.edu&amp;#34; # http://www.stats.ox.ac.uk/pub/RWin/ReadMe if (.Platform$OS.type == &amp;#34;windows&amp;#34;) { repos[&amp;#34;CRANextra&amp;#34;] &amp;lt;- &amp;#34;http://www.</description>
+    </item>
+    
+  </channel>
+</rss>

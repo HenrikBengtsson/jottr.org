@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>remote graphics on JottR</title>
+    <link>https://www.jottr.org/tags/remote-graphics/</link>
+    <description>Recent content in remote graphics on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 11 Oct 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/remote-graphics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Remote Processing Using Futures</title>
+      <link>https://www.jottr.org/2016/10/11/future-remotes/</link>
+      <pubDate>Tue, 11 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2016/10/11/future-remotes/</guid>
+      <description>A new version of the future package has been released and is available on CRAN. With futures, it is easy to write R code once, which later the user can choose to parallelize using whatever resources s/he has available, e.g. a local machine, a set of local notebooks, a set of remote machines, or a high-end compute cluster.
+The future provides comfortable and friendly long-distance interactions.
+The new version, future 1.</description>
+    </item>
+    
+    <item>
+      <title>A Future for R: Slides from useR 2016</title>
+      <link>https://www.jottr.org/2016/07/02/future-user2016-slides/</link>
+      <pubDate>Sat, 02 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2016/07/02/future-user2016-slides/</guid>
+      <description>Unless you count DSC 2003 in Vienna, last week&amp;rsquo;s useR conference at Stanford was my very first time at useR. It was a great event, it was awesome to meet our lovely and vibrant R community in real life, which we otherwise only get know from online interactions, and of course it was very nice to meet old friends and make new ones.
+The future is promising.
+At the end of the second day, I presented A Future for R (18 min talk; slides below) on how you can use the future package for asynchronous (parallel and distributed) processing using a single unified API regardless of what backend you have available, e.</description>
+    </item>
+    
+  </channel>
+</rss>

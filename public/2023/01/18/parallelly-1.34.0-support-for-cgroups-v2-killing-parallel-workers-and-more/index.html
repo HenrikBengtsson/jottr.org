@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="With the recent releases of parallelly 1.33.0 (2022-12-13) and 1.34.0 (2023-01-13), availableCores() and availableWorkers() gained better support for Linux CGroups, options for avoiding running out of R connections when setting up parallel-style clusters, and killNode() for forcefully terminating one or more parallel workers. I summarize these updates below. For other updates, please see the NEWS.
+Added support for CGroups v2 availableCores() and availableWorkers() gained support for Linux Control Groups v2 (CGroups v2), besides CGroups v1, which has been supported since parallelly 1.">
+
+
+<meta property="og:description" content="With the recent releases of parallelly 1.33.0 (2022-12-13) and 1.34.0 (2023-01-13), availableCores() and availableWorkers() gained better support for Linux CGroups, options for avoiding running out of R connections when setting up parallel-style clusters, and killNode() for forcefully terminating one or more parallel workers. I summarize these updates below. For other updates, please see the NEWS.
+Added support for CGroups v2 availableCores() and availableWorkers() gained support for Linux Control Groups v2 (CGroups v2), besides CGroups v1, which has been supported since parallelly 1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="parallelly 1.34.0: Support for CGroups v2, Killing Parallel Workers, and more">
+<meta name="twitter:title" content="parallelly 1.34.0: Support for CGroups v2, Killing Parallel Workers, and more">
+<meta property="og:url" content="https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/">
+<meta property="twitter:url" content="https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="With the recent releases of parallelly 1.33.0 (2022-12-13) and 1.34.0 (2023-01-13), availableCores() and availableWorkers() gained better support for Linux CGroups, options for avoiding running out of R connections when setting up parallel-style clusters, and killNode() for forcefully terminating one or more parallel workers. I summarize these updates below. For other updates, please see the NEWS.
+Added support for CGroups v2 availableCores() and availableWorkers() gained support for Linux Control Groups v2 (CGroups v2), besides CGroups v1, which has been supported since parallelly 1.">
+<meta name="twitter:description" content="With the recent releases of parallelly 1.33.0 (2022-12-13) and 1.34.0 (2023-01-13), availableCores() and availableWorkers() gained better support for Linux CGroups, options for avoiding running out of R connections when setting up parallel-style clusters, and killNode() for forcefully terminating one or more parallel workers. I summarize these updates below. For other updates, please see the NEWS.
+Added support for CGroups v2 availableCores() and availableWorkers() gained support for Linux Control Groups v2 (CGroups v2), besides CGroups v1, which has been supported since parallelly 1.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2023-01-18T14:00:00">
+  
+  
+    <meta property="article:modified_time" content="2023-01-18T14:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallelly">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="parallel-processing">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>parallelly 1.34.0: Support for CGroups v2, Killing Parallel Workers, and more</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      parallelly 1.34.0: Support for CGroups v2, Killing Parallel Workers, and more
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2023-01-18T14:00:00-08:00">
+        
+  January 18, 2023
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p>With the recent releases of <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> 1.33.0 (2022-12-13) and
+1.34.0 (2023-01-13), <a href="https://parallelly.futureverse.org/reference/availableCores.html"><code>availableCores()</code></a> and <a href="https://parallelly.futureverse.org/reference/availableWorkers.html"><code>availableWorkers()</code></a>
+gained better support for Linux CGroups, options for avoiding running
+out of R connections when setting up <strong>parallel</strong>-style clusters, and
+<code>killNode()</code> for forcefully terminating one or more parallel workers.
+I summarize these updates below.  For other updates, please see
+the <a href="https://parallelly.futureverse.org/news/index.html">NEWS</a>.</p>
+<h2 id="added-support-for-cgroups-v2">Added support for CGroups v2</h2>
+<p><a href="https://parallelly.futureverse.org/reference/availableCores.html"><code>availableCores()</code></a> and <a href="https://parallelly.futureverse.org/reference/availableWorkers.html"><code>availableWorkers()</code></a> gained support for
+Linux Control Groups v2 (CGroups v2), besides CGroups v1, which has
+been supported since <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> 1.31.0 (2022-04-07) and
+partially since 1.22.0 (2020-12-12).  This means that if you use
+<code>availableCores()</code> and <code>availableWorkers()</code> in your R code, it will
+better respect the number of CPU cores that the Linux system has made
+available to you.  Not all systems use CGroups, but it is becoming
+more popular, so if the Linux system you run on does not use it right
+now, it is likely it will at some point.</p>
+<h2 id="avoid-running-out-of-r-connections">Avoid running out of R connections</h2>
+<p>If you run parallel code on a machine with a many CPU cores, there&rsquo;s a
+risk that you run out of available R connections, which are needed
+when setting up <strong>parallel</strong> cluster nodes.  This is because R has a
+limit of a maximum 125 connections being used at the same time(*) and
+each cluster node consumes one R connection.  If you try to set up
+more parallel workers than this, you will get an error.  The
+<strong>parallelly</strong> package already has built-in protection against this,
+e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl <span style="color:#f92672">&lt;-</span> parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">192</span>)
+</span></span><span style="display:flex;"><span>Error<span style="color:#f92672">:</span> Cannot create <span style="color:#ae81ff">192</span> parallel PSOCK nodes. Each node needs
+</span></span><span style="display:flex;"><span>one connection, but there are only <span style="color:#ae81ff">124</span> connections left out of
+</span></span><span style="display:flex;"><span>the maximum <span style="color:#ae81ff">128</span> available on this R installation
+</span></span></code></pre></div><p>This error is <em>instant</em> and with no parallel workers being launched.
+In contrast, if you use <strong>parallel</strong>, you will only get an error after
+R has launched the first 124 cluster nodes and fails to launch the
+125:th one, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">makePSOCKcluster</span>(<span style="color:#ae81ff">192</span>)
+</span></span><span style="display:flex;"><span>Error in <span style="color:#a6e22e">socketAccept</span>(socket <span style="color:#f92672">=</span> socket, blocking <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>, open <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a+b&#34;</span>,  <span style="color:#f92672">:</span> 
+</span></span><span style="display:flex;"><span>  all connections are in use
+</span></span></code></pre></div><p>Now, assume you use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(parallelly)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> nworkers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">availableCores</span>()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(ncores)
+</span></span></code></pre></div><p>to set up a maximum-sized cluster on the current machine.  This works
+as long as <code>availableCores()</code> returns something less than 125.
+However, if you are on machine with, say, 192 CPU cores, you will get
+the above error.  You could do something like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> nworkers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">availableCores</span>()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> nworkers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">max</span>(nworkers, <span style="color:#ae81ff">125L</span>)
+</span></span></code></pre></div><p>to work around this problem.  Or, if you want to be more agile to what
+R supports, you could do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> nworkers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">availableCores</span>()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> nworkers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">max</span>(nworkers, <span style="color:#a6e22e">freeConnections</span>())
+</span></span></code></pre></div><p>With the latest versions of <strong>parallelly</strong>, you can simplify this to:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> nworkers <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">availableCores</span>(constraints <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;connections&#34;</span>)
+</span></span></code></pre></div><p>The <code>availableWorkers()</code> function also supports <code>constraints = &quot;connections&quot;</code>.</p>
+<p>(*) The only way to increase this limit is to change the R source
+code and build R from source, cf. <a href="https://parallelly.futureverse.org/reference/availableConnections.html"><code>freeConnections()</code></a>.</p>
+<h2 id="forcefully-terminate-psock-cluster-nodes">Forcefully terminate PSOCK cluster nodes</h2>
+<p>The <code>parallel::stopCluster()</code> should be used for stopping a parallel
+cluster.  This works by asking the clusters node to shut themselves
+down.  However, a parallel worker will only shut down this way when it
+receives the message, which can only happen when the worker is done
+processing any parallel tasks.  So, if a worker runs a very
+long-running task, which can take minutes, hours, or even days, it
+will not shut down until after that completes.</p>
+<p>This far, we had to turn to special operating-system tools to kill the
+R process for that cluster worker.  With <strong>parallelly</strong> 1.33.0, you
+can now use <code>killNode()</code> to kill any parallel worker that runs on the
+local machine and that was launched by <a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html"><code>makeClusterPSOCK()</code></a>.  For
+example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(parallelly)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl
+</span></span><span style="display:flex;"><span>Socket cluster with <span style="color:#ae81ff">10</span> nodes where <span style="color:#ae81ff">10</span> nodes are on host <span style="color:#e6db74">&#39;localhost&#39;</span>
+</span></span><span style="display:flex;"><span>(R version <span style="color:#ae81ff">4.2.2</span> (<span style="color:#ae81ff">2022-10-31</span>), platform x86_64<span style="color:#f92672">-</span>pc<span style="color:#f92672">-</span>linux<span style="color:#f92672">-</span>gnu)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">which</span>(<span style="color:#a6e22e">isNodeAlive</span>(cl))
+</span></span><span style="display:flex;"><span> [1]  <span style="color:#ae81ff">1</span>  <span style="color:#ae81ff">2</span>  <span style="color:#ae81ff">3</span>  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> success <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">killNode</span>(cl[1<span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>])
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> success
+</span></span><span style="display:flex;"><span>[1] <span style="color:#66d9ef">TRUE</span> <span style="color:#66d9ef">TRUE</span> <span style="color:#66d9ef">TRUE</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">which</span>(<span style="color:#a6e22e">isNodeAlive</span>(cl))
+</span></span><span style="display:flex;"><span>[1]  <span style="color:#ae81ff">4</span>  <span style="color:#ae81ff">5</span>  <span style="color:#ae81ff">6</span>  <span style="color:#ae81ff">7</span>  <span style="color:#ae81ff">8</span>  <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl <span style="color:#f92672">&lt;-</span> cl<span style="color:#a6e22e">[isNodeAlive</span>(cl)]
+</span></span><span style="display:flex;"><span>Socket cluster with <span style="color:#ae81ff">7</span> nodes where <span style="color:#ae81ff">7</span> nodes are on host <span style="color:#e6db74">&#39;localhost&#39;</span>
+</span></span><span style="display:flex;"><span>(R version <span style="color:#ae81ff">4.2.2</span> (<span style="color:#ae81ff">2022-10-31</span>), platform x86_64<span style="color:#f92672">-</span>pc<span style="color:#f92672">-</span>linux<span style="color:#f92672">-</span>gnu)
+</span></span></code></pre></div><p>Over and out,</p>
+<p>Henrik</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>parallelly</strong> package: <a href="https://cran.r-project.org/package=parallelly">CRAN</a>, <a href="https://github.com/HenrikBengtsson/parallelly">GitHub</a>, <a href="https://parallelly.futureverse.org">pkgdown</a></li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallelly/">parallelly</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel-processing</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/" data-tooltip="Edmonton R User Group Meetup: Futureverse - A Unifying Parallelization Framework in R for Everyone">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/01/10/progressr-0.13.0/" data-tooltip="progressr 0.13.0: cli &#43; progressr = ♥">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/" data-tooltip="Edmonton R User Group Meetup: Futureverse - A Unifying Parallelization Framework in R for Everyone">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/01/10/progressr-0.13.0/" data-tooltip="progressr 0.13.0: cli &#43; progressr = ♥">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2023%2F01%2F18%2Fparallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2023%2F01%2F18%2Fparallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

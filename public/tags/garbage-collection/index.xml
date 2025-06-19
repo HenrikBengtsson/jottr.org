@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>garbage collection on JottR</title>
+    <link>https://www.jottr.org/tags/garbage-collection/</link>
+    <description>Recent content in garbage collection on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 02 Apr 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/garbage-collection/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Performance: Avoid Coercing Indices To Doubles</title>
+      <link>https://www.jottr.org/2018/04/02/coercion-of-indices/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/02/coercion-of-indices/</guid>
+      <description>x[idxs + 1] or x[idxs + 1L]? That is the question.
+Assume that we have a vector $x$ of $n = 100,000$ random values, e.g.
+&amp;gt; n &amp;lt;- 100000 &amp;gt; x &amp;lt;- rnorm(n) and that we wish to calculate the $n-1$ first-order differences $y=(y_1, y_2, &amp;hellip;, y_{n-1})$ where $y_i=x_{i+1} - x_i$. In R, we can calculate this using the following vectorized form:
+&amp;gt; idxs &amp;lt;- seq_len(n - 1) &amp;gt; y &amp;lt;- x[idxs + 1] - x[idxs] We can certainly do better if we turn to native code, but is there a more efficient way to implement this using plain R code?</description>
+    </item>
+    
+    <item>
+      <title>matrixStats: Optimized Subsetted Matrix Calculations</title>
+      <link>https://www.jottr.org/2015/12/16/matrixstats-subsetting/</link>
+      <pubDate>Wed, 16 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/12/16/matrixstats-subsetting/</guid>
+      <description>The matrixStats package provides highly optimized functions for computing common summaries over rows and columns of matrices. In a previous blog post, I showed that, instead of using apply(X, MARGIN = 2, FUN = median), we can speed up calculations dramatically by using colMedians(X). In the most recent release (version 0.50.0), matrixStats has been extended to perform optimized calculations also on a subset of rows and/or columns specified via new arguments rows and cols, e.</description>
+    </item>
+    
+    <item>
+      <title>Pitfall: Did You Really Mean to Use matrix(nrow, ncol)?</title>
+      <link>https://www.jottr.org/2014/06/17/matrixna-wrong-way/</link>
+      <pubDate>Tue, 17 Jun 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2014/06/17/matrixna-wrong-way/</guid>
+      <description>Are you a good R citizen and preallocates your matrices? If you are allocating a numeric matrix in one of the following two ways, then you are doing it the wrong way!
+x &amp;lt;- matrix(nrow = 500, ncol = 100) or
+x &amp;lt;- matrix(NA, nrow = 500, ncol = 100) Why? Because it is counter productive. And why is that? In the above, x becomes a logical matrix, and not a numeric matrix as intended.</description>
+    </item>
+    
+  </channel>
+</rss>

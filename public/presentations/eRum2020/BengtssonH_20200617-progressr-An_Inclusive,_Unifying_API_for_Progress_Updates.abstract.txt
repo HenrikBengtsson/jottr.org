@@ -1,0 +1,14 @@
+Title: progressr: An Inclusive, Unifying API for Progress Updates
+Speaker: Henrik Bengtsson
+Where: e-Rum 2020(https://2020.erum.io/
+When: 2020-06-17
+Length: 15 minutes
+Abstract:
+
+The 'progressr' package provides a minimal, unifying API for scripts and packages to report progress from anywhere including when using parallel processing to anywhere.
+
+It is designed such that the developer can focus on what to report progress on without having to worry about how to present it. The end user has full control of how, where, and when to render these progress updates. Progress bars from popular progress packages are supported and more can be added.
+
+The 'progressr' is inclusive by design. Specifically, no assumptions are made how progress is reported, i.e. it does not have to be a progress bar in the terminal. Progress can also be reported as audio (e.g. unique begin and end sounds with intermediate non-intrusive step sounds), or via a local or online notification system.
+
+Another novelty is that progress updates are controlled and signaled via R's condition framework. Because of this, there is no need for progress-specific arguments and progress can be reported from nearly everywhere in R, e.g. in classical for and while loops, within map-reduce APIs like the 'lapply()' family of functions, 'purrr', 'plyr', and 'foreach'. It also works with parallel processing via the 'future' framework, e.g. 'future.apply', 'furrr', and 'foreach' with 'doFuture'. The package is compatible with Shiny applications.

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RNG on JottR</title>
+    <link>https://www.jottr.org/tags/rng/</link>
+    <description>Recent content in RNG on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Feb 2022 13:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/rng/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future 1.24.0: Forwarding RNG State also for Stand-Alone Futures</title>
+      <link>https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/</link>
+      <pubDate>Tue, 22 Feb 2022 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/</guid>
+      <description>future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
+int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &amp;ldquo;/&amp;gt;
+future(&amp;hellip;, seed = TRUE) updates RNG state In future (&amp;lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).</description>
+    </item>
+    
+    <item>
+      <title>future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing</title>
+      <link>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</link>
+      <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
+      <description>After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
+    </item>
+    
+    <item>
+      <title>Detect When the Random Number Generator Was Used</title>
+      <link>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</guid>
+      <description>If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+if (interactive()) { invisible(addTaskCallback(local({ last &amp;lt;- .GlobalEnv$.Random.seed function(...) { curr &amp;lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &amp;lt;- &amp;#34;TRACKER: .Random.seed changed&amp;#34; if (requireNamespace(&amp;#34;crayon&amp;#34;, quietly=TRUE)) msg &amp;lt;- crayon::blurred(msg) message(msg) last &amp;lt;&amp;lt;- curr } TRUE } }), name = &amp;#34;RNG tracker&amp;#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .</description>
+    </item>
+    
+    <item>
+      <title>future.apply - Parallelize Any Base R Apply Function</title>
+      <link>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</guid>
+      <description>Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &amp;hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&amp;rsquo;s it! The default is sequential processing but by using plan(multisession) it&amp;rsquo;ll run in parallel.</description>
+    </item>
+    
+    <item>
+      <title>future 1.8.0: Preparing for a Shiny Future</title>
+      <link>https://www.jottr.org/2018/04/12/future-results/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/12/future-results/</guid>
+      <description>future 1.8.0 is available on CRAN.
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more. These features are not yet available out of the box, but thanks to this release we will be able to make some headway on many of the feature requests related to this - hopefully already by the next release.
+For shiny users following Joe Cheng&amp;rsquo;s efforts on extending Shiny with asynchronous processing using futures, future 1.</description>
+    </item>
+    
+    <item>
+      <title>future 1.3.0: Reproducible RNGs, future_lapply() and More</title>
+      <link>https://www.jottr.org/2017/02/19/future-rng/</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/02/19/future-rng/</guid>
+      <description>future 1.3.0 is available on CRAN. With futures, it is easy to write R code once, which the user can choose to evaluate in parallel using whatever resources s/he has available, e.g. a local machine, a set of local machines, a set of remote machines, a high-end compute cluster (via future.BatchJobs and soon also future.batchtools), or in the cloud (e.g. via googleComputeEngineR).
+Futures makes it easy to harness any resources at hand.</description>
+    </item>
+    
+  </channel>
+</rss>

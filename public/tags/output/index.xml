@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>output on JottR</title>
+    <link>https://www.jottr.org/tags/output/</link>
+    <description>Recent content in output on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 06 Nov 2020 13:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/output/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future 1.20.1 - The Future Just Got a Bit Brighter</title>
+      <link>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</link>
+      <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</guid>
+      <description>future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &amp;ldquo;tee&amp;rdquo;, any output produced by futures.
+The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.</description>
+    </item>
+    
+    <item>
+      <title>future 1.9.0 - Output from The Future</title>
+      <link>https://www.jottr.org/2018/07/23/output-from-the-future/</link>
+      <pubDate>Mon, 23 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/07/23/output-from-the-future/</guid>
+      <description>future 1.9.0 - Unified Parallel and Distributed Processing in R for Everyone - is on CRAN. This is a milestone release:
+Standard output is now relayed from futures back to the master R session - regardless of where the futures are processed!
+Disclaimer: A future&amp;rsquo;s output is relayed only after it is resolved and when its value is retrieved by the master R process. In other words, the output is not streamed back in a &amp;ldquo;live&amp;rdquo; fashion as it is produced.</description>
+    </item>
+    
+  </channel>
+</rss>

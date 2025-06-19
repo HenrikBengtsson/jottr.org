@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="The R function capture.output() can be used to &ldquo;collect&rdquo; the output of functions such as cat() and print() to strings. For example,
+&gt; s &lt;- capture.output({ &#43; cat(&#34;Hello\nworld!\n&#34;) &#43; print(pi) &#43; }) &gt; s [1] &#34;Hello&#34; &#34;world!&#34; &#34;[1] 3.141593&#34; More precisely, it captures all output sent to the standard output and returns a character vector where each element correspond to a line of output. By the way, it does not capture the output sent to the standard error, e.">
+
+
+<meta property="og:description" content="The R function capture.output() can be used to &ldquo;collect&rdquo; the output of functions such as cat() and print() to strings. For example,
+&gt; s &lt;- capture.output({ &#43; cat(&#34;Hello\nworld!\n&#34;) &#43; print(pi) &#43; }) &gt; s [1] &#34;Hello&#34; &#34;world!&#34; &#34;[1] 3.141593&#34; More precisely, it captures all output sent to the standard output and returns a character vector where each element correspond to a line of output. By the way, it does not capture the output sent to the standard error, e.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Performance: captureOutput() is Much Faster than capture.output()">
+<meta name="twitter:title" content="Performance: captureOutput() is Much Faster than capture.output()">
+<meta property="og:url" content="https://www.jottr.org/2014/05/26/captureoutput/">
+<meta property="twitter:url" content="https://www.jottr.org/2014/05/26/captureoutput/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="The R function capture.output() can be used to &ldquo;collect&rdquo; the output of functions such as cat() and print() to strings. For example,
+&gt; s &lt;- capture.output({ &#43; cat(&#34;Hello\nworld!\n&#34;) &#43; print(pi) &#43; }) &gt; s [1] &#34;Hello&#34; &#34;world!&#34; &#34;[1] 3.141593&#34; More precisely, it captures all output sent to the standard output and returns a character vector where each element correspond to a line of output. By the way, it does not capture the output sent to the standard error, e.">
+<meta name="twitter:description" content="The R function capture.output() can be used to &ldquo;collect&rdquo; the output of functions such as cat() and print() to strings. For example,
+&gt; s &lt;- capture.output({ &#43; cat(&#34;Hello\nworld!\n&#34;) &#43; print(pi) &#43; }) &gt; s [1] &#34;Hello&#34; &#34;world!&#34; &#34;[1] 3.141593&#34; More precisely, it captures all output sent to the standard output and returns a character vector where each element correspond to a line of output. By the way, it does not capture the output sent to the standard error, e.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2014-05-26T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2014-05-26T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="performance">
+    
+      <meta property="article:tag" content="R.utils">
+    
+      <meta property="article:tag" content="capture.output">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Performance: captureOutput() is Much Faster than capture.output()</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2014/05/26/captureoutput/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Performance: captureOutput() is Much Faster than capture.output()
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2014-05-26T00:00:00Z">
+        
+  May 26, 2014
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>The R function <code>capture.output()</code> can be used to &ldquo;collect&rdquo; the output of functions such as <code>cat()</code> and <code>print()</code> to strings.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> s <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">capture.output</span>({
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     <span style="color:#a6e22e">cat</span>(<span style="color:#e6db74">&#34;Hello\nworld!\n&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     <span style="color:#a6e22e">print</span>(<span style="color:#66d9ef">pi</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> })
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> s
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;Hello&#34;</span>        <span style="color:#e6db74">&#34;world!&#34;</span>       <span style="color:#e6db74">&#34;[1] 3.141593&#34;</span>
+</span></span></code></pre></div><p>More precisely, it captures all output sent to the <a href="http://www.wikipedia.org/wiki/Standard_streams">standard output</a> and returns a character vector where each element correspond to a line of output.  By the way, it does not capture the output sent to the standard error, e.g. <code>cat(&quot;Hello\nworld!\n&quot;, file = stderr())</code> and <code>message(&quot;Hello\nworld!\n&quot;)</code>.</p>
+<p>However, as currently implemented (R 3.1.0), this function is <a href="https://stat.ethz.ch/pipermail/r-devel/2014-February/068349.html">very slow</a> in capturing a large number of lines. Its processing time is approximately <em>quadratic (= $O(n^2)$)</em>, <del>exponential (= O(e^n))</del> in the number of lines capture, e.g. on my notebook 10,000 lines take 0.7 seconds to capture, whereas 50,000 take 12 seconds, and 100,000 take 42 seconds.  The culprit is <code>textConnection()</code> which <code>capture.output()</code> utilizes.  Without going in to the <a href="https://github.com/wch/r-source/blob/R-3-1-branch/src/main/connections.c#L2920-2960">details</a>, it turns out that textConnection() copies lines one by one internally, which is extremely inefficient.</p>
+<p><strong>The <code>captureOutput()</code> function of <a href="http://cran.r-project.org/package=R.utils">R.utils</a> does not have this problem.</strong>  Its processing time is <em>linear</em> in the number of lines and characters, because it relies on <code>rawConnection()</code> instead of <code>textConnection()</code>.  For instance, 100,000 lines take 0.2 seconds and 1,000,000 lines take 2.5 seconds to captures when the lines are 100 characters long.  For 100,000 lines with 1,000 characters it takes 2.4 seconds.</p>
+<h2 id="benchmarking">Benchmarking</h2>
+<p>The above benchmark results were obtained as following.  We first create a function that generates a string with a large number of lines:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> lineBuffer <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(n, len) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     line <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">paste</span>(<span style="color:#a6e22e">c</span>(<span style="color:#a6e22e">rep</span>(<span style="color:#66d9ef">letters</span>, length.out <span style="color:#f92672">=</span> len), <span style="color:#e6db74">&#34;\n&#34;</span>), collapse <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     line <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">charToRaw</span>(line)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     lines <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">rep</span>(line, times <span style="color:#f92672">=</span> n)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     <span style="color:#a6e22e">rawToChar</span>(lines, multiple <span style="color:#f92672">=</span> <span style="color:#66d9ef">FALSE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> }
+</span></span></code></pre></div><p>For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">cat</span>(<span style="color:#a6e22e">lineBuffer</span>(n <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, len <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>))
+</span></span><span style="display:flex;"><span>abcdefghij
+</span></span><span style="display:flex;"><span>abcdefghij
+</span></span></code></pre></div><p>For very long character vectors <code>paste()</code> becomes very slow, which is why <code>rawToChar()</code> is used above.</p>
+<p>Next, lets create a function that measures the processing time for a capture function to capture the output of a given number of lines:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> benchmark <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(fcn, n, len) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lineBuffer</span>(n, len)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     <span style="color:#a6e22e">system.time</span>({
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>         <span style="color:#a6e22e">fcn</span>(<span style="color:#a6e22e">cat</span>(x))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     }, gcFirst <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)[[3]]
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> }
+</span></span></code></pre></div><p>Note that the measured processing time neither includes the creation of the line buffer string nor the garbage collection.</p>
+<p>The functions to be benchmarked are:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> fcns <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>(capture.output <span style="color:#f92672">=</span> capture.output, captureOutput <span style="color:#f92672">=</span> captureOutput)
+</span></span></code></pre></div><p>and we choose to benchmark for outputs with a variety number of lines:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> ns <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">100</span>, <span style="color:#ae81ff">1000</span>, <span style="color:#ae81ff">10000</span>, <span style="color:#ae81ff">25000</span>, <span style="color:#ae81ff">50000</span>, <span style="color:#ae81ff">75000</span>, <span style="color:#ae81ff">1e+05</span>)
+</span></span></code></pre></div><p>Finally, lets benchmark all of the above with lines of length 100 and 1,000 characters:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> benchmarkAll <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(ns, len) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     stats <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(ns, FUN <span style="color:#f92672">=</span> <span style="color:#a6e22e">function</span>(n) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>         <span style="color:#a6e22e">message</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;n=%d&#34;</span>, n))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>         t <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sapply</span>(fcns, FUN <span style="color:#f92672">=</span> benchmark, n <span style="color:#f92672">=</span> n, len <span style="color:#f92672">=</span> len)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>         <span style="color:#a6e22e">data.frame</span>(name <span style="color:#f92672">=</span> <span style="color:#a6e22e">names</span>(t), n <span style="color:#f92672">=</span> n, time <span style="color:#f92672">=</span> <span style="color:#a6e22e">unname</span>(t))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     })
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     <span style="color:#a6e22e">Reduce</span>(rbind, stats)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> stats_100 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">benchmarkAll</span>(ns, len <span style="color:#f92672">=</span> <span style="color:#ae81ff">100L</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> stats_1000 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">benchmarkAll</span>(ns, len <span style="color:#f92672">=</span> <span style="color:#ae81ff">1000L</span>)
+</span></span></code></pre></div><p>The results are:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">n</th>
+<th style="text-align:right">capture.output(100)</th>
+<th style="text-align:right">captureOutput(100)</th>
+<th style="text-align:right">capture.output(1000)</th>
+<th style="text-align:right">captureOutput(1000)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.00</td>
+</tr>
+<tr>
+<td style="text-align:right">10</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.00</td>
+</tr>
+<tr>
+<td style="text-align:right">100</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.01</td>
+<td style="text-align:right">0.00</td>
+</tr>
+<tr>
+<td style="text-align:right">1000</td>
+<td style="text-align:right">0.00</td>
+<td style="text-align:right">0.02</td>
+<td style="text-align:right">0.02</td>
+<td style="text-align:right">0.01</td>
+</tr>
+<tr>
+<td style="text-align:right">10000</td>
+<td style="text-align:right">0.69</td>
+<td style="text-align:right">0.02</td>
+<td style="text-align:right">0.80</td>
+<td style="text-align:right">0.21</td>
+</tr>
+<tr>
+<td style="text-align:right">25000</td>
+<td style="text-align:right">3.18</td>
+<td style="text-align:right">0.05</td>
+<td style="text-align:right">2.99</td>
+<td style="text-align:right">0.57</td>
+</tr>
+<tr>
+<td style="text-align:right">50000</td>
+<td style="text-align:right">11.88</td>
+<td style="text-align:right">0.15</td>
+<td style="text-align:right">10.33</td>
+<td style="text-align:right">1.17</td>
+</tr>
+<tr>
+<td style="text-align:right">75000</td>
+<td style="text-align:right">25.01</td>
+<td style="text-align:right">0.19</td>
+<td style="text-align:right">25.43</td>
+<td style="text-align:right">1.80</td>
+</tr>
+<tr>
+<td style="text-align:right">100000</td>
+<td style="text-align:right">41.73</td>
+<td style="text-align:right">0.24</td>
+<td style="text-align:right">46.34</td>
+<td style="text-align:right">2.41</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table: Benchmarking of <code>captureOutput()</code> and <code>capture.output()</code> for n lines of length 100 and 1,000 characters. All times are in seconds.</em></p>
+<p><img src="https://www.jottr.org/post/captureOutput_vs_capture.output,67760e64d0951ca2124886cd8c257b6c,len=100.png" alt="captureOutput_vs_capture.output">
+<em>Figure: <code>captureOutput()</code> captures standard output much faster than <code>capture.output()</code>.  The processing time for the latter grows exponentially in the number of lines captured whereas for the former it only grows linearly.</em></p>
+<p>These results will vary a little bit from run to run, particularly since we only benchmark once per setting.  This also explains why for some settings the processing time for lines with 1,000 characters appears faster than the corresponding setting with 100 characters.  Averaging over multiple runs would remove this artifact.</p>
+<p><strong>UPDATE:</strong><br>
+2015-02-06: Thanks to Kevin Van Horn for pointing out that the growth of the <code>capture.output()</code> is probably not as extreme as <em>exponential</em> and suggests <em>quadratic</em> growth.</p>
+<h2 id="appendix">Appendix</h2>
+<h3 id="session-information">Session information</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>R version <span style="color:#ae81ff">3.1.0</span> <span style="color:#a6e22e">Patched </span>(<span style="color:#ae81ff">2014-05-21</span> r65711)
+</span></span><span style="display:flex;"><span>Platform<span style="color:#f92672">:</span> x86_64<span style="color:#f92672">-</span>w64<span style="color:#f92672">-</span>mingw32<span style="color:#f92672">/</span><span style="color:#a6e22e">x64 </span>(<span style="color:#ae81ff">64</span><span style="color:#f92672">-</span>bit)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>locale<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>[1] LC_COLLATE<span style="color:#f92672">=</span>English_United States.1252 
+</span></span><span style="display:flex;"><span>[2] LC_CTYPE<span style="color:#f92672">=</span>English_United States.1252   
+</span></span><span style="display:flex;"><span>[3] LC_MONETARY<span style="color:#f92672">=</span>English_United States.1252
+</span></span><span style="display:flex;"><span>[4] LC_NUMERIC<span style="color:#f92672">=</span>C                          
+</span></span><span style="display:flex;"><span>[5] LC_TIME<span style="color:#f92672">=</span>English_United States.1252    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>attached base packages<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>[1] stats     graphics  grDevices utils     datasets  methods   base     
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>other attached packages<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>[1] markdown_0.7      plyr_1.8.1        R.cache_0.9.5     knitr_1.5.26     
+</span></span><span style="display:flex;"><span>[5] ggplot2_1.0.0     R.devices_2.9.2   R.utils_1.32.5    R.oo_1.18.2      
+</span></span><span style="display:flex;"><span>[9] R.methodsS3_1.6.2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>loaded via a <span style="color:#a6e22e">namespace </span>(and not attached)<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span> [1] base64enc_0.1<span style="color:#ae81ff">-1</span>  colorspace_1.2<span style="color:#ae81ff">-4</span> digest_0.6.4     evaluate_0.5.5  
+</span></span><span style="display:flex;"><span> [5] formatR_0.10     grid_3.1.0       gtable_0.1.2     labeling_0.2    
+</span></span><span style="display:flex;"><span> [9] MASS_7.3<span style="color:#ae81ff">-33</span>      mime_0.1.1       munsell_0.4.2    proto_0.3<span style="color:#ae81ff">-10</span>    
+</span></span><span style="display:flex;"><span>[13] R.rsp_0.18.2     Rcpp_0.11.1      reshape2_1.4     scales_0.2.4    
+</span></span><span style="display:flex;"><span>[17] stringr_0.6.2    tools_3.1.0     
+</span></span></code></pre></div><p>Tables were generated using <a href="http://cran.r-project.org/package=plyr">plyr</a> and <a href="http://cran.r-project.org/package=knitr">knitr</a>,
+and graphics using <a href="http://cran.r-project.org/package=ggplot2">ggplot2</a>.</p>
+<h3 id="reproducibility">Reproducibility</h3>
+<p>This report was generated from an RSP-embedded Markdown <a href="https://gist.github.com/HenrikBengtsson/854d13a11a33b3d43ec3/raw/captureOutput.md.rsp">document</a> using <a href="http://cran.r-project.org/package=R.rsp">R.rsp</a> v0.18.2.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/performance/">performance</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r.utils/">R.utils</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/capture.output/">capture.output</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2014/06/17/matrixna-wrong-way/" data-tooltip="Pitfall: Did You Really Mean to Use matrix(nrow, ncol)?">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2013/05/25/trick-fast-rm/" data-tooltip="Speed Trick: Assigning Large Object NULL is Much Faster than using rm()!">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2014/05/26/captureoutput/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2014/05/26/captureoutput/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2014/06/17/matrixna-wrong-way/" data-tooltip="Pitfall: Did You Really Mean to Use matrix(nrow, ncol)?">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2013/05/25/trick-fast-rm/" data-tooltip="Speed Trick: Assigning Large Object NULL is Much Faster than using rm()!">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2014/05/26/captureoutput/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2014/05/26/captureoutput/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2014%2F05%2F26%2Fcaptureoutput%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2014%2F05%2F26%2Fcaptureoutput%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

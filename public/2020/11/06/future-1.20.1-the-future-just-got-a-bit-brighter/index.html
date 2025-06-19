@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &ldquo;tee&rdquo;, any output produced by futures.
+The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.">
+
+
+<meta property="og:description" content="future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &ldquo;tee&rdquo;, any output produced by futures.
+The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="future 1.20.1 - The Future Just Got a Bit Brighter">
+<meta name="twitter:title" content="future 1.20.1 - The Future Just Got a Bit Brighter">
+<meta property="og:url" content="https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/">
+<meta property="twitter:url" content="https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &ldquo;tee&rdquo;, any output produced by futures.
+The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.">
+<meta name="twitter:description" content="future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &ldquo;tee&rdquo;, any output produced by futures.
+The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-11-06T13:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-11-06T13:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="future.batchtools">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallelly">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="parallel-processing">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="progressr">
+    
+      <meta property="article:tag" content="progress-updates">
+    
+      <meta property="article:tag" content="output">
+    
+      <meta property="article:tag" content="standard output">
+    
+      <meta property="article:tag" content="stdout">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>future 1.20.1 - The Future Just Got a Bit Brighter</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      future 1.20.1 - The Future Just Got a Bit Brighter
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-11-06T13:00:00-08:00">
+        
+  November 6, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p><strong><a href="https://cran.r-project.org/package=future">future</a></strong> 1.20.1 is on CRAN.  It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.</p>
+<h1 id="interactive-debugging">Interactive debugging</h1>
+<p>First out among the new features, and a long-running feature request, is the addition of argument <code>split</code> to <code>plan()</code>, which allows us to split, or &ldquo;tee&rdquo;, any output produced by futures.</p>
+<p>The default is <code>split = FALSE</code> for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.e. the captured output is displayed and re-signaled on the main R session when value of the future is queried.  This emulates what we experience in R when not using futures, e.g. we can add temporary <code>print()</code> and <code>message()</code> statements to our code for quick troubleshooting.  You can read more about this in blog post &lsquo;<a href="https://www.jottr.org/2018/07/23/output-from-the-future/">future 1.9.0 - Output from The Future</a>&rsquo;.</p>
+<p>However, if we want to use <code>debug()</code> or <code>browser()</code> for interactive debugging, we quickly realize they&rsquo;re not very useful because no output is visible, which is because also their output is captured by the future.  This is where the new &ldquo;split&rdquo; feature comes to rescue.  By using <code>split = TRUE</code>, the standard output and all non-error conditions are split (&ldquo;tee:d&rdquo;) on the worker&rsquo;s end, while still being captured by the future to be relayed back to the main R session at a later time.  This means that we can debug &lsquo;sequential&rsquo; future interactively.  Here is an illustration of using <code>browser()</code> for debugging a future:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(sequential, split <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> mysqrt <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x) { <span style="color:#a6e22e">browser</span>(); y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">sqrt</span>(x); y }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">mysqrt</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>))
+</span></span><span style="display:flex;"><span>Called from<span style="color:#f92672">:</span> <span style="color:#a6e22e">mysqrt</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>Browse[1]<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">str</span>(x)
+</span></span><span style="display:flex;"><span> int [1<span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>Browse[1]<span style="color:#f92672">&gt;</span> 
+</span></span><span style="display:flex;"><span>debug at <span style="color:#75715e">#1: y &lt;- sqrt(x)</span>
+</span></span><span style="display:flex;"><span>Browse[2]<span style="color:#f92672">&gt;</span> 
+</span></span><span style="display:flex;"><span>debug at <span style="color:#75715e">#1: y</span>
+</span></span><span style="display:flex;"><span>Browse[2]<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">str</span>(y)
+</span></span><span style="display:flex;"><span> num [1<span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1.41</span> <span style="color:#ae81ff">1.73</span>
+</span></span><span style="display:flex;"><span>Browse[2]<span style="color:#f92672">&gt;</span> y[1] <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>Browse[2]<span style="color:#f92672">&gt;</span> cont
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span>Called from<span style="color:#f92672">:</span> <span style="color:#a6e22e">mysqrt</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span> int [1<span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>debug at <span style="color:#75715e">#1: y &lt;- sqrt(x)</span>
+</span></span><span style="display:flex;"><span>debug at <span style="color:#75715e">#1: y</span>
+</span></span><span style="display:flex;"><span> num [1<span style="color:#f92672">:</span><span style="color:#ae81ff">3</span>] <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">1.41</span> <span style="color:#ae81ff">1.73</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">0.000000</span> <span style="color:#ae81ff">1.414214</span> <span style="color:#ae81ff">1.732051</span>
+</span></span></code></pre></div><p><em>Comment</em>: Note how the output produced while debugging is relayed also when <code>value()</code> is called.  This is a somewhat unfortunate side effect from futures capturing <em>all</em> output produced while they are active.</p>
+<h1 id="preserved-logging-on-workers-eg-futurebatchtools">Preserved logging on workers (e.g. future.batchtools)</h1>
+<p>The added support for <code>split = TRUE</code> also means that we can now preserve all output in any log files that might be produced on parallel workers.  For example, if you use <strong><a href="https://cran.r-project.org/package=future.batchtools">future.batchtools</a></strong> on a Slurm scheduler, you can use <code>plan(future.batchtools::batchtools_slurm, split = TRUE)</code> to make sure standard output, messages, warnings, etc. are ending up in the <strong><a href="https://cran.r-project.org/package=batchtools">batchtools</a></strong> log files while still being relayed to the main R session at the end.  This way we can inspect cluster jobs while they still run, among other things.  Here is a proof-of-concept example using a &lsquo;batchtools_local&rsquo; future:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(future.batchtools)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(batchtools_local, split <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>({ <span style="color:#a6e22e">message</span>(<span style="color:#e6db74">&#34;Hello world&#34;</span>); y <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">42</span>; <span style="color:#a6e22e">print</span>(y); <span style="color:#a6e22e">sqrt</span>(y) })
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span>Hello world
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">6.480741</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">loggedOutput</span>(f)
+</span></span><span style="display:flex;"><span> [1] <span style="color:#e6db74">&#34;### [bt]: This is batchtools v0.9.14&#34;</span>                                 
+</span></span><span style="display:flex;"><span> [2] <span style="color:#e6db74">&#34;### [bt]: Starting calculation of 1 jobs&#34;</span>                             
+</span></span><span style="display:flex;"><span> [3] <span style="color:#e6db74">&#34;### [bt]: Setting working directory to &#39;/home/alice/repositories/future&#39;&#34;</span>
+</span></span><span style="display:flex;"><span> [4] <span style="color:#e6db74">&#34;### [bt]: Memory measurement disabled&#34;</span>                                
+</span></span><span style="display:flex;"><span> [5] <span style="color:#e6db74">&#34;### [bt]: Starting job [batchtools job.id=1]&#34;</span>                         
+</span></span><span style="display:flex;"><span> [6] <span style="color:#e6db74">&#34;### [bt]: Setting seed to 15794 ...&#34;</span>                                  
+</span></span><span style="display:flex;"><span> [7] <span style="color:#e6db74">&#34;Hello world&#34;</span>                                                          
+</span></span><span style="display:flex;"><span> [8] <span style="color:#e6db74">&#34;[1] 42&#34;</span>                                                               
+</span></span><span style="display:flex;"><span> [9] <span style="color:#e6db74">&#34;&#34;</span>                                                                     
+</span></span><span style="display:flex;"><span>[10] <span style="color:#e6db74">&#34;### [bt]: Job terminated successfully [batchtools job.id=1]&#34;</span>          
+</span></span><span style="display:flex;"><span>[11] <span style="color:#e6db74">&#34;### [bt]: Calculation finished!&#34;</span>  
+</span></span></code></pre></div><p>Without <code>split = TRUE</code>, we would not get lines 7 and 8 in the <strong>batchtools</strong> logs.</p>
+<h1 id="near-live-progress-updates-also-from-multicore-futures">Near-live progress updates also from &lsquo;multicore&rsquo; futures</h1>
+<p>Second out among the new features is &lsquo;multicore&rsquo; futures, which now join &lsquo;sequential&rsquo;, &lsquo;multisession&rsquo;, and (local and remote) &lsquo;cluster&rsquo; futures in the ability of relaying progress updates of <strong><a href="https://cran.r-project.org/package=progressr">progressr</a></strong> in a near-live fashion.  This means that all of our most common parallelization backends support near-live progress updates.  If this is the first time you hear of <strong>progressr</strong>, here&rsquo;s an example of how it can be used in parallel processing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future.apply)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multicore)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(progressr)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">handlers</span>(<span style="color:#e6db74">&#34;progress&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>xs <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">with_progress</span>({
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">progressor</span>(along <span style="color:#f92672">=</span> xs)
+</span></span><span style="display:flex;"><span>  y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future_lapply</span>(xs, <span style="color:#a6e22e">function</span>(x, <span style="color:#66d9ef">...</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Sys.sleep</span>(<span style="color:#ae81ff">6.0</span><span style="color:#f92672">-</span>x)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;x=%g&#34;</span>, x))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># [=================&gt;------------------------------]  40% x=2</span>
+</span></span></code></pre></div><p>Note that the progress updates signaled by <code>p()</code>, updates the progress bar almost instantly, even if the parallel workers run on a remote machine.</p>
+<h1 id="multisession-futures-agile-to-changes-in-rs-library-path">Multisession futures agile to changes in R&rsquo;s library path</h1>
+<p>Third out is &lsquo;multisession&rsquo; futures.  It now automatically inherits the package library path from the main R session.  For instance, if you use <code>.libPaths()</code> to adjust your library path and <em>then</em> call <code>plan(multisession)</code>, the multisession workers will see the same packages as the parent session.  This change is based on a feature request related to RStudio Connect.  With this update, it no longer matters which type of local futures you use - &lsquo;sequential&rsquo;, &lsquo;multisession&rsquo;, or &lsquo;multicore&rsquo; - your future code has access to the same set of installed packages.</p>
+<p>As a proof of concept, assume that we add <code>tempdir()</code> as a new folder to R&rsquo;s library path;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">.libPaths</span>(<span style="color:#a6e22e">c</span>(<span style="color:#a6e22e">tempdir</span>(), <span style="color:#a6e22e">.libPaths</span>()))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">.libPaths</span>()
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;/tmp/alice/RtmpwLKdrG&#34;</span>
+</span></span><span style="display:flex;"><span>[2] <span style="color:#e6db74">&#34;/home/alice/R/x86_64-pc-linux-gnu-library/4.0-custom&#34;</span>   
+</span></span><span style="display:flex;"><span>[3] <span style="color:#e6db74">&#34;/home/alice/software/R-devel/tags/R-4-0-3/lib/R/library&#34;</span>
+</span></span></code></pre></div><p>If we then launch a &lsquo;multisession&rsquo; future, we find that it uses the same library path;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(multisession)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">.libPaths</span>())
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;/tmp/alice/RtmpwLKdrG&#34;</span>
+</span></span><span style="display:flex;"><span>[2] <span style="color:#e6db74">&#34;/home/alice/R/x86_64-pc-linux-gnu-library/4.0-custom&#34;</span>   
+</span></span><span style="display:flex;"><span>[3] <span style="color:#e6db74">&#34;/home/alice/software/R-devel/tags/R-4-0-3/lib/R/library&#34;</span>
+</span></span></code></pre></div><h1 id="best-practices-for-package-developers">Best practices for package developers</h1>
+<p>I&rsquo;ve added a vignette &lsquo;<a href="https://cran.r-project.org/web/packages/future/vignettes/future-7-for-package-developers.html">Best Practices for Package Developers</a>&rsquo;, which hopefully provides some useful guidelines on how to write and validate future code so it will work on as many parallel backends as possible.</p>
+<h1 id="saying-goodbye-to-multiprocess---but-dont-worry-">Saying goodbye to &lsquo;multiprocess&rsquo; - but don&rsquo;t worry &hellip;</h1>
+<p>Ok, lets discuss what is being removed.  Using <code>plan(multiprocess)</code>, which was just an alias for &ldquo;<code>plan(multicore)</code> on Linux and macOS and <code>plan(multisession)</code> on MS Windows&rdquo;, is now deprecated.  If used, you will get a one-time warning:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(multiprocess)
+</span></span><span style="display:flex;"><span>Warning message<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>Strategy <span style="color:#e6db74">&#39;multiprocess&#39;</span> is deprecated in <span style="color:#a6e22e">future </span>(<span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1.20.0</span>). Instead, explicitly
+</span></span><span style="display:flex;"><span>specify either <span style="color:#e6db74">&#39;multisession&#39;</span> or <span style="color:#e6db74">&#39;multicore&#39;</span>. In the current R session,
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;multiprocess&#39;</span> equals <span style="color:#e6db74">&#39;multicore&#39;</span>.
+</span></span></code></pre></div><p>I recommend that you use <code>plan(multisession)</code> as a replacement for <code>plan(multiprocess)</code>.   If you are on Linux or macOS, and are 100% sure that your code and all its dependencies is fork-safe, then you can also use <code>plan(multicore)</code>.</p>
+<p>Although &lsquo;multiprocess&rsquo; was neat to use in documentation and examples, it was at the same time ambiguous, and it risked introducing a platform-dependent behavior to those examples.  For instance, it could be that the parallel code worked only for users on Linux and macOS because some non-exportable globals were used.  If a user or MS Windows tried the same code, they might have gotten run-time errors.  Vice versa, it could also be that code works on MS Windows but not on Linux or macOS.  Moreover, in <strong>future</strong> 1.13.0 (2019-05-08), support for &lsquo;multicore&rsquo; futures was disabled when running R via RStudio.  This was done because forked parallel processing was deemed unstable in RStudio.  This meant that a user on macOS who used <code>plan(multiprocess)</code> would end up getting &lsquo;multicore&rsquo; futures when running in the terminal while getting &lsquo;multisession&rsquo; futures when running in RStudio.  These types of platform-specific, environment-specific user experiences were confusing and complicates troubleshooting and communications, which is why it was decided to move away from &lsquo;multiprocess&rsquo; in favor of explicitly specifying &lsquo;multisession&rsquo; or &lsquo;multicore&rsquo;.</p>
+<h1 id="saying-goodbye-to-local--false---a-good-thing">Saying goodbye to &rsquo;local = FALSE&rsquo; - a good thing</h1>
+<p>In an effort of refining the Future API, the use of <code>future(..., local = FALSE)</code> is now deprecated.  The only place where it is still supported, for backward compatible reason, is when using &lsquo;cluster&rsquo; futures that are persistent, i.e. <code>plan(cluster, ..., persistent = TRUE)</code>.  If you use the latter, I recommended that you start thinking about moving away from using <code>local = FALSE</code> also in those cases.  Although <code>persistent = TRUE</code> is rarely used, I am aware that some of you got use cases that require objects to remain on the parallel workers also after a future has been resolved.  If you have such needs, please see <a href="https://github.com/HenrikBengtsson/future/issues/433">future Issue #433</a>, particularly the parts on &ldquo;sticky globals&rdquo;.  Feel free to add your comments and suggestions for how we best could move forward on this.  The long-term goals is to get rid of both <code>local</code> and <code>persistent</code> in order to harmonize the Future API across <em>all</em> future backends.</p>
+<p>For recent bug fixes, please see the package <a href="https://cran.r-project.org/web/packages/future/NEWS">NEWS</a>.</p>
+<h1 id="whats-on-the-horizon">What&rsquo;s on the horizon?</h1>
+<p>There are still lots of things on the roadmap.  In no specific order, here are the few things in the works:</p>
+<ul>
+<li>
+<p>Sticky globals for caching globals on workers.  This will decrease the number of globals that need to be exported when launching futures.  It addresses several related feature requests, e.g. future Issues <a href="https://github.com/HenrikBengtsson/future/issues/273">#273</a>, <a href="https://github.com/HenrikBengtsson/future/issues/339">#339</a>, <a href="https://github.com/HenrikBengtsson/future/issues/346">#346</a>, <a href="https://github.com/HenrikBengtsson/future/issues/431">#431</a>, and <a href="https://github.com/HenrikBengtsson/future/issues/437">#437</a>.</p>
+</li>
+<li>
+<p>Ability to terminate futures (for backends supporting it), which opens up for the possibility of restarting failed futures and more.  This is a frequently requested feature, e.g. Issues <a href="https://github.com/HenrikBengtsson/future/issues/93">#93</a>, <a href="https://github.com/HenrikBengtsson/future/issues/188">#188</a>, <a href="https://github.com/HenrikBengtsson/future/issues/205">#205</a>, <a href="https://github.com/HenrikBengtsson/future/issues/213">#213</a>, and <a href="https://github.com/HenrikBengtsson/future/issues/236">#236</a>.</p>
+</li>
+<li>
+<p>Optional, zero-cost generic hook function.  Having them in place opens up for adding a framework for doing time-and-memory profiling/benchmarking futures and their backends.  Being able profile futures and their backends will help identify bottlenecks and improve the performance on some of our parallel backends, e.g. Issues <a href="https://github.com/HenrikBengtsson/future/issues/49">#59</a>, <a href="https://github.com/HenrikBengtsson/future/issues/142">#142</a>, <a href="https://github.com/HenrikBengtsson/future/issues/239">#239</a>, and <a href="https://github.com/HenrikBengtsson/future/issues/437">#437</a>.</p>
+</li>
+<li>
+<p>Add support for global calling handlers in <strong>progressr</strong>.  This is not specific to the future framework but since its closely related, I figured I mention this here too.  A global calling handler for progress updates would remove the need for having to use <code>with_progress()</code> when monitoring progress.  This would also help resolve the common problem where package developers want to provide progress updates without having to ask the user to use <code>with_progress()</code>, e.g. <strong>progressr</strong> Issues <a href="https://github.com/HenrikBengtsson/progressr/issues/78">#78</a>, <a href="https://github.com/HenrikBengtsson/progressr/issues/83">#83</a>, and <a href="https://github.com/HenrikBengtsson/progressr/issues/85">#85</a>.</p>
+</li>
+</ul>
+<p>That&rsquo;s all for now - Happy futuring!</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a></li>
+<li><strong>future.batchtools</strong> package: <a href="https://cran.r-project.org/package=future.batchtools">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future.batchtools">GitHub</a></li>
+<li><strong>progressr</strong> package: <a href="https://cran.r-project.org/package=progressr">CRAN</a>, <a href="https://github.com/HenrikBengtsson/progressr">GitHub</a></li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://www.jottr.org/2016/10/22/future-hpc/">High-Performance Compute in R Using Futures</a>, 2016-10-22</li>
+<li><a href="https://www.jottr.org/2018/07/23/output-from-the-future/">future 1.9.0 - Output from The Future</a>, 2018-07-23</li>
+<li><a href="https://www.jottr.org/2020/07/04/progressr-erum2020-slides/">e-Rum 2020 Slides on Progressr</a>, 2020-07-04</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.batchtools/">future.batchtools</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallelly/">parallelly</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel-processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/progressr/">progressr</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/progress-updates/">progress-updates</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/output/">output</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/standard-output/">standard output</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/stdout/">stdout</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/11/12/future-nycmeetup-slides/" data-tooltip="NYC R Meetup: Slides on Future">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/" data-tooltip="parallelly, future - Cleaning Up Around the House">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/11/12/future-nycmeetup-slides/" data-tooltip="NYC R Meetup: Slides on Future">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/" data-tooltip="parallelly, future - Cleaning Up Around the House">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2020%2F11%2F06%2Ffuture-1.20.1-the-future-just-got-a-bit-brighter%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2020%2F11%2F06%2Ffuture-1.20.1-the-future-just-got-a-bit-brighter%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

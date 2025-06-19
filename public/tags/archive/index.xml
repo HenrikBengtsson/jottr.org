@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>archive on JottR</title>
+    <link>https://www.jottr.org/tags/archive/</link>
+    <description>Recent content in archive on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Jan 2021 09:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/archive/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future.BatchJobs - End-of-Life Announcement</title>
+      <link>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</guid>
+      <description>This is an announcement that future.BatchJobs - A Future API for Parallel and Distributed Processing using BatchJobs has been archived on CRAN. The package has been deprecated for years with a recommendation of using future.batchtools instead. The latter has been on CRAN since June 2017 and builds upon the batchtools package, which itself supersedes the BatchJobs package.
+To wrap up the three-and-a-half year long life of future.BatchJobs, the very last version, 0.</description>
+    </item>
+    
+  </channel>
+</rss>

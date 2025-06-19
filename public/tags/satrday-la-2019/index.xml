@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>satRday LA 2019 on JottR</title>
+    <link>https://www.jottr.org/tags/satrday-la-2019/</link>
+    <description>Recent content in satRday LA 2019 on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 16 May 2019 12:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/satrday-la-2019/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SatRday LA 2019 Slides on Futures</title>
+      <link>https://www.jottr.org/2019/05/16/future-satrdayla2019-slides/</link>
+      <pubDate>Thu, 16 May 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/05/16/future-satrdayla2019-slides/</guid>
+      <description>A bit late but here are my slides on Future: Friendly Parallel Processing in R for Everyone that I presented at the satRday LA 2019 conference in Los Angeles, CA, USA on April 6, 2019.
+My talk (33 slides; ~45 minutes):
+Title: : Friendly Parallel and Distributed Processing in R for Everyone HTML (incremental slides; requires online access) PDF (flat slides) Video (44 min; YouTube; sorry, different page numbers) Thank you all for making this a stellar satRday event.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>unlist on JottR</title>
+    <link>https://www.jottr.org/tags/unlist/</link>
+    <description>Recent content in unlist on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 07 Jan 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/unlist/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Speed Trick: unlist(..., use.names=FALSE) is Heaps Faster!</title>
+      <link>https://www.jottr.org/2013/01/07/trick-unlist/</link>
+      <pubDate>Mon, 07 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2013/01/07/trick-unlist/</guid>
+      <description>Sometimes a minor change to your R code can make a big difference in processing time. Here is an example showing that if you&amp;rsquo;re don&amp;rsquo;t care about the names attribute when unlist():ing a list, specifying argument use.names = FALSE can speed up the processing lots!
+&amp;gt; x &amp;lt;- split(sample(1000, size = 1e6, rep = TRUE), rep(1:1e5, times = 10)) &amp;gt; t1 &amp;lt;- system.time(y1 &amp;lt;- unlist(x)) &amp;gt; t2 &amp;lt;- system.time(y2 &amp;lt;- unlist(x, use.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>compute clusters on JottR</title>
+    <link>https://www.jottr.org/tags/compute-clusters/</link>
+    <description>Recent content in compute clusters on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/compute-clusters/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely</title>
+      <link>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</guid>
+      <description>parallelly 1.36.0 is on CRAN since May 2023. The parallelly package is part of the Futureverse and enhances the parallel package of base R, e.g. it adds several features you&amp;rsquo;d otherwise expect to see in parallel. The parallelly package is one of the internal work horses for the future package, but it can also be used outside of the future ecosystem.
+In this most recent release, parallelly gained several new skills in how cluster nodes (a.</description>
+    </item>
+    
+    <item>
+      <title>%dofuture% - a Better foreach() Parallelization Operator than %dopar%</title>
+      <link>https://www.jottr.org/2023/06/26/dofuture/</link>
+      <pubDate>Mon, 26 Jun 2023 19:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2023/06/26/dofuture/</guid>
+      <description>doFuture 1.0.0 is on CRAN since March 2023. It introduces a new foreach operator %dofuture%, which makes it even easier to use foreach() to parallelize via the future ecosystem. This new operator is designed to be an alternative to the existing %dopar% operator for foreach() - an alternative that works in similar ways but better. If you already use foreach() together with futures, or plan on doing so, I recommend using %dofuture% instead of %dopar%.</description>
+    </item>
+    
+    <item>
+      <title>Edmonton R User Group Meetup: Futureverse - A Unifying Parallelization Framework in R for Everyone</title>
+      <link>https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/</guid>
+      <description> Below are the slides from my presentation at the Edmonton R User Group Meetup (YEGRUG) on May 22, 2023:
+Title: Futureverse - A Unifying Parallelization Framework in R for Everyone
+Speaker: Henrik Bengtsson
+Slides: HTML, PDF (46 slides)
+Video: official recording (~60 minutes)
+Thank you Péter Sólymos and the YEGRUG for the invitate and the opportunity!
+/Henrik
+Links YEGRUG: https://yegrug.github.io/ Futureverse website: https://www.futureverse.org/ future package CRAN, GitHub, pkgdown </description>
+    </item>
+    
+    <item>
+      <title>Please Avoid detectCores() in your R Packages</title>
+      <link>https://www.jottr.org/2022/12/05/avoid-detectcores/</link>
+      <pubDate>Mon, 05 Dec 2022 21:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2022/12/05/avoid-detectcores/</guid>
+      <description>The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&amp;rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.</description>
+    </item>
+    
+    <item>
+      <title>useR! 2022: My &#39;Futureverse: Profile Parallel Code&#39; Slides</title>
+      <link>https://www.jottr.org/2022/06/23/future-user2022-slides/</link>
+      <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/06/23/future-user2022-slides/</guid>
+      <description>Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+Title: Futureverse: Profile Parallel Code
+Speaker: Henrik Bengtsson
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
+Slides: HTML, PDF (24 slides)
+Video: official recording (27m30s long starting at 42m10s)
+Abstract:
+&amp;ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.</description>
+    </item>
+    
+    <item>
+      <title>parallelly, future - Cleaning Up Around the House</title>
+      <link>https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/</link>
+      <pubDate>Wed, 04 Nov 2020 18:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/</guid>
+      <description>I&amp;rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&amp;rsquo;re like me and concerned about bloating package dependencies, I&amp;rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&amp;rsquo;ll try to explain this below, but let me be start by clarifying a few things:
+The functions in the parallelly package used to be part of the future package</description>
+    </item>
+    
+    <item>
+      <title>future and future.apply - Some Recent Improvements</title>
+      <link>https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/</link>
+      <pubDate>Sat, 11 Jul 2020 22:15:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/</guid>
+      <description>There are new versions of future and future.apply - your friends in the parallelization business - on CRAN. These updates are mostly maintenance updates with bug fixes, some improvements, and preparations for upcoming changes. It&amp;rsquo;s been some time since I blogged about these packages, so here is the summary of the main updates this far since early 2020:
+future:
+values() for lists and other containers was renamed to value() to simplify the API [future 1.</description>
+    </item>
+    
+    <item>
+      <title>rstudio::conf 2020 Slides on Futures</title>
+      <link>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</link>
+      <pubDate>Sat, 01 Feb 2020 19:30:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</guid>
+      <description>I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
+HTML (incremental Google Slides; requires online access) PDF (flat slides) Video with closed captions (official rstudio::conf recording) First of all, a big thank you goes out to Dan LaBar (@embiggenData) for proposing and contributing the original design of the future hex sticker.</description>
+    </item>
+    
+    <item>
+      <title>future 1.15.0 - Lazy Futures are Now Launched if Queried</title>
+      <link>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</link>
+      <pubDate>Sat, 09 Nov 2019 11:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
+      <description>No dogs were harmed while making this release
+future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
+Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+    </item>
+    
+    <item>
+      <title>useR! 2019 Slides on Futures</title>
+      <link>https://www.jottr.org/2019/07/12/future-user2019-slides/</link>
+      <pubDate>Fri, 12 Jul 2019 16:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2019/07/12/future-user2019-slides/</guid>
+      <description>Below are the slides for my Future: Simple Parallel and Distributed Processing in R that I presented at the useR! 2019 conference in Toulouse, France on July 9-12, 2019.
+My talk (25 slides; ~15+3 minutes):
+Title: Future: Simple Parallel and Distributed Processing in R HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (official recording) I want to send out a big thank you to everyone making the useR!</description>
+    </item>
+    
+    <item>
+      <title>SatRday LA 2019 Slides on Futures</title>
+      <link>https://www.jottr.org/2019/05/16/future-satrdayla2019-slides/</link>
+      <pubDate>Thu, 16 May 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/05/16/future-satrdayla2019-slides/</guid>
+      <description>A bit late but here are my slides on Future: Friendly Parallel Processing in R for Everyone that I presented at the satRday LA 2019 conference in Los Angeles, CA, USA on April 6, 2019.
+My talk (33 slides; ~45 minutes):
+Title: : Friendly Parallel and Distributed Processing in R for Everyone HTML (incremental slides; requires online access) PDF (flat slides) Video (44 min; YouTube; sorry, different page numbers) Thank you all for making this a stellar satRday event.</description>
+    </item>
+    
+    <item>
+      <title>SatRday Paris 2019 Slides on Futures</title>
+      <link>https://www.jottr.org/2019/03/07/future-satrdayparis2019-slides/</link>
+      <pubDate>Thu, 07 Mar 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/03/07/future-satrdayparis2019-slides/</guid>
+      <description>Below are links to my slides from my talk on Future: Friendly Parallel Processing in R for Everyone that I presented last month at the satRday Paris 2019 conference in Paris, France (February 23, 2019).
+My talk (32 slides; ~40 minutes):
+Title: Future: Friendly Parallel Processing in R for Everyone HTML (incremental slides; requires online access) PDF (flat slides) A big shout out to the organizers, all the volunteers, and everyone else for making it a great satRday.</description>
+    </item>
+    
+    <item>
+      <title>Maintenance Updates of Future Backends and doFuture</title>
+      <link>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</guid>
+      <description>New versions of the following future backends are available on CRAN:
+future.callr - parallelization via callr, i.e. on the local machine future.batchtools - parallelization via batchtools, i.e. on a compute cluster with job schedulers (SLURM, SGE, Torque/PBS, etc.) but also on the local machine future.BatchJobs - (maintained for legacy reasons) parallelization via BatchJobs, which is the predecessor of batchtools These releases fix a few small bugs and inconsistencies that were identified with help of the future.</description>
+    </item>
+    
+    <item>
+      <title>future 1.9.0 - Output from The Future</title>
+      <link>https://www.jottr.org/2018/07/23/output-from-the-future/</link>
+      <pubDate>Mon, 23 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/07/23/output-from-the-future/</guid>
+      <description>future 1.9.0 - Unified Parallel and Distributed Processing in R for Everyone - is on CRAN. This is a milestone release:
+Standard output is now relayed from futures back to the master R session - regardless of where the futures are processed!
+Disclaimer: A future&amp;rsquo;s output is relayed only after it is resolved and when its value is retrieved by the master R process. In other words, the output is not streamed back in a &amp;ldquo;live&amp;rdquo; fashion as it is produced.</description>
+    </item>
+    
+    <item>
+      <title>future.apply - Parallelize Any Base R Apply Function</title>
+      <link>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</guid>
+      <description>Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &amp;hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&amp;rsquo;s it! The default is sequential processing but by using plan(multisession) it&amp;rsquo;ll run in parallel.</description>
+    </item>
+    
+    <item>
+      <title>Delayed Future(Slides from eRum 2018)</title>
+      <link>https://www.jottr.org/2018/06/18/future-erum2018-slides/</link>
+      <pubDate>Mon, 18 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/06/18/future-erum2018-slides/</guid>
+      <description>As promised - though a bit delayed - below are links to my slides and the video of my talk on Future: Parallel &amp;amp; Distributed Processing in R for Everyone that I presented last month at the eRum 2018 conference in Budapest, Hungary (May 14-16, 2018).
+The conference was very well organized (thank you everyone involved) with a great lineup of several brilliant workshop sessions, talks, and poster presentations (thanks all).</description>
+    </item>
+    
+    <item>
+      <title>future 1.8.0: Preparing for a Shiny Future</title>
+      <link>https://www.jottr.org/2018/04/12/future-results/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/12/future-results/</guid>
+      <description>future 1.8.0 is available on CRAN.
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more. These features are not yet available out of the box, but thanks to this release we will be able to make some headway on many of the feature requests related to this - hopefully already by the next release.
+For shiny users following Joe Cheng&amp;rsquo;s efforts on extending Shiny with asynchronous processing using futures, future 1.</description>
+    </item>
+    
+    <item>
+      <title>The Many-Faced Future</title>
+      <link>https://www.jottr.org/2017/06/05/many-faced-future/</link>
+      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/06/05/many-faced-future/</guid>
+      <description>The future package defines the Future API, which is a unified, generic, friendly API for parallel processing. The Future API follows the principle of write code once and run anywhere - the developer chooses what to parallelize and the user how and where.
+The nature of a future is such that it lends itself to be used with several of the existing map-reduce frameworks already available in R. In this post, I&amp;rsquo;ll give an example of how to apply a function over a set of elements concurrently using plain sequential R, the parallel package, the future package alone, as well as future in combination of the foreach, the plyr, and the purrr packages.</description>
+    </item>
+    
+    <item>
+      <title>doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000&#43; Packages</title>
+      <link>https://www.jottr.org/2017/03/18/dofuture/</link>
+      <pubDate>Sat, 18 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/03/18/dofuture/</guid>
+      <description>doFuture 0.4.0 is available on CRAN. The doFuture package provides a universal foreach adaptor enabling any future backend to be used with the foreach() %dopar% { ... } construct. As shown below, this will allow foreach() to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+1,300+ R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.</description>
+    </item>
+    
+    <item>
+      <title>future 1.3.0: Reproducible RNGs, future_lapply() and More</title>
+      <link>https://www.jottr.org/2017/02/19/future-rng/</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/02/19/future-rng/</guid>
+      <description>future 1.3.0 is available on CRAN. With futures, it is easy to write R code once, which the user can choose to evaluate in parallel using whatever resources s/he has available, e.g. a local machine, a set of local machines, a set of remote machines, a high-end compute cluster (via future.BatchJobs and soon also future.batchtools), or in the cloud (e.g. via googleComputeEngineR).
+Futures makes it easy to harness any resources at hand.</description>
+    </item>
+    
+  </channel>
+</rss>

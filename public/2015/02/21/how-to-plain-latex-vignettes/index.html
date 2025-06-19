@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="Ever wanted to include a plain-LaTeX vignette in your package and have it compiled into a PDF? The R.rsp package provides a four-line solution for this.
+But, first, what&rsquo;s R.rsp? R.rsp is an R package that implements a compiler for the RSP markup language. RSP can be used to embed dynamic R code in any text-based source document to be compiled into a final document, e.g. RSP-embedded LaTeX into PDF, RSP-embedded Markdown into HTML, RSP-embedded HTML into HTML and so on.">
+
+
+<meta property="og:description" content="Ever wanted to include a plain-LaTeX vignette in your package and have it compiled into a PDF? The R.rsp package provides a four-line solution for this.
+But, first, what&rsquo;s R.rsp? R.rsp is an R package that implements a compiler for the RSP markup language. RSP can be used to embed dynamic R code in any text-based source document to be compiled into a final document, e.g. RSP-embedded LaTeX into PDF, RSP-embedded Markdown into HTML, RSP-embedded HTML into HTML and so on.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to: Package Vignettes in Plain LaTeX">
+<meta name="twitter:title" content="How to: Package Vignettes in Plain LaTeX">
+<meta property="og:url" content="https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/">
+<meta property="twitter:url" content="https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="Ever wanted to include a plain-LaTeX vignette in your package and have it compiled into a PDF? The R.rsp package provides a four-line solution for this.
+But, first, what&rsquo;s R.rsp? R.rsp is an R package that implements a compiler for the RSP markup language. RSP can be used to embed dynamic R code in any text-based source document to be compiled into a final document, e.g. RSP-embedded LaTeX into PDF, RSP-embedded Markdown into HTML, RSP-embedded HTML into HTML and so on.">
+<meta name="twitter:description" content="Ever wanted to include a plain-LaTeX vignette in your package and have it compiled into a PDF? The R.rsp package provides a four-line solution for this.
+But, first, what&rsquo;s R.rsp? R.rsp is an R package that implements a compiler for the RSP markup language. RSP can be used to embed dynamic R code in any text-based source document to be compiled into a final document, e.g. RSP-embedded LaTeX into PDF, RSP-embedded Markdown into HTML, RSP-embedded HTML into HTML and so on.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2015-02-21T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2015-02-21T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="R.rsp">
+    
+      <meta property="article:tag" content="vignette">
+    
+      <meta property="article:tag" content="LaTeX">
+    
+      <meta property="article:tag" content="PDF">
+    
+      <meta property="article:tag" content="CRAN">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>How to: Package Vignettes in Plain LaTeX</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      How to: Package Vignettes in Plain LaTeX
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2015-02-21T00:00:00Z">
+        
+  February 21, 2015
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>Ever wanted to include a plain-LaTeX vignette in your package and have it compiled into a PDF?  The <a href="http://cran.r-project.org/package=R.rsp">R.rsp</a> package provides a four-line solution for this.</p>
+<p><em>But, first, what&rsquo;s R.rsp?</em>  R.rsp is an R package that implements a compiler for the RSP markup language.  RSP can be used to embed dynamic R code in <em>any</em> text-based source document to be compiled into a final document, e.g. RSP-embedded LaTeX into PDF, RSP-embedded Markdown into HTML, RSP-embedded HTML into HTML and so on.  The package provides a set of <em>vignette engines</em> making it straightforward to use RSP in vignettes and there are also other vignette engines to, for instance, include static PDF vignettes.  Starting with R.rsp v0.20.0 (on CRAN), a vignette engine for including plain LaTeX-based vignettes is also available.  The R.rsp package installs out-of-the-box on all common operating systems, including Linux, OS X and Windows.  Its source code is available on <a href="https://github.com/HenrikBengtsson/R.rsp">GitHub</a>.</p>
+<p><img src="https://www.jottr.org/post/Writing_ball_keyboard_3.jpg" alt="A Hansen writing ball - a keyboard invented by Rasmus Malling-Hansen in 1865"></p>
+<h2 id="steps-to-include-a-latex-vignettes-in-your-package">Steps to include a LaTeX vignettes in your package</h2>
+<ol>
+<li>
+<p>Place your LaTeX file in the <code>vignettes/</code> directory of your package.  If it needs other files such as image files, place those under this directory too.</p>
+</li>
+<li>
+<p>Rename the file to have filename extension *.ltx, e.g. vignettes/UsingYadayada.ltx(*)</p>
+</li>
+<li>
+<p>Add the following meta directives at the top of the LaTeX file:<br>
+<code>%\VignetteIndexEntry{Using Yadayada}</code><br>
+<code>%\VignetteEngine{R.rsp::tex}</code></p>
+</li>
+<li>
+<p>Add the following to your <code>DESCRIPTION</code> file:<br>
+<code>Suggests: R.rsp</code><br>
+<code>VignetteBuilder: R.rsp</code></p>
+</li>
+</ol>
+<p>That&rsquo;s all!</p>
+<p>When you run <code>R CMD build</code>, the <code>R.rsp::tex</code> vignette engine will compile your LaTeX vignette into a PDF and make it part of your package&rsquo;s *.tar.gz file.  As for any vignette engine, the PDF will be placed in the <code>inst/doc/</code> directory of the *.tar.gz file, ready to be installed together with your package.  Users installing your package will <em>not</em> have to install R.rsp.</p>
+<p>If this is your first package vignette ever, you should know that you are now only baby steps away from writing your first &ldquo;dynamic&rdquo; vignette using Sweave, <a href="http://cran.r-project.org/package=knitr">knitr</a> or RSP.  For RSP-embedded LaTeX vignettes, change the engine to <code>R.rsp::rsp</code>, rename the file to <code>*.ltx.rsp</code> (or <code>*.tex.rsp</code>) and start embedding R code in the LaTeX file, e.g. &lsquo;The p-value is &lt;%= signif(p, 2) %&gt;`.</p>
+<p><em>Footnote:</em> (*) If one uses filename extension <code>*.tex</code>, then <code>R CMD check</code> will give a <em>false</em> NOTE about the file &ldquo;should probably not be installed&rdquo;.  Using extension <code>*.ltx</code>, which is an official LaTeX extension, avoids this issue.</p>
+<h3 id="why-not-use-sweave">Why not use Sweave?</h3>
+<p>It has always been possible to &ldquo;hijack&rdquo; the Sweave vignette engine to achieve the same thing by renaming the filename extension to <code>*.Rnw</code> and including the proper <code>\VignetteIndexEntry</code> markup.  This would trick R to compile it as an Sweave vignette (without Sweave markup) resulting in a PDF, which in practice would work as a plain LaTeX-to-PDF compiler.  The <code>R.rsp::tex</code> engine achieves the same without the &ldquo;hack&rdquo; and without the Sweave machinery.</p>
+<h3 id="static-pdfs">Static PDFs?</h3>
+<p>If you want to use a &ldquo;static&rdquo; pre-generated PDF as a package vignette that can also be achieved in a few step using the <code>R.rsp::asis</code> vignette engine.   There is an R.rsp <a href="http://cran.r-project.org/package=R.rsp">vignette</a> explaining how to do this, but please consider alternatives that compile from source before doing this.  Also, vignettes without full source may not be accepted by CRAN.  A LaTeX vignette does not have this problem.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>CRAN page: <a href="http://cran.r-project.org/package=R.rsp">http://cran.r-project.org/package=R.rsp</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/R.rsp">https://github.com/HenrikBengtsson/R.rsp</a></li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r.rsp/">R.rsp</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/vignette/">vignette</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/latex/">LaTeX</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/pdf/">PDF</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/cran/">CRAN</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2015/03/12/matrixstats-gsoc/" data-tooltip="To Students: matrixStats for Google Summer of Code">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2015/01/25/matrixstats-0.13.1/" data-tooltip="Package: matrixStats 0.13.1 - Methods that Apply to Rows and Columns of a Matrix (and Vectors)">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2015/03/12/matrixstats-gsoc/" data-tooltip="To Students: matrixStats for Google Summer of Code">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2015/01/25/matrixstats-0.13.1/" data-tooltip="Package: matrixStats 0.13.1 - Methods that Apply to Rows and Columns of a Matrix (and Vectors)">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2015%2F02%2F21%2Fhow-to-plain-latex-vignettes%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2015%2F02%2F21%2Fhow-to-plain-latex-vignettes%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

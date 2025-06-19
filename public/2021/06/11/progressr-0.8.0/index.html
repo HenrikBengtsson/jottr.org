@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="progressr 0.8.0 is on CRAN. It comes with some new features:
+A new &lsquo;rstudio&rsquo; handler that reports on progress via the RStudio job interface in RStudio withProgressShiny() now updates the detail part, instead of the message part In addition to signalling relative amounts of progress, it&rsquo;s now also possible to signal total amounts If you&rsquo;re curious what progressr is about, have a look at my e-Rum 2020 presentation.
+Progress updates in RStudio&rsquo;s job interface If you&rsquo;re using RStudio Console, you can now report on progress in the RStudio&rsquo;s job interface as long as the progress originates from a progressr-signalling function.">
+
+
+<meta property="og:description" content="progressr 0.8.0 is on CRAN. It comes with some new features:
+A new &lsquo;rstudio&rsquo; handler that reports on progress via the RStudio job interface in RStudio withProgressShiny() now updates the detail part, instead of the message part In addition to signalling relative amounts of progress, it&rsquo;s now also possible to signal total amounts If you&rsquo;re curious what progressr is about, have a look at my e-Rum 2020 presentation.
+Progress updates in RStudio&rsquo;s job interface If you&rsquo;re using RStudio Console, you can now report on progress in the RStudio&rsquo;s job interface as long as the progress originates from a progressr-signalling function.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="progressr 0.8.0: RStudio&#39;s Progress Bar, Shiny Progress Updates, and Absolute Progress">
+<meta name="twitter:title" content="progressr 0.8.0: RStudio&#39;s Progress Bar, Shiny Progress Updates, and Absolute Progress">
+<meta property="og:url" content="https://www.jottr.org/2021/06/11/progressr-0.8.0/">
+<meta property="twitter:url" content="https://www.jottr.org/2021/06/11/progressr-0.8.0/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="progressr 0.8.0 is on CRAN. It comes with some new features:
+A new &lsquo;rstudio&rsquo; handler that reports on progress via the RStudio job interface in RStudio withProgressShiny() now updates the detail part, instead of the message part In addition to signalling relative amounts of progress, it&rsquo;s now also possible to signal total amounts If you&rsquo;re curious what progressr is about, have a look at my e-Rum 2020 presentation.
+Progress updates in RStudio&rsquo;s job interface If you&rsquo;re using RStudio Console, you can now report on progress in the RStudio&rsquo;s job interface as long as the progress originates from a progressr-signalling function.">
+<meta name="twitter:description" content="progressr 0.8.0 is on CRAN. It comes with some new features:
+A new &lsquo;rstudio&rsquo; handler that reports on progress via the RStudio job interface in RStudio withProgressShiny() now updates the detail part, instead of the message part In addition to signalling relative amounts of progress, it&rsquo;s now also possible to signal total amounts If you&rsquo;re curious what progressr is about, have a look at my e-Rum 2020 presentation.
+Progress updates in RStudio&rsquo;s job interface If you&rsquo;re using RStudio Console, you can now report on progress in the RStudio&rsquo;s job interface as long as the progress originates from a progressr-signalling function.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2021-06-11T19:00:00">
+  
+  
+    <meta property="article:modified_time" content="2021-06-11T19:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="progressr">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="shiny">
+    
+      <meta property="article:tag" content="rstudio">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>progressr 0.8.0: RStudio&#39;s Progress Bar, Shiny Progress Updates, and Absolute Progress</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2021/06/11/progressr-0.8.0/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      progressr 0.8.0: RStudio&#39;s Progress Bar, Shiny Progress Updates, and Absolute Progress
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2021-06-11T19:00:00-07:00">
+        
+  June 11, 2021
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><strong><a href="https://progressr.futureverse.org">progressr</a></strong> 0.8.0 is on CRAN.  It comes with some new features:</p>
+<ul>
+<li>A new &lsquo;rstudio&rsquo; handler that reports on progress via the RStudio job interface in RStudio</li>
+<li><code>withProgressShiny()</code> now updates the <code>detail</code> part, instead of the <code>message</code> part</li>
+<li>In addition to signalling relative amounts of progress, it&rsquo;s now also possible to signal total amounts</li>
+</ul>
+<p>If you&rsquo;re curious what <strong>progressr</strong> is about, have a look at my <a href="https://www.jottr.org/2020/07/04/progressr-erum2020-slides/">e-Rum 2020 presentation</a>.</p>
+<h2 id="progress-updates-in-rstudios-job-interface">Progress updates in RStudio&rsquo;s job interface</h2>
+<p>If you&rsquo;re using RStudio Console, you can now report on progress in the RStudio&rsquo;s job interface as long as the progress originates from a <strong>progressr</strong>-signalling function.  I’ve shown an example of this in Figure 1.</p>
+<!-- raw HTML omitted -->
+<p>To try this yourself, run the below in the RStudio Console.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(progressr)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">handlers</span>(global <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">handlers</span>(<span style="color:#e6db74">&#34;rstudio&#34;</span>)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">slow_sum</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span>)
+</span></span></code></pre></div><p>The progress bar disappears when the calculation completes.</p>
+<h2 id="tweaks-to-withprogressshiny">Tweaks to withProgressShiny()</h2>
+<p>The <code>withProgressShiny()</code> function, which is a <strong>progressr</strong>-aware version of <code>withProgress()</code>, gained argument <code>inputs</code>.  It defaults to <code>inputs = list(message = NULL, detail = &quot;message&quot;)</code>, which says that a progress message should update the &lsquo;detail&rsquo; part of the Shiny progress panel.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">withProgressShiny</span>(message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Calculation in progress&#34;</span>,
+</span></span><span style="display:flex;"><span>                  detail <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Starting ...&#34;</span>,
+</span></span><span style="display:flex;"><span>                  value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, {
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">progressor</span>(along <span style="color:#f92672">=</span> X)
+</span></span><span style="display:flex;"><span>  y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(X, FUN<span style="color:#f92672">=</span><span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Sys.sleep</span>(<span style="color:#ae81ff">0.25</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;x=%d&#34;</span>, x))
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>will start out as in the left panel of Figure 2, and, as soon as the first progress signal is received, the &lsquo;detail&rsquo; part is updated with <code>x=1</code> as shown in the right panel.</p>
+<!-- raw HTML omitted -->
+<p>Prior to this new release, the default behavior was to update the &lsquo;message&rsquo; part of the Shiny progress panel.  To revert to the old behavior, set argument <code>inputs</code> as in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">withProgressShiny</span>(message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Starting ...&#34;</span>,
+</span></span><span style="display:flex;"><span>                  detail <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Calculation in progress&#34;</span>,
+</span></span><span style="display:flex;"><span>                  value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, {
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">progressor</span>(along <span style="color:#f92672">=</span> X)
+</span></span><span style="display:flex;"><span>  y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(X, FUN<span style="color:#f92672">=</span><span style="color:#a6e22e">function</span>(x) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Sys.sleep</span>(<span style="color:#ae81ff">0.25</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;x=%d&#34;</span>, x))
+</span></span><span style="display:flex;"><span>  })
+</span></span><span style="display:flex;"><span>}, inputs <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;message&#34;</span>, detail <span style="color:#f92672">=</span> <span style="color:#66d9ef">NULL</span>))
+</span></span></code></pre></div><p>This results in what you see in Figure 3.  I think that the new behavior, as shown in Figure 2, looks better and makes more sense.</p>
+<!-- raw HTML omitted -->
+<h2 id="update-to-a-specific-amount-of-total-progress">Update to a specific amount of total progress</h2>
+<p>When using <strong>progressr</strong>, we start out by creating a progressor function that we then call to signal progress.  For example, if we do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>my_slow_fun <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>() {
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">&lt;-</span> progressr<span style="color:#f92672">::</span><span style="color:#a6e22e">progressor</span>(steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>  count <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">for </span>(i in <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span>) {
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">&lt;-</span> count <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Sys.sleep</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;count=%d&#34;</span>, count))
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  count
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><p>each call to <code>p()</code> corresponds to <code>p(amount = 1)</code>, which signals that our function have moved <code>amount = 1</code> steps closer to the total amount <code>steps = 10</code>.  We can take smaller or bigger steps by specifying another <code>amount</code>.</p>
+<p>In this new version, I&rsquo;ve introduced a new beta feature that allows us to signal progress that says where we are in <em>absolute terms</em>.  With this, we can do things like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>my_slow_fun <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>() {
+</span></span><span style="display:flex;"><span>  p <span style="color:#f92672">&lt;-</span> progressr<span style="color:#f92672">::</span><span style="color:#a6e22e">progressor</span>(steps <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>  count <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">for </span>(i in <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>) {
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">&lt;-</span> count <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Sys.sleep</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">if </span>(<span style="color:#a6e22e">runif</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.5</span>) break
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;count=%d&#34;</span>, count))
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">## In case we broke out of the loop early,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">## make sure to update to 5/10 progress</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">p</span>(step <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">for </span>(i in <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>) {
+</span></span><span style="display:flex;"><span>    count <span style="color:#f92672">&lt;-</span> count <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Sys.sleep</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">p</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;count=%d&#34;</span>, count))
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  count
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When calling <code>my_slow_fun()</code>, we might see progress being reported as:</p>
+<pre tabindex="0"><code>- [------------------------------------------------]   0% 
+\ [===&gt;-------------------------------------]  10% count=1
+| [=======&gt;---------------------------------]  20% count=2
+\ [===================&gt;---------------------]  50% count=3
+...
+</code></pre><p>Note how it took a leap from 20% to 50% when <code>count == 2</code>.  If we run it again, the move to 50% might happen at another iteration.</p>
+<h2 id="wrapping-up">Wrapping up</h2>
+<p>There are also a few bug fixes, which you can read about in <a href="https://progressr.futureverse.org/news/index.html">NEWS</a>.  And a usual, all of this work also when you run in parallel using the <a href="https://futureverse.org">future framework</a>.</p>
+<p>Make progress!</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>progressr</strong> package: <a href="https://cran.r-project.org/package=progressr">CRAN</a>, <a href="https://github.com/HenrikBengtsson/progressr">GitHub</a>, <a href="https://progressr.futureverse.org">pkgdown</a></li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/progressr/">progressr</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/shiny/">shiny</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/rstudio/">rstudio</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/" data-tooltip="matrixStats: Consistent Support for Name Attributes via GSoC Project">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/06/10/parallelly-1.26.0/" data-tooltip="parallelly 1.26.0: Fast, Concurrent Setup of Parallel Workers (Finally)">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2021/06/11/progressr-0.8.0/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2021/06/11/progressr-0.8.0/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/" data-tooltip="matrixStats: Consistent Support for Name Attributes via GSoC Project">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/06/10/parallelly-1.26.0/" data-tooltip="parallelly 1.26.0: Fast, Concurrent Setup of Parallel Workers (Finally)">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2021/06/11/progressr-0.8.0/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2021/06/11/progressr-0.8.0/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2021%2F06%2F11%2Fprogressr-0.8.0%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2021%2F06%2F11%2Fprogressr-0.8.0%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

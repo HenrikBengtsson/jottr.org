@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="future 1.9.0 - Unified Parallel and Distributed Processing in R for Everyone - is on CRAN. This is a milestone release:
+Standard output is now relayed from futures back to the master R session - regardless of where the futures are processed!
+Disclaimer: A future&rsquo;s output is relayed only after it is resolved and when its value is retrieved by the master R process. In other words, the output is not streamed back in a &ldquo;live&rdquo; fashion as it is produced.">
+
+
+<meta property="og:description" content="future 1.9.0 - Unified Parallel and Distributed Processing in R for Everyone - is on CRAN. This is a milestone release:
+Standard output is now relayed from futures back to the master R session - regardless of where the futures are processed!
+Disclaimer: A future&rsquo;s output is relayed only after it is resolved and when its value is retrieved by the master R process. In other words, the output is not streamed back in a &ldquo;live&rdquo; fashion as it is produced.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="future 1.9.0 - Output from The Future">
+<meta name="twitter:title" content="future 1.9.0 - Output from The Future">
+<meta property="og:url" content="https://www.jottr.org/2018/07/23/output-from-the-future/">
+<meta property="twitter:url" content="https://www.jottr.org/2018/07/23/output-from-the-future/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="future 1.9.0 - Unified Parallel and Distributed Processing in R for Everyone - is on CRAN. This is a milestone release:
+Standard output is now relayed from futures back to the master R session - regardless of where the futures are processed!
+Disclaimer: A future&rsquo;s output is relayed only after it is resolved and when its value is retrieved by the master R process. In other words, the output is not streamed back in a &ldquo;live&rdquo; fashion as it is produced.">
+<meta name="twitter:description" content="future 1.9.0 - Unified Parallel and Distributed Processing in R for Everyone - is on CRAN. This is a milestone release:
+Standard output is now relayed from futures back to the master R session - regardless of where the futures are processed!
+Disclaimer: A future&rsquo;s output is relayed only after it is resolved and when its value is retrieved by the master R process. In other words, the output is not streamed back in a &ldquo;live&rdquo; fashion as it is produced.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2018-07-23T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2018-07-23T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="output">
+    
+      <meta property="article:tag" content="standard output">
+    
+      <meta property="article:tag" content="stdout">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="compute clusters">
+    
+      <meta property="article:tag" content="HPC">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>future 1.9.0 - Output from The Future</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2018/07/23/output-from-the-future/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      future 1.9.0 - Output from The Future
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-23T00:00:00Z">
+        
+  July 23, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><strong><a href="https://cran.r-project.org/package=future">future</a></strong> 1.9.0 - <em>Unified Parallel and Distributed Processing in R for Everyone</em> - is on CRAN.  This is a milestone release:</p>
+<p><strong>Standard output is now relayed from futures back to the master R session -
+regardless of where the futures are processed!</strong></p>
+<p><em>Disclaimer:</em> A future&rsquo;s output is relayed only after it is resolved and when its value is retrieved by the master R process.  In other words, the output is not streamed back in a &ldquo;live&rdquo; fashion as it is produced.  Also, it is only the standard output that is relayed.  See below, for why the standard error cannot be relayed.</p>
+<p><img src="https://www.jottr.org/post/Signaling_by_Napoleonic_semaphore_line.jpg" alt="Illustration of communication by mechanical semaphore in 1800s France. Lines of towers supporting semaphore masts were built within visual distance of each other. The arms of the semaphore were moved to different positions, to spell out text messages. The operators in the next tower would read the message and pass it on. Invented by Claude Chappee in 1792, semaphore was a popular communication technology in the early 19th century until the telegraph replaced it. (source: wikipedia.org)">
+<em>Relaying standard output from far away</em></p>
+<h2 id="examples">Examples</h2>
+<p>Assume we have access to three machines with R installed on our local network.  We can distribute our R processing to these machines using futures by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(cluster, workers <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;n1&#34;</span>, <span style="color:#e6db74">&#34;n2&#34;</span>, <span style="color:#e6db74">&#34;n3&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">nbrOfWorkers</span>()
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><p>With the above, future expressions will now be processed across those three machines.  To see which machine a future ends up being resolved by, we can output the hostname, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> printf <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(<span style="color:#66d9ef">...</span>) <span style="color:#a6e22e">cat</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#66d9ef">...</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>({
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Hostname: %s\n&#34;</span>, <span style="color:#a6e22e">Sys.info</span>()[[<span style="color:#e6db74">&#34;nodename&#34;</span>]])
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> })
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> n1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">42</span>
+</span></span></code></pre></div><p>We see that this particular future was resolved on the <em>n1</em> machine.  Note how <em>the output is relayed when we call <code>value()</code></em>.  This means that if we call <code>value()</code> multiple times, the output will also be relayed multiple times, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> n1
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> n1
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">42</span>
+</span></span></code></pre></div><p>This is intended and by design.  In case you are new to futures, note that <em>a future is only evaluated once</em>.  In other words, calling <code>value()</code> multiple times will not re-evaluate the future expression.</p>
+<p>The output is also relayed when using future assignments (<code>%&lt;-%</code>).  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v <span style="color:#f92672">%&lt;-%</span> {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Hostname: %s\n&#34;</span>, <span style="color:#a6e22e">Sys.info</span>()[[<span style="color:#e6db74">&#34;nodename&#34;</span>]])
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> n1
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">42</span>
+</span></span></code></pre></div><p>In this case, the output is only relayed the first time we print <code>v</code>.  The reason for this is because when first set up, <code>v</code> is a promise (delayed assignment), and as soon as we &ldquo;touch&rdquo; (here print) it, it will internally call <code>value()</code> on the underlying future and then be resolved to a regular variable <code>v</code>.  This is also intended and by design.</p>
+<p>In the spirit of the Future API, any <em>output behaves exactly the same way regardless of future backend used</em>.  In the above, we see that output can be relayed from three external machines back to our local R session.  We would get the exact same if we run our futures in parallel, or sequentially, on our local machine, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(sequential)
+</span></span><span style="display:flex;"><span> v <span style="color:#f92672">%&lt;-%</span> {
+</span></span><span style="display:flex;"><span>   <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Hostname: %s\n&#34;</span>, <span style="color:#a6e22e">Sys.info</span>()[[<span style="color:#e6db74">&#34;nodename&#34;</span>]])
+</span></span><span style="display:flex;"><span>   <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span> }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> v
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> my<span style="color:#f92672">-</span>laptop
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">42</span>
+</span></span></code></pre></div><p>This also works when we use nested futures wherever the workers are located (local or remote), e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(<span style="color:#a6e22e">list</span>(sequential, multisession))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> a <span style="color:#f92672">%&lt;-%</span> {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;PID: %d\n&#34;</span>, <span style="color:#a6e22e">Sys.getpid</span>())
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   b <span style="color:#f92672">%&lt;-%</span> {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;PID: %d\n&#34;</span>, <span style="color:#a6e22e">Sys.getpid</span>())
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>     <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   b	
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> }
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> a
+</span></span><span style="display:flex;"><span>PID<span style="color:#f92672">:</span> <span style="color:#ae81ff">360547</span>
+</span></span><span style="display:flex;"><span>PID<span style="color:#f92672">:</span> <span style="color:#ae81ff">484252</span>
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">42</span>
+</span></span></code></pre></div><h2 id="higher-level-future-frontends">Higher-Level Future Frontends</h2>
+<p>The core Future API, that is, the explicit <code>future()</code>-<code>value()</code> functions and the implicit future-assignment operator <code>%&lt;-%</code> function, provides the foundation for all of the future ecosystem.  Because of this, <em>relaying of output will work out of the box wherever futures are used</em>.  For example, when using <strong>future.apply</strong> we get:</p>
+<pre tabindex="0"><code>&gt; library(future.apply)
+&gt; plan(cluster, workers = c(&#34;n1&#34;, &#34;n2&#34;, &#34;n3&#34;))
+&gt; printf &lt;- function(...) cat(sprintf(...))
+
+&gt; y &lt;- future_lapply(1:5, FUN = function(x) {
++   printf(&#34;Hostname: %s (x = %g)\n&#34;, Sys.info()[[&#34;nodename&#34;]], x)
++   sqrt(x)
++ })
+Hostname: n1 (x = 1)
+Hostname: n1 (x = 2)
+Hostname: n2 (x = 3)
+Hostname: n3 (x = 4)
+Hostname: n3 (x = 5)
+&gt; unlist(y)
+[1] 1.000000 1.414214 1.732051 2.000000 2.236068
+</code></pre><p>and similarly when, for example, using <strong>foreach</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(doFuture)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">registerDoFuture</span>()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(cluster, workers <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;n1&#34;</span>, <span style="color:#e6db74">&#34;n2&#34;</span>, <span style="color:#e6db74">&#34;n3&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> printf <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(<span style="color:#66d9ef">...</span>) <span style="color:#a6e22e">cat</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#66d9ef">...</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">foreach</span>(x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">5</span>) <span style="color:#f92672">%dopar%</span> {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;Hostname: %s (x = %g)\n&#34;</span>, <span style="color:#a6e22e">Sys.info</span>()[[<span style="color:#e6db74">&#34;nodename&#34;</span>]], x)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">sqrt</span>(x)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> }
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> <span style="color:#a6e22e">n1 </span>(x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> <span style="color:#a6e22e">n1 </span>(x <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> <span style="color:#a6e22e">n2 </span>(x <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> <span style="color:#a6e22e">n3 </span>(x <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>Hostname<span style="color:#f92672">:</span> <span style="color:#a6e22e">n3 </span>(x <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">unlist</span>(y)
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">1.000000</span> <span style="color:#ae81ff">1.414214</span> <span style="color:#ae81ff">1.732051</span> <span style="color:#ae81ff">2.000000</span> <span style="color:#ae81ff">2.236068</span>
+</span></span></code></pre></div><h2 id="what-about-standard-error">What about standard error?</h2>
+<p>Unfortunately, it is <em>not possible</em> to relay output sent to the standard error (stderr), that is, output by <code>message()</code>, <code>cat(..., file = stderr())</code>, and so on, is not taken care of.  This is due to a <a href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/55">limitation in R</a>, preventing us from capturing stderr in a reliable way.  The gist of the problem is that, contrary to stdout (&ldquo;output&rdquo;), there can only be a single stderr (&ldquo;message&rdquo;) sink active in R at any time.  What really is the show stopper is that if we allocate such a message sink, it will be stolen from us the moment other code/functions request the message sink.  In other words, message sinks cannot be used reliably in R unless one fully controls the whole software stack.  As long as this is the case, it is not possible to collect and relay stderr in a consistent fashion across <em>all</em> future backends (*).  But, of course, I&rsquo;ll keep on trying to find a solution to this problem.  If anyone has a suggestion for a workaround or a patch to R, please let me know.</p>
+<p>(*) The <strong><a href="https://cran.r-project.org/package=callr">callr</a></strong> package captures stdout and stderr in a consistent manner, so for the <strong><a href="https://cran.r-project.org/package=future.callr">future.callr</a></strong> backend, we could indeed already now relay stderr.  We could probably also find a solution for <strong><a href="https://cran.r-project.org/package=future.batchtools">future.batchtools</a></strong> backends, which targets HPC job schedulers by utilizing the <strong><a href="https://cran.r-project.org/package=batchtools">batchtools</a></strong> package.  However, if code becomes dependent on using specific future backends, it will limit the end users&rsquo; options - we want to avoid that as far as ever possible.  Having said this, it is possible that we&rsquo;ll start out supporting stderr by making it an <a href="https://github.com/HenrikBengtsson/future/issues/172">optional feature of the Future API</a>.</p>
+<h2 id="poor-mans-debugging">Poor Man&rsquo;s debugging</h2>
+<p>Because the output is also relayed when there is an error, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> x <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;42&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>({
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">str</span>(<span style="color:#a6e22e">list</span>(x <span style="color:#f92672">=</span> x))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">log</span>(x)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> })
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span>List of <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> x<span style="color:#f92672">:</span> chr <span style="color:#e6db74">&#34;42&#34;</span>
+</span></span><span style="display:flex;"><span>Error in <span style="color:#a6e22e">log</span>(x) <span style="color:#f92672">:</span> non<span style="color:#f92672">-</span>numeric argument to mathematical function
+</span></span></code></pre></div><p>it can be used for simple troubleshooting and narrowing down errors.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(doFuture)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">registerDoFuture</span>()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(multisession)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">nbrOfWorkers</span>()
+</span></span><span style="display:flex;"><span>[1] <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">list</span>(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;2&#34;</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">foreach</span>(x <span style="color:#f92672">=</span> x) <span style="color:#f92672">%dopar%</span> {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">str</span>(<span style="color:#a6e22e">list</span>(x <span style="color:#f92672">=</span> x))
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span>   <span style="color:#a6e22e">log</span>(x)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">+</span> }
+</span></span><span style="display:flex;"><span>List of <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> x<span style="color:#f92672">:</span> num <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>List of <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> x<span style="color:#f92672">:</span> chr <span style="color:#e6db74">&#34;2&#34;</span>
+</span></span><span style="display:flex;"><span>List of <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> x<span style="color:#f92672">:</span> num <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>List of <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> x<span style="color:#f92672">:</span> num <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>List of <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span> <span style="color:#f92672">$</span> x<span style="color:#f92672">:</span> num <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>Error in { <span style="color:#f92672">:</span> 
+</span></span><span style="display:flex;"><span>  task <span style="color:#ae81ff">2</span> failed <span style="color:#f92672">-</span> <span style="color:#e6db74">&#34;non-numeric argument to mathematical function&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> 
+</span></span></code></pre></div><p>From the error message, we get that there was an &ldquo;non-numeric argument&rdquo; (element) passed to a function.  By adding the <code>str()</code>, we can also see that it is of type character and what its value is.  This will help us go back to the data source (<code>x</code>) and continue the troubleshooting there.</p>
+<h2 id="whats-next">What&rsquo;s next?</h2>
+<p>Progress bar information is one of several frequently <a href="https://github.com/HenrikBengtsson/future/labels/feature%20request">requested features</a> in the future framework.  I hope to attack the problem of progress bars and progress messages in higher-level future frontends such as <strong><a href="https://cran.r-project.org/package=future.apply">future.apply</a></strong>.  Ideally, this can be done in a uniform and generic fashion to meet all needs.  A possible implementation that has been discussed, is to provide a set of basic hook functions (e.g. on-start, on-resolved, on-value) that any ProgressBar API (e.g. <strong><a href="https://github.com/ropenscilabs/jobstatus">jobstatus</a></strong>) can build upon.  This could help avoid tie-in to a particular progress-bar implementation.</p>
+<p>Another feature I&rsquo;d like to get going is (optional) <a href="https://github.com/HenrikBengtsson/future/issues/59">benchmarking of processing time and memory consumption</a>.  This type of information will help optimize parallel and distributed processing by identifying and understand the various sources of overhead involved in parallelizing a particular piece of code in a particular compute environment.  This information will also help any efforts trying to automate load balancing.  It may even be used for progress bars that try to estimate the remaining processing time (&ldquo;ETA&rdquo;).</p>
+<p>So, lots of work ahead.  Oh well &hellip;</p>
+<p><em>Happy futuring!</em></p>
+<p>UPDATE 2022-12-11: Update examples that used the deprecated <code>multiprocess</code> future backend alias to use the <code>multisession</code> backend.</p>
+<h2 id="see-also">See also</h2>
+<ul>
+<li>
+<p>About <a href="https://www.wikipedia.org/wiki/Semaphore_line">Semaphore Telegraphs</a>, Wikipedia</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2018/06/23/future.apply_1.0.0/">future.apply - Parallelize Any Base R Apply Function</a>, 2018-06-23</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2018/06/18/future-erum2018-slides/">Delayed Future(Slides from eRum 2018)</a>, 2018-06-19</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2018/04/12/future-results/">future 1.8.0: Preparing for a Shiny Future</a>, 2018-04-12</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2017/06/05/many-faced-future/">The Many-Faced Future</a>, 2017-06-05</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2017/02/19/future-rng/">future 1.3.0 Reproducible RNGs, future_lapply() and More</a>, 2017-02-19</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2016/10/22/future-hpc/">High-Performance Compute in R Using Futures</a>, 2016-10-22</p>
+</li>
+<li>
+<p><a href="https://www.jottr.org/2016/10/11/future-remotes/">Remote Processing Using Futures</a>, 2016-10-11</p>
+</li>
+</ul>
+<h2 id="links">Links</h2>
+<ul>
+<li>future - <em>Unified Parallel and Distributed Processing in R for Everyone</em>
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future">https://cran.r-project.org/package=future</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future">https://github.com/HenrikBengtsson/future</a></li>
+</ul>
+</li>
+<li>future.apply - <em>Apply Function to Elements in Parallel using Futures</em>
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.apply">https://cran.r-project.org/package=future.apply</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.apply">https://github.com/HenrikBengtsson/future.apply</a></li>
+</ul>
+</li>
+<li>doFuture - <em>A Universal Foreach Parallel Adaptor using the Future API of the &lsquo;future&rsquo; Package</em>
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=doFuture">https://cran.r-project.org/package=doFuture</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/doFuture">https://github.com/HenrikBengtsson/doFuture</a></li>
+</ul>
+</li>
+<li>future.batchtools - <em>A Future API for Parallel and Distributed Processing using &lsquo;batchtools&rsquo;</em>
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.batchtools">https://cran.r-project.org/package=future.batchtools</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.batchtools">https://github.com/HenrikBengtsson/future.batchtools</a></li>
+</ul>
+</li>
+<li>future.callr - <em>A Future API for Parallel Processing using &lsquo;callr&rsquo;</em>
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.callr">https://cran.r-project.org/package=future.callr</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.callr">https://github.com/HenrikBengtsson/future.callr</a></li>
+</ul>
+</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/output/">output</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/standard-output/">standard output</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/stdout/">stdout</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/compute-clusters/">compute clusters</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/" data-tooltip="Maintenance Updates of Future Backends and doFuture">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/07/21/suppressgraphics/" data-tooltip="R.devices - Into the Void">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/07/23/output-from-the-future/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/07/23/output-from-the-future/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/" data-tooltip="Maintenance Updates of Future Backends and doFuture">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/07/21/suppressgraphics/" data-tooltip="R.devices - Into the Void">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/07/23/output-from-the-future/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/07/23/output-from-the-future/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2018%2F07%2F23%2Foutput-from-the-future%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2018%2F07%2F23%2Foutput-from-the-future%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

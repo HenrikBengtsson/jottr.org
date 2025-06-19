@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>eRum2018 on JottR</title>
+    <link>https://www.jottr.org/tags/erum2018/</link>
+    <description>Recent content in eRum2018 on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/erum2018/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Delayed Future(Slides from eRum 2018)</title>
+      <link>https://www.jottr.org/2018/06/18/future-erum2018-slides/</link>
+      <pubDate>Mon, 18 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/06/18/future-erum2018-slides/</guid>
+      <description>As promised - though a bit delayed - below are links to my slides and the video of my talk on Future: Parallel &amp;amp; Distributed Processing in R for Everyone that I presented last month at the eRum 2018 conference in Budapest, Hungary (May 14-16, 2018).
+The conference was very well organized (thank you everyone involved) with a great lineup of several brilliant workshop sessions, talks, and poster presentations (thanks all).</description>
+    </item>
+    
+  </channel>
+</rss>

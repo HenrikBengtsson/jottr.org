@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="R.devices 2.16.0 - Unified Handling of Graphics Devices - is on CRAN. With this release, you can now easily suppress unwanted graphics, e.g. graphics produced by one of those do-everything-in-one-call functions that we all bump into once in a while. To suppress graphics, the R.devices package provides graphics device nulldev(), and function suppressGraphics(), which both send any produced graphics into the void. This works on all operating systems, including Windows.">
+
+
+<meta property="og:description" content="R.devices 2.16.0 - Unified Handling of Graphics Devices - is on CRAN. With this release, you can now easily suppress unwanted graphics, e.g. graphics produced by one of those do-everything-in-one-call functions that we all bump into once in a while. To suppress graphics, the R.devices package provides graphics device nulldev(), and function suppressGraphics(), which both send any produced graphics into the void. This works on all operating systems, including Windows.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R.devices - Into the Void">
+<meta name="twitter:title" content="R.devices - Into the Void">
+<meta property="og:url" content="https://www.jottr.org/2018/07/21/suppressgraphics/">
+<meta property="twitter:url" content="https://www.jottr.org/2018/07/21/suppressgraphics/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="R.devices 2.16.0 - Unified Handling of Graphics Devices - is on CRAN. With this release, you can now easily suppress unwanted graphics, e.g. graphics produced by one of those do-everything-in-one-call functions that we all bump into once in a while. To suppress graphics, the R.devices package provides graphics device nulldev(), and function suppressGraphics(), which both send any produced graphics into the void. This works on all operating systems, including Windows.">
+<meta name="twitter:description" content="R.devices 2.16.0 - Unified Handling of Graphics Devices - is on CRAN. With this release, you can now easily suppress unwanted graphics, e.g. graphics produced by one of those do-everything-in-one-call functions that we all bump into once in a while. To suppress graphics, the R.devices package provides graphics device nulldev(), and function suppressGraphics(), which both send any produced graphics into the void. This works on all operating systems, including Windows.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2018-07-21T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2018-07-21T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="graphics">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>R.devices - Into the Void</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2018/07/21/suppressgraphics/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      R.devices - Into the Void
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2018-07-21T00:00:00Z">
+        
+  July 21, 2018
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><strong><a href="https://cran.r-project.org/package=R.devices">R.devices</a></strong> 2.16.0 - <em>Unified Handling of Graphics Devices</em> - is on CRAN.  With this release, you can now easily <strong>suppress unwanted graphics</strong>, e.g. graphics produced by one of those do-everything-in-one-call functions that we all bump into once in a while.  To suppress graphics, the <strong>R.devices</strong> package provides graphics device <code>nulldev()</code>, and function <code>suppressGraphics()</code>, which both send any produced graphics into the void.  This works on all operating systems, including Windows.</p>
+<p><img src="https://www.jottr.org/post/guillaume_nery_into_the_void_2.gif" alt="&amp;ldquo;Into the void&amp;rdquo;">
+<!-- raw HTML omitted --><em><a href="https://www.youtube.com/watch?v=uQITWbAaDx0">Guillaume Nery base jumping at Dean&rsquo;s Blue Hole, filmed on breath hold by Julie Gautier</a></em><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<h2 id="examples">Examples</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(R.devices)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">nulldev</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plot</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>, main <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Some Ignored Graphics&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">dev.off</span>()
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>R.devices<span style="color:#f92672">::</span><span style="color:#a6e22e">suppressGraphics</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">plot</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>, main <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Some Ignored Graphics&#34;</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></div><h2 id="other-features">Other Features</h2>
+<p>Some other reasons for using the <strong>R.devices</strong> package:</p>
+<ul>
+<li>
+<p><strong>No need to call dev.off()</strong> - Did you ever forgot to call <code>dev.off()</code>, or did a function call produce an error causing <code>dev.off()</code> not to be reached, leaving a graphics device open?  By using one of the <code>toPDF()</code>, <code>toPNG()</code>, &hellip; functions, or the more general <code>devEval()</code> function, <code>dev.off()</code> is automatically taken care of.</p>
+</li>
+<li>
+<p><strong>No need to specify filename extension</strong> - Did you ever switch from using <code>png()</code> to, say, <code>pdf()</code>, and forgot to update the filename resulting in a <code>my_plot.png</code> file that is actually a PDF file?  By using one of the <code>toPDF()</code>, <code>toPNG()</code>, &hellip; functions, or the more general <code>devEval()</code> function, filename extensions are automatically taken care of - just specify the part without the extension.</p>
+</li>
+<li>
+<p><strong>Specify the aspect ratio</strong> - rather than having to manually calculate device-specific arguments <code>width</code> or <code>height</code>, e.g. <code>toPNG(&quot;my_plot&quot;, { plot(1:10) }, aspectRatio = 2/3)</code>.  This is particularly useful when switching between device types, or when outputting to multiple ones at the same time.</p>
+</li>
+<li>
+<p><strong>Unified API for graphics options</strong> - conveniently set (most) graphics options including those that can otherwise only be controlled via arguments, e.g. <code>devOptions(&quot;png&quot;, width = 1024)</code>.</p>
+</li>
+<li>
+<p><strong>Control where figure files are saved</strong> - the default is folder <code>figures/</code> but can be set per device type or globally, e.g. <code>devOptions(&quot;*&quot;, path = &quot;figures/col/&quot;)</code>.</p>
+</li>
+<li>
+<p><strong>Easily produce EPS and favicons</strong> - <code>toEPS()</code> and <code>toFavicon()</code> are friendly wrappers for producing EPS and favicon graphics.</p>
+</li>
+<li>
+<p><strong>Capture and replay graphics</strong> - for instance, use <code>future::plan(remote, workers = &quot;remote.server.org&quot;); p %&lt;-% capturePlot({ plot(1:10) })</code> to produce graphics on a remote machine, and then display it locally by printing <code>p</code>.</p>
+</li>
+</ul>
+<h3 id="some-more-examples">Some more examples</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>R.devices<span style="color:#f92672">::</span><span style="color:#a6e22e">toPDF</span>(<span style="color:#e6db74">&#34;my_plot&#34;</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">plot</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>, main <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Amazing Graphics&#34;</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### [1] &#34;figures/my_plot.pdf&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>R.devices<span style="color:#f92672">::</span><span style="color:#a6e22e">toPNG</span>(<span style="color:#e6db74">&#34;my_plot&#34;</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">plot</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>, main <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Amazing Graphics&#34;</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### [1] &#34;figures/my_plot.png&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>R.devices<span style="color:#f92672">::</span><span style="color:#a6e22e">toEPS</span>(<span style="color:#e6db74">&#34;my_plot&#34;</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">plot</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>, main <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Amazing Graphics&#34;</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### [1] &#34;figures/my_plot.eps&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>R.devices<span style="color:#f92672">::</span><span style="color:#a6e22e">devEval</span>(<span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;png&#34;</span>, <span style="color:#e6db74">&#34;pdf&#34;</span>, <span style="color:#e6db74">&#34;eps&#34;</span>), name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;my_plot&#34;</span>, {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">plot</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">100</span>, main <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Amazing Graphics&#34;</span>)
+</span></span><span style="display:flex;"><span>}, aspectRatio <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.3</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### $png</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### [1] &#34;figures/my_plot.png&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### $pdf</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### [1] &#34;figures/my_plot.pdf&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### $eps</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### [1] &#34;figures/my_plot.eps&#34;</span>
+</span></span></code></pre></div><h2 id="links">Links</h2>
+<ul>
+<li>R.devices package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=R.devices">https://cran.r-project.org/package=R.devices</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/R.devices">https://github.com/HenrikBengtsson/R.devices</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://www.jottr.org/2016/07/02/future-user2016-slides/">A Future for R: Slides from useR 2016</a>, 2016-07-02
+<ul>
+<li>See Slide 17 for an example of using <code>capturePlot()</code> remotely and plotting locally</li>
+</ul>
+</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/graphics/">graphics</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/07/23/output-from-the-future/" data-tooltip="future 1.9.0 - Output from The Future">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/06/23/future.apply_1.0.0/" data-tooltip="future.apply - Parallelize Any Base R Apply Function">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/07/21/suppressgraphics/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/07/21/suppressgraphics/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/07/23/output-from-the-future/" data-tooltip="future 1.9.0 - Output from The Future">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2018/06/23/future.apply_1.0.0/" data-tooltip="future.apply - Parallelize Any Base R Apply Function">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2018/07/21/suppressgraphics/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2018/07/21/suppressgraphics/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2018%2F07%2F21%2Fsuppressgraphics%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2018%2F07%2F21%2Fsuppressgraphics%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>trick on JottR</title>
+    <link>https://www.jottr.org/tags/trick/</link>
+    <description>Recent content in trick on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 25 May 2013 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/trick/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Speed Trick: Assigning Large Object NULL is Much Faster than using rm()!</title>
+      <link>https://www.jottr.org/2013/05/25/trick-fast-rm/</link>
+      <pubDate>Sat, 25 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2013/05/25/trick-fast-rm/</guid>
+      <description>When processing large data sets in R you often also end up creating large temporary objects. In order to keep the memory footprint small, it is always good to remove those temporary objects as soon as possible. When done, removed objects will be deallocated from memory (RAM) the next time the garbage collection runs.
+Better: Use rm(list = &amp;quot;x&amp;quot;) instead of rm(x), if using rm() To remove an object in R, one can use the rm() function (with alias remove()).</description>
+    </item>
+    
+  </channel>
+</rss>

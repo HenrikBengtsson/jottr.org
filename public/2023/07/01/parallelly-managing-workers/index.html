@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="parallelly 1.36.0 is on CRAN since May 2023. The parallelly package is part of the Futureverse and enhances the parallel package of base R, e.g. it adds several features you&rsquo;d otherwise expect to see in parallel. The parallelly package is one of the internal work horses for the future package, but it can also be used outside of the future ecosystem.
+In this most recent release, parallelly gained several new skills in how cluster nodes (a.">
+
+
+<meta property="og:description" content="parallelly 1.36.0 is on CRAN since May 2023. The parallelly package is part of the Futureverse and enhances the parallel package of base R, e.g. it adds several features you&rsquo;d otherwise expect to see in parallel. The parallelly package is one of the internal work horses for the future package, but it can also be used outside of the future ecosystem.
+In this most recent release, parallelly gained several new skills in how cluster nodes (a.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely">
+<meta name="twitter:title" content="parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely">
+<meta property="og:url" content="https://www.jottr.org/2023/07/01/parallelly-managing-workers/">
+<meta property="twitter:url" content="https://www.jottr.org/2023/07/01/parallelly-managing-workers/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="parallelly 1.36.0 is on CRAN since May 2023. The parallelly package is part of the Futureverse and enhances the parallel package of base R, e.g. it adds several features you&rsquo;d otherwise expect to see in parallel. The parallelly package is one of the internal work horses for the future package, but it can also be used outside of the future ecosystem.
+In this most recent release, parallelly gained several new skills in how cluster nodes (a.">
+<meta name="twitter:description" content="parallelly 1.36.0 is on CRAN since May 2023. The parallelly package is part of the Futureverse and enhances the parallel package of base R, e.g. it adds several features you&rsquo;d otherwise expect to see in parallel. The parallelly package is one of the internal work horses for the future package, but it can also be used outside of the future ecosystem.
+In this most recent release, parallelly gained several new skills in how cluster nodes (a.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2023-07-01T18:00:00">
+  
+  
+    <meta property="article:modified_time" content="2023-07-01T18:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallelly">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="compute clusters">
+    
+      <meta property="article:tag" content="hpc">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2023/07/01/parallelly-managing-workers/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2023-07-01T18:00:00&#43;02:00">
+        
+  July 1, 2023
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p><strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> 1.36.0 is on CRAN since May 2023. The <strong>parallelly</strong>
+package is part of the <a href="https://www.futureverse.org">Futureverse</a> and enhances the <strong>parallel</strong>
+package of base R, e.g. it adds several features you&rsquo;d otherwise
+expect to see in <strong>parallel</strong>.  The <strong>parallelly</strong> package is one of
+the internal work horses for the <strong><a href="https://future.futureverse.org">future</a></strong> package, but it can also
+be used outside of the future ecosystem.</p>
+<p>In this most recent release, <strong>parallelly</strong> gained several new skills
+in how cluster nodes (a.k.a. parallel workers) can be managed.  Most
+notably,</p>
+<ul>
+<li>
+<p>the <a href="https://parallelly.futureverse.org/reference/isNodeAlive.html"><code>isNodeAlive()</code></a> function can now also query parallel workers
+running on remote machines.  Previously, this was only possible to
+workers running on the same machine.</p>
+</li>
+<li>
+<p>the <a href="https://parallelly.futureverse.org/reference/killNode.html"><code>killNode()</code></a> function gained the power to terminate parallel
+workers running also on remotes machines.</p>
+</li>
+<li>
+<p>the new function <a href="https://parallelly.futureverse.org/reference/cloneNode.html"><code>cloneNode()</code></a> can be used to &ldquo;restart&rdquo; a cluster
+node, e.g. if a node was determined to no longer be alive by
+<code>isNodeAlive()</code>, then <code>cloneNode()</code> can be called to launch an new
+parallel worker on the same machine as the previous worker.</p>
+</li>
+<li>
+<p>The <code>print()</code> functions for PSOCK clusters and PSOCK nodes reports
+on the status of the parallel workers.</p>
+</li>
+</ul>
+<h2 id="examples">Examples</h2>
+<p>Assume we&rsquo;re running a PSOCK cluster of two parallel workers - one
+running on the local machine and the other on a remote machine that we
+connect to over SSH.  Here is how we can set up such a cluster using
+<strong>parallelly</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallelly)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;localhost&#34;</span>, <span style="color:#e6db74">&#34;server.remote.org&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Socket cluster with 2 nodes where 1 node is on host &#39;server.remote.org&#39; (R</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># version 4.3.1 (2023-06-16), platform x86_64-pc-linux-gnu), 1 node is on host</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># &#39;localhost&#39; (R version 4.3.1 (2023-06-16), platform x86_64-pc-linux-gnu)</span>
+</span></span></code></pre></div><p>We can check if these two parallel workers are running.  We can check
+this even if they are busy processing parallel tasks.  The way
+<code>isNodeAlive()</code> works is that it checks of the <em>process</em> is running on
+worker&rsquo;s machine, which is something that can be done even when the
+worker is busy. For example, let&rsquo;s check the first worker process that
+run on the current machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl[[1]])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## RichSOCKnode of a socket cluster on local host &#39;localhost&#39; with pid 2457339</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## (R version 4.3.1 (2023-06-16), x86_64-pc-linux-gnu) using socket connection</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## #3 (&#39;&lt;-localhost:11436&#39;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl[[1]])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] TRUE</span>
+</span></span></code></pre></div><p>In <strong>parallelly</strong> (&gt;= 1.36.0), we can now also query the remote machine:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl[[2]])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## RichSOCKnode of a socket cluster on remote host &#39;server.remove.org&#39; with</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## pid 7731 (R version 4.3.1 (2023-06-16), x86_64-pc-linux-gnu) using socket</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## connection #4 (&#39;&lt;-localhost:11436&#39;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl[[2]])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] TRUE</span>
+</span></span></code></pre></div><p>We can also query <em>all</em> parallel workers of the cluster at once, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] TRUE TRUE</span>
+</span></span></code></pre></div><p>Now, imagine if, say, the remote parallel process terminates for some
+unknown reasons.  For example, the code running in parallel called
+some code that causes the parallel R process to crash and terminate.
+Although this &ldquo;should not&rdquo; happen, we all experience it once in a
+while.  Another example is that the machine is running out of memory,
+for instance due to other misbehaving processes on the same machine.
+When that happens, the operating system might start killing processes
+in order not to completely crash the machine.</p>
+<p>When one of our parallel workers has crashed, it will obviously not
+respond to requests for processing our R tasks.  Instead, we will get
+obscure errors like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">parLapply</span>(cl, X <span style="color:#f92672">=</span> X, fun <span style="color:#f92672">=</span> slow_fcn)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Error in summary.connection(connection) : invalid connection</span>
+</span></span></code></pre></div><p>We can see that the second parallel worker in our cluster is no longer
+alive by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] TRUE FALSE</span>
+</span></span></code></pre></div><p>We can also see that there is something wrong with the one of our
+workers if we call <code>print()</code> on our <code>RichSOCKcluster</code> and
+<code>RichSOCKnode</code> objects, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Socket cluster with 2 nodes where 1 node is on host &#39;server.remote.org&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## (R version 4.3.1 (2023-06-16), platform x86_64-pc-linux-gnu), 1 node is</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## on host &#39;localhost&#39; (R version 4.3.1 (2023-06-16), platform</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## x86_64-pc-linux-gnu). 1 node (#2) has a broken connection (ERROR:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## invalid connection)</span>
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl[[1]])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## RichSOCKnode of a socket cluster on local host &#39;localhost&#39; with pid</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## 2457339 (R version 4.3.1 (2023-06-16), x86_64-pc-linux-gnu) using</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## socket connection #3 (&#39;&lt;-localhost:11436&#39;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl[[2]])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## RichSOCKnode of a socket cluster on remote host &#39;server.remote.org&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## with pid 7731 (R version 4.3.1 (2023-06-16), x86_64-pc-linux-gnu)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## using socket connection #4 (&#39;ERROR: invalid connection&#39;)</span>
+</span></span></code></pre></div><p>If we end up with a broken parallel worker like this, we can since
+<strong>parallelly</strong> 1.36.0 use <code>cloneNode()</code> to re-create the original
+worker.  In our example, we can do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl[[2]] <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">cloneNode</span>(cl[[2]])
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl[[2]])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## RichSOCKnode of a socket cluster on remote host &#39;server.remote.org&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## with pid 19808 (R version 4.3.1 (2023-06-16), x86_64-pc-linux-gnu)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## using socket connection #4 (&#39;&lt;-localhost:11436&#39;)</span>
+</span></span></code></pre></div><p>to get a working parallel cluster, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] TRUE TRUE</span>
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">parLapply</span>(cl, X <span style="color:#f92672">=</span> X, fun <span style="color:#f92672">=</span> slow_fcn)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">str</span>(y)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## List of 8</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">##  $ : num 1</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">##  $ : num 1.41</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">##  $ : num 1.73</span>
+</span></span></code></pre></div><p>We can also use <code>cloneNode()</code> to launch <em>additional</em> workers of the
+same kind. For example, say we want to launch two more local workers
+and one more remote worker, and append them to the current cluster.
+One way to achieve that is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(cl, <span style="color:#a6e22e">cloneNode</span>(cl<span style="color:#a6e22e">[c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>)]))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Socket cluster with 5 nodes where 3 nodes are on host &#39;localhost&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## (R version 4.3.1 (2023-06-16), platform x86_64-pc-linux-gnu), 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## nodes are on host &#39;server.remote.org&#39; (R version 4.3.1 (2023-06-16),</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## platform x86_64-pc-linux-gnu)</span>
+</span></span></code></pre></div><p>Now, consider we launching many heavy parallel tasks, where some of
+them run on remote machines.  However, after some time, we realize
+that we have launched tasks that will take much longer to resolve than
+we first anticipated.  If we don&rsquo;t want to wait for this to resolve by
+itself, we can choose to terminate some or all of the workers using
+<code>killNode()</code>.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">killNode</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] TRUE TRUE TRUE TRUE TRUE</span>
+</span></span></code></pre></div><p>will kill all parallel workers in our cluster, even if they are busy
+running tasks.  We can confirm that these worker processes are no
+longer alive by calling:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] FALSE FALSE FALSE FALSE FALSE</span>
+</span></span></code></pre></div><p>If we would attempt to use the cluster, we&rsquo;d get the &ldquo;Error in
+unserialize(node$con) : error reading from connection&rdquo; as we saw
+previously.  After having killed our cluster, we can re-launch it
+using <code>cloneNode()</code>, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">cloneNode</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">isNodeAlive</span>(cl)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## [1] TRUE TRUE TRUE TRUE TRUE</span>
+</span></span></code></pre></div><h2 id="the-new-cluster-managing-skills-enhances-the-future-ecosystem">The new cluster managing skills enhances the future ecosystem</h2>
+<p>When we use the <a href="https://future.futureverse.org/reference/cluster.html"><code>cluster</code></a> and <a href="https://future.futureverse.org/reference/multisession.html"><code>multisession</code></a> parallel backends of
+the <strong>future</strong> package, we rely on the <strong>parallelly</strong> package
+internally.  Thanks to these new abilities, the Futureverse can now
+give more informative error message whenever we fail to launch a
+future or when we fail to retrieve the results of one.  For example,
+if a parallel worker has terminated, we might get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">slow_fcn</span>(<span style="color:#ae81ff">42</span>))
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Error: ClusterFuture (&lt;none&gt;) failed to call grmall() on cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## RichSOCKnode #1 (PID 29701 on &#39;server.remote.org&#39;). The reason reported</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## was &#39;error reading from connection&#39;. Post-mortem diagnostic: No process</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## exists with this PID on the remote host, i.e. the remote worker is no</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## longer alive</span>
+</span></span></code></pre></div><p>That post-mortem diagnostic is often enough to realize something quite
+exceptional has happened. It also gives us enough information to
+troubleshooting the problem further, e.g. if we keep seeing the same
+problem occurring over and over for a particular machine, it might
+suggest that there is an issue on that machine and we want to exclude
+it from further processing.</p>
+<p>We could imagine that the <strong>future</strong> package would not only give us
+information on why things went wrong, but it could theoretically also
+try to fix the problem automatically.  For instance, it could
+automatically re-create the crashed worker using <code>cloneNode()</code>, and
+re-launch the future.  It is on the roadmap to add such robustness to
+the future ecosystem later on. However, there are several things to
+consider when doing so.  For instance, what should happen if it was
+not a glitch, but that there is one parallel task that keeps crashing
+the parallel workers over and over?  Most certainly, we want to only
+retry a fixed number of times, before giving up, otherwise we might
+get stuck in a never ending procedure.  But even so, what if the
+problematic parallel code brings down the machine where it runs?  If
+we have automatic restart of workers and parallel tasks, we might end
+up bringing down multiple machines before we notice the problem.  So,
+although it appears fairly straightforward to handle crashed workers
+automatically, we need to come up with a robust, well-behaving
+strategy for doing so before we can implement it.</p>
+<p>I hope you find this useful. If you have questions or comments on
+<strong>parallelly</strong>, or the Futureverse in general, please use the
+<a href="https://github.com/HenrikBengtsson/future/discussions/">Futureverse Discussion forum</a>.</p>
+<p>Henrik</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>parallelly</strong> package: <a href="https://cran.r-project.org/package=parallelly">CRAN</a>, <a href="https://github.com/HenrikBengtsson/parallelly">GitHub</a>, <a href="https://parallelly.futureverse.org">pkgdown</a></li>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a>, <a href="https://future.futureverse.org">pkgdown</a></li>
+<li><strong>Futureverse</strong>: <a href="https://www.futureverse.org">https://www.futureverse.org</a></li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallelly/">parallelly</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/compute-clusters/">compute clusters</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">hpc</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/06/26/dofuture/" data-tooltip="%dofuture% - a Better foreach() Parallelization Operator than %dopar%">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2023/07/01/parallelly-managing-workers/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2023/07/01/parallelly-managing-workers/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/06/26/dofuture/" data-tooltip="%dofuture% - a Better foreach() Parallelization Operator than %dopar%">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2023/07/01/parallelly-managing-workers/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2023/07/01/parallelly-managing-workers/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2023%2F07%2F01%2Fparallelly-managing-workers%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2023%2F07%2F01%2Fparallelly-managing-workers%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

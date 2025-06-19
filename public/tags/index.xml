@@ -1,0 +1,1145 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on JottR</title>
+    <link>https://www.jottr.org/tags/</link>
+    <description>Recent content in Tags on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>compute clusters</title>
+      <link>https://www.jottr.org/tags/compute-clusters/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/compute-clusters/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HPC</title>
+      <link>https://www.jottr.org/tags/hpc/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/hpc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>package</title>
+      <link>https://www.jottr.org/tags/package/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/package/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parallel</title>
+      <link>https://www.jottr.org/tags/parallel/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/parallel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parallel processing</title>
+      <link>https://www.jottr.org/tags/parallel-processing/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/parallel-processing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parallelly</title>
+      <link>https://www.jottr.org/tags/parallelly/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/parallelly/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://www.jottr.org/tags/r/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>%dopar%</title>
+      <link>https://www.jottr.org/tags/dopar/</link>
+      <pubDate>Mon, 26 Jun 2023 19:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/dopar/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>doFuture</title>
+      <link>https://www.jottr.org/tags/dofuture/</link>
+      <pubDate>Mon, 26 Jun 2023 19:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/dofuture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>foreach</title>
+      <link>https://www.jottr.org/tags/foreach/</link>
+      <pubDate>Mon, 26 Jun 2023 19:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/foreach/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>asynchronous</title>
+      <link>https://www.jottr.org/tags/asynchronous/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/asynchronous/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Edmonton R User Group Meetup</title>
+      <link>https://www.jottr.org/tags/edmonton-r-user-group-meetup/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/edmonton-r-user-group-meetup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>future</title>
+      <link>https://www.jottr.org/tags/future/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/future/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>presentation</title>
+      <link>https://www.jottr.org/tags/presentation/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/presentation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>remote evaluation</title>
+      <link>https://www.jottr.org/tags/remote-evaluation/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/remote-evaluation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slides</title>
+      <link>https://www.jottr.org/tags/slides/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/slides/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>talk</title>
+      <link>https://www.jottr.org/tags/talk/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/talk/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>YEGRUG</title>
+      <link>https://www.jottr.org/tags/yegrug/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/yegrug/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cli</title>
+      <link>https://www.jottr.org/tags/cli/</link>
+      <pubDate>Tue, 10 Jan 2023 19:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/cli/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>progressr</title>
+      <link>https://www.jottr.org/tags/progressr/</link>
+      <pubDate>Tue, 10 Jan 2023 19:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/progressr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>purrr</title>
+      <link>https://www.jottr.org/tags/purrr/</link>
+      <pubDate>Tue, 10 Jan 2023 19:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/purrr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>availableCores</title>
+      <link>https://www.jottr.org/tags/availablecores/</link>
+      <pubDate>Mon, 05 Dec 2022 21:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/availablecores/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>detectCores</title>
+      <link>https://www.jottr.org/tags/detectcores/</link>
+      <pubDate>Mon, 05 Dec 2022 21:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/detectcores/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>profiling</title>
+      <link>https://www.jottr.org/tags/profiling/</link>
+      <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/profiling/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>useR 2022</title>
+      <link>https://www.jottr.org/tags/user-2022/</link>
+      <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/user-2022/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>video</title>
+      <link>https://www.jottr.org/tags/video/</link>
+      <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/video/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>i18n</title>
+      <link>https://www.jottr.org/tags/i18n/</link>
+      <pubDate>Wed, 08 Jun 2022 14:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/i18n/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>locale</title>
+      <link>https://www.jottr.org/tags/locale/</link>
+      <pubDate>Wed, 08 Jun 2022 14:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/locale/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>plyr</title>
+      <link>https://www.jottr.org/tags/plyr/</link>
+      <pubDate>Fri, 03 Jun 2022 13:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/plyr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cgroups</title>
+      <link>https://www.jottr.org/tags/cgroups/</link>
+      <pubDate>Fri, 22 Apr 2022 11:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/cgroups/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux containers</title>
+      <link>https://www.jottr.org/tags/linux-containers/</link>
+      <pubDate>Fri, 22 Apr 2022 11:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/linux-containers/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RNG</title>
+      <link>https://www.jottr.org/tags/rng/</link>
+      <pubDate>Tue, 22 Feb 2022 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/rng/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GSoC</title>
+      <link>https://www.jottr.org/tags/gsoc/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/gsoc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>matrix</title>
+      <link>https://www.jottr.org/tags/matrix/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/matrix/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>matrixStats</title>
+      <link>https://www.jottr.org/tags/matrixstats/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/matrixstats/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>memory</title>
+      <link>https://www.jottr.org/tags/memory/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/memory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>name attributes</title>
+      <link>https://www.jottr.org/tags/name-attributes/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/name-attributes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>performance</title>
+      <link>https://www.jottr.org/tags/performance/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/performance/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>project</title>
+      <link>https://www.jottr.org/tags/project/</link>
+      <pubDate>Mon, 23 Aug 2021 00:10:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/project/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rstudio</title>
+      <link>https://www.jottr.org/tags/rstudio/</link>
+      <pubDate>Fri, 11 Jun 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/rstudio/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shiny</title>
+      <link>https://www.jottr.org/tags/shiny/</link>
+      <pubDate>Fri, 11 Jun 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/shiny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>MS Windows</title>
+      <link>https://www.jottr.org/tags/ms-windows/</link>
+      <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/ms-windows/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>remote-parallel-processing</title>
+      <link>https://www.jottr.org/tags/remote-parallel-processing/</link>
+      <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/remote-parallel-processing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>SSH</title>
+      <link>https://www.jottr.org/tags/ssh/</link>
+      <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/ssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud</title>
+      <link>https://www.jottr.org/tags/cloud/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dask</title>
+      <link>https://www.jottr.org/tags/dask/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/dask/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://www.jottr.org/tags/docker/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GKE</title>
+      <link>https://www.jottr.org/tags/gke/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/gke/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Google Kubernetes Engine</title>
+      <link>https://www.jottr.org/tags/google-kubernetes-engine/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/google-kubernetes-engine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>guest post</title>
+      <link>https://www.jottr.org/tags/guest-post/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/guest-post/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Helm</title>
+      <link>https://www.jottr.org/tags/helm/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/helm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kubernetes</title>
+      <link>https://www.jottr.org/tags/kubernetes/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/kubernetes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rocker</title>
+      <link>https://www.jottr.org/tags/rocker/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/rocker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RStudio Server</title>
+      <link>https://www.jottr.org/tags/rstudio-server/</link>
+      <pubDate>Thu, 08 Apr 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/rstudio-server/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>archive</title>
+      <link>https://www.jottr.org/tags/archive/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/archive/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CRAN</title>
+      <link>https://www.jottr.org/tags/cran/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/cran/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>deprecation</title>
+      <link>https://www.jottr.org/tags/deprecation/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/deprecation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>future.BatchJobs</title>
+      <link>https://www.jottr.org/tags/future.batchjobs/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/future.batchjobs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>future.batchtools</title>
+      <link>https://www.jottr.org/tags/future.batchtools/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/future.batchtools/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bioconductor</title>
+      <link>https://www.jottr.org/tags/bioconductor/</link>
+      <pubDate>Sat, 19 Dec 2020 10:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/bioconductor/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BiocParallel</title>
+      <link>https://www.jottr.org/tags/biocparallel/</link>
+      <pubDate>Sat, 19 Dec 2020 10:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/biocparallel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>output</title>
+      <link>https://www.jottr.org/tags/output/</link>
+      <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/output/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>progress updates</title>
+      <link>https://www.jottr.org/tags/progress-updates/</link>
+      <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/progress-updates/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>standard output</title>
+      <link>https://www.jottr.org/tags/standard-output/</link>
+      <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/standard-output/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>stdout</title>
+      <link>https://www.jottr.org/tags/stdout/</link>
+      <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/stdout/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>furrr</title>
+      <link>https://www.jottr.org/tags/furrr/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/furrr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>future.apply</title>
+      <link>https://www.jottr.org/tags/future.apply/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/future.apply/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>future.callr</title>
+      <link>https://www.jottr.org/tags/future.callr/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/future.callr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>future.tests</title>
+      <link>https://www.jottr.org/tags/future.tests/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/future.tests/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>testing</title>
+      <link>https://www.jottr.org/tags/testing/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/testing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>validation</title>
+      <link>https://www.jottr.org/tags/validation/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/validation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>doRNG</title>
+      <link>https://www.jottr.org/tags/dorng/</link>
+      <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/dorng/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>crayon</title>
+      <link>https://www.jottr.org/tags/crayon/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/crayon/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>prompt</title>
+      <link>https://www.jottr.org/tags/prompt/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/prompt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rprofile</title>
+      <link>https://www.jottr.org/tags/rprofile/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/rprofile/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>startup</title>
+      <link>https://www.jottr.org/tags/startup/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/startup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>taskCallbackManager</title>
+      <link>https://www.jottr.org/tags/taskcallbackmanager/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/taskcallbackmanager/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>eRum 2020</title>
+      <link>https://www.jottr.org/tags/erum-2020/</link>
+      <pubDate>Sat, 04 Jul 2020 17:30:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/erum-2020/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rstudio::conf 2020</title>
+      <link>https://www.jottr.org/tags/rstudioconf-2020/</link>
+      <pubDate>Sat, 01 Feb 2020 19:30:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/rstudioconf-2020/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>useR 2019</title>
+      <link>https://www.jottr.org/tags/user-2019/</link>
+      <pubDate>Fri, 12 Jul 2019 16:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/tags/user-2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>anacron</title>
+      <link>https://www.jottr.org/tags/anacron/</link>
+      <pubDate>Sun, 26 May 2019 21:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/anacron/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>configuration</title>
+      <link>https://www.jottr.org/tags/configuration/</link>
+      <pubDate>Sun, 26 May 2019 21:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/configuration/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Renviron</title>
+      <link>https://www.jottr.org/tags/renviron/</link>
+      <pubDate>Sun, 26 May 2019 21:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/tags/renviron/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>satRday LA 2019</title>
+      <link>https://www.jottr.org/tags/satrday-la-2019/</link>
+      <pubDate>Thu, 16 May 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/satrday-la-2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>satRday Paris 2019</title>
+      <link>https://www.jottr.org/tags/satrday-paris-2019/</link>
+      <pubDate>Thu, 07 Mar 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/satrday-paris-2019/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>for-loop</title>
+      <link>https://www.jottr.org/tags/for-loop/</link>
+      <pubDate>Fri, 11 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/for-loop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lapply</title>
+      <link>https://www.jottr.org/tags/lapply/</link>
+      <pubDate>Fri, 11 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/tags/lapply/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>graphics</title>
+      <link>https://www.jottr.org/tags/graphics/</link>
+      <pubDate>Sat, 21 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/graphics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>apply</title>
+      <link>https://www.jottr.org/tags/apply/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/apply/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Map</title>
+      <link>https://www.jottr.org/tags/map/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/map/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mapply</title>
+      <link>https://www.jottr.org/tags/mapply/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/mapply/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>replicate</title>
+      <link>https://www.jottr.org/tags/replicate/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/replicate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sapply</title>
+      <link>https://www.jottr.org/tags/sapply/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/sapply/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tapply</title>
+      <link>https://www.jottr.org/tags/tapply/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/tapply/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vapply</title>
+      <link>https://www.jottr.org/tags/vapply/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/vapply/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>eRum2018</title>
+      <link>https://www.jottr.org/tags/erum2018/</link>
+      <pubDate>Mon, 18 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/erum2018/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>coercion</title>
+      <link>https://www.jottr.org/tags/coercion/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/coercion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>garbage collection</title>
+      <link>https://www.jottr.org/tags/garbage-collection/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/garbage-collection/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>microbenchmark</title>
+      <link>https://www.jottr.org/tags/microbenchmark/</link>
+      <pubDate>Mon, 02 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/microbenchmark/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>environment variables</title>
+      <link>https://www.jottr.org/tags/environment-variables/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/environment-variables/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>options</title>
+      <link>https://www.jottr.org/tags/options/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/options/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>secrets</title>
+      <link>https://www.jottr.org/tags/secrets/</link>
+      <pubDate>Fri, 30 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/secrets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>purr</title>
+      <link>https://www.jottr.org/tags/purr/</link>
+      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/purr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>history</title>
+      <link>https://www.jottr.org/tags/history/</link>
+      <pubDate>Sat, 01 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/history/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mailing list</title>
+      <link>https://www.jottr.org/tags/mailing-list/</link>
+      <pubDate>Sat, 01 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/mailing-list/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R-help</title>
+      <link>https://www.jottr.org/tags/r-help/</link>
+      <pubDate>Sat, 01 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/r-help/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>interactive graphics</title>
+      <link>https://www.jottr.org/tags/interactive-graphics/</link>
+      <pubDate>Tue, 11 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/interactive-graphics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>remote graphics</title>
+      <link>https://www.jottr.org/tags/remote-graphics/</link>
+      <pubDate>Tue, 11 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/remote-graphics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>useR2016</title>
+      <link>https://www.jottr.org/tags/user2016/</link>
+      <pubDate>Sat, 02 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/user2016/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>milestone</title>
+      <link>https://www.jottr.org/tags/milestone/</link>
+      <pubDate>Wed, 12 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/milestone/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>packages</title>
+      <link>https://www.jottr.org/tags/packages/</link>
+      <pubDate>Wed, 12 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/packages/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C</title>
+      <link>https://www.jottr.org/tags/c/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/c/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>user interrupts</title>
+      <link>https://www.jottr.org/tags/user-interrupts/</link>
+      <pubDate>Fri, 05 Jun 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/user-interrupts/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>LaTeX</title>
+      <link>https://www.jottr.org/tags/latex/</link>
+      <pubDate>Sat, 21 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/latex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PDF</title>
+      <link>https://www.jottr.org/tags/pdf/</link>
+      <pubDate>Sat, 21 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/pdf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R.rsp</title>
+      <link>https://www.jottr.org/tags/r.rsp/</link>
+      <pubDate>Sat, 21 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/r.rsp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vignette</title>
+      <link>https://www.jottr.org/tags/vignette/</link>
+      <pubDate>Sat, 21 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/vignette/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>capture.output</title>
+      <link>https://www.jottr.org/tags/capture.output/</link>
+      <pubDate>Mon, 26 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/capture.output/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R.utils</title>
+      <link>https://www.jottr.org/tags/r.utils/</link>
+      <pubDate>Mon, 26 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/r.utils/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>trick</title>
+      <link>https://www.jottr.org/tags/trick/</link>
+      <pubDate>Sat, 25 May 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/trick/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R-announce</title>
+      <link>https://www.jottr.org/tags/r-announce/</link>
+      <pubDate>Mon, 01 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/r-announce/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R-devel</title>
+      <link>https://www.jottr.org/tags/r-devel/</link>
+      <pubDate>Mon, 01 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/r-devel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>unlist</title>
+      <link>https://www.jottr.org/tags/unlist/</link>
+      <pubDate>Mon, 07 Jan 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/unlist/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>help</title>
+      <link>https://www.jottr.org/tags/help/</link>
+      <pubDate>Mon, 22 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/help/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>port</title>
+      <link>https://www.jottr.org/tags/port/</link>
+      <pubDate>Mon, 22 Oct 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/port/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>repositories</title>
+      <link>https://www.jottr.org/tags/repositories/</link>
+      <pubDate>Thu, 27 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/repositories/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

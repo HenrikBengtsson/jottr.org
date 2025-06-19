@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>foreach on JottR</title>
+    <link>https://www.jottr.org/tags/foreach/</link>
+    <description>Recent content in foreach on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 26 Jun 2023 19:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/foreach/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>%dofuture% - a Better foreach() Parallelization Operator than %dopar%</title>
+      <link>https://www.jottr.org/2023/06/26/dofuture/</link>
+      <pubDate>Mon, 26 Jun 2023 19:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2023/06/26/dofuture/</guid>
+      <description>doFuture 1.0.0 is on CRAN since March 2023. It introduces a new foreach operator %dofuture%, which makes it even easier to use foreach() to parallelize via the future ecosystem. This new operator is designed to be an alternative to the existing %dopar% operator for foreach() - an alternative that works in similar ways but better. If you already use foreach() together with futures, or plan on doing so, I recommend using %dofuture% instead of %dopar%.</description>
+    </item>
+    
+    <item>
+      <title>future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing</title>
+      <link>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</link>
+      <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
+      <description>After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
+    </item>
+    
+    <item>
+      <title>future and future.apply - Some Recent Improvements</title>
+      <link>https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/</link>
+      <pubDate>Sat, 11 Jul 2020 22:15:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/07/11/future-future.apply-recent-improvements/</guid>
+      <description>There are new versions of future and future.apply - your friends in the parallelization business - on CRAN. These updates are mostly maintenance updates with bug fixes, some improvements, and preparations for upcoming changes. It&amp;rsquo;s been some time since I blogged about these packages, so here is the summary of the main updates this far since early 2020:
+future:
+values() for lists and other containers was renamed to value() to simplify the API [future 1.</description>
+    </item>
+    
+    <item>
+      <title>future 1.15.0 - Lazy Futures are Now Launched if Queried</title>
+      <link>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</link>
+      <pubDate>Sat, 09 Nov 2019 11:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
+      <description>No dogs were harmed while making this release
+future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
+Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+    </item>
+    
+    <item>
+      <title>Parallelize a For-Loop by Rewriting it as an Lapply Call</title>
+      <link>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</link>
+      <pubDate>Fri, 11 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</guid>
+      <description>A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &amp;lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &amp;lt;- future.apply::future_lapply(...) or y &amp;lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.</description>
+    </item>
+    
+    <item>
+      <title>The Many-Faced Future</title>
+      <link>https://www.jottr.org/2017/06/05/many-faced-future/</link>
+      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/06/05/many-faced-future/</guid>
+      <description>The future package defines the Future API, which is a unified, generic, friendly API for parallel processing. The Future API follows the principle of write code once and run anywhere - the developer chooses what to parallelize and the user how and where.
+The nature of a future is such that it lends itself to be used with several of the existing map-reduce frameworks already available in R. In this post, I&amp;rsquo;ll give an example of how to apply a function over a set of elements concurrently using plain sequential R, the parallel package, the future package alone, as well as future in combination of the foreach, the plyr, and the purrr packages.</description>
+    </item>
+    
+    <item>
+      <title>doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000&#43; Packages</title>
+      <link>https://www.jottr.org/2017/03/18/dofuture/</link>
+      <pubDate>Sat, 18 Mar 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/03/18/dofuture/</guid>
+      <description>doFuture 0.4.0 is available on CRAN. The doFuture package provides a universal foreach adaptor enabling any future backend to be used with the foreach() %dopar% { ... } construct. As shown below, this will allow foreach() to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+1,300+ R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CRAN on JottR</title>
+    <link>https://www.jottr.org/tags/cran/</link>
+    <description>Recent content in CRAN on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Jan 2021 09:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/cran/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future.BatchJobs - End-of-Life Announcement</title>
+      <link>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</guid>
+      <description>This is an announcement that future.BatchJobs - A Future API for Parallel and Distributed Processing using BatchJobs has been archived on CRAN. The package has been deprecated for years with a recommendation of using future.batchtools instead. The latter has been on CRAN since June 2017 and builds upon the batchtools package, which itself supersedes the BatchJobs package.
+To wrap up the three-and-a-half year long life of future.BatchJobs, the very last version, 0.</description>
+    </item>
+    
+    <item>
+      <title>Trust the Future</title>
+      <link>https://www.jottr.org/2020/11/04/trust-the-future/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/04/trust-the-future/</guid>
+      <description>Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&amp;rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&amp;rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&amp;rsquo;m sure I forgot something:</description>
+    </item>
+    
+    <item>
+      <title>Milestone: 7000 Packages on CRAN</title>
+      <link>https://www.jottr.org/2015/08/12/milestone-cran-7000/</link>
+      <pubDate>Wed, 12 Aug 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/08/12/milestone-cran-7000/</guid>
+      <description>Another 1,000 packages were added to CRAN, which took less than 9 months. Today (August 12, 2015), the Comprehensive R Archive Network (CRAN) package page reports:
+&amp;ldquo;Currently, the CRAN package repository features 7002 available packages.&amp;rdquo;
+While the previous 1,000 packages took 355 days, going from 6,000 to 7,000 packages took 286 days - which means that now a new CRAN package is born on average every 6.9 hours (or 3.5 packages per day).</description>
+    </item>
+    
+    <item>
+      <title>How to: Package Vignettes in Plain LaTeX</title>
+      <link>https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/</link>
+      <pubDate>Sat, 21 Feb 2015 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2015/02/21/how-to-plain-latex-vignettes/</guid>
+      <description>Ever wanted to include a plain-LaTeX vignette in your package and have it compiled into a PDF? The R.rsp package provides a four-line solution for this.
+But, first, what&amp;rsquo;s R.rsp? R.rsp is an R package that implements a compiler for the RSP markup language. RSP can be used to embed dynamic R code in any text-based source document to be compiled into a final document, e.g. RSP-embedded LaTeX into PDF, RSP-embedded Markdown into HTML, RSP-embedded HTML into HTML and so on.</description>
+    </item>
+    
+    <item>
+      <title>Milestone: 6000 Packages on CRAN</title>
+      <link>https://www.jottr.org/2014/10/29/milestone-cran-6000/</link>
+      <pubDate>Wed, 29 Oct 2014 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2014/10/29/milestone-cran-6000/</guid>
+      <description>Another 1,000 packages were added to CRAN and this time in less than 12 months. Today (2014-10-29) on The Comprehensive R Archive Network (CRAN) package page:
+&amp;ldquo;Currently, the CRAN package repository features 6000 available packages.&amp;rdquo;
+Going from 5,000 to 6,000 packages took 355 days - which means that it on average was only ~8.5 hours between each new packages added. It is actually even more frequent since dropped packages are not accounted for.</description>
+    </item>
+    
+    <item>
+      <title>Set Package Repositories at Startup</title>
+      <link>https://www.jottr.org/2012/09/27/config-repos/</link>
+      <pubDate>Thu, 27 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2012/09/27/config-repos/</guid>
+      <description>The below code shows how to configure the repos option in R such that install.packages() etc. will locate the packages without having to explicitly specify the repository. Just add it to the .Rprofile file in your home directory (iff missing, create it). For more details, see help(&amp;quot;Startup&amp;quot;).
+local({ repos &amp;lt;- getOption(&amp;#34;repos&amp;#34;) # http://cran.r-project.org/ # For a list of CRAN mirrors, see getCRANmirrors(). repos[&amp;#34;CRAN&amp;#34;] &amp;lt;- &amp;#34;http://cran.stat.ucla.edu&amp;#34; # http://www.stats.ox.ac.uk/pub/RWin/ReadMe if (.Platform$OS.type == &amp;#34;windows&amp;#34;) { repos[&amp;#34;CRANextra&amp;#34;] &amp;lt;- &amp;#34;http://www.</description>
+    </item>
+    
+  </channel>
+</rss>

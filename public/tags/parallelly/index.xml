@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>parallelly on JottR</title>
+    <link>https://www.jottr.org/tags/parallelly/</link>
+    <description>Recent content in parallelly on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/parallelly/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely</title>
+      <link>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</link>
+      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</guid>
+      <description>parallelly 1.36.0 is on CRAN since May 2023. The parallelly package is part of the Futureverse and enhances the parallel package of base R, e.g. it adds several features you&amp;rsquo;d otherwise expect to see in parallel. The parallelly package is one of the internal work horses for the future package, but it can also be used outside of the future ecosystem.
+In this most recent release, parallelly gained several new skills in how cluster nodes (a.</description>
+    </item>
+    
+    <item>
+      <title>parallelly 1.34.0: Support for CGroups v2, Killing Parallel Workers, and more</title>
+      <link>https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/</link>
+      <pubDate>Wed, 18 Jan 2023 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/</guid>
+      <description>With the recent releases of parallelly 1.33.0 (2022-12-13) and 1.34.0 (2023-01-13), availableCores() and availableWorkers() gained better support for Linux CGroups, options for avoiding running out of R connections when setting up parallel-style clusters, and killNode() for forcefully terminating one or more parallel workers. I summarize these updates below. For other updates, please see the NEWS.
+Added support for CGroups v2 availableCores() and availableWorkers() gained support for Linux Control Groups v2 (CGroups v2), besides CGroups v1, which has been supported since parallelly 1.</description>
+    </item>
+    
+    <item>
+      <title>Please Avoid detectCores() in your R Packages</title>
+      <link>https://www.jottr.org/2022/12/05/avoid-detectcores/</link>
+      <pubDate>Mon, 05 Dec 2022 21:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2022/12/05/avoid-detectcores/</guid>
+      <description>The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&amp;rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.</description>
+    </item>
+    
+    <item>
+      <title>parallelly: Support for Fujitsu Technical Computing Suite High-Performance Compute (HPC) Environments</title>
+      <link>https://www.jottr.org/2022/06/09/parallelly-support-for-fujitsu-technical-computing-suite-high-performance-compute-hpc-environments/</link>
+      <pubDate>Thu, 09 Jun 2022 13:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/06/09/parallelly-support-for-fujitsu-technical-computing-suite-high-performance-compute-hpc-environments/</guid>
+      <description>parallelly 1.32.0 is now on CRAN. One of the major updates is that availableCores() and availableWorkers(), and therefore also the future framework, gained support for the &amp;lsquo;Fujitsu Technical Computing Suite&amp;rsquo; job scheduler. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package.</description>
+    </item>
+    
+    <item>
+      <title>parallelly 1.32.0: makeClusterPSOCK() Didn&#39;t Work with Chinese and Korean Locales</title>
+      <link>https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/</link>
+      <pubDate>Wed, 08 Jun 2022 14:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/</guid>
+      <description>parallelly 1.32.0 is on CRAN. This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused makeClusterPSOCK(), and therefore also future::plan(&amp;quot;multisession&amp;quot;), to fail with an error. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.</description>
+    </item>
+    
+    <item>
+      <title>parallelly 1.31.1: Better at Inferring Number of CPU Cores with Cgroups and Linux Containers</title>
+      <link>https://www.jottr.org/2022/04/22/parallelly-1.31.1/</link>
+      <pubDate>Fri, 22 Apr 2022 11:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/04/22/parallelly-1.31.1/</guid>
+      <description>parallelly 1.31.1 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package relies on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly in November 2021, I&amp;rsquo;ve fixed a few bugs and added some new features to the package;</description>
+    </item>
+    
+    <item>
+      <title>parallelly 1.29.0: New Skills and Less Communication Latency on Linux</title>
+      <link>https://www.jottr.org/2021/11/22/parallelly-1.29.0/</link>
+      <pubDate>Mon, 22 Nov 2021 21:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2021/11/22/parallelly-1.29.0/</guid>
+      <description>parallelly 1.29.0 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package rely on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly five months ago, the parallelly package had some bugs fixed, and it gained a few new features;</description>
+    </item>
+    
+    <item>
+      <title>parallelly 1.26.0: Fast, Concurrent Setup of Parallel Workers (Finally)</title>
+      <link>https://www.jottr.org/2021/06/10/parallelly-1.26.0/</link>
+      <pubDate>Thu, 10 Jun 2021 15:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2021/06/10/parallelly-1.26.0/</guid>
+      <description>parallelly 1.26.0 is on CRAN. It comes with one major improvement and one new function:
+The setup of parallel workers is now much faster, which comes from using a concurrent, instead of sequential, setup strategy
+The new freePort() can be used to find a TCP port that is currently available
+Faster setup of local, parallel workers In R 4.0.0, which was released in May 2020, parallel::makeCluster(n) gained the power of setting up the n local cluster nodes all at the same time, which greatly reduces to total setup time.</description>
+    </item>
+    
+    <item>
+      <title>parallelly 1.25.0: availableCores(omit=n) and, Finally, Built-in SSH Support for MS Windows 10 Users</title>
+      <link>https://www.jottr.org/2021/04/30/parallelly-1.25.0/</link>
+      <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2021/04/30/parallelly-1.25.0/</guid>
+      <description>parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+You can now use availableCores(omit = n) to ask for all but n CPU cores
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
+availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
+ncores &amp;lt;- parallel::detectCores() It&amp;rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.</description>
+    </item>
+    
+    <item>
+      <title>future 1.20.1 - The Future Just Got a Bit Brighter</title>
+      <link>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</link>
+      <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</guid>
+      <description>future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &amp;ldquo;tee&amp;rdquo;, any output produced by futures.
+The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.</description>
+    </item>
+    
+    <item>
+      <title>parallelly, future - Cleaning Up Around the House</title>
+      <link>https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/</link>
+      <pubDate>Wed, 04 Nov 2020 18:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/</guid>
+      <description>I&amp;rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&amp;rsquo;re like me and concerned about bloating package dependencies, I&amp;rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&amp;rsquo;ll try to explain this below, but let me be start by clarifying a few things:
+The functions in the parallelly package used to be part of the future package</description>
+    </item>
+    
+    <item>
+      <title>Trust the Future</title>
+      <link>https://www.jottr.org/2020/11/04/trust-the-future/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/04/trust-the-future/</guid>
+      <description>Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&amp;rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&amp;rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&amp;rsquo;m sure I forgot something:</description>
+    </item>
+    
+  </channel>
+</rss>

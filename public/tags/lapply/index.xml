@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lapply on JottR</title>
+    <link>https://www.jottr.org/tags/lapply/</link>
+    <description>Recent content in lapply on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Jan 2019 12:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/lapply/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Parallelize a For-Loop by Rewriting it as an Lapply Call</title>
+      <link>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</link>
+      <pubDate>Fri, 11 Jan 2019 12:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/11/parallelize-a-for-loop-by-rewriting-it-as-an-lapply-call/</guid>
+      <description>A commonly asked question in the R community is:
+How can I parallelize the following for-loop?
+The answer almost always involves rewriting the for (...) { ... } loop into something that looks like a y &amp;lt;- lapply(...) call. If you can achieve that, you can parallelize it via for instance y &amp;lt;- future.apply::future_lapply(...) or y &amp;lt;- foreach::foreach() %dopar% { ... }.
+For some for-loops it is straightforward to rewrite the code to make use of lapply() instead, whereas in other cases it can be a bit more complicated, especially if the for-loop updates multiple variables in each iteration.</description>
+    </item>
+    
+    <item>
+      <title>future.apply - Parallelize Any Base R Apply Function</title>
+      <link>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</guid>
+      <description>Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &amp;hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&amp;rsquo;s it! The default is sequential processing but by using plan(multisession) it&amp;rsquo;ll run in parallel.</description>
+    </item>
+    
+    <item>
+      <title>future 1.8.0: Preparing for a Shiny Future</title>
+      <link>https://www.jottr.org/2018/04/12/future-results/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/12/future-results/</guid>
+      <description>future 1.8.0 is available on CRAN.
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more. These features are not yet available out of the box, but thanks to this release we will be able to make some headway on many of the feature requests related to this - hopefully already by the next release.
+For shiny users following Joe Cheng&amp;rsquo;s efforts on extending Shiny with asynchronous processing using futures, future 1.</description>
+    </item>
+    
+    <item>
+      <title>The Many-Faced Future</title>
+      <link>https://www.jottr.org/2017/06/05/many-faced-future/</link>
+      <pubDate>Mon, 05 Jun 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/06/05/many-faced-future/</guid>
+      <description>The future package defines the Future API, which is a unified, generic, friendly API for parallel processing. The Future API follows the principle of write code once and run anywhere - the developer chooses what to parallelize and the user how and where.
+The nature of a future is such that it lends itself to be used with several of the existing map-reduce frameworks already available in R. In this post, I&amp;rsquo;ll give an example of how to apply a function over a set of elements concurrently using plain sequential R, the parallel package, the future package alone, as well as future in combination of the foreach, the plyr, and the purrr packages.</description>
+    </item>
+    
+    <item>
+      <title>future 1.3.0: Reproducible RNGs, future_lapply() and More</title>
+      <link>https://www.jottr.org/2017/02/19/future-rng/</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/02/19/future-rng/</guid>
+      <description>future 1.3.0 is available on CRAN. With futures, it is easy to write R code once, which the user can choose to evaluate in parallel using whatever resources s/he has available, e.g. a local machine, a set of local machines, a set of remote machines, a high-end compute cluster (via future.BatchJobs and soon also future.batchtools), or in the cloud (e.g. via googleComputeEngineR).
+Futures makes it easy to harness any resources at hand.</description>
+    </item>
+    
+  </channel>
+</rss>

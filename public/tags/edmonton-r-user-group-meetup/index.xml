@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Edmonton R User Group Meetup on JottR</title>
+    <link>https://www.jottr.org/tags/edmonton-r-user-group-meetup/</link>
+    <description>Recent content in Edmonton R User Group Meetup on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 22 May 2023 18:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/edmonton-r-user-group-meetup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Edmonton R User Group Meetup: Futureverse - A Unifying Parallelization Framework in R for Everyone</title>
+      <link>https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/</link>
+      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/</guid>
+      <description> Below are the slides from my presentation at the Edmonton R User Group Meetup (YEGRUG) on May 22, 2023:
+Title: Futureverse - A Unifying Parallelization Framework in R for Everyone
+Speaker: Henrik Bengtsson
+Slides: HTML, PDF (46 slides)
+Video: official recording (~60 minutes)
+Thank you Péter Sólymos and the YEGRUG for the invitate and the opportunity!
+/Henrik
+Links YEGRUG: https://yegrug.github.io/ Futureverse website: https://www.futureverse.org/ future package CRAN, GitHub, pkgdown </description>
+    </item>
+    
+  </channel>
+</rss>

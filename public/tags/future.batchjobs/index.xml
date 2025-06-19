@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>future.BatchJobs on JottR</title>
+    <link>https://www.jottr.org/tags/future.batchjobs/</link>
+    <description>Recent content in future.BatchJobs on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 08 Jan 2021 09:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/future.batchjobs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future.BatchJobs - End-of-Life Announcement</title>
+      <link>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</link>
+      <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</guid>
+      <description>This is an announcement that future.BatchJobs - A Future API for Parallel and Distributed Processing using BatchJobs has been archived on CRAN. The package has been deprecated for years with a recommendation of using future.batchtools instead. The latter has been on CRAN since June 2017 and builds upon the batchtools package, which itself supersedes the BatchJobs package.
+To wrap up the three-and-a-half year long life of future.BatchJobs, the very last version, 0.</description>
+    </item>
+    
+    <item>
+      <title>Maintenance Updates of Future Backends and doFuture</title>
+      <link>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2019/01/07/maintenance-updates-of-future-backends-and-dofuture/</guid>
+      <description>New versions of the following future backends are available on CRAN:
+future.callr - parallelization via callr, i.e. on the local machine future.batchtools - parallelization via batchtools, i.e. on a compute cluster with job schedulers (SLURM, SGE, Torque/PBS, etc.) but also on the local machine future.BatchJobs - (maintained for legacy reasons) parallelization via BatchJobs, which is the predecessor of batchtools These releases fix a few small bugs and inconsistencies that were identified with help of the future.</description>
+    </item>
+    
+    <item>
+      <title>future 1.3.0: Reproducible RNGs, future_lapply() and More</title>
+      <link>https://www.jottr.org/2017/02/19/future-rng/</link>
+      <pubDate>Sun, 19 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/02/19/future-rng/</guid>
+      <description>future 1.3.0 is available on CRAN. With futures, it is easy to write R code once, which the user can choose to evaluate in parallel using whatever resources s/he has available, e.g. a local machine, a set of local machines, a set of remote machines, a high-end compute cluster (via future.BatchJobs and soon also future.batchtools), or in the cloud (e.g. via googleComputeEngineR).
+Futures makes it easy to harness any resources at hand.</description>
+    </item>
+    
+    <item>
+      <title>High-Performance Compute in R Using Futures</title>
+      <link>https://www.jottr.org/2016/10/22/future-hpc/</link>
+      <pubDate>Sat, 22 Oct 2016 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2016/10/22/future-hpc/</guid>
+      <description>A new version of the future.BatchJobs package has been released and is available on CRAN. With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.
+Our different futures can easily be resolved on high-performance compute clusters.
+Requirements The future.BatchJobs package implements the Future API, as defined by the future package, on top of the API provided by the BatchJobs package.</description>
+    </item>
+    
+  </channel>
+</rss>

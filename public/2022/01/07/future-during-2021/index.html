@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="Happy New Year! I made some updates to the future framework during 2021 that involve overall improvements and essential preparations to go forward with some exciting new features that I&rsquo;m keen to work on during 2022.
+The future framework makes it easy to parallelize existing R code - often with only a minor change of code. The goal is to lower the barriers so that anyone can quickly and safely speed up their existing R code in a worry-free manner.">
+
+
+<meta property="og:description" content="Happy New Year! I made some updates to the future framework during 2021 that involve overall improvements and essential preparations to go forward with some exciting new features that I&rsquo;m keen to work on during 2022.
+The future framework makes it easy to parallelize existing R code - often with only a minor change of code. The goal is to lower the barriers so that anyone can quickly and safely speed up their existing R code in a worry-free manner.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Future Improvements During 2021">
+<meta name="twitter:title" content="Future Improvements During 2021">
+<meta property="og:url" content="https://www.jottr.org/2022/01/07/future-during-2021/">
+<meta property="twitter:url" content="https://www.jottr.org/2022/01/07/future-during-2021/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="Happy New Year! I made some updates to the future framework during 2021 that involve overall improvements and essential preparations to go forward with some exciting new features that I&rsquo;m keen to work on during 2022.
+The future framework makes it easy to parallelize existing R code - often with only a minor change of code. The goal is to lower the barriers so that anyone can quickly and safely speed up their existing R code in a worry-free manner.">
+<meta name="twitter:description" content="Happy New Year! I made some updates to the future framework during 2021 that involve overall improvements and essential preparations to go forward with some exciting new features that I&rsquo;m keen to work on during 2022.
+The future framework makes it easy to parallelize existing R code - often with only a minor change of code. The goal is to lower the barriers so that anyone can quickly and safely speed up their existing R code in a worry-free manner.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2022-01-07T14:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-01-07T14:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="parallel-processing">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Future Improvements During 2021</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2022/01/07/future-during-2021/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Future Improvements During 2021
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-01-07T14:00:00-08:00">
+        
+  January 7, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <!-- raw HTML omitted -->
+<p>Happy New Year!  I made some updates to the future framework during
+2021 that involve overall improvements and essential preparations to
+go forward with some exciting new features that I&rsquo;m keen to work on
+during 2022.</p>
+<p>The <a href="https://futureverse.org">future framework</a> makes it easy to
+parallelize existing R code - often with only a minor change of
+code. The goal is to lower the barriers so that anyone can quickly and
+safely speed up their existing R code in a worry-free manner.</p>
+<p><strong><a href="https://future.futureverse.org">future</a></strong> 1.22.1 was released in August 2021, followed by
+<strong>future</strong> 1.23.0 at the end of October 2021.  Below, I summarize the
+updates that came with those two releases:</p>
+<ul>
+<li><a href="#new-features">New features</a></li>
+<li><a href="#performance-improvements">Performance improvements</a></li>
+<li><a href="#cleanups-to-make-room-for-new-features">Cleanups to make room for new features</a></li>
+<li><a href="#significant-changes-preparing-for-the-future">Significant changes preparing for the future</a></li>
+<li><a href="#roadmap-ahead">Roadmap ahead</a></li>
+</ul>
+<p>There were also several updates to the related <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> and
+<strong><a href="https://progressr.futureverse.org">progressr</a></strong> packages, which you can read about in earlier blog
+posts under the <a href="https://www.jottr.org/tags/#parallelly-list">#parallelly</a> and
+<a href="https://www.jottr.org/tags/#progressr-list">#progressr</a> blog tags.</p>
+<h2 id="new-features">New features</h2>
+<h3 id="futuresessioninfo-for-troubleshooting-and-issue-reporting">futureSessionInfo() for troubleshooting and issue reporting</h3>
+<p>Function <a href="https://future.futureverse.org/reference/futureSessionInfo.html"><code>futureSessionInfo()</code></a> was added to <strong>future</strong> 1.22.0.  It
+outputs information useful for troubleshooting problems related to the
+future framework.  It also runs some basic tests to validate that the
+current future backend works as expected.  If you have problems
+getting futures to work on your machine, please run this function
+before reporting issues at <a href="https://github.com/HenrikBengtsson/future/discussions">Future Discussions</a>.  Here&rsquo;s an example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">plan</span>(multisession, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">futureSessionInfo</span>()
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> Package versions
+</span></span><span style="display:flex;"><span>future <span style="color:#ae81ff">1.23.0</span>, parallelly <span style="color:#ae81ff">1.30.0</span>, parallel <span style="color:#ae81ff">4.1.2</span>, globals <span style="color:#ae81ff">0.14.0</span>, listenv <span style="color:#ae81ff">0.8.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> Allocations
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">availableCores</span>()<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>system  nproc 
+</span></span><span style="display:flex;"><span>     <span style="color:#ae81ff">8</span>      <span style="color:#ae81ff">8</span> 
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">availableWorkers</span>()<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">$</span>system
+</span></span><span style="display:flex;"><span>[1] <span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#e6db74">&#34;localhost&#34;</span>
+</span></span><span style="display:flex;"><span>[4] <span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#e6db74">&#34;localhost&#34;</span>
+</span></span><span style="display:flex;"><span>[7] <span style="color:#e6db74">&#34;localhost&#34;</span> <span style="color:#e6db74">&#34;localhost&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> Settings
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.plan<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.fork.multithreading.enable<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.globals.maxSize<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.globals.onReference<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.resolve.recursive<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.rng.onMisuse<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;warning&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.wait.timeout<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.wait.interval<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.wait.alpha<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> future.startup.script<span style="color:#f92672">=&lt;</span>not set<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> Backends
+</span></span><span style="display:flex;"><span>Number of workers<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>List of future strategies<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>. multisession<span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">-</span> args<span style="color:#f92672">:</span> <span style="color:#a6e22e">function </span>(<span style="color:#66d9ef">...</span>, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, envir <span style="color:#f92672">=</span> <span style="color:#a6e22e">parent.frame</span>())
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">-</span> tweaked<span style="color:#f92672">:</span> <span style="color:#66d9ef">TRUE</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">-</span> call<span style="color:#f92672">:</span> <span style="color:#a6e22e">plan</span>(multisession, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span><span style="color:#f92672">***</span> Basic tests
+</span></span><span style="display:flex;"><span>  worker   pid     r sysname          release
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>      <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">19291</span> <span style="color:#ae81ff">4.1.2</span>   Linux <span style="color:#ae81ff">5.4.0-91</span><span style="color:#f92672">-</span>generic
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>      <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">19290</span> <span style="color:#ae81ff">4.1.2</span>   Linux <span style="color:#ae81ff">5.4.0-91</span><span style="color:#f92672">-</span>generic
+</span></span><span style="display:flex;"><span>                                               version
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> <span style="color:#75715e">#102~18.04.1-Ubuntu SMP Thu Nov 11 14:46:36 UTC 2021</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> <span style="color:#75715e">#102~18.04.1-Ubuntu SMP Thu Nov 11 14:46:36 UTC 2021</span>
+</span></span><span style="display:flex;"><span>   nodename machine login  user effective_user
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span> my<span style="color:#f92672">-</span>laptop  x86_64 alice alice          alice
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span> my<span style="color:#f92672">-</span>laptop  x86_64 alice alice          alice
+</span></span><span style="display:flex;"><span>Number of unique PIDs<span style="color:#f92672">:</span> <span style="color:#ae81ff">2</span> (as expected)
+</span></span></code></pre></div><h3 id="working-around-utf-8-escaping-on-ms-windows">Working around UTF-8 escaping on MS Windows</h3>
+<p>Because of limitations in R itself, UTF-8 symbols outputted on MS
+Windows parallel workers would be <a href="https://github.com/HenrikBengtsson/future/issues/473">relayed as escaped
+symbols</a> when
+using futures.  Now, the future framework, and, more specifically,
+<a href="https://future.futureverse.org/reference/value.html"><code>value()</code></a>, attempts to recover such MS Windows output to UTF-8
+before outputting it.</p>
+<p>For example, in <strong>future</strong> (&lt; 1.23.0) you would get the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>({ <span style="color:#a6e22e">cat</span>(<span style="color:#e6db74">&#34;\u2713 Everything is OK&#34;</span>) ; <span style="color:#ae81ff">42</span> })
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; &lt;U+2713&gt; Everything is OK</span>
+</span></span></code></pre></div><p>when, and only when, those futures are resolved on a MS Windows
+machine.  In <strong>future</strong> (&gt;= 1.23.0), we work around this problem by
+looking for <code>&lt;U+NNNN&gt;</code> like patterns in the output and decode them as
+UTF-8 symbols;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>({ <span style="color:#a6e22e">cat</span>(<span style="color:#e6db74">&#34;\u2713 Everything is OK&#34;</span>) ; <span style="color:#ae81ff">42</span> })
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; ✓ Everything is OK</span>
+</span></span></code></pre></div><p><em>Comment</em>: From <a href="https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows/index.html">R 4.2.0, R will have native support for UTF-8 also on
+MS
+Windows</a>.
+More testing and validation is needed to confirm this will work out of
+the box in R (&gt;= 4.2.0) when running R in the terminal, in the R GUI,
+in the RStudio Console, and so on.  If so, <strong>future</strong> will be updated
+to only apply this workaround for R (&lt; 4.2.0).</p>
+<h3 id="harmonization-of-future-futureassign-and-futurecall">Harmonization of future(), futureAssign(), and futureCall()</h3>
+<p>Prior to <strong>future</strong> 1.22.0, argument <code>seed</code> for <a href="https://future.futureverse.org/reference/future.html"><code>futureAssign()</code></a> and
+<a href="https://future.futureverse.org/reference/future.html"><code>futureCall()</code></a> defaulted to <code>TRUE</code>, whereas it defaulted to <code>FALSE</code>
+for <a href="https://future.futureverse.org/reference/future.html"><code>future()</code></a>.  This was an oversight.  In <strong>future</strong> (&gt;= 1.22.0),
+<code>seed = FALSE</code> is the default for all these functions.</p>
+<h3 id="protecting-against-non-exportable-results">Protecting against non-exportable results</h3>
+<p>Analogously to how globals may be scanned for <a href="https://future.futureverse.org/articles/future-4-non-exportable-objects.html">&ldquo;non-exportable&rdquo;
+objects</a>
+when option <code>future.globals.onReference</code> is set to <code>&quot;error&quot;</code> or
+<code>&quot;warning&quot;</code>, <code>value()</code> will now check for similar problems in the
+value returned from parallel workers.  For example, in <strong>future</strong> (&lt;
+1.23.0) we would get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">options</span>(future.globals.onReference <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(xml2<span style="color:#f92672">::</span><span style="color:#a6e22e">read_xml</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&lt;/body&gt;&#34;</span>))
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(v)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; Error in doc_type(x) : external pointer is not valid</span>
+</span></span></code></pre></div><p>whereas in <strong>future</strong> (&gt;= 1.23.0) we get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">options</span>(future.globals.onReference <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;error&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(xml2<span style="color:#f92672">::</span><span style="color:#a6e22e">read_xml</span>(<span style="color:#e6db74">&#34;&lt;body&gt;&lt;/body&gt;&#34;</span>))
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">value</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; Error: Detected a non-exportable reference (&#39;externalptr&#39;) in the value</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; (of class &#39;xml_document&#39;) of the resolved future</span>
+</span></span></code></pre></div><h3 id="finer-control-of-what-type-of-conditions-are-captured-and-replayed">Finer control of what type of conditions are captured and replayed</h3>
+<p>Besides specifying which condition classes to be captured and relayed,
+in <strong>future</strong> (&gt;= 1.22.0), it is possible to specify also condition
+classes to be ignored.  For example,</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#66d9ef">...</span>, conditions <span style="color:#f92672">=</span> <span style="color:#a6e22e">structure</span>(<span style="color:#e6db74">&#34;condition&#34;</span>, exclude <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;message&#34;</span>))
+</span></span></code></pre></div><p>captures all conditions but message conditions.  The default is
+<code>conditions = &quot;condition&quot;</code>, which captures and relays any type of
+condition.</p>
+<h2 id="performance-improvements">Performance improvements</h2>
+<p>I always prioritize correctness over performance in the <strong>future</strong>
+framework.  So, whenever optimizing for performance, one always has
+to make sure we are not breaking things somewhere else.  Thankfully,
+there are now <a href="https://www.futureverse.org/statistics.html">over 200 reverse-dependency packages on
+CRAN</a> and Bioconductor
+that I can validate against.  They provide another comfy cushion
+against mistakes than what we already get from package unit tests and
+the <strong><a href="https://future.tests.futureverse.org">future.tests</a></strong> test suite.  Below are some recent performance
+improvements made.</p>
+<h3 id="less-latency-for-multicore-multisession-and-cluster-futures">Less latency for multicore, multisession, and cluster futures</h3>
+<p>In <strong>future</strong> 1.22.0, the default timeout of <a href="https://future.futureverse.org/reference/resolved.html"><code>resolved()</code></a> was
+decreased from 0.20 seconds to 0.01 seconds for multicore,
+multisession, and cluster futures.  This means that less time is now
+spent on checking for results from these future backends when they are
+not yet available.  After making sure it is safe to do so, we might
+decrease the default timeout to zero in a later release.</p>
+<h3 id="less-overhead-when-initiating-futures">Less overhead when initiating futures</h3>
+<p>The overhead of initiating futures was significantly reduced in
+<strong>future</strong> 1.22.0.  For example, the round-trip time for
+<code>value(future(NULL))</code> is about twice as fast for sequential, cluster,
+and multisession futures.  For multicore futures the round-trip speedup
+is about 20%.</p>
+<p>The speedup comes from pre-compiling the future&rsquo;s R expression into an
+R expression template, which then can quickly re-compiled into the
+final expression to be evaluated. Specifically, instead of calling
+<code>expr &lt;- base::bquote(tmpl)</code> for each future, which is computationally
+expensive, we take a two-step approach where we first call <code>tmpl_cmp &lt;- bquote_compile(tmpl)</code> once per session such that we only have to
+call the much faster <code>expr &lt;- bquote_apply(tmpl_cmp)</code> for each
+future.(*) This new pre-compile approach speeds up the construction of
+the final future expression from the original future expression ~10
+times.</p>
+<p>(*) These are <a href="https://github.com/HenrikBengtsson/future/blob/1064c4ec2c37a70fa8fff8887d0030a5f03c46da/R/000.bquote.R#L56-L131">internal functions</a> of the <strong>future</strong> package.</p>
+<h3 id="environment-variables-are-only-used-when-package-is-loaded">Environment variables are only used when package is loaded</h3>
+<p>All R <a href="https://future.futureverse.org/reference/future.options.html">options specific to the future
+framework</a>
+have defaults that fall back to corresponding environment variables.
+For example, the default for option <code>future.rng.onMisuse</code> can be set
+by environment variable <code>R_FUTURE_RNG_ONMISUSE</code>.</p>
+<p>The purpose of the environment variables is to make it possible to
+configure the future framework before launching R, e.g. in shell
+startup scripts, or in shell scripts submitted to job schedulers in
+high-performance compute (HPC) environments.  When R is already
+running, the best practice is to use the R options to configure the
+future framework.</p>
+<p>In order to avoid the overhead from querying and parsing environment
+variables at runtime, but also to clarify how and when environment
+variables should be set, starting with <strong>future</strong> 1.22.0,
+<em><code>R_FUTURE_*</code> environment variables are only used when the <strong>future</strong>
+package is loaded</em>.  Then, if set, they are used for setting the
+corresponding <code>future.*</code> option.</p>
+<h2 id="cleanups-to-make-room-for-new-features">Cleanups to make room for new features</h2>
+<p>The <code>values()</code> function is defunct since <strong>future</strong> 1.23.0 in favor of
+<code>value()</code>.  All CRAN and Bioconductor packages that depend on
+<strong>future</strong> have been updated since a long time.  If you get the error:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>Error<span style="color:#f92672">:</span> <span style="color:#a6e22e">values</span>() is defunct in <span style="color:#a6e22e">future </span>(<span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1.20.0</span>). Use <span style="color:#a6e22e">value</span>() instead.
+</span></span></code></pre></div><p>make sure to update your R packages.  A few users of <strong><a href="https://furrr.futureverse.org">furrr</a></strong> have
+run into this error - updating to <strong>furrr</strong> (&gt;= 0.2.0) solved the
+problem.</p>
+<p>Continuing, to further harmonize how developers use the Future API, we
+are moving away from odds-and-ends features, especially the ones that
+are holding us back from adding new features. The goal is to ensure
+that more code using futures can truly run anywhere, not just on a
+particular parallel backend that the developer work with.</p>
+<p>In this spirit, we are slowly moving away from &ldquo;persistent&rdquo; workers.
+For example, in <strong>future</strong> (&gt;= 1.23.0), <code>plan(multisession, persistent = TRUE)</code> is no longer supported and will produce an error if
+attempted.  The same will eventually happen also for <code>plan(cluster, persistent = TRUE)</code>, but not until we have <a href="https://www.futureverse.org/roadmap.html">support for caching
+&ldquo;sticky&rdquo; globals</a>, which is
+the main use case for persistent workers.</p>
+<p>Another example is transparent futures, which are prepared for
+deprecation in <strong>future</strong> (&gt;= 1.23.0).  If used, <code>plan(transparent)</code>
+produces a warning, which soon will be upgraded to a formal
+deprecation warning.  In a later release, it will produce an error.
+Transparent futures were added during the early days in order to
+simplify troubleshooting of futures.  A better approach these days is
+to use <code>plan(sequential, split = TRUE)</code>, which makes interactive
+troubleshooting tools such as <code>browser()</code> and <code>debug()</code> to work.</p>
+<h2 id="significant-changes-preparing-for-the-future">Significant changes preparing for the future</h2>
+<p>Prior to <strong>future</strong> 1.22.0, lazy futures were assigned to the
+currently set future backend immediately when created.  For example,
+if we do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(future)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(multisession, workers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#ae81ff">42</span>, lazy <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span></code></pre></div><p>with <strong>future</strong> (&lt; 1.22.0), we would get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">class</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] &#34;MultisessionFuture&#34; &#34;ClusterFuture&#34;      &#34;MultiprocessFuture&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [4] &#34;Future&#34;             &#34;environment&#34; </span>
+</span></span></code></pre></div><p>Starting with <strong>future</strong> 1.22.0, lazy futures remain generic futures
+until they are launched, which means they are not assigned a backend
+class until they have to.  Now, the above example gives:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">class</span>(f)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; [1] &#34;Future&#34;      &#34;environment&#34;</span>
+</span></span></code></pre></div><p>This change opens up the door for storing futures themselves to file
+and sending them elsewhere. More precisely, this means we can start
+working towards a <em>queue of futures</em>, which then can be processed on
+whatever compute resources we have access to at the moment, e.g. some
+futures might be resolved on the local computer, others on machines on
+a local cluster, and when those fill up, we can burst out to cloud
+resources, or maybe process them via a community-driven peer-to-peer
+cluster.</p>
+<h2 id="roadmap-ahead">Roadmap ahead</h2>
+<p>There are lots of new features on the roadmap related to the above and
+other things.  I hope to make progress on several of them during 2022.
+If you&rsquo;re curious about what&rsquo;s coming up, see the <a href="https://www.futureverse.org/roadmap.html">Project
+Roadmap</a>, stay tuned on this
+blog (<a href="https://www.jottr.org/index.xml">feed</a>), or follow <a href="https://twitter.com/henrikbengtsson/">me on
+Twitter</a>.</p>
+<p>Happy futuring!</p>
+<p>Henrik</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a>, <a href="https://future.futureverse.org">pkgdown</a></li>
+<li><strong>parallelly</strong> package: <a href="https://cran.r-project.org/package=parallelly">CRAN</a>, <a href="https://github.com/HenrikBengtsson/parallelly">GitHub</a>, <a href="https://parallelly.futureverse.org">pkgdown</a></li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel-processing</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/" data-tooltip="future 1.24.0: Forwarding RNG State also for Stand-Alone Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/11/22/parallelly-1.29.0/" data-tooltip="parallelly 1.29.0: New Skills and Less Communication Latency on Linux">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/01/07/future-during-2021/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/01/07/future-during-2021/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/" data-tooltip="future 1.24.0: Forwarding RNG State also for Stand-Alone Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2021/11/22/parallelly-1.29.0/" data-tooltip="parallelly 1.29.0: New Skills and Less Communication Latency on Linux">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/01/07/future-during-2021/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/01/07/future-during-2021/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2022%2F01%2F07%2Ffuture-during-2021%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2022%2F01%2F07%2Ffuture-during-2021%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

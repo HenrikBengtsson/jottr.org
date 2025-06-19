@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>history on JottR</title>
+    <link>https://www.jottr.org/tags/history/</link>
+    <description>Recent content in history on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 01 Apr 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/history/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The R-help Community was Started on This Day 20 Years Ago</title>
+      <link>https://www.jottr.org/2017/04/01/history-r-help-20-years/</link>
+      <pubDate>Sat, 01 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2017/04/01/history-r-help-20-years/</guid>
+      <description>Today, its been 20 years since Martin Mächler started the R-help community list. The first post was written by Ross Ihaka on 1997-04-01:
+Screenshot of the very first post to the R-help mailing list.
+This is a post about R&amp;rsquo;s memory model. We&amp;rsquo;re talking R v0.50 beta. I think that the paragraph at the end provides a nice anecdote on the importance not to be overwhelmed by problems ahead:
+&amp;ldquo;(The consumption of one cell per string is perhaps the major memory problem in R - we didn&amp;rsquo;t design it with large problems in mind.</description>
+    </item>
+    
+    <item>
+      <title>This Day in History (1997-04-01)</title>
+      <link>https://www.jottr.org/2013/04/01/history-r-help/</link>
+      <pubDate>Mon, 01 Apr 2013 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2013/04/01/history-r-help/</guid>
+      <description>Today it&amp;rsquo;s 16 years ago and 367,496 messages later since Martin Mächler started the R-help (321,119 msgs), R-devel (45,830 msgs) and R-announce (547 msgs) mailing lists [1] - a great benefit to all of us. Special thanks to Martin and also thanks to everyone else contributing to these forums.
+[1] https://stat.ethz.ch/pipermail/r-help/1997-April/001490.html</description>
+    </item>
+    
+  </channel>
+</rss>

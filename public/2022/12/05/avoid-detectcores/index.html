@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.">
+
+
+<meta property="og:description" content="The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Please Avoid detectCores() in your R Packages">
+<meta name="twitter:title" content="Please Avoid detectCores() in your R Packages">
+<meta property="og:url" content="https://www.jottr.org/2022/12/05/avoid-detectcores/">
+<meta property="twitter:url" content="https://www.jottr.org/2022/12/05/avoid-detectcores/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.">
+<meta name="twitter:description" content="The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2022-12-05T21:00:00">
+  
+  
+    <meta property="article:modified_time" content="2022-12-05T21:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="parallelly">
+    
+      <meta property="article:tag" content="detectCores">
+    
+      <meta property="article:tag" content="availableCores">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="compute clusters">
+    
+      <meta property="article:tag" content="hpc">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>Please Avoid detectCores() in your R Packages</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2022/12/05/avoid-detectcores/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Please Avoid detectCores() in your R Packages
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2022-12-05T21:00:00-08:00">
+        
+  December 5, 2022
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>The <code>detectCores()</code> function of the <strong>parallel</strong> package is probably
+one of the most used functions when it comes to setting the number of
+parallel workers to use in R.  In this blog post, I&rsquo;ll try to explain
+why using it is not always a good idea.  Already now, I am going to
+make a bold request and ask you to:</p>
+<blockquote>
+<p>Please <em>avoid</em> using <code>parallel::detectCores()</code> in your package!</p>
+</blockquote>
+<p>By reading this blog post, I hope you become more aware of the
+different problems that arise from using <code>detectCores()</code> and how they
+might affect you and the users of your code.</p>
+<!-- raw HTML omitted -->
+<p>Figure 1: Using <!-- raw HTML omitted -->detectCores()<!-- raw HTML omitted --> risks overloading the
+machine where R runs, even more so if there are other things already
+running.  The machine seen at the left is heavily loaded, because too
+many parallel processes compete for the 24 CPU cores available, which
+results in an extensive amount of kernel context switching (red),
+which wastes precious CPU cycles.  The machine to the right is
+near-perfectly loaded at 100%, where none of the processes use more
+than they may use (mostly green).</p>
+<!-- raw HTML omitted -->
+<h2 id="tldr">TL;DR</h2>
+<p>If you don&rsquo;t have time to read everything, but will take my word that
+we should avoid <code>detectCores()</code>, then the quick summary is that you
+basically have two choices for the number of parallel workers to use
+by default;</p>
+<ol>
+<li>
+<p>Have your code run with a single core by default
+(i.e. sequentially), or</p>
+</li>
+<li>
+<p>replace all <code>parallel::detectCores()</code> with
+<a href="https://parallelly.futureverse.org/reference/availableCores.html"><code>parallelly::availableCores()</code></a>.</p>
+</li>
+</ol>
+<p>I&rsquo;m in the conservative camp and recommend the first alternative.
+Using sequential processing by default, where the user has to make an
+explicit choice to run in parallel, significantly lowers the risk for
+clogging up the CPUs (left panel in Figure 1), especially when
+there are other things running on the same machine.</p>
+<p>The second alternative is useful if you&rsquo;re not ready to make the move
+to run sequentially by default.  The <code>availableCores()</code> function of
+the <strong>[parallelly]</strong> package is fully backward compatible with
+<code>detectCores()</code>, while it avoids the most common problems that comes
+with <code>detectCores()</code>, plus it is agile to a lot more CPU-related
+settings, including settings that the end-user, the systems
+administrator, job schedulers and Linux containers control.  It is
+designed to take care of common overuse issues so that you do not have
+to spend time worry about them.</p>
+<h2 id="background">Background</h2>
+<p>There are several problems with using <code>detectCores()</code> from the
+<strong>parallel</strong> package for deciding how many parallel workers to use.
+But before we get there, I want you to know that we find this function
+commonly used in R script and R packages, and frequently suggested in
+tutorials. So, do not feel ashamed if you use it.</p>
+<p>If we scan the code of the R packages on CRAN (e.g. by <a href="https://github.com/search?q=org%3Acran+language%3Ar+%22detectCores%28%29%22&amp;type=code">searching
+GitHub</a><!-- raw HTML omitted -->1<!-- raw HTML omitted -->), or on Bioconductor (e.g. by [searching
+Bioc::CodeSearch]) we find many cases where <code>detectCores()</code> is used.
+Here are some variants we see in the wild:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeCluster</span>(<span style="color:#a6e22e">detectCores</span>())
+</span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeCluster</span>(<span style="color:#a6e22e">detectCores</span>() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">mclapply</span>(<span style="color:#66d9ef">...</span>, mc.cores <span style="color:#f92672">=</span> <span style="color:#a6e22e">detectCores</span>())
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">registerDoParallel</span>(<span style="color:#a6e22e">detectCores</span>())
+</span></span></code></pre></div><p>We also find functions that let the user choose the number of workers
+via some argument, which defaults to <code>detectCores()</code>.  Sometimes the
+default is explicit, as in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>fast_fcn <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, ncores <span style="color:#f92672">=</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">detectCores</span>()) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">if </span>(ncores <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>    cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeCluster</span>(ncores)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">...</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>and sometimes it&rsquo;s implicit, as in:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>fast_fcn <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>(x, ncores <span style="color:#f92672">=</span> <span style="color:#66d9ef">NULL</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">if </span>(<span style="color:#a6e22e">is.null</span>(ncores)) 
+</span></span><span style="display:flex;"><span>    ncores <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">detectCores</span>() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">if </span>(ncores <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>    cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeCluster</span>(ncores)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">...</span>
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As we will see next, all the above examples are potentially buggy and
+might result in run-time errors.</p>
+<h2 id="common-mistakes-when-using-detectcores">Common mistakes when using detectCores()</h2>
+<h3 id="issue-1-detectcores-may-return-a-missing-value">Issue 1: detectCores() may return a missing value</h3>
+<p>A small, but important detail about <code>detectCores()</code> that is often
+missed is the following section in <code>help(&quot;detectCores&quot;, package = &quot;parallel&quot;)</code>:</p>
+<blockquote>
+<p><strong>Value</strong></p>
+<p>An integer, <strong>NA if the answer is unknown</strong>.</p>
+</blockquote>
+<p>Because of this, we cannot rely on:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">detectCores</span>()
+</span></span></code></pre></div><p>to always work, i.e. we might end up with errors like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">detectCores</span>()
+</span></span><span style="display:flex;"><span>workers <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">makeCluster</span>(ncores)
+</span></span><span style="display:flex;"><span>Error in <span style="color:#a6e22e">makePSOCKcluster</span>(names <span style="color:#f92672">=</span> spec, <span style="color:#66d9ef">...</span>) <span style="color:#f92672">:</span> 
+</span></span><span style="display:flex;"><span>  numeric <span style="color:#e6db74">&#39;names&#39;</span> must be <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>We need to account for this, especially as package developers.  One
+way to handle it is simply by using:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">detectCores</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">if </span>(<span style="color:#a6e22e">is.na</span>(ncores)) ncores <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1L</span>
+</span></span></code></pre></div><p>or, by using the following shorter, but also harder to understand,
+one-liner:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">max</span>(<span style="color:#ae81ff">1L</span>, <span style="color:#a6e22e">detectCores</span>(), na.rm <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span></code></pre></div><p>This construct is guaranteed to always return at least one core.</p>
+<p><em>Shameless advertisement for the <strong>[parallelly]</strong> package</em>: In
+contrast to <code>detectCores()</code>, <code>parallelly::availableCores()</code> handles
+the above case automatically, and it guarantees to always return at
+least one core.</p>
+<h3 id="issue-2-detectcores-may-return-one">Issue 2: detectCores() may return one</h3>
+<p>Although it&rsquo;s rare to run into hardware with single-core CPUs these
+days, you might run into a virtual machine (VM) configured to have a
+single core.  Because of this, you cannot reliably use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">detectCores</span>() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1L</span>
+</span></span></code></pre></div><p>or</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">detectCores</span>() <span style="color:#f92672">-</span> <span style="color:#ae81ff">2L</span>
+</span></span></code></pre></div><p>in your code.  If you use these constructs, a user of your code might
+end up with zero or a negative number of cores here, which another way
+we can end up with an error downstream.  A real-world example of this
+problem can be found in continous integration (CI) services,
+e.g. <code>detectCores()</code> returns 2 in GitHub Actions jobs.  So, we need to
+account also for this case, which we can do by using the above
+<code>max()</code> solution, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">max</span>(<span style="color:#ae81ff">1L</span>, <span style="color:#a6e22e">detectCores</span>() <span style="color:#f92672">-</span> <span style="color:#ae81ff">2L</span>, na.rm <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span></code></pre></div><p>This is guaranteed to always return at least one.</p>
+<p><em>Shameless advertisement for the <strong>[parallelly]</strong> package</em>: In
+contrast, <code>parallelly::availableCores()</code> handles this case via
+argument <code>omit</code>, which makes it easier to understand the code, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">availableCores</span>(omit <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</span></span></code></pre></div><p>This construct is guaranteed to return at least one core, e.g. if
+there are one, two, or three CPU cores on this machine, <code>ncores</code> will
+be one in all three cases.</p>
+<h3 id="issue-3-detectcores-may-return-too-many-cores">Issue 3: detectCores() may return too many cores</h3>
+<p>When we use PSOCK, SOCK, or MPI clusters as defined by the
+<strong>parallel</strong> package, the communication between the main R session and
+the parallel workers is done via R socket connection.  Low-level
+functions <code>parallel::makeCluster()</code>, <code>parallelly::makeClusterPSOCK()</code>,
+and legacy <code>snow::makeCluster()</code> create these types of clusters.  In
+turn, there are higher-level functions that rely on these low-level
+functions, e.g. <code>doParallel::registerDoParallel()</code> uses
+<code>parallel::makeCluster()</code> if you are on MS Windows,
+<code>BiocParallel::SnowParam()</code> uses <code>snow::makeCluster()</code>, and
+<code>plan(multisession)</code> and <code>plan(cluster)</code> of the <strong>[future]</strong> package
+uses <code>parallelly::makeClusterPSOCK()</code>.</p>
+<p>R has a limit in the number of connections it can have open at any
+time.  As of R 4.2.2, [the limit is 125 open connections].  Because of
+this, we can use at most 125 parallel PSOCK, SOCK, or MPI workers.  In
+practice, this limit is lower, because some connections may already be
+in use elsewhere.  To find the current number of free connections, we
+can use [<code>parallelly::freeConnections()</code>].  If we try to launch a
+cluster with too many workers, there will not be enough connections
+available for the communication and the setup of the cluster will
+fail.  For example, a user running on a 192-core machine will get
+errors such as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl <span style="color:#f92672">&lt;-</span> parallel<span style="color:#f92672">::</span><span style="color:#a6e22e">makeCluster</span>(<span style="color:#a6e22e">detectCores</span>())
+</span></span><span style="display:flex;"><span>Error in <span style="color:#a6e22e">socketAccept</span>(socket <span style="color:#f92672">=</span> socket, blocking <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>, open <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a+b&#34;</span>,  <span style="color:#f92672">:</span> 
+</span></span><span style="display:flex;"><span>  all connections are in use
+</span></span></code></pre></div><p>and</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f92672">&gt;</span> cl <span style="color:#f92672">&lt;-</span> parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#a6e22e">detectCores</span>())
+</span></span><span style="display:flex;"><span>Error<span style="color:#f92672">:</span> Cannot create <span style="color:#ae81ff">192</span> parallel PSOCK nodes. Each node needs
+</span></span><span style="display:flex;"><span>one connection, but there are only <span style="color:#ae81ff">124</span> connections left out of
+</span></span><span style="display:flex;"><span>the maximum <span style="color:#ae81ff">128</span> available on this R installation
+</span></span></code></pre></div><p>Thus, if we use <code>detectCores()</code>, our R code will not work on larger,
+modern machines.  This is a problem that will become more and more
+common as more users get access to more powerful computers.
+Hopefully, R will increase this connection limit in a future release,
+but until then, you as the developer are responsible to handle also
+this case.  To make your code agile to this limit, also if R increases
+it, you can use:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">max</span>(<span style="color:#ae81ff">1L</span>, <span style="color:#a6e22e">detectCores</span>(), na.rm <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">min</span>(parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">freeConnections</span>(), ncores)
+</span></span></code></pre></div><p>This is guaranteed to return at least zero (sic!) and never more than
+what is required to create a PSOCK, SOCK, and MPI cluster with than
+many parallel workers.</p>
+<p><em>Shameless advertisement for the <strong>[parallelly]</strong> package</em>: In the
+upcoming <strong>parallelly</strong> 1.33.0 version, you can use
+<code>parallelly::availableCores(constraints = &quot;connections&quot;)</code> to limit
+the result to the current number of available R connections.  In
+addition, you can control the maximum number of cores that
+<code>availableCores()</code> returns by setting R option
+<code>parallelly.availableCores.system</code>, or environment variable
+<code>R_PARALLELLY_AVAILABLECORES_SYSTEM</code>,
+e.g. <code>R_PARALLELLY_AVAILABLECORES_SYSTEM=120</code>.</p>
+<h2 id="issue-4-detectcores-does-not-give-the-number-of-allowed-cores">Issue 4: detectCores() does not give the number of &ldquo;allowed&rdquo; cores</h2>
+<p>There&rsquo;s a note in <code>help(&quot;detectCores&quot;, package = &quot;parallel&quot;)</code> that
+touches on the above problems, but also on other important limitations
+that we should know of:</p>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>This [= <code>detectCores()</code>] is not suitable for use directly for the <code>mc.cores</code> argument of
+<code>mclapply</code> nor specifying the number of cores in
+<code>makeCluster</code>. First because it may return <code>NA</code>, second because it
+does not give the number of <em>allowed</em> cores, and third because on
+Sparc Solaris and some Windows boxes it is not reasonable to try to
+use all the logical CPUs at once.</p>
+</blockquote>
+<p><strong>When is this relevant?  The answer is: Always!</strong>  This is because as
+package developers, we cannot really know when this occurs, because we
+never know on what type of hardware and system our code will run.  So,
+we have to account for these unknowns too.</p>
+<p>Let&rsquo;s look at some real-world case where using <code>detectCores()</code> can
+become a real issue.</p>
+<h3 id="4a-a-personal-computer">4a. A personal computer</h3>
+<p>A user might want to run other software tools at the same time while
+running the R analysis.  A very common pattern we find in R code is
+to save one core for other purposes, say, browsing the web, e.g.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>ncores <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">detectCores</span>() <span style="color:#f92672">-</span> <span style="color:#ae81ff">1L</span>
+</span></span></code></pre></div><p>This is a good start. It is the first step toward your software tool
+acknowledging that there might be other things running on the same
+machine. However, contrary to end-users, we as package developers
+cannot know how many cores the user needs, or wishes, to set
+aside. Because of this, it is better to let the user make this
+decision.</p>
+<p>A related scenario is when the user wants to run two concurrent R
+sessions on the same machine, both using your code.  If your code
+assumes it can use all cores on the machine (i.e. <code>detectCores()</code>
+cores), the user will end up running the machine at 200% of its
+capacity.  Whenever we use over 100% of the available CPU resources,
+we get penalized and waste our computational cycles on overhead from
+context switching, sub-optimal memory access, and more.  This is where
+we end up with the situation illustrated in the left part of
+Figure 1.</p>
+<p>Note also that users might not know that they use an R function that
+runs on all cores by default.  They might not even be aware that this
+is a problem.  Now, imagine if the user runs three or four such R
+sessions, resulting in a 300-400% CPU load.  This is when things start
+to run slowly. The computer will be sluggish, maybe unresponsive, and
+mostly likely going to get very hot (&ldquo;we&rsquo;re frying the computer&rdquo;).  By
+the time the four concurrent R processes complete, the user might have
+been able to finish six to eight similar processes if they would not
+have been fighting each other for the limited CPU resources.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h3 id="4b-a-shared-computer">4b. A shared computer</h3>
+<p>In the academia and the industry, it is common that several users
+share the same compute server or set of compute nodes.  It might be
+as simple as they SSH into a shared machine with many cores and large
+amounts of memory to run their analysis there.  On such setups, load
+balancing between users is often based on an honor system, where each
+user checks how many resources are available before launching an
+analysis. This helps to make sure they don’t end up using too many
+cores, or too much memory, slowing down the computer for everyone
+else.</p>
+<!-- raw HTML omitted -->
+<p>Now, imagine they run a software tool that uses all CPU cores by
+default.  In that case, there is a significant risk they will step on
+the other users&rsquo; processes, slowing everything down for everyone,
+especially if there is already a big load on the machine.  From my
+experience in academia, this happens frequently.  The user causing the
+problem is often not aware, because they just launch the problematic
+software with the default settings, leave it running, with a plan to
+coming back to it a few hours or a few days later.  In the meantime,
+other users might wonder why their command-line prompts become
+sluggish or even non-responsive, and their analyses suddenly take
+forever to complete.  Eventually, someone or something alerts the
+systems administrators to the problem, who end up having to drop
+everything else and start troubleshooting.  This often results in them
+terminating the wild-running processes and reaching out to the user
+who runs the problematic software, which leads to a large amount of
+time and resources being wasted among users and administrators.  All
+this is only because we designed our R package to use all cores by
+default.  This is not a made-up toy story; it is a very likely
+scenario that happens on shared servers if you make <code>detectCores()</code>
+the default in your R code.</p>
+<p><em>Shameless advertisement for the <strong>[parallelly]</strong> package</em>: In
+contrast to <code>detectCores()</code>, if you use <code>parallelly::availableCores()</code>
+the user, or the systems administrator, can limit the default number
+of CPU cores returned by setting environment variable
+<code>R_PARALLELLY_AVAILABLECORES_FALLBACK</code>.  For instance, by setting it
+to <code>R_PARALLELLY_AVAILABLECORES_FALLBACK=2</code> centrally,
+<code>availableCores()</code> will, unless there are other settings that allow
+the process to use more, return two cores regardless how many CPU
+cores the machine has.  This will lower the damage any single process
+can inflict on the system.  It will take many such processes running
+at the same time in order for them to have an overall a negative
+impact.  The risk for that to happen by mistake is much lower than
+when using <code>detectCores()</code> by default.</p>
+<h3 id="4c-a-shared-compute-cluster-with-many-machines">4c. A shared compute cluster with many machines</h3>
+<p>Other, larger compute systems, often referred to as high-performance
+compute (HPC) cluster, have a job scheduler for running scripts in
+batches distributed across multiple machines.  When users submit their
+scripts to the scheduler&rsquo;s job queue, they request how many cores and
+how much memory each job requires.  For example, a user on a Slurm
+cluster can request that their <code>run_my_rscript.sh</code> script gets to run
+with 48 CPU cores and 256 GiB of RAM by submitting it to the scheduler
+as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sbatch --cpus-per-task<span style="color:#f92672">=</span><span style="color:#ae81ff">48</span> --mem<span style="color:#f92672">=</span>256G run_my_rscript.sh
+</span></span></code></pre></div><p>The scheduler keeps track of all running and queued jobs, and when
+enough compute slots are freed up, it will launch the next job in the
+queue, giving it the compute resources it requested.  This is a very
+convenient and efficient way to batch process a large amount of
+analyses coming from many users.</p>
+<p>However, just like with a shared server, it is important that the
+software tools running this way respect the compute resources that the
+job scheduler allotted to the job.  The <code>detectCores()</code> function does
+<em>not</em> know about job schedulers - all it does is return the number of
+CPU cores on the current machine regardless of how many cores the job
+has been allotted by the scheduler.  So, if your R package uses
+<code>detectCores()</code> cores by default, then it will overuse the CPUs and
+slow things down for everyone running on the same compute node.
+Again, when this happens, it often slows everything done and triggers
+lots of wasted user and admin efforts spent on troubleshooting and
+communication back and forth.</p>
+<p><em>Shameless advertisement for the <strong>[parallelly]</strong> package</em>: In
+contrast, <code>parallelly::availableCores()</code> respects the number of CPU
+slots that the job scheduler has given to the job.  It recognizes
+environment variables set by our most common HPC schedulers, including
+Fujitsu Technical Computing Suite (PJM), Grid Engine (SGE), Load
+Sharing Facility (LSF), PBS/Torque, and Simple Linux Utility for
+Resource Management (Slurm).</p>
+<h3 id="4d-running-r-via-cgroups-on-in-a-linux-container">4d. Running R via CGroups on in a Linux container</h3>
+<p>This far, we have been concerned about the overuse of the CPU cores
+affecting other processes and other users running on the same machine.
+Some systems are configured to protect against misbehaving software
+from affecting other users.  In Linux, this can be done with so-called
+control groups (&ldquo;cgroups&rdquo;), where a process gets allotted a certain
+amount of CPU cores.  If the process uses too many parallel workers,
+they cannot break out from the sandbox set up by cgroups. From the
+outside, it will look like the process uses its maximum amount of
+allocated CPU cores.  Some HPC job schedulers have this feature
+enabled, but not all of them.  You find the same feature for Linux
+containers, e.g. we can limit the number of CPU cores, or throttle the
+CPU load, using command-line options when you launch a Docker
+container, e.g. <code>docker run --cpuset-cpus=0-2,8 …</code> or <code>docker run --cpu=3.4 …</code>.</p>
+<p>So, if you are a user on a system where compute resources are
+compartmentalized this way, you run a much lower risk for wreaking
+havoc on a shared system.  That is good news, but if you run too many
+parallel workers, that is, try to use more cores than available to
+you, then you will clog up your own analysis.  The behavior would be
+the same as if you request 96 parallel workers on your local
+eight-core notebook (the scenario in the left panel of Figure 1),
+with the exception that you will not overheat the computer.</p>
+<p>The problem with <code>detectCores()</code> is that it returns the number of CPU
+cores on the hardware, regardless of the cgroups settings.  So, if
+your R process is limited to eight cores by cgroups, and you use
+<code>ncores = detectCores()</code> on a 96-core machine, you will end up running
+96 parallel workers fighting for the resources on eight cores.  A
+real-world example of this happens for those of you who have a free
+account on RStudio Cloud. In that case, you are given only a single
+CPU core to run your R code on, but the underlying machine typically
+has 16 cores.  If you use <code>detectCores()</code> there, you will end up
+creating 16 parallel workers, running on the same CPU core, which is a
+very ineffecient way to run the code.</p>
+<p><em>Shameless advertisement for the <strong>[parallelly]</strong> package</em>: In
+contrast to <code>detectCores()</code>, <code>parallelly::availableCores()</code> respects
+cgroups, and will return eight cores instead of 96 in the above
+example, and a single core on a free RStudio Cloud account.</p>
+<h2 id="my-opinionated-recommendation">My opinionated recommendation</h2>
+<!-- raw HTML omitted -->
+<p>As developers, I think we should at least be aware of these problems,
+and acknowledge that they exist and they are indeed real problem that
+people run into &ldquo;out there&rdquo;.  We should also accept that we cannot
+predict on what type of compute environment our R code will run on.
+Unfortunately, I don&rsquo;t have a magic solution that addresses all the
+problems reported here.  That said, I think the best we can do is to
+be conservative and don&rsquo;t make hard-coded decisions on parallelization
+in our R packages and R scripts.</p>
+<p>Because of this, I argue that <strong>the safest is to design your R package
+to run sequentially by default (e.g. <code>ncores = 1L</code>), and leave it to
+the user to decide on the number of parallel workers to use.</strong></p>
+<p>The <strong>second-best alternative</strong> that I can come up with, is to replace
+<code>detectCores()</code> with <code>availableCores()</code>, e.g. <code>ncores = parallelly::availableCores()</code>.  It is designed to respect common
+system and R settings that control the number of allowed CPU cores.
+It also respects R options and environment variables commonly used to
+limit CPU usage, including those set by our most common HPC job
+schedulers.  In addition, it is possible to control the <em>fallback</em>
+behavior so that it uses only a few cores when nothing else being set.
+For example, if the environment variable
+<code>R_PARALLELLY_AVAILABLECORES_FALLBACK</code> is set to <code>2</code>, then
+<code>availableCores()</code> returns two cores by default, unless other settings
+allowing more are available.  A conservative systems administrator may
+want to set <code>export R_PARALLELLY_AVAILABLECORES_FALLBACK=1</code> in
+<code>/etc/profile.d/single-core-by-default.sh</code>.  To see other benefits
+from using <code>availableCores()</code>, see
+<a href="https://parallelly.futureverse.org">https://parallelly.futureverse.org</a>.</p>
+<p>Believe it or not, there&rsquo;s actually more to be said on this topic, but
+I think this is already more than a mouthful, so I will save that for
+another blog post.  If you made it this far, I applaud you and I thank
+you for your interest.  If you agree, or disagree, or have additional
+thoughts around this, please feel free to reach out on the [Future
+Discussions Forum].</p>
+<p>Over and out,</p>
+<p>Henrik</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Searching code on GitHub, requires you to log in to
+GitHub.<!-- raw HTML omitted --></p>
+<p>UPDATE 2022-12-06: [Alex Chubaty pointed out another problem], where
+<code>detectCores()</code> can be too large on modern machines, e.g. machines
+with 128 or 192 CPU cores.  I&rsquo;ve added Section &lsquo;Issue 3: detectCores()
+may return too many cores&rsquo; explaining and addressing this problem.</p>
+<p>UPDATE 2022-12-11: Mention upcoming
+<code>parallelly::availableCores(constraints = &quot;connections&quot;)</code>.</p>
+<p>[searching Bioc::CodeSearch]: <a href="https://code.bioconductor.org/search/search?q=detectCores%28%29">https://code.bioconductor.org/search/search?q=detectCores%28%29</a>)
+[Future Discussions Forum]: <a href="https://github.com/HenrikBengtsson/future/discussions/">https://github.com/HenrikBengtsson/future/discussions/</a>
+[the limit is 125 open connections]: <a href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/28">https://github.com/HenrikBengtsson/Wishlist-for-R/issues/28</a>
+[Alex Chubaty pointed out another problem]: <a href="https://github.com/HenrikBengtsson/future/discussions/656">https://github.com/HenrikBengtsson/future/discussions/656</a>
+[<code>parallelly::freeConnections()</code>]: <a href="https://parallelly.futureverse.org/reference/availableConnections.html">https://parallelly.futureverse.org/reference/availableConnections.html</a>
+[future]: <a href="https://future.futureverse.org">https://future.futureverse.org</a>
+[parallelly]: <a href="https://parallelly.futureverse.org">https://parallelly.futureverse.org</a></p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallelly/">parallelly</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/detectcores/">detectCores</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/availablecores/">availableCores</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/compute-clusters/">compute clusters</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">hpc</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/01/10/progressr-0.13.0/" data-tooltip="progressr 0.13.0: cli &#43; progressr = ♥">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/06/23/future-user2022-slides/" data-tooltip="useR! 2022: My &#39;Futureverse: Profile Parallel Code&#39; Slides">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/12/05/avoid-detectcores/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/12/05/avoid-detectcores/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2023/01/10/progressr-0.13.0/" data-tooltip="progressr 0.13.0: cli &#43; progressr = ♥">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2022/06/23/future-user2022-slides/" data-tooltip="useR! 2022: My &#39;Futureverse: Profile Parallel Code&#39; Slides">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2022/12/05/avoid-detectcores/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2022/12/05/avoid-detectcores/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2022%2F12%2F05%2Favoid-detectcores%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2022%2F12%2F05%2Favoid-detectcores%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

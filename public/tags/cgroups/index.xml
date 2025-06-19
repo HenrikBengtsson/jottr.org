@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cgroups on JottR</title>
+    <link>https://www.jottr.org/tags/cgroups/</link>
+    <description>Recent content in cgroups on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 22 Apr 2022 11:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/cgroups/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>parallelly 1.31.1: Better at Inferring Number of CPU Cores with Cgroups and Linux Containers</title>
+      <link>https://www.jottr.org/2022/04/22/parallelly-1.31.1/</link>
+      <pubDate>Fri, 22 Apr 2022 11:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/04/22/parallelly-1.31.1/</guid>
+      <description>parallelly 1.31.1 is on CRAN. The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones. Somewhat simplified, parallelly provides the things that you would otherwise expect to find in the parallel package. The future package relies on the parallelly package internally for local and remote parallelization.
+Since my previous post on parallelly in November 2021, I&amp;rsquo;ve fixed a few bugs and added some new features to the package;</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shiny on JottR</title>
+    <link>https://www.jottr.org/tags/shiny/</link>
+    <description>Recent content in shiny on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Jun 2021 19:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>progressr 0.8.0: RStudio&#39;s Progress Bar, Shiny Progress Updates, and Absolute Progress</title>
+      <link>https://www.jottr.org/2021/06/11/progressr-0.8.0/</link>
+      <pubDate>Fri, 11 Jun 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2021/06/11/progressr-0.8.0/</guid>
+      <description>progressr 0.8.0 is on CRAN. It comes with some new features:
+A new &amp;lsquo;rstudio&amp;rsquo; handler that reports on progress via the RStudio job interface in RStudio withProgressShiny() now updates the detail part, instead of the message part In addition to signalling relative amounts of progress, it&amp;rsquo;s now also possible to signal total amounts If you&amp;rsquo;re curious what progressr is about, have a look at my e-Rum 2020 presentation.
+Progress updates in RStudio&amp;rsquo;s job interface If you&amp;rsquo;re using RStudio Console, you can now report on progress in the RStudio&amp;rsquo;s job interface as long as the progress originates from a progressr-signalling function.</description>
+    </item>
+    
+    <item>
+      <title>future 1.8.0: Preparing for a Shiny Future</title>
+      <link>https://www.jottr.org/2018/04/12/future-results/</link>
+      <pubDate>Thu, 12 Apr 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/04/12/future-results/</guid>
+      <description>future 1.8.0 is available on CRAN.
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more. These features are not yet available out of the box, but thanks to this release we will be able to make some headway on many of the feature requests related to this - hopefully already by the next release.
+For shiny users following Joe Cheng&amp;rsquo;s efforts on extending Shiny with asynchronous processing using futures, future 1.</description>
+    </item>
+    
+  </channel>
+</rss>

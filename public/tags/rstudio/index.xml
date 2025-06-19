@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rstudio on JottR</title>
+    <link>https://www.jottr.org/tags/rstudio/</link>
+    <description>Recent content in rstudio on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Jun 2021 19:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/rstudio/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>progressr 0.8.0: RStudio&#39;s Progress Bar, Shiny Progress Updates, and Absolute Progress</title>
+      <link>https://www.jottr.org/2021/06/11/progressr-0.8.0/</link>
+      <pubDate>Fri, 11 Jun 2021 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2021/06/11/progressr-0.8.0/</guid>
+      <description>progressr 0.8.0 is on CRAN. It comes with some new features:
+A new &amp;lsquo;rstudio&amp;rsquo; handler that reports on progress via the RStudio job interface in RStudio withProgressShiny() now updates the detail part, instead of the message part In addition to signalling relative amounts of progress, it&amp;rsquo;s now also possible to signal total amounts If you&amp;rsquo;re curious what progressr is about, have a look at my e-Rum 2020 presentation.
+Progress updates in RStudio&amp;rsquo;s job interface If you&amp;rsquo;re using RStudio Console, you can now report on progress in the RStudio&amp;rsquo;s job interface as long as the progress originates from a progressr-signalling function.</description>
+    </item>
+    
+  </channel>
+</rss>

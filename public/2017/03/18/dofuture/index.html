@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="doFuture 0.4.0 is available on CRAN. The doFuture package provides a universal foreach adaptor enabling any future backend to be used with the foreach() %dopar% { ... } construct. As shown below, this will allow foreach() to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+1,300&#43; R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.">
+
+
+<meta property="og:description" content="doFuture 0.4.0 is available on CRAN. The doFuture package provides a universal foreach adaptor enabling any future backend to be used with the foreach() %dopar% { ... } construct. As shown below, this will allow foreach() to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+1,300&#43; R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000&#43; Packages">
+<meta name="twitter:title" content="doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000&#43; Packages">
+<meta property="og:url" content="https://www.jottr.org/2017/03/18/dofuture/">
+<meta property="twitter:url" content="https://www.jottr.org/2017/03/18/dofuture/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="doFuture 0.4.0 is available on CRAN. The doFuture package provides a universal foreach adaptor enabling any future backend to be used with the foreach() %dopar% { ... } construct. As shown below, this will allow foreach() to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+1,300&#43; R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.">
+<meta name="twitter:description" content="doFuture 0.4.0 is available on CRAN. The doFuture package provides a universal foreach adaptor enabling any future backend to be used with the foreach() %dopar% { ... } construct. As shown below, this will allow foreach() to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+1,300&#43; R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2017-03-18T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2017-03-18T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="doFuture">
+    
+      <meta property="article:tag" content="foreach">
+    
+      <meta property="article:tag" content="parallel">
+    
+      <meta property="article:tag" content="HPC">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="compute clusters">
+    
+      <meta property="article:tag" content="cloud">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000&#43; Packages</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2017/03/18/dofuture/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000&#43; Packages
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2017-03-18T00:00:00Z">
+        
+  March 18, 2017
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p><a href="https://cran.r-project.org/package=doFuture">doFuture</a> 0.4.0 is available on CRAN.  The doFuture package provides a <em>universal</em> <a href="https://cran.r-project.org/package=foreach">foreach</a> adaptor enabling  <em>any</em> <a href="https://cran.r-project.org/package=future">future</a> backend to be used with the <code>foreach() %dopar% { ... }</code> construct.  As shown below, this will allow <code>foreach()</code> to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.</p>
+<p>1,300+ R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.  By using doFuture, a user has the option to parallelize those computations on more compute environments than previously supported, especially HPC clusters.  Notably, all <a href="https://cran.r-project.org/package=plyr">plyr</a> code with <code>.parallel = TRUE</code> will be able to take advantage of this without need for modifications - this is possible because internally plyr makes use of foreach for its parallelization.</p>
+<p><img src="https://www.jottr.org/post/programmer_next_to_62500_punch_cards_SAGE.jpg" alt=" Programmer standing beside punched cards">
+<em>With doFuture, foreach can process your code in more places than ever before.  Alright, it may not be able to process <a href="http://www.computerhistory.org/revolution/memory-storage/8/326/924">this programmer&rsquo;s 62,500 punched cards</a>.</em></p>
+<h2 id="what-is-new-in-dofuture-040">What is new in doFuture 0.4.0?</h2>
+<ul>
+<li>
+<p><strong>Load balancing</strong>: The doFuture <code>%dopar%</code> backend will now partition all iterations (elements) and distribute them uniformly such that the each backend worker will receive exactly one partition equally sized to those sent to the other workers.  This approach speeds up the processing significantly when iterating over a large set of elements that each has a relatively small processing time.</p>
+</li>
+<li>
+<p><strong>Globals</strong>: Global variables and packages needed in order for external R workers to evaluate the foreach expression are now identified by the same algorithm as used for regular future constructs and <code>future::future_lapply()</code>.</p>
+</li>
+</ul>
+<p>For full details on updates, please see the <a href="https://cran.r-project.org/package=doFuture">NEWS</a> file.  <strong>The doFuture package installs out-of-the-box on all operating systems</strong>.</p>
+<h2 id="a-quick-example">A quick example</h2>
+<p>Here is a bootstrap example using foreach adapted from <code>help(&quot;clusterApply&quot;, package = &quot;parallel&quot;)</code>.  I use this example to illustrate how to perform <code>foreach()</code> iterations in parallel on a variety of backends.</p>
+<pre tabindex="0"><code>library(&#34;boot&#34;)
+
+run &lt;- function(...) {
+  cd4.rg &lt;- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+  cd4.mle &lt;- list(m = colMeans(cd4), v = var(cd4))
+  boot(cd4, corr, R = 10000, sim = &#34;parametric&#34;, ran.gen = cd4.rg, mle = cd4.mle)
+}
+
+## Attach doFuture (and foreach), and tell foreach to use futures
+library(&#34;doFuture&#34;)
+registerDoFuture()
+
+## Sequentially on the local machine
+plan(sequential)
+system.time(boot &lt;- foreach(i = 1:100, .packages = &#34;boot&#34;) %dopar% { run() })
+##    user  system elapsed 
+## 298.728   0.601 304.242
+
+# In parallel on local machine (with 8 cores)
+plan(multisession)
+system.time(boot &lt;- foreach(i = 1:100, .packages = &#34;boot&#34;) %dopar% { run() })
+##    user  system elapsed 
+## 452.241   1.635  68.740
+
+# In parallel on the ad-hoc cluster machine (5 machines with 4 workers each)
+nodes &lt;- rep(c(&#34;n1&#34;, &#34;n2&#34;, &#34;n3&#34;, &#34;n4&#34;, &#34;n5&#34;), each = 4L)
+plan(cluster, workers = nodes)
+system.time(boot &lt;- foreach(i = 1:100, .packages = &#34;boot&#34;) %dopar% { run() })
+##    user  system elapsed
+##   2.046   0.188  22.227
+
+# In parallel on Google Compute Engine (10 r-base Docker containers)
+vms &lt;- lapply(paste0(&#34;node&#34;, 1:10), FUN = googleComputeEngineR::gce_vm, template = &#34;r-base&#34;)
+vms &lt;- lapply(vms, FUN = gce_ssh_setup)
+vms &lt;- as.cluster(vms, docker_image = &#34;henrikbengtsson/r-base-future&#34;)
+plan(cluster, workers = vms)
+system.time(boot &lt;- foreach(i = 1:100, .packages = &#34;boot&#34;) %dopar% { run() })
+##    user  system elapsed
+##   0.952   0.040  26.269
+
+# In parallel on a HPC cluster with a TORQUE / PBS scheduler
+# (Note, the below timing includes waiting time on job queue)
+plan(future.BatchJobs::batchjobs_torque, workers = 10)
+system.time(boot &lt;- foreach(i = 1:100, .packages = &#34;boot&#34;) %dopar% { run() })
+##    user  system elapsed
+##  15.568   6.778  52.024
+</code></pre><h2 id="about-export-and-packages">About <code>.export</code> and <code>.packages</code></h2>
+<p>When using <code>doFuture::registerDoFuture()</code>, there is no need to manually specify which global variables (argument <code>.export</code>) to export.  By default, the doFuture backend automatically identifies and exports all globals needed. This is done using recursive static-code inspection.  The same is true for packages that need to be attached; those will also be handled automatically and there is no need to specify them manually via argument <code>.packages</code>.  This is in line with how it works for regular future constructs, e.g. <code>y %&lt;-% { a * sum(x) }</code>.</p>
+<p>Having said this, you may still want to specify arguments <code>.export</code> and <code>.packages</code> because of the risk that your <code>foreach()</code> statement may not work with other foreach adaptors, e.g. <a href="https://cran.r-project.org/package=doParallel">doParallel</a> and <a href="https://cran.r-project.org/package=doSNOW">doSNOW</a>.  Exactly when and where a failure may occur depends on the nestedness of your code and the location of your global variables.  Specifying <code>.export</code> and <code>.packages</code> manually skips such automatic identification.</p>
+<p>Finally, I recommend that you as a developer always try to write your code in such way the users can choose their own futures: The developer decides <em>what</em> should be parallelized - the user chooses <em>how</em>.</p>
+<p>Happy futuring!</p>
+<p>UPDATE 2022-12-11: Update examples that used the deprecated <code>multiprocess</code> future backend alias to use the <code>multisession</code> backend.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>doFuture package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=doFuture">https://cran.r-project.org/package=doFuture</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/doFuture">https://github.com/HenrikBengtsson/doFuture</a></li>
+</ul>
+</li>
+<li>future package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future">https://cran.r-project.org/package=future</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future">https://github.com/HenrikBengtsson/future</a></li>
+</ul>
+</li>
+<li>future.BatchJobs package (enhancing <a href="https://cran.r-project.org/package=BatchJobs">BatchJobs</a>):
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.BatchJobs">https://cran.r-project.org/package=future.BatchJobs</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.BatchJobs">https://github.com/HenrikBengtsson/future.BatchJobs</a></li>
+</ul>
+</li>
+<li>future.batchtools package (enhancing <a href="https://cran.r-project.org/package=batchtools">batchtools</a>):
+<ul>
+<li>CRAN page: coming soon</li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.batchtools">https://github.com/HenrikBengtsson/future.batchtools</a></li>
+</ul>
+</li>
+<li>googleComputeEngineR package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=googleComputeEngineR">https://cran.r-project.org/package=googleComputeEngineR</a></li>
+<li>GitHub page: <a href="https://cloudyr.github.io/googleComputeEngineR">https://cloudyr.github.io/googleComputeEngineR</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://www.jottr.org/2017/02/future-reproducible-rngs-futurelapply.html">future: Reproducible RNGs, future_lapply() and more</a>, 2017-02-19</li>
+<li><a href="https://www.jottr.org/2016/10/remote-processing-using-futures.html">Remote Processing Using Futures</a>, 2016-10-21</li>
+<li><a href="https://www.jottr.org/2016/07/a-future-for-r-slides-from-user-2016.html">A Future for R: Slides from useR 2016</a>, 2016-07-02</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/dofuture/">doFuture</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/foreach/">foreach</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel/">parallel</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/compute-clusters/">compute clusters</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/cloud/">cloud</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2017/04/01/history-r-help-20-years/" data-tooltip="The R-help Community was Started on This Day 20 Years Ago">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2017/02/19/future-rng/" data-tooltip="future 1.3.0: Reproducible RNGs, future_lapply() and More">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2017/03/18/dofuture/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2017/03/18/dofuture/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2017/04/01/history-r-help-20-years/" data-tooltip="The R-help Community was Started on This Day 20 Years Ago">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2017/02/19/future-rng/" data-tooltip="future 1.3.0: Reproducible RNGs, future_lapply() and More">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2017/03/18/dofuture/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2017/03/18/dofuture/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2017%2F03%2F18%2Fdofuture%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2017%2F03%2F18%2Fdofuture%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

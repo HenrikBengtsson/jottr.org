@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="New release: startup 0.12.0 is now on CRAN. This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month. See below for two examples.
+startup::startup() is cross platform.
+The startup package makes it easy to split up a long, complicated .Rprofile startup file into multiple, smaller files in a .Rprofile.d/ folder. For instance, setting R option repos in a separate file ~/.">
+
+
+<meta property="og:description" content="New release: startup 0.12.0 is now on CRAN. This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month. See below for two examples.
+startup::startup() is cross platform.
+The startup package makes it easy to split up a long, complicated .Rprofile startup file into multiple, smaller files in a .Rprofile.d/ folder. For instance, setting R option repos in a separate file ~/.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="startup - run R startup files once per hour, day, week, ...">
+<meta name="twitter:title" content="startup - run R startup files once per hour, day, week, ...">
+<meta property="og:url" content="https://www.jottr.org/2019/05/26/startup-sometimes/">
+<meta property="twitter:url" content="https://www.jottr.org/2019/05/26/startup-sometimes/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="New release: startup 0.12.0 is now on CRAN. This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month. See below for two examples.
+startup::startup() is cross platform.
+The startup package makes it easy to split up a long, complicated .Rprofile startup file into multiple, smaller files in a .Rprofile.d/ folder. For instance, setting R option repos in a separate file ~/.">
+<meta name="twitter:description" content="New release: startup 0.12.0 is now on CRAN. This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month. See below for two examples.
+startup::startup() is cross platform.
+The startup package makes it easy to split up a long, complicated .Rprofile startup file into multiple, smaller files in a .Rprofile.d/ folder. For instance, setting R option repos in a separate file ~/.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2019-05-26T21:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-05-26T21:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="startup">
+    
+      <meta property="article:tag" content="Rprofile">
+    
+      <meta property="article:tag" content="Renviron">
+    
+      <meta property="article:tag" content="configuration">
+    
+      <meta property="article:tag" content="anacron">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>startup - run R startup files once per hour, day, week, ...</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2019/05/26/startup-sometimes/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      startup - run R startup files once per hour, day, week, ...
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-05-26T21:00:00-07:00">
+        
+  May 26, 2019
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>New release: <strong><a href="https://cran.r-project.org/package=startup">startup</a></strong> 0.12.0 is now on CRAN.  This version introduces support for processing some of the R startup files with a certain frequency, e.g. once per day, once per week, or once per month.  See below for two examples.</p>
+<p><img src="https://www.jottr.org/post/startup_0.10.0-zxspectrum.gif" alt="ZX Spectrum animation">
+<em>startup::startup() is cross platform.</em></p>
+<p>The <a href="https://cran.r-project.org/package=startup">startup</a> package makes it easy to split up a long, complicated <code>.Rprofile</code> startup file into multiple, smaller files in a <code>.Rprofile.d/</code> folder.  For instance, setting R option <code>repos</code> in a separate file <code>~/.Rprofile.d/repos.R</code> makes it easy to find and update the option.  Analogously, environment variables can be configured by using multiple <code>.Renviron.d/</code> files.  To make use of this, install the <strong>startup</strong> package, and then call <code>startup::install()</code> once, which will tweak your <code>~/.Rprofile</code> file and create <code>~/.Renviron.d/</code> and <code>~/.Rprofile.d/</code> folders, if missing.  For an introduction, see <a href="https://www.jottr.org/2016/12/22/startup/">Start Me Up</a>.</p>
+<h2 id="example-show-a-fortune-once-per-hour">Example: Show a fortune once per hour</h2>
+<p>The <a href="https://cran.r-project.org/package=fortunes"><strong>fortunes</strong></a> package is a collection of quotes and wisdom related to the R language.  By adding</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">if </span>(<span style="color:#a6e22e">interactive</span>()) <span style="color:#a6e22e">print</span>(fortunes<span style="color:#f92672">::</span><span style="color:#a6e22e">fortune</span>())
+</span></span></code></pre></div><p>to our <code>~/.Rprofile</code> file, a random fortune will be displayed each time we start R, e.g.</p>
+<pre tabindex="0"><code>$ R --quiet
+
+I think, therefore I R.
+   -- William B. King (in his R tutorials)
+      http://ww2.coastal.edu/kingw/statistics/R-tutorials/ (July 2010)
+
+&gt;
+</code></pre><p>Now, if we&rsquo;re launching R frequently, it might be too much to see a new fortune each time R is started.  With <strong>startup</strong> (&gt;= 0.12.0), we can limit how often a certain startup file should be processed via <code>when=&lt;frequency&gt;</code> declarations.  Currently supported values are <code>when=once</code>, <code>when=hourly</code>, <code>when=daily</code>, <code>when=weekly</code>, <code>when=fortnighly</code>, and <code>when=monthly</code>.  See the package vignette for more details.</p>
+<p>For instance, we can limit ourselves to one fortune per hour, by creating a file <code>~/.Rprofile.d/interactive=TRUE/when=hourly/package=fortunes.R</code> containing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(fortunes<span style="color:#f92672">::</span><span style="color:#a6e22e">fortune</span>())
+</span></span></code></pre></div><p>The <code>interactive=TRUE</code> part declares that the file should only be processed in an interactive session, the <code>when=hourly</code> part that it should be processed at most once per hour, and the <code>package=fortunes</code> part that it should be processed only if the <strong>fortunes</strong> package is installed.  It not all of these declarations are fulfilled, then the file will <em>not</em> be processed.</p>
+<h2 id="example-check-the-status-of-your-cran-packages-once-per-day">Example: Check the status of your CRAN packages once per day</h2>
+<p>If you are a developer with one or more packages on CRAN, the <a href="https://cran.r-project.org/package=foghorn"><strong>foghorn</strong></a> package provides <code>foghorn::summary_cran_results()</code> which is a neat way to get a summary of the CRAN statuses of your packages.  I use the following two files to display the summary of my CRAN packages once per day:</p>
+<p>File <code>~/.Rprofile.d/interactive=TRUE/when=daily/package=foghorn.R</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">try</span>(<span style="color:#a6e22e">local</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">if </span>(<span style="color:#a6e22e">nzchar</span>(email <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">Sys.getenv</span>(<span style="color:#e6db74">&#34;MY_CRAN_EMAIL&#34;</span>))) {
+</span></span><span style="display:flex;"><span>    foghorn<span style="color:#f92672">::</span><span style="color:#a6e22e">summary_cran_results</span>(email)
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}), silent <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span></code></pre></div><p>File <code>~/.Renviron.d/private/me</code>:</p>
+<pre tabindex="0"><code>MY_CRAN_EMAIL=alice@example.org
+</code></pre><h2 id="links">Links</h2>
+<ul>
+<li><strong>startup</strong> package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=startup">https://cran.r-project.org/package=startup</a> (<a href="https://cran.r-project.org/web/packages/startup/NEWS">NEWS</a>, <a href="https://cran.r-project.org/web/packages/startup/vignettes/startup-intro.html">vignette</a>)</li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/startup">https://github.com/HenrikBengtsson/startup</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="related">Related</h2>
+<ul>
+<li><a href="https://www.jottr.org/2016/12/22/startup/">Start Me Up</a> on 2016-12-22.</li>
+<li><a href="https://www.jottr.org/2018/03/30/startup-secrets/">Startup with Secrets - A Poor Man&rsquo;s Approach</a> on 2018-03-30.</li>
+</ul>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/startup/">startup</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/rprofile/">Rprofile</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/renviron/">Renviron</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/configuration/">configuration</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/anacron/">anacron</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/07/12/future-user2019-slides/" data-tooltip="useR! 2019 Slides on Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/05/16/future-satrdayla2019-slides/" data-tooltip="SatRday LA 2019 Slides on Futures">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2019/05/26/startup-sometimes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2019/05/26/startup-sometimes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/07/12/future-user2019-slides/" data-tooltip="useR! 2019 Slides on Futures">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2019/05/16/future-satrdayla2019-slides/" data-tooltip="SatRday LA 2019 Slides on Futures">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2019/05/26/startup-sometimes/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2019/05/26/startup-sometimes/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2019%2F05%2F26%2Fstartup-sometimes%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2019%2F05%2F26%2Fstartup-sometimes%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

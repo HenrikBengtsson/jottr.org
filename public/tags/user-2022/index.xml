@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>useR 2022 on JottR</title>
+    <link>https://www.jottr.org/tags/user-2022/</link>
+    <description>Recent content in useR 2022 on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 23 Jun 2022 17:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/user-2022/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>useR! 2022: My &#39;Futureverse: Profile Parallel Code&#39; Slides</title>
+      <link>https://www.jottr.org/2022/06/23/future-user2022-slides/</link>
+      <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/06/23/future-user2022-slides/</guid>
+      <description>Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+Title: Futureverse: Profile Parallel Code
+Speaker: Henrik Bengtsson
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
+Slides: HTML, PDF (24 slides)
+Video: official recording (27m30s long starting at 42m10s)
+Abstract:
+&amp;ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.</description>
+    </item>
+    
+  </channel>
+</rss>

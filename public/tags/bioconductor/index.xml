@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bioconductor on JottR</title>
+    <link>https://www.jottr.org/tags/bioconductor/</link>
+    <description>Recent content in Bioconductor on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 19 Dec 2020 10:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/bioconductor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>My Keynote &#39;Future&#39; Presentation at the European Bioconductor Meeting 2020</title>
+      <link>https://www.jottr.org/2020/12/19/future-eurobioc2020-slides/</link>
+      <pubDate>Sat, 19 Dec 2020 10:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/12/19/future-eurobioc2020-slides/</guid>
+      <description>I presented Future: A Simple, Extendable, Generic Framework for Parallel Processing in R at the European Bioconductor Meeting 2020, which took place online during the week of December 14-18, 2020.
+You&amp;rsquo;ll find my slides (39 slides + Q&amp;amp;A slides; 35 minutes) below:
+Title &amp;amp; Abstract HTML (Google Slides; requires online access) PDF (flat slides) Video (YouTube) I want to thank the organizers for inviting me to this Bioconductor conference. The Bioconductor Project provides a powerful and an important technical and social environment for developing and conducting computational research in bioinformatics and genomics.</description>
+    </item>
+    
+    <item>
+      <title>Set Package Repositories at Startup</title>
+      <link>https://www.jottr.org/2012/09/27/config-repos/</link>
+      <pubDate>Thu, 27 Sep 2012 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2012/09/27/config-repos/</guid>
+      <description>The below code shows how to configure the repos option in R such that install.packages() etc. will locate the packages without having to explicitly specify the repository. Just add it to the .Rprofile file in your home directory (iff missing, create it). For more details, see help(&amp;quot;Startup&amp;quot;).
+local({ repos &amp;lt;- getOption(&amp;#34;repos&amp;#34;) # http://cran.r-project.org/ # For a list of CRAN mirrors, see getCRANmirrors(). repos[&amp;#34;CRAN&amp;#34;] &amp;lt;- &amp;#34;http://cran.stat.ucla.edu&amp;#34; # http://www.stats.ox.ac.uk/pub/RWin/ReadMe if (.Platform$OS.type == &amp;#34;windows&amp;#34;) { repos[&amp;#34;CRANextra&amp;#34;] &amp;lt;- &amp;#34;http://www.</description>
+    </item>
+    
+  </channel>
+</rss>

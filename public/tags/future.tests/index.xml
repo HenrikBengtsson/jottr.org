@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>future.tests on JottR</title>
+    <link>https://www.jottr.org/tags/future.tests/</link>
+    <description>Recent content in future.tests on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 04 Nov 2020 14:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/future.tests/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Trust the Future</title>
+      <link>https://www.jottr.org/2020/11/04/trust-the-future/</link>
+      <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2020/11/04/trust-the-future/</guid>
+      <description>Each time we use R to analyze data, we rely on the assumption that functions used produce correct results. If we can&amp;rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail. Luckily, we don&amp;rsquo;t have to do this. There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R. Here are some I could think of while writing this blog post - I&amp;rsquo;m sure I forgot something:</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
+<meta name="author" content="Henrik Bengtsson">
+<meta name="keywords" content="">
+<meta name="description" content="A new version of the future.BatchJobs package has been released and is available on CRAN. With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.
+Our different futures can easily be resolved on high-performance compute clusters.
+Requirements The future.BatchJobs package implements the Future API, as defined by the future package, on top of the API provided by the BatchJobs package.">
+
+
+<meta property="og:description" content="A new version of the future.BatchJobs package has been released and is available on CRAN. With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.
+Our different futures can easily be resolved on high-performance compute clusters.
+Requirements The future.BatchJobs package implements the Future API, as defined by the future package, on top of the API provided by the BatchJobs package.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="High-Performance Compute in R Using Futures">
+<meta name="twitter:title" content="High-Performance Compute in R Using Futures">
+<meta property="og:url" content="https://www.jottr.org/2016/10/22/future-hpc/">
+<meta property="twitter:url" content="https://www.jottr.org/2016/10/22/future-hpc/">
+<meta property="og:site_name" content="JottR">
+<meta property="og:description" content="A new version of the future.BatchJobs package has been released and is available on CRAN. With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.
+Our different futures can easily be resolved on high-performance compute clusters.
+Requirements The future.BatchJobs package implements the Future API, as defined by the future package, on top of the API provided by the BatchJobs package.">
+<meta name="twitter:description" content="A new version of the future.BatchJobs package has been released and is available on CRAN. With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.
+Our different futures can easily be resolved on high-performance compute clusters.
+Requirements The future.BatchJobs package implements the Future API, as defined by the future package, on top of the API provided by the BatchJobs package.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2016-10-22T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2016-10-22T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="R">
+    
+  
+  
+    
+      <meta property="article:tag" content="R">
+    
+      <meta property="article:tag" content="package">
+    
+      <meta property="article:tag" content="future">
+    
+      <meta property="article:tag" content="future.BatchJobs">
+    
+      <meta property="article:tag" content="future.batchtools">
+    
+      <meta property="article:tag" content="asynchronous">
+    
+      <meta property="article:tag" content="parallel processing">
+    
+      <meta property="article:tag" content="HPC">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+  <meta name="twitter:site" content="@HenrikBengtsson">
+
+
+  <meta name="twitter:creator" content="@HenrikBengtsson">
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=640">
+
+
+    <title>High-Performance Compute in R Using Futures</title>
+
+    <link rel="icon" href="https://www.jottr.org/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://www.jottr.org/2016/10/22/future-hpc/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://www.jottr.org/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-37469319-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://www.jottr.org/">JottR</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://www.jottr.org/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://www.jottr.org/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Henrik Bengtsson</h4>
+        
+          <h5 class="sidebar-profile-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-edit"></i>
+      
+      <span class="sidebar-button-desc">All posts</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/HenrikBengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://twitter.com/henrikbengtsson" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-twitter"></i>
+      
+      <span class="sidebar-button-desc">Twitter</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.jottr.org/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      High-Performance Compute in R Using Futures
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2016-10-22T00:00:00Z">
+        
+  October 22, 2016
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <p>A new version of the <a href="https://cran.r-project.org/package=future.BatchJobs">future.BatchJobs</a> package has been released and is available on CRAN.  With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.</p>
+<p><img src="https://www.jottr.org/post/future_mainframe_red.jpg" alt="A room with a classical mainframe computer and work desks">
+<em>Our different futures can easily be resolved on high-performance compute clusters.</em></p>
+<h2 id="requirements">Requirements</h2>
+<p>The future.BatchJobs package implements the Future API, as defined by the <a href="https://cran.r-project.org/package=future">future</a> package, on top of the API provided by the <a href="https://cran.r-project.org/package=BatchJobs">BatchJobs</a> package.  These packages and their dependencies install out-of-the-box on all operating systems.</p>
+<p>Installing the package is all that is needed in order to give it a test ride.  If you have access to a compute cluster that uses one of the common job schedulers, such as <a href="https://en.wikipedia.org/wiki/TORQUE">TORQUE (PBS)</a>, <a href="https://en.wikipedia.org/wiki/Slurm_Workload_Manager">Slurm</a>, <a href="https://en.wikipedia.org/wiki/Oracle_Grid_Engine">Sun/Oracle Grid Engine (SGE)</a>, <a href="https://en.wikipedia.org/wiki/Platform_LSF">Load Sharing Facility (LSF)</a> or <a href="https://en.wikipedia.org/wiki/OpenLava">OpenLava</a>, then you&rsquo;re ready to take it for a serious ride.  If your cluster uses another type of scheduler, it is possible to configure it to work also there.  If you don&rsquo;t have access to a compute cluster right now, you can still try future.BatchJobs by simply using <code>plan(batchjobs_local)</code> in the below example - all futures (&ldquo;jobs&rdquo;) will then be processed sequentially on your local machine (*).</p>
+<!-- raw HTML omitted -->
+<h2 id="example-extracting-text-and-generating-images-from-pdfs">Example: Extracting text and generating images from PDFs</h2>
+<p>Imagine we have a large set of PDF documents from which we would like to extract the text and also generate PNG images for each of the pages.  Below, I will show how this can be easily done in R thanks to the <a href="https://cran.r-project.org/package=pdftools">pdftools</a> package written by <a href="https://github.com/jeroenooms">Jeroen Ooms</a>.  I will also show how we can speed up the processing by using futures that are resolved in parallel either on the local machine or, as shown here, distributed on a compute cluster.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(<span style="color:#e6db74">&#34;pdftools&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(<span style="color:#e6db74">&#34;future.BatchJobs&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(<span style="color:#e6db74">&#34;listenv&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Process all PDFs on local TORQUE cluster</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(batchjobs_torque)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## PDF documents to process</span>
+</span></span><span style="display:flex;"><span>pdfs <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">dir</span>(path <span style="color:#f92672">=</span> <span style="color:#a6e22e">rev</span>(<span style="color:#a6e22e">.libPaths</span>())[1], recursive <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>,
+</span></span><span style="display:flex;"><span>            pattern <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;[.]pdf$&#34;</span>, full.names <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</span></span><span style="display:flex;"><span>pdfs <span style="color:#f92672">&lt;-</span> pdfs<span style="color:#a6e22e">[basename</span>(<span style="color:#a6e22e">dirname</span>(pdfs)) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;doc&#34;</span>]
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">print</span>(pdfs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## For each PDF ...</span>
+</span></span><span style="display:flex;"><span>docs <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">listenv</span>()
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">for </span>(ii in <span style="color:#a6e22e">seq_along</span>(pdfs)) {
+</span></span><span style="display:flex;"><span>  pdf <span style="color:#f92672">&lt;-</span> pdfs[ii]
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">message</span>(<span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;%d. Processing %s&#34;</span>, ii, pdf))
+</span></span><span style="display:flex;"><span>  name <span style="color:#f92672">&lt;-</span> tools<span style="color:#f92672">::</span><span style="color:#a6e22e">file_path_sans_ext</span>(<span style="color:#a6e22e">basename</span>(pdf))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  docs[[name]] <span style="color:#f92672">%&lt;-%</span> {
+</span></span><span style="display:flex;"><span>    path <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">file.path</span>(<span style="color:#e6db74">&#34;output&#34;</span>, name)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">dir.create</span>(path, recursive <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>, showWarnings <span style="color:#f92672">=</span> <span style="color:#66d9ef">FALSE</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">## (a) Extract the text and write to file</span>
+</span></span><span style="display:flex;"><span>    content <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">pdf_text</span>(pdf)
+</span></span><span style="display:flex;"><span>    txt <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">file.path</span>(path, <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;%s.txt&#34;</span>, name))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">cat</span>(content, file <span style="color:#f92672">=</span> txt)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">## (b) Create a PNG file per page</span>
+</span></span><span style="display:flex;"><span>    pngs <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">listenv</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">for </span>(jj in <span style="color:#a6e22e">seq_along</span>(content)) {
+</span></span><span style="display:flex;"><span>      pngs[[jj]] <span style="color:#f92672">%&lt;-%</span> {
+</span></span><span style="display:flex;"><span>        img <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">pdf_render_page</span>(pdf, page <span style="color:#f92672">=</span> jj)
+</span></span><span style="display:flex;"><span>        png <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">file.path</span>(path, <span style="color:#a6e22e">sprintf</span>(<span style="color:#e6db74">&#34;%s_p%03d.png&#34;</span>, name, jj))
+</span></span><span style="display:flex;"><span>        png<span style="color:#f92672">::</span><span style="color:#a6e22e">writePNG</span>(img, png)
+</span></span><span style="display:flex;"><span>        png
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">list</span>(pdf <span style="color:#f92672">=</span> pdf, txt <span style="color:#f92672">=</span> txt, pngs <span style="color:#f92672">=</span> <span style="color:#a6e22e">unlist</span>(pngs))
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">## Resolve everything if not already done</span>
+</span></span><span style="display:flex;"><span>docs <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">as.list</span>(docs)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">str</span>(docs)
+</span></span></code></pre></div><p>As true for all code using the Future API, as a user you always have full control on how futures should be resolved.  For instance, you can choose to run the above on your local machine, still via the BatchJobs framework, by using <code>plan(batchjobs_local)</code>.  You could even skip the future.BatchJobs package and use what is available in the future package alone, e.g. <code>library(&quot;future&quot;)</code> and <code>plan(multisession)</code>.</p>
+<p>As emphasized in for instance the <a href="https://www.jottr.org/2016/10/remote-processing-using-futures.html">Remote Processing Using Futures</a> blog post and in the vignettes of the <a href="https://cran.r-project.org/package=future">future</a> package, there is no need to manually identify and manually export variables and functions that need to be available to the external R processes resolving the futures.  Such global variables are automatically identified by the future package and exported when necessary.</p>
+<h2 id="futures-may-be-nested">Futures may be nested</h2>
+<p>Note how we used nested futures in the above example, where we create one future per PDF and for each PDF we, in turn, create one future per PNG.  The design of the Future API is such that the user should have full control on how each level of futures is resolved.  In other words, it is the user and not the developer who should decide what is specified in <code>plan()</code>.</p>
+<p>For futures, if nothing is specified, then sequential processing is always used for resolving futures.  In the above example, we specified <code>plan(batchjobs_torque)</code>, which means that the outer loop of futures is processed as individual jobs on the cluster.  Each of these futures will be resolved in a separate R process.  Next, since we didn&rsquo;t specify how the inner loop of futures should be processed, these will be resolved sequentially as part of these individual R processes.</p>
+<p>However, we could also choose to have the futures in the inner loop be resolved as individual jobs on the scheduler, which can be done as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(<span style="color:#a6e22e">list</span>(batchjobs_torque, batchjobs_torque))
+</span></span></code></pre></div><p>This would cause each PDF to be submitted as an individual job, which when launched on a compute node by scheduler will start by extract the plain text of the document and write it to file.  When this is done, the job continues by generating a PDF image file for each page, which is done via individual jobs on the scheduler.</p>
+<p>Exactly what strategies to use for resolving the different levels of futures depends on how long they take to process.  If the amount of processing needed for a future is really long, then it makes sense to submit it the scheduler whereas if it is really quick it probably makes more sense to process it on the current machine either using parallel futures or no futures at all.  For instance, in our example, we could also have chosen to generate the PNGs in parallel on the same compute node that extracted the text.  Such a configuration could look like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">plan</span>(<span style="color:#a6e22e">list</span>(
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">tweak</span>(batchjobs_torque, resources <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;nodes=1:ppn=12&#34;</span>),
+</span></span><span style="display:flex;"><span>  multisession
+</span></span><span style="display:flex;"><span>))
+</span></span></code></pre></div><p>This setup tells the scheduler that each job should be allocated 12 cores that the individual R processes then may use in parallel.  The future package and the <code>multisession</code> configuration will automatically detect how many cores it was allocated by the scheduler.</p>
+<p>There are numerous other ways to control how and where futures are resolved.  See the vignettes of the <a href="https://cran.r-project.org/package=future">future</a> and the <a href="https://cran.r-project.org/package=future.BatchJobs">future.BatchJobs</a> packages for more details.   Also, if you read the above and thought that this may result in an explosion of futures created recursively that will bring down your computer or your cluster, don&rsquo;t worry.  It&rsquo;s built into the core of future package to prevent this from happening.</p>
+<h2 id="whats-next">What&rsquo;s next?</h2>
+<p>The future.BatchJobs package simply implements the Future API (as defined by the future package) on top of the API provided by the awesome BatchJobs package.  The creators of that package are working on the next generation of their tool - the <a href="https://github.com/mllg/batchtools">batchtools</a> package.  I&rsquo;ve already started on the corresponding future.batchtools package so that you and your users can switch over to using <code>plan(batchtools_torque)</code> - it&rsquo;ll be as simple as that.</p>
+<p>Happy futuring!</p>
+<p>UPDATE 2022-12-11: Update examples that used the deprecated <code>multiprocess</code> future backend alias to use the <code>multisession</code> backend.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>future package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future">https://cran.r-project.org/package=future</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future">https://github.com/HenrikBengtsson/future</a></li>
+</ul>
+</li>
+<li>future.BatchJobs package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=future.BatchJobs">https://cran.r-project.org/package=future.BatchJobs</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/future.BatchJobs">https://github.com/HenrikBengtsson/future.BatchJobs</a></li>
+</ul>
+</li>
+<li>doFuture package:
+<ul>
+<li>CRAN page: <a href="https://cran.r-project.org/package=doFuture">https://cran.r-project.org/package=doFuture</a></li>
+<li>GitHub page: <a href="https://github.com/HenrikBengtsson/doFuture">https://github.com/HenrikBengtsson/doFuture</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="https://www.jottr.org/2016/07/a-future-for-r-slides-from-user-2016.html">A Future for R: Slides from useR 2016</a>, 2016-07-02</li>
+<li><a href="https://www.jottr.org/2016/10/remote-processing-using-futures.html">Remote Processing Using Futures</a>, 2016-10-11</li>
+</ul>
+<p>Keywords: R, future, future.BatchJobs, BatchJobs, package, CRAN, asynchronous, parallel processing, distributed processing, high-performance compute, HPC, compute cluster, TORQUE, PBS, Slurm, SGE, LSF, OpenLava</p>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/r/">R</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/package/">package</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future/">future</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.batchjobs/">future.BatchJobs</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/future.batchtools/">future.batchtools</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/asynchronous/">asynchronous</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/parallel-processing/">parallel processing</a>
+
+  <a class="tag tag--primary tag--small" href="https://www.jottr.org/tags/hpc/">HPC</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/12/22/startup/" data-tooltip="Start Me Up">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/10/11/future-remotes/" data-tooltip="Remote Processing Using Futures">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2016/10/22/future-hpc/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2016/10/22/future-hpc/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2025 Henrik Bengtsson. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/12/22/startup/" data-tooltip="Start Me Up">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://www.jottr.org/2016/10/11/future-remotes/" data-tooltip="Remote Processing Using Futures">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://www.jottr.org/2016/10/22/future-hpc/&amp;quote=%23RStats">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://www.jottr.org/2016/10/22/future-hpc/%0A%0A%23RStats">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+      
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.jottr.org%2F2016%2F10%2F22%2Ffuture-hpc%2F&amp;quote=%23RStats">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fwww.jottr.org%2F2016%2F10%2F22%2Ffuture-hpc%2F%0A%0A%23RStats">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/2b82bb95fbd751e5766fa0601dcab16c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Henrik Bengtsson</h4>
+    
+      <div id="about-card-bio">MSc CS | PhD Math Stat | Associate Professor | R Foundation | R Consortium</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Associate Professor
+      </div>
+    
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      
+      <div id="cover" style="background-image:url('https://www.jottr.org/images/20170514-california-poppy.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://www.jottr.org/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+  
+
+
+
+
+    <script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+    
+  </body>
+</html>
+

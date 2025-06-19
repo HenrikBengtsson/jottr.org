@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>i18n on JottR</title>
+    <link>https://www.jottr.org/tags/i18n/</link>
+    <description>Recent content in i18n on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 08 Jun 2022 14:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/i18n/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>parallelly 1.32.0: makeClusterPSOCK() Didn&#39;t Work with Chinese and Korean Locales</title>
+      <link>https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/</link>
+      <pubDate>Wed, 08 Jun 2022 14:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/</guid>
+      <description>parallelly 1.32.0 is on CRAN. This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused makeClusterPSOCK(), and therefore also future::plan(&amp;quot;multisession&amp;quot;), to fail with an error. For other updates, please see NEWS.
+The parallelly package enhances the parallel package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.</description>
+    </item>
+    
+  </channel>
+</rss>

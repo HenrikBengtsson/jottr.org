@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>prompt on JottR</title>
+    <link>https://www.jottr.org/tags/prompt/</link>
+    <description>Recent content in prompt on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 21 Sep 2020 18:45:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/prompt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Detect When the Random Number Generator Was Used</title>
+      <link>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</link>
+      <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</guid>
+      <description>If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+if (interactive()) { invisible(addTaskCallback(local({ last &amp;lt;- .GlobalEnv$.Random.seed function(...) { curr &amp;lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &amp;lt;- &amp;#34;TRACKER: .Random.seed changed&amp;#34; if (requireNamespace(&amp;#34;crayon&amp;#34;, quietly=TRUE)) msg &amp;lt;- crayon::blurred(msg) message(msg) last &amp;lt;&amp;lt;- curr } TRUE } }), name = &amp;#34;RNG tracker&amp;#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .</description>
+    </item>
+    
+  </channel>
+</rss>

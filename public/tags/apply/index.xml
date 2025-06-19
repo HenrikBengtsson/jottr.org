@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>apply on JottR</title>
+    <link>https://www.jottr.org/tags/apply/</link>
+    <description>Recent content in apply on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/apply/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future.apply - Parallelize Any Base R Apply Function</title>
+      <link>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</link>
+      <pubDate>Sat, 23 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</guid>
+      <description>Got compute?
+future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &amp;hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&amp;rsquo;s it! The default is sequential processing but by using plan(multisession) it&amp;rsquo;ll run in parallel.</description>
+    </item>
+    
+  </channel>
+</rss>

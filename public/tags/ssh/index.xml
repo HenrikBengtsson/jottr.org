@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SSH on JottR</title>
+    <link>https://www.jottr.org/tags/ssh/</link>
+    <description>Recent content in SSH on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 30 Apr 2021 15:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/ssh/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>parallelly 1.25.0: availableCores(omit=n) and, Finally, Built-in SSH Support for MS Windows 10 Users</title>
+      <link>https://www.jottr.org/2021/04/30/parallelly-1.25.0/</link>
+      <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2021/04/30/parallelly-1.25.0/</guid>
+      <description>parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+You can now use availableCores(omit = n) to ask for all but n CPU cores
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
+availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
+ncores &amp;lt;- parallel::detectCores() It&amp;rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.</description>
+    </item>
+    
+  </channel>
+</rss>

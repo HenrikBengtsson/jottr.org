@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>detectCores on JottR</title>
+    <link>https://www.jottr.org/tags/detectcores/</link>
+    <description>Recent content in detectCores on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 05 Dec 2022 21:00:00 -0800</lastBuildDate><atom:link href="https://www.jottr.org/tags/detectcores/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Please Avoid detectCores() in your R Packages</title>
+      <link>https://www.jottr.org/2022/12/05/avoid-detectcores/</link>
+      <pubDate>Mon, 05 Dec 2022 21:00:00 -0800</pubDate>
+      
+      <guid>https://www.jottr.org/2022/12/05/avoid-detectcores/</guid>
+      <description>The detectCores() function of the parallel package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I&amp;rsquo;ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:
+Please avoid using parallel::detectCores() in your package!
+By reading this blog post, I hope you become more aware of the different problems that arise from using detectCores() and how they might affect you and the users of your code.</description>
+    </item>
+    
+  </channel>
+</rss>

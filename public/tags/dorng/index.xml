@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>doRNG on JottR</title>
+    <link>https://www.jottr.org/tags/dorng/</link>
+    <description>Recent content in doRNG on JottR</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 22 Sep 2020 19:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/dorng/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing</title>
+      <link>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</link>
+      <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
+      
+      <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
+      <description>After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
+    </item>
+    
+  </channel>
+</rss>

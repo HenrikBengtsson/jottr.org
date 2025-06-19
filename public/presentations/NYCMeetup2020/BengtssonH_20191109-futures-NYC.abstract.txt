@@ -1,0 +1,13 @@
+Title: Future - Simple, Friendly Parallel Processing for R
+
+Speaker: Henrik Bengtsson
+
+Hosted by: Jared Lander
+
+When: Monday, November 9, 2020 @ 6 pm EST
+
+About the Talk:
+The 'future' package provides a minimal and unifying framework for asynchronous, parallel, and distributed computing in R. It is being used to run R code in parallel on the local computer, on remote machines, in the cloud, and on high-performance computing. Popular packages such as 'shiny', 'plumber', and 'drake' use futures internally. I will explain what futures are, discuss common feature requests, recent progress, and what is on the roadmap.
+
+About Henrik:
+Henrik Bengtsson is the author of over 30 R packages on CRAN and Bioconductor, e.g. 'future', 'matrixStats', 'progressr', and 'startup'. His research is on statistics and bioinformatics with an emphasis on high quality, reproducible method development, sustainable implementations, and large-scale processing. He is an Associate Professor in the Department of Epidemiology & Biostatistics at the University of California, San Francisco (UCSF), affiliated with the UCSF Helen Diller Family Comprehensive Cancer Center, and a member of the R Foundation and the R Consortium Infrastructure Steering Committee.
