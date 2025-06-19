@@ -4,6 +4,6 @@ preview:
 render:
 	quarto render --output-dir=docs
 
-deploy: render
+publish: render
 	git commit -am "refresh"
 	git push
