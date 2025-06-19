@@ -1,0 +1,63 @@
+---
+title: "Delayed Future(Slides from eRum 2018)"
+author: Henrik Bengtsson
+slug: "future-eRum2018-slides"
+date: 2018-06-18
+aliases:
+ - /2018/06/18/future-erum2018-slides/
+categories:
+ - R
+ - package
+ - future
+ - eRum
+ - talk
+ - presentation
+ - slides
+ - asynchronous
+ - parallel processing
+ - remote evaluation
+ - compute clusters
+ - video
+ 
+---
+
+ 
+![The eRum 2018 hex sticker](resources/erum2018--hexlogo.jpg)
+
+As promised - though a bit delayed - below are links to my slides and the video of my talk on _Future: Parallel & Distributed Processing in R for Everyone_ that I presented last month at the [eRum 2018](https://2018.erum.io/) conference in Budapest, Hungary (May 14-16, 2018).
+
+The conference was very well organized (thank you everyone involved) with a great lineup of several brilliant workshop sessions, talks, and poster presentations (thanks all).  It was such a pleasure to attend this conference and to connect and reconnect with so many of the lovely people that we are fortunate to have in the R Community.  I'm looking forward to meeting you all again.
+
+
+My talk (22 slides plus several appendix slides):
+
+* Title: _Future: Parallel & Distributed Processing in R for Everyone_
+* [HTML](https://www.jottr.org/presentations/eRum2018/BengtssonH_20180516-eRum2018.html) (incremental slides; requires online access)
+* [PDF](https://www.jottr.org/presentations/eRum2018/BengtssonH_20180516-eRum2018.pdf) (flat slides)
+* [Video](https://www.youtube.com/watch?v=doa7avxbptQ) (22 mins)
+
+
+
+May the future be with you!
+
+
+
+## Links
+* eRum 2018:
+  - Conference site: https://2018.erum.io/
+  - All talks (slides & videos): https://2018.erum.io/#talk-abstracts
+* future package:
+  - CRAN page: https://cran.r-project.org/package=future
+  - GitHub page: https://github.com/HenrikBengtsson/future
+* future.batchtools package:
+  - CRAN page: https://cran.r-project.org/package=future.batchtools
+  - GitHub page: https://github.com/HenrikBengtsson/future.batchtools
+* doFuture package:
+  - CRAN page: https://cran.r-project.org/package=doFuture
+  - GitHub page: https://github.com/HenrikBengtsson/doFuture
+* future.apply package:
+  - CRAN page: https://cran.r-project.org/package=future.apply
+  - GitHub page: https://github.com/HenrikBengtsson/future.apply
+
+[future]: https://cran.r-project.org/package=future
+[eRum]: https://2018.erum.io/

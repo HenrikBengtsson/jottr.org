@@ -1,0 +1,191 @@
+---
+title: "progressr 0.8.0: RStudio's Progress Bar, Shiny Progress Updates, and Absolute Progress"
+author: Henrik Bengtsson
+slug: progressr-0.8.0
+date: 2021-06-11 19:00:00 -0700
+aliases:
+ - /2021/06/11/progressr-0.8.0/
+categories:
+ - R
+ - package
+ - progressr
+ - parallel
+ - shiny
+ - rstudio
+---
+
+**[progressr]** 0.8.0 is on CRAN.  It comes with some new features:
+
+* A new 'rstudio' handler that reports on progress via the RStudio job interface in RStudio
+* `withProgressShiny()` now updates the `detail` part, instead of the `message` part
+* In addition to signalling relative amounts of progress, it's now also possible to signal total amounts
+
+If you're curious what **progressr** is about, have a look at my [e-Rum 2020 presentation](/2020/07/04/progressr-erum2020-slides/).
+
+
+## Progress updates in RStudio's job interface
+
+If you're using RStudio Console, you can now report on progress in the RStudio's job interface as long as the progress originates from a **progressr**-signalling function.  I’ve shown an example of this in Figure&nbsp;1.
+
+<figure style="margin-top: 3ex;">
+<img src="resources/progressr-rstudio.png" alt="A screenshot of the upper part of the RStudio Console panel.  Below the title bar, which says 'R 4.1.0 ~/', there is a row with the text 'Console 05:50:51 PM' left of a green progress bar at 30% followed by the text '0:03'.  Below these two lines are the R commands called this far, which are the same as in the below example. Following the commands, is output 'M: Added value 1',  'M: Added value 2', and  'M: Added value 3', from the first steps that have completed this far."/>
+<figcaption>
+Figure 1: The RStudio job interface can show progress bars and we can use it with **progressr**.  The progress bar title - "Console 05:50:51 PM" - shows at what time the progress began.  The '0:03' shows for how long the progress has been running - here 3 seconds.
+</figcaption>
+</figure>
+
+To try this yourself, run the below in the RStudio Console.
+
+```r
+library(progressr)
+handlers(global = TRUE)
+handlers("rstudio")
+y <- slow_sum(1:10)
+```
+
+The progress bar disappears when the calculation completes.
+
+
+
+
+
+## Tweaks to withProgressShiny()
+
+The `withProgressShiny()` function, which is a **progressr**-aware version of `withProgress()`, gained argument `inputs`.  It defaults to `inputs = list(message = NULL, detail = "message")`, which says that a progress message should update the 'detail' part of the Shiny progress panel.  For example,
+
+```r
+X <- 1:10
+withProgressShiny(message = "Calculation in progress",
+                  detail = "Starting ...",
+                  value = 0, {
+  p <- progressor(along = X)
+  y <- lapply(X, FUN=function(x) {
+    Sys.sleep(0.25)
+    p(sprintf("x=%d", x))
+  })
+})
+```
+
+will start out as in the left panel of Figure&nbsp;2, and, as soon as the first progress signal is received, the 'detail' part is updated with `x=1` as shown in the right panel.
+
+<figure style="margin-top: 3ex;">
+<table style="margin: 1ex;">
+<tr style="margin: 1ex;">
+<td>
+<img src="resources/withProgressShiny_A_x=0.png" alt="A Shiny progress bar panel with a progress bar at 0% on top, with 'Calculation in progress' written in a bold large font, with 'Starting ...' written in a normal small font below."/>
+</td>
+<td>
+<img src="resources/withProgressShiny_A_x=1.png" alt="A Shiny progress bar panel with a progress bar at 10% on top, with 'Calculation in progress' written in a bold large font, with 'x=1' written in a normal small font below."/>
+</td>
+</tr>
+</table>
+<figcaption>
+Figure 2: A Shiny progress panel that start out with the 'message' part displaying "Calculation in progress" and the 'detail' part displaying "Starting ..." (left), and whose 'detail' part is updated to "x=1" (right) as soon the first progress update comes in.
+</figcaption>
+</figure>
+
+
+Prior to this new release, the default behavior was to update the 'message' part of the Shiny progress panel.  To revert to the old behavior, set argument `inputs` as in:
+
+```r
+X <- 1:10
+withProgressShiny(message = "Starting ...",
+                  detail = "Calculation in progress",
+                  value = 0, {
+  p <- progressor(along = X)
+  y <- lapply(X, FUN=function(x) {
+    Sys.sleep(0.25)
+    p(sprintf("x=%d", x))
+  })
+}, inputs = list(message = "message", detail = NULL))
+```
+
+This results in what you see in Figure&nbsp;3.  I think that the new behavior, as shown in Figure&nbsp;2, looks better and makes more sense.
+
+<figure style="margin-top: 3ex;">
+<table style="margin: 1ex;">
+<tr style="margin: 1ex;">
+<td>
+<img src="resources/withProgressShiny_B_x=0.png" alt="A Shiny progress bar panel with a progress bar at 0% on top, with 'Starting ...' written in a bold large font, with 'Calculation in progress' written to the right of it and wrapping onto the next row."/>
+</td>
+<td>
+<img src="resources/withProgressShiny_B_x=1.png" alt="A Shiny progress bar panel with a progress bar at 10% on top, with 'x=1' written in a bold large font, with 'Calculation in progress' written to the right of it."/>
+</td>
+</tr>
+</table>
+<figcaption>
+Figure 3: A Shiny progress panel that start out with the 'message' part displaying "Starting ..." and the 'detail' part displaying "Calculation in progress" (left), and whose 'message' part is updated to "x=1" (right) as soon the first progress update comes in.
+</figcaption>
+</figure>
+
+
+## Update to a specific amount of total progress
+
+When using **progressr**, we start out by creating a progressor function that we then call to signal progress.  For example, if we do:
+
+```r
+my_slow_fun <- function() {
+  p <- progressr::progressor(steps = 10)
+  count <- 0
+  for (i in 1:10) {
+    count <- count + 1
+    Sys.sleep(1)
+    p(sprintf("count=%d", count))
+  }
+  count
+})
+```
+
+each call to `p()` corresponds to `p(amount = 1)`, which signals that our function have moved `amount = 1` steps closer to the total amount `steps = 10`.  We can take smaller or bigger steps by specifying another `amount`.
+
+In this new version, I've introduced a new beta feature that allows us to signal progress that says where we are in _absolute terms_.  With this, we can do things like:
+
+```r
+my_slow_fun <- function() {
+  p <- progressr::progressor(steps = 10)
+  count <- 0
+  for (i in 1:5) {
+    count <- count + 1
+    Sys.sleep(1)
+    if (runif(1) < 0.5) break
+    p(sprintf("count=%d", count))
+  }
+  ## In case we broke out of the loop early,
+  ## make sure to update to 5/10 progress
+  p(step = 5)
+  for (i in 1:5) {
+    count <- count + 1
+    Sys.sleep(1)
+    p(sprintf("count=%d", count))
+  }
+  count
+}
+```
+
+When calling `my_slow_fun()`, we might see progress being reported as:
+
+```
+- [------------------------------------------------]   0% 
+\ [===>-------------------------------------]  10% count=1
+| [=======>---------------------------------]  20% count=2
+\ [===================>---------------------]  50% count=3
+...
+```
+
+Note how it took a leap from 20% to 50% when `count == 2`.  If we run it again, the move to 50% might happen at another iteration.
+
+
+## Wrapping up
+
+There are also a few bug fixes, which you can read about in [NEWS](https://progressr.futureverse.org/news/index.html).  And a usual, all of this work also when you run in parallel using the [future framework](https://futureverse.org).
+
+Make progress!
+
+
+
+## Links
+
+* **progressr** package: [CRAN](https://cran.r-project.org/package=progressr), [GitHub](https://github.com/HenrikBengtsson/progressr), [pkgdown](https://progressr.futureverse.org)
+
+
+[progressr]: https://progressr.futureverse.org

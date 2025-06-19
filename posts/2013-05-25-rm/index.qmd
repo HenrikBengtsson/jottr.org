@@ -1,0 +1,60 @@
+---
+title: "Speed Trick: Assigning Large Object NULL is Much Faster than using rm()!"
+author: Henrik Bengtsson
+slug: "trick-fast-rm"
+aliases:
+ - /2013/05/speed-trick-assigning-large-object-null.html
+ - /2013/05/25/trick-fast-rm/
+date: 2013-05-25
+categories:
+ - R
+ - trick
+ - performance
+---
+
+When processing large data sets in R you often also end up creating large temporary objects.  In order to keep the memory footprint small, it is always good to remove those temporary objects as soon as possible.  When done, removed objects will be deallocated from memory (RAM) the next time the garbage collection runs.
+
+
+## Better: Use `rm(list = "x")` instead of `rm(x)`, if using `rm()`
+
+To remove an object in R, one can use the `rm()` function (with alias `remove()`). However, it turns out that that function has quite a bit of internal overhead (look at its R code), particularly if you call it as `rm(x)` rather than `rm(list = "x")`.  The former takes about three times longer to complete.  Example:
+
+```r
+> t1 <- system.time(for (k in 1:1e5) { a <- 1; rm(a) })
+> t2 <- system.time(for (k in 1:1e5) { a <- 1; rm(list = "a") })
+> t1
+   user  system elapsed
+  10.45    0.00   10.50
+> t2
+   user  system elapsed
+   2.93    0.00    2.94
+> t1/t2
+    user   system  elapsed
+3.566553      NaN 3.571429
+```
+
+Note: In order to minimize the impact of the memory allocation on the benchmark, I use `a <- 1` to represent the "large" object.
+
+
+## Best: Use x <- NULL instead of rm()
+
+Instead of using `rm(list = "x")`, which still has a fair amount of overhead, one can remove a large active object by assigning the corresponding variable a new value (a small object), e.g.  `x <- NULL`.  Whenever doing this, the previously assigned value (the large object) will become available for garbage collection. Example:
+
+```r
+> t3 <- system.time(for (k in 1:1e5) { a <- 1; a <- NULL })
+> t3
+   user  system elapsed
+   0.05    0.00    0.05
+> t1/t3
+   user  system elapsed
+    209     NaN     210
+```
+
+That's a **200 times speedup**!
+
+
+## Background
+
+I "accidentally" discovered this when profiling `readMat()` in my [R.matlab](http://cran.r-project.org/web/packages/R.matlab/) package.  In particular, there was one rm(x) call inside a local function that was called thousands of times when parsing modestly large MAT files.  Together with some additional optimizations, R.matlab v2.0.0 (to be appear) is now 10-20 times faster.  Now I'm going to review all my other packages for expensive `rm()` calls.
+
+

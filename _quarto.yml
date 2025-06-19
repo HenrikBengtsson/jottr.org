@@ -1,0 +1,29 @@
+project:
+  type: website
+
+website:
+  title: "JottR"
+  
+  navbar:
+    right:
+      - icon: github
+        href: https://github.com/HenrikBengtsson
+      - icon: mastodon
+        href: https://mastodon.social/@henrikbengtsson
+      - text: "{{< bi bluesky >}}"
+        href: https://bsky.app/profile/henrikbengtsson.bsky.social
+      - icon: twitter
+        href: https://x.com/henrikbengtsson
+
+  favicon: assets/favicon.png
+
+  site-url: https://www.jottr.org/
+
+format:
+  html:
+    css: styles.css
+    respect-user-color-scheme: true
+
+theme:
+  light: flatly
+  dark: darkly

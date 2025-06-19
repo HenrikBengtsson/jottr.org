@@ -1,0 +1,73 @@
+---
+title: "future.BatchJobs - End-of-Life Announcement"
+author: Henrik Bengtsson
+date: 2021-01-08 09:00:00 -0800
+aliases:
+ - /2021/01/08/future.batchjobs-end-of-life-announcement/
+categories:
+ - R
+ - package
+ - future.BatchJobs
+ - future.batchtools
+ - future
+ - parallel processing
+ - HPC
+ - CRAN
+ - archive
+ - deprecation
+---
+
+<div style="width: 40%; margin: 2ex; float: right;"/>
+ <center>
+   <img src="resources/sign_out_of_service_do_not_use.png" alt="Sign: Out of Service - Do not use!" style="width: 100%;"/>
+ </center>
+</div>
+
+This is an announcement that **[future.BatchJobs]** - _A Future API for Parallel and Distributed Processing using BatchJobs_ has been archived on CRAN.  The package has been deprecated for years with a recommendation of using **[future.batchtools]** instead.  The latter has been on CRAN since June 2017 and builds upon the **[batchtools]** package, which itself supersedes the **[BatchJobs]** package.
+
+To wrap up the three-and-a-half year long life of **[future.BatchJobs]**, the very last version, 0.17.0, reached CRAN on 2021-01-04 and passed on CRAN checks as of 2020-01-08, when the the package was requested to be formally archived.  All versions ever existing on CRAN can be found at <https://cran.r-project.org/src/contrib/Archive/future.BatchJobs/>.
+
+Archiving the **future.BatchJobs** package will speed up new releases of the **future** package.  In the past, some of the **future** releases required internal updates to reverse packages dependencies such as **future.BatchJobs** to be rolled out on CRAN first in order for **future** to pass the CRAN incoming checks.
+
+
+## Postscript
+
+The <https://cran.r-project.org/package=future.BatchJobs> page mentions:
+
+> Archived on 2021-01-08 at the request of the maintainer.
+>
+> Consider using package ‘[future.batchtools]’ instead.
+
+I'm happy to see that we can suggest another package on our archived package pages.  All I did to get this was to mention it in my email to CRAN:
+
+> Hi,
+> 
+> please archive the 'future.BatchJobs' package. It has zero reverse dependencies.
+> The package has been labelled deprecated for a long time now and has been superseded by the 'future.batchtools' package.
+>
+> Thank you,  
+> Henrik
+
+
+
+## Links
+
+* future package:
+  - CRAN page: https://cran.r-project.org/package=future
+  - GitHub page: https://github.com/HenrikBengtsson/future
+
+* future.BatchJobs package:
+  - CRAN page: https://cran.r-project.org/package=future.BatchJobs
+  - All CRAN versions: https://cran.r-project.org/src/contrib/Archive/future.BatchJobs/
+  - GitHub page: https://github.com/HenrikBengtsson/future.BatchJobs
+
+* future.batchtools package:
+  - CRAN page: https://cran.r-project.org/package=future.batchtools
+  - GitHub page: https://github.com/HenrikBengtsson/future.batchtools
+
+
+[BatchJobs]: https://cran.r-project.org/package=BatchJobs
+[batchtools]: https://cran.r-project.org/package=batchtools
+[future]: https://cran.r-project.org/package=future
+[future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
+[future.batchtools]: https://cran.r-project.org/package=future.batchtools

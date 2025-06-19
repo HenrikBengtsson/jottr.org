@@ -1,0 +1,382 @@
+---
+title: "Future Improvements During 2021"
+author: Henrik Bengtsson
+slug: future-during-2021
+date: 2022-01-07 14:00:00 -0800
+aliases:
+ - /2022/01/07/future-during-2021/
+categories:
+ - R
+ - package
+ - future
+ - parallel
+ - HPC
+ - parallel processing
+---
+
+<img src="resources/paragliding_mount_tamalpais_20220101.jpg" alt="First person view while paragliding during a sunny day with blue skies. The pilot's left hand with a glove can be seen pulling the left break with lines going up to the white, left wing tip above. The pilot is in a left turn high above the mountain side with open patched of grass among the tree. Two other paragliders further down can be seen in the distance. Down below, to the left, there is a long ocean beach slowly curving up towards a point in the horizon. Inside the beach, there is a lagoon. Part of the mountain ridge can be seen to the right." style="width: 100%; margin: 0; margin-bottom: 2ex;"/>
+
+Happy New Year!  I made some updates to the future framework during
+2021 that involve overall improvements and essential preparations to
+go forward with some exciting new features that I'm keen to work on
+during 2022.
+
+The [future framework](https://futureverse.org) makes it easy to
+parallelize existing R code - often with only a minor change of
+code. The goal is to lower the barriers so that anyone can quickly and
+safely speed up their existing R code in a worry-free manner.
+
+**[future]** 1.22.1 was released in August 2021, followed by
+**future** 1.23.0 at the end of October 2021.  Below, I summarize the
+updates that came with those two releases:
+
+ * [New features](#new-features)
+ * [Performance improvements](#performance-improvements)
+ * [Cleanups to make room for new features](#cleanups-to-make-room-for-new-features)
+ * [Significant changes preparing for the future](#significant-changes-preparing-for-the-future)
+ * [Roadmap ahead](#roadmap-ahead)
+ 
+There were also several updates to the related **[parallelly]** and
+**[progressr]** packages, which you can read about in earlier blog
+posts under the [#parallelly](/tags/#parallelly-list) and
+[#progressr](/tags/#progressr-list) blog tags.
+
+
+## New features
+
+### futureSessionInfo() for troubleshooting and issue reporting
+
+Function [`futureSessionInfo()`] was added to **future** 1.22.0.  It
+outputs information useful for troubleshooting problems related to the
+future framework.  It also runs some basic tests to validate that the
+current future backend works as expected.  If you have problems
+getting futures to work on your machine, please run this function
+before reporting issues at [Future Discussions].  Here's an example:
+
+```r
+> library(future)
+> plan(multisession, workers = 2)
+> futureSessionInfo()
+*** Package versions
+future 1.23.0, parallelly 1.30.0, parallel 4.1.2, globals 0.14.0, listenv 0.8.0
+
+*** Allocations
+availableCores():
+system  nproc 
+     8      8 
+availableWorkers():
+$system
+[1] "localhost" "localhost" "localhost"
+[4] "localhost" "localhost" "localhost"
+[7] "localhost" "localhost"
+
+*** Settings
+- future.plan=<not set>
+- future.fork.multithreading.enable=<not set>
+- future.globals.maxSize=<not set>
+- future.globals.onReference=<not set>
+- future.resolve.recursive=<not set>
+- future.rng.onMisuse='warning'
+- future.wait.timeout=<not set>
+- future.wait.interval=<not set>
+- future.wait.alpha=<not set>
+- future.startup.script=<not set>
+
+*** Backends
+Number of workers: 2
+List of future strategies:
+1. multisession:
+   - args: function (..., workers = 2, envir = parent.frame())
+   - tweaked: TRUE
+   - call: plan(multisession, workers = 2)
+   
+*** Basic tests
+  worker   pid     r sysname          release
+1      1 19291 4.1.2   Linux 5.4.0-91-generic
+2      2 19290 4.1.2   Linux 5.4.0-91-generic
+                                               version
+1 #102~18.04.1-Ubuntu SMP Thu Nov 11 14:46:36 UTC 2021
+2 #102~18.04.1-Ubuntu SMP Thu Nov 11 14:46:36 UTC 2021
+   nodename machine login  user effective_user
+1 my-laptop  x86_64 alice alice          alice
+2 my-laptop  x86_64 alice alice          alice
+Number of unique PIDs: 2 (as expected)
+```
+
+
+
+### Working around UTF-8 escaping on MS Windows
+
+Because of limitations in R itself, UTF-8 symbols outputted on MS
+Windows parallel workers would be [relayed as escaped
+symbols](https://github.com/HenrikBengtsson/future/issues/473) when
+using futures.  Now, the future framework, and, more specifically,
+[`value()`], attempts to recover such MS Windows output to UTF-8
+before outputting it.
+
+For example, in **future** (< 1.23.0) you would get the following:
+
+```r
+f <- future({ cat("\u2713 Everything is OK") ; 42 })
+v <- value(f)
+#> <U+2713> Everything is OK
+```
+
+when, and only when, those futures are resolved on a MS Windows
+machine.  In **future** (>= 1.23.0), we work around this problem by
+looking for `<U+NNNN>` like patterns in the output and decode them as
+UTF-8 symbols;
+
+```r
+f <- future({ cat("\u2713 Everything is OK") ; 42 })
+v <- value(f)
+#> ✓ Everything is OK
+```
+
+_Comment_: From [R 4.2.0, R will have native support for UTF-8 also on
+MS
+Windows](https://developer.r-project.org/Blog/public/2021/12/07/upcoming-changes-in-r-4.2-on-windows/index.html).
+More testing and validation is needed to confirm this will work out of
+the box in R (>= 4.2.0) when running R in the terminal, in the R GUI,
+in the RStudio Console, and so on.  If so, **future** will be updated
+to only apply this workaround for R (< 4.2.0).
+
+
+
+### Harmonization of future(), futureAssign(), and futureCall()
+
+Prior to **future** 1.22.0, argument `seed` for [`futureAssign()`] and
+[`futureCall()`] defaulted to `TRUE`, whereas it defaulted to `FALSE`
+for [`future()`].  This was an oversight.  In **future** (>= 1.22.0),
+`seed = FALSE` is the default for all these functions.
+
+
+### Protecting against non-exportable results
+
+Analogously to how globals may be scanned for ["non-exportable"
+objects](https://future.futureverse.org/articles/future-4-non-exportable-objects.html)
+when option `future.globals.onReference` is set to `"error"` or
+`"warning"`, `value()` will now check for similar problems in the
+value returned from parallel workers.  For example, in **future** (<
+1.23.0) we would get:
+
+```r
+library(future)
+plan(multisession, workers = 2)
+options(future.globals.onReference = "error")
+
+f <- future(xml2::read_xml("<body></body>"))
+v <- value(f)
+print(v)
+#> Error in doc_type(x) : external pointer is not valid
+```
+
+whereas in **future** (>= 1.23.0) we get:
+
+```r
+library(future)
+plan(multisession, workers = 2)
+options(future.globals.onReference = "error")
+
+f <- future(xml2::read_xml("<body></body>"))
+v <- value(f)
+#> Error: Detected a non-exportable reference ('externalptr') in the value
+#> (of class 'xml_document') of the resolved future
+```
+
+
+### Finer control of what type of conditions are captured and replayed
+
+Besides specifying which condition classes to be captured and relayed,
+in **future** (>= 1.22.0), it is possible to specify also condition
+classes to be ignored.  For example,
+
+```r
+f <- future(..., conditions = structure("condition", exclude = "message"))
+```
+
+captures all conditions but message conditions.  The default is
+`conditions = "condition"`, which captures and relays any type of
+condition.
+
+
+
+## Performance improvements
+
+I always prioritize correctness over performance in the **future**
+framework.  So, whenever optimizing for performance, one always has
+to make sure we are not breaking things somewhere else.  Thankfully,
+there are now [over 200 reverse-dependency packages on
+CRAN](https://www.futureverse.org/statistics.html) and Bioconductor
+that I can validate against.  They provide another comfy cushion
+against mistakes than what we already get from package unit tests and
+the **[future.tests]** test suite.  Below are some recent performance
+improvements made.
+
+
+### Less latency for multicore, multisession, and cluster futures
+
+In **future** 1.22.0, the default timeout of [`resolved()`] was
+decreased from 0.20 seconds to 0.01 seconds for multicore,
+multisession, and cluster futures.  This means that less time is now
+spent on checking for results from these future backends when they are
+not yet available.  After making sure it is safe to do so, we might
+decrease the default timeout to zero in a later release.
+
+
+### Less overhead when initiating futures
+
+The overhead of initiating futures was significantly reduced in
+**future** 1.22.0.  For example, the round-trip time for
+`value(future(NULL))` is about twice as fast for sequential, cluster,
+and multisession futures.  For multicore futures the round-trip speedup
+is about 20%.
+
+The speedup comes from pre-compiling the future's R expression into an
+R expression template, which then can quickly re-compiled into the
+final expression to be evaluated. Specifically, instead of calling
+`expr <- base::bquote(tmpl)` for each future, which is computationally
+expensive, we take a two-step approach where we first call `tmpl_cmp
+<- bquote_compile(tmpl)` once per session such that we only have to
+call the much faster `expr <- bquote_apply(tmpl_cmp)` for each
+future.(*) This new pre-compile approach speeds up the construction of
+the final future expression from the original future expression ~10
+times.
+
+(*) These are [internal functions](https://github.com/HenrikBengtsson/future/blob/1064c4ec2c37a70fa8fff8887d0030a5f03c46da/R/000.bquote.R#L56-L131) of the **future** package.
+
+
+### Environment variables are only used when package is loaded
+
+All R [options specific to the future
+framework](https://future.futureverse.org/reference/future.options.html)
+have defaults that fall back to corresponding environment variables.
+For example, the default for option `future.rng.onMisuse` can be set
+by environment variable `R_FUTURE_RNG_ONMISUSE`.
+
+The purpose of the environment variables is to make it possible to
+configure the future framework before launching R, e.g. in shell
+startup scripts, or in shell scripts submitted to job schedulers in
+high-performance compute (HPC) environments.  When R is already
+running, the best practice is to use the R options to configure the
+future framework.
+
+In order to avoid the overhead from querying and parsing environment
+variables at runtime, but also to clarify how and when environment
+variables should be set, starting with **future** 1.22.0,
+_`R_FUTURE_*` environment variables are only used when the **future**
+package is loaded_.  Then, if set, they are used for setting the
+corresponding `future.*` option.
+
+
+## Cleanups to make room for new features
+
+The `values()` function is defunct since **future** 1.23.0 in favor of
+`value()`.  All CRAN and Bioconductor packages that depend on
+**future** have been updated since a long time.  If you get the error:
+
+```r
+Error: values() is defunct in future (>= 1.20.0). Use value() instead.
+```
+
+make sure to update your R packages.  A few users of **[furrr]** have
+run into this error - updating to **furrr** (>= 0.2.0) solved the
+problem.
+
+
+Continuing, to further harmonize how developers use the Future API, we
+are moving away from odds-and-ends features, especially the ones that
+are holding us back from adding new features. The goal is to ensure
+that more code using futures can truly run anywhere, not just on a
+particular parallel backend that the developer work with.
+
+In this spirit, we are slowly moving away from "persistent" workers.
+For example, in **future** (>= 1.23.0), `plan(multisession, persistent
+= TRUE)` is no longer supported and will produce an error if
+attempted.  The same will eventually happen also for `plan(cluster,
+persistent = TRUE)`, but not until we have [support for caching
+"sticky" globals](https://www.futureverse.org/roadmap.html), which is
+the main use case for persistent workers.
+
+Another example is transparent futures, which are prepared for
+deprecation in **future** (>= 1.23.0).  If used, `plan(transparent)`
+produces a warning, which soon will be upgraded to a formal
+deprecation warning.  In a later release, it will produce an error.
+Transparent futures were added during the early days in order to
+simplify troubleshooting of futures.  A better approach these days is
+to use `plan(sequential, split = TRUE)`, which makes interactive
+troubleshooting tools such as `browser()` and `debug()` to work.
+
+
+
+## Significant changes preparing for the future
+
+Prior to **future** 1.22.0, lazy futures were assigned to the
+currently set future backend immediately when created.  For example,
+if we do:
+
+```r
+library(future)
+plan(multisession, workers = 2)
+
+f <- future(42, lazy = TRUE)
+```
+
+with **future** (< 1.22.0), we would get:
+
+```r
+class(f)
+#> [1] "MultisessionFuture" "ClusterFuture"      "MultiprocessFuture"
+#> [4] "Future"             "environment" 
+```
+
+Starting with **future** 1.22.0, lazy futures remain generic futures
+until they are launched, which means they are not assigned a backend
+class until they have to.  Now, the above example gives:
+
+```r
+class(f)
+#> [1] "Future"      "environment"
+```
+
+This change opens up the door for storing futures themselves to file
+and sending them elsewhere. More precisely, this means we can start
+working towards a _queue of futures_, which then can be processed on
+whatever compute resources we have access to at the moment, e.g. some
+futures might be resolved on the local computer, others on machines on
+a local cluster, and when those fill up, we can burst out to cloud
+resources, or maybe process them via a community-driven peer-to-peer
+cluster.
+
+
+## Roadmap ahead
+
+There are lots of new features on the roadmap related to the above and
+other things.  I hope to make progress on several of them during 2022.
+If you're curious about what's coming up, see the [Project
+Roadmap](https://www.futureverse.org/roadmap.html), stay tuned on this
+blog ([feed](https://www.jottr.org/index.xml)), or follow [me on
+Twitter](https://twitter.com/henrikbengtsson/).
+
+Happy futuring!
+
+Henrik
+
+## Links
+
+* **future** package: [CRAN](https://cran.r-project.org/package=future), [GitHub](https://github.com/HenrikBengtsson/future), [pkgdown](https://future.futureverse.org)
+* **parallelly** package: [CRAN](https://cran.r-project.org/package=parallelly), [GitHub](https://github.com/HenrikBengtsson/parallelly), [pkgdown](https://parallelly.futureverse.org)
+
+
+[future]: https://future.futureverse.org
+[furrr]: https://furrr.futureverse.org
+[future.tests]: https://future.tests.futureverse.org
+[parallelly]: https://parallelly.futureverse.org
+[progressr]: https://progressr.futureverse.org
+[`future()`]: https://future.futureverse.org/reference/future.html
+[`futureAssign()`]: https://future.futureverse.org/reference/future.html
+[`futureCall()`]: https://future.futureverse.org/reference/future.html
+[`futureSessionInfo()`]: https://future.futureverse.org/reference/futureSessionInfo.html
+[`resolved()`]: https://future.futureverse.org/reference/resolved.html
+[`value()`]: https://future.futureverse.org/reference/value.html
+[Future Discussions]: https://github.com/HenrikBengtsson/future/discussions

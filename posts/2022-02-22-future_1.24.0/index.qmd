@@ -1,0 +1,111 @@
+---
+title: "future 1.24.0: Forwarding RNG State also for Stand-Alone Futures"
+author: Henrik Bengtsson
+date: 2022-02-22 13:00:00 -0800
+aliases:
+ - /2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/
+categories:
+ - R
+ - package
+ - future
+ - parallel
+ - parallel processing
+ - RNG
+---
+
+**[future]** 1.24.0 is on CRAN.  It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to `plan()` and `tweaks()`, and some bug fixes.  Below are the most important changes.
+
+<figure style="padding: 2ex; float: right;"/>
+<center>
+  <img src="resources/xkcd_221-random_number.png" alt="A one-box XKCD comic with the following handwritten code:
+  
+  int getRandomNumber()
+  {
+    return 4;  // chosen by fair dice roll.
+               // guaranteed to be random.
+  }
+  "/>
+ </center>
+ <figcaption style="font-size: small; font-style: italic;">One of many possible random number generators. This one was carefully designed by <a href="https://xkcd.com/221/">XKCD</a> [CC BY-NC 2.5].
+ </figcaption>
+</figure>
+
+
+
+## future(..., seed = TRUE) updates RNG state
+
+In **future** (< 1.24.0), using [`future(..., seed = TRUE)`] would _not_ forward the state of the random number generator (RNG).  For example, if we generated random numbers in individual futures this way, they would become _identical_, e.g.
+
+```r
+f <- future(rnorm(n = 1L), seed = TRUE)
+value(f)
+#> [1] -1.424997
+
+f <- future(rnorm(n = 1L), seed = TRUE)
+value(f)
+#> [1] -1.424997
+```
+
+This was a deliberate, conservative design, because it is not obvious exactly how the RNG state should be forwarded in this case, especially if we consider random numbers may be generated also in the main R session.
+The more I dug into the problem, the further down I ended up in a rabbit hole.  Because of this, I have held back on addressing this problem and leaving it to the developer to solve it, i.e. they had to roll their own RNG streams designed for parallel processing, and populate each future with a unique seed from those RNG streams, i.e. `future(..., seed = <seed>)`. This is how **[future.apply]** and **[furrr]** already do it internally.
+
+However, I understand that design was confusing, and if not understood, it could silently lead to RNG mistakes and correlated, and even identical random numbers.  I also sometimes got confused about this when I needed to do something quickly with individual futures and random numbers.  I even considered making `seed = TRUE` an error until resolved, and, looking back, maybe I should have done so.
+
+Anyway, because it is rather tedious to roll your own  L'Ecuyer-CMRG RNG streams, I decided to update `future(..., seed = TRUE)` to provide a good-enough solution internally, where it forwards the RNG state and then provides the future with an RNG substream based on the updated RNG state.  In **future** (>= 1.24.0), we now get:
+
+```r
+f <- future(rnorm(n = 1L), seed = TRUE)
+v <- value(f)
+print(v)
+#> [1] -1.424997
+
+f <- future(rnorm(n = 1L), seed = TRUE)
+v <- value(f)
+print(v)
+#> [1] -1.985136
+```
+
+This update only affects code that currently uses `future(..., seed = TRUE)`.  It does _not_ affect code that relies on **future.apply** or **furrr**, which already worked correctly. That is, you can keep using `y <- future_lapply(..., future.seed = TRUE)` and `y <- future_map(..., .options = furrr_options(seed = TRUE))`.
+
+
+## Deprecating future strategies 'transparent' and 'remote'
+
+It's on the [roadmap] to provide mechanisms for the developer to declare what resources a particular future needs and for the end-user to specify multiple parallel-backend alternatives, so that the future can be processed on a worker that best can meet its resource requirements.  In order to support this, we need to restrict the future backend API further, which has been in the works over the last couple of years in collaboration with existing package developers.
+
+In this release, I am formally deprecating future strategies `transparent` and `remote`.  When used, they now produce an informative warning. The `transparent` strategy is deprecated in favor of using `sequential` with argument `split = TRUE` set. If you still use `remote`, please migrate to `cluster`, which since a long time can achieve everything that `remote` can do.
+
+On a related note, if you are still using `multiprocess`, which is deprecated in **future** (>= 1.20.0) since 2020-11-03, please migrate to `multisession` so you won't get surprised when `multiprocess` becomes defunct.
+
+
+For the other updates, please see the [NEWS](https://future.futureverse.org/news/index.html).
+
+
+Happy futuring!
+
+Henrik
+
+
+## Other posts on random numbers in parallel processing
+
+* [future 1.19.1 - Making Sure Proper Random Numbers are Produced in Parallel Processing](/2020/09/22/push-for-statistical-sound-rng/), 2020-09-22
+
+* [Detect When the Random Number Generator Was Used](/2020/09/21/detect-when-the-random-number-generator-was-used/), 2020-09-21
+
+* [future 1.3.0: Reproducible RNGs, future_lapply() and More](/2017/02/19/future-rng/), 2017-02-19
+
+
+## Links
+
+* **future** package: [CRAN](https://cran.r-project.org/package=future), [GitHub](https://github.com/HenrikBengtsson/future), [pkgdown](https://future.futureverse.org)
+* **future.apply** package: [CRAN](https://cran.r-project.org/package=future.apply), [GitHub](https://github.com/HenrikBengtsson/future.apply), [pkgdown](https://future.apply.futureverse.org)
+* **furrr** package: [CRAN](https://cran.r-project.org/package=furrr), [GitHub](https://github.com/HenrikBengtsson/furrr), [pkgdown](https://furrr.futureverse.org)
+
+
+[future]: https://future.futureverse.org
+[future.apply]: https://future.apply.futureverse.org
+[furrr]: https://furrr.futureverse.org
+[`future()`]: https://future.futureverse.org/reference/future.html
+[`future(..., seed = TRUE)`]: https://future.futureverse.org/reference/future.html
+[roadmap]: https://futureverse.org/roadmap.html
+
+[Future Discussions]: https://github.com/HenrikBengtsson/future/discussions

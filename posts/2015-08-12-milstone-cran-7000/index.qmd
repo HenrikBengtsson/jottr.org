@@ -1,0 +1,38 @@
+---
+title: "Milestone: 7000 Packages on CRAN"
+author: Henrik Bengtsson
+slug: "milestone-cran-7000"
+aliases:
+ - /2015/08/milestone-7000-packages-on-cran.html
+ - /2015/08/12/milestone-cran-7000/
+date: 2015-08-12
+categories:
+ - R
+ - CRAN
+ - milestone
+ - packages
+---
+
+Another 1,000 packages were added to CRAN, which took less than 9 months. Today (August 12, 2015), the Comprehensive R Archive Network (CRAN) package page reports:
+
+>  "Currently, the CRAN package repository features 7002 available packages."
+
+
+While the previous 1,000 packages took 355 days, going from 6,000 to 7,000 packages took 286 days - which means that now a new CRAN package is born on average every 6.9 hours (or 3.5 packages per day). Since the start of CRAN 18.3 years ago on April 23, 1997, there has been on average one new package appearing on CRAN every 22.9 hours. It is actually more frequent than that because dropped/archived packages are not accounted for. The 7,000 packages on CRAN are maintained by ~4,130 people.
+
+Thanks to the CRAN team and to all package developers. You can give back by carefully reporting bugs to the maintainers and properly citing any packages you use in your publications (see `citation("pkg name")`).
+
+Milestones:
+
+* 2015-08-12: [7000 packages](https://stat.ethz.ch/pipermail/r-package-devel/2015q3/000393.html)
+* 2014-10-29: [6000 packages](https://mailman.stat.ethz.ch/pipermail/r-devel/2014-October/069997.html)
+* 2013-11-08: [5000 packages](https://stat.ethz.ch/pipermail/r-devel/2013-November/067935.html)
+* 2012-08-23: [4000 packages](https://stat.ethz.ch/pipermail/r-devel/2012-August/064675.html)
+* 2011-05-12: [3000 packages](https://stat.ethz.ch/pipermail/r-devel/2011-May/061002.html)
+* 2009-10-04: [2000 packages](https://stat.ethz.ch/pipermail/r-devel/2009-October/055049.html)
+* 2007-04-12: [1000 packages](https://stat.ethz.ch/pipermail/r-devel/2007-April/045359.html)
+* 2004-10-01: 500 packages
+* 2003-04-01: 250 packages
+
+These data are for CRAN only. There are many more packages elsewhere, e.g. [Bioconductor](http://bioconductor.org/), [R-Forge](http://r-forge.r-project.org/) (sic!), [RForge](http://rforge.net/) (sic!), [Github](http://github.com/) etc.
+

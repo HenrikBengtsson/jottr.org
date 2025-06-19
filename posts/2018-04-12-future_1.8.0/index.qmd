@@ -1,0 +1,72 @@
+---
+title: "future 1.8.0: Preparing for a Shiny Future"
+author: Henrik Bengtsson
+slug: "future-results"
+date: 2018-04-12
+aliases:
+ - /2018/04/12/future-results/
+categories:
+ - R
+ - package
+ - future
+ - future.apply
+ - future.batchtools
+ - future.callr
+ - doFuture
+ - shiny
+ - lapply
+ - RNG
+ - parallel
+ - HPC
+ - asynchronous
+ - compute clusters
+ - cloud
+---
+
+
+**[future]** 1.8.0 is available on CRAN.
+
+This release lays the foundation for being able to capture outputs from futures, perform automated timing and memory benchmarking (profiling) on futures, and more.  These features are _not_ yet available out of the box, but thanks to this release we will be able to make some headway on many of [the feature requests related to this](https://github.com/HenrikBengtsson/future/issues/172) - hopefully already by the next release.
+
+!["A Shiny Future"](resources/retro-shiny-future-small.png)
+
+For **shiny** users following Joe Cheng's efforts on extending [Shiny with asynchronous processing using futures](https://rstudio.github.io/promises/articles/shiny.html), **future** 1.8.0 comes with some [important updates/bug fixes](https://github.com/HenrikBengtsson/future/issues/200) that allow for consistent error handling regardless whether Shiny runs with or without futures and regardless of the future backend used.  With previous versions of the **future** package, you would receive errors of different classes depending on which future backend was used.
+
+The `future_lapply()` function was moved to the **[future.apply]** package back in January 2018.  Please use that one instead, especially since the one in the **future** package is now formally deprecated (and produces a warning if used).  In **future.apply** there is also a `future_sapply()` function and hopefully, in a not too far future, we'll see additional futurized versions of other base R apply functions, e.g. `future_vapply()` and `future_apply()`.
+
+Finally, with this release, there was an bug fix related to _nested futures_ (where you call `future()` within a `future()` - or use `%<-%` within another `%<-%`).  When using non-standard evaluation (NSE) such as **dplyr** expressions in a nested future, you could get a false error that complained about not being able to identify a global variable when it actually was a column in a data.frame.
+
+
+
+## What's next?
+
+* I'm giving a presentation on futures at the [eRum 2018 conference taking place on May 14-16, 2018 in Budapest](https://2018.erum.io/). I'm excited about this opportunity and to meet more folks in the European R community.
+
+* I'm happy to announce that The Infrastructure Steering Committee of The R Consortium is funding the project [Future Minimal API: Specification with Backend Conformance Test Suite](https://www.r-consortium.org/projects/awarded-projects).  I'm grateful for their support.  The aim is to formalize the Future API further and to provide a standardized test suite that packages implementing future backends can validate their implementations against.  This will benefit the quality of higher-level parallel frameworks that utilize futures internally, e.g. **[future.apply]** and **foreach** with **[doFuture]**. It will also help moving forward on several of [the feature requests received from the community](https://github.com/HenrikBengtsson/future/issues/172).  
+
+
+## Help shape the future
+
+If you find futures useful in your R-related work, please consider sharing your stories, e.g. by blogging, on [Twitter], or on [GitHub]. It always exciting to hear about how people are using them or how they'd like to use. I know there are so many great ideas out there!
+
+Happy futuring!
+
+
+## Links
+* future package: [CRAN](https://cran.r-project.org/package=future), [GitHub](https://github.com/HenrikBengtsson/future)
+* future.batchtools package: [CRAN](https://cran.r-project.org/package=future.batchtools), [GitHub](https://github.com/HenrikBengtsson/future.batchtools)
+* future.callr package: [CRAN](https://cran.r-project.org/package=future.callr), [GitHub](https://github.com/HenrikBengtsson/future.callr)
+* doFuture package: [CRAN](https://cran.r-project.org/package=doFuture), [GitHub](https://github.com/HenrikBengtsson/doFuture) (a [foreach] adaptor)
+
+
+[future]: https://cran.r-project.org/package=future
+[future.apply]: https://cran.r-project.org/package=future.apply
+[future.batchtools]: https://github.com/HenrikBengtsson/future.batchtools
+[future.callr]: https://github.com/HenrikBengtsson/future.callr
+[globals]: https://cran.r-project.org/package=globals
+[batchtools]: https://cran.r-project.org/package=batchtools
+[doFuture]: https://cran.r-project.org/package=doFuture
+[foreach]: https://cran.r-project.org/package=foreach
+
+[GitHub]: https://github.com/HenrikBengtsson/future
+[Twitter]: https://twitter.com/henrikbengtsson

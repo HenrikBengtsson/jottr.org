@@ -1,0 +1,17 @@
+---
+title: "JottR - Some Jotter About R"
+listing:
+  contents:
+    - posts/*/index.qmd
+  exclude:
+    categories: [announcement, draft]
+  feed: true
+  sort: "date desc"
+  type: default
+  date-format: iso
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: false
+---

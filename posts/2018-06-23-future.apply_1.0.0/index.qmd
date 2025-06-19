@@ -1,0 +1,185 @@
+---
+title: "future.apply - Parallelize Any Base R Apply Function"
+author: Henrik Bengtsson
+slug: "future.apply_1.0.0"
+date: 2018-06-23
+aliases:
+ - /2018/06/23/future.apply_1.0.0/
+categories:
+ - R
+ - package
+ - future
+ - apply
+ - lapply
+ - mapply
+ - sapply
+ - tapply
+ - vapply
+ - Map
+ - replicate
+ - asynchronous
+ - parallel processing
+ - compute clusters
+ - HPC
+ - RNG
+ 
+---
+
+![0% to 100% utilization](resources/future.apply_1.0.0-htop_32cores.png)
+_Got compute?_
+
+[future.apply] 1.0.0 - _Apply Function to Elements in Parallel using Futures_ - is on CRAN.  With this milestone release, all<sup>*</sup> base R apply functions now have corresponding futurized implementations.  This makes it easier than ever before to parallelize your existing `apply()`, `lapply()`, `mapply()`, ... code - just prepend `future_` to an apply call that takes a long time to complete. That's it! The default is sequential processing but by using `plan(multisession)` it'll run in parallel.
+
+<br>
+_Table: All future\_nnn() functions in the **future.apply** package.  Each function takes the same arguments as the corresponding **base** function does._<br>
+
+Function                          | Description
+----------------------------------|--------------------------------------
+<code>future\_<strong>apply()</strong></code>  | Apply Functions Over Array Margins
+<code>future\_<strong>lapply()</strong></code>    | Apply a Function over a List or Vector
+<code>future\_<strong>sapply()</strong></code>    | - " -
+<code>future\_<strong>vapply()</strong></code>    | - " -
+<code>future\_<strong>replicate()</strong></code> | - " -
+<code>future\_<strong>mapply()</strong></code>    | Apply a Function to Multiple List or Vector Arguments
+<code>future\_<strong>Map()</strong></code>       | - " -
+<code>future\_<strong>eapply()</strong></code> | Apply a Function Over Values in an Environment
+<code>future\_<strong>tapply()</strong></code>    | Apply a Function Over a Ragged Array
+
+<sup>*</sup> <code>future\_<strong>rapply()</strong></code> - Recursively Apply a Function to a List - is yet to be implemented.
+
+
+## A Motivating Example
+
+In the **parallel** package there is an example - in `?clusterApply` - showing how to perform bootstrap simulations in parallel.  After some small modifications to clarify the steps, it looks like the following:
+
+```r
+library(parallel)
+library(boot)
+
+run1 <- function(...) {
+   library(boot)
+   cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+   cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
+   boot(cd4, corr, R = 500, sim = "parametric",
+        ran.gen = cd4.rg, mle = cd4.mle)
+}
+
+cl <- makeCluster(4) ## Parallelize using four cores
+clusterSetRNGStream(cl, 123)
+cd4.boot <- do.call(c, parLapply(cl, 1:4, run1))
+boot.ci(cd4.boot, type = c("norm", "basic", "perc"),
+                  conf = 0.9, h = atanh, hinv = tanh)
+stopCluster(cl)
+```
+
+The script defines a function `run1()` that produces 500 bootstrap samples, and then it calls this function four times, combines the four replicated samples into one `cd4.boot`, and at the end it uses `boot.ci()` to summarize the results.
+
+The corresponding sequential implementation would look something like:
+```r
+library(boot)
+
+run1 <- function(...) {
+   cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+   cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
+   boot(cd4, corr, R = 500, sim = "parametric",
+        ran.gen = cd4.rg, mle = cd4.mle)
+}
+
+set.seed(123)
+cd4.boot <- do.call(c, lapply(1:4, run1))
+boot.ci(cd4.boot, type = c("norm", "basic", "perc"),
+                  conf = 0.9, h = atanh, hinv = tanh)
+```
+
+
+We notice a few things about these two code snippets.  First of all, in the parallel code, there are two `library(boot)` calls; one in the main code and one inside the `run1()` function.  The reason for this is to make sure that the **boot** package is also attached in the parallel, background R session when `run1()` is called there.  The **boot** package defines the `boot.ci()` function, as well as the `boot()` function and the `cd4` data.frame - both used inside `run1()`.  If **boot** is not attached inside the function, we would get an error on `"object 'cd4' not found"` when running the parallel code.  In contrast, we do not need to do this in the sequential code.  Also, if we later would turn our parallel script into a package, then `R CMD check` would complain if we kept the `library(boot)` call inside the `run1()` function.
+
+Second, the example uses `MASS::mvrnorm()` in `run1()`.  The reason for this is related to the above - if we use only `mvrnorm()`, we need to attach the **MASS** package using `library(MASS)` and also do so inside `run1()`.  Since there is only one **MASS** function called, it's easier and neater to use the form `MASS::mvrnorm()`.
+
+Third, the random-seed setup differs between the sequential and the parallel approach.
+
+
+In summary, in order to turn the sequential script into a script that parallelizes using the **parallel** package, we would have to not only rewrite parts of the code but also be aware of important differences in order to avoid getting run-time errors due to missing packages or global variables.
+
+
+One of the objectives of the **future.apply** package, and the **future** ecosystem in general, is to make transitions from writing sequential code to writing parallel code as simple and frictionless as possible.
+
+Here is the same example parallelized using the **future.apply** package:
+
+```r
+library(future.apply)
+plan(multisession, workers = 4) ## Parallelize using four cores
+library(boot)
+
+run1 <- function(...) {
+   cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+   cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
+   boot(cd4, corr, R = 500, sim = "parametric",
+        ran.gen = cd4.rg, mle = cd4.mle)
+}
+
+set.seed(123)
+cd4.boot <- do.call(c, future_lapply(1:4, run1, future.seed = TRUE))
+boot.ci(cd4.boot, type = c("norm", "basic", "perc"),
+                  conf = 0.9, h = atanh, hinv = tanh)
+```
+
+The difference between the sequential base-R implementation and the **future.apply** implementation is minimal.  The **future.apply** package is attached, the parallel plan of four workers is set up, and the `apply()` function is replaced by `future_apply()`, where we specify `future.seed = TRUE` to get statistical sound and numerically reproducible parallel random number generation (RNG).
+More importantly, notice how there is no need to worry about which packages need to be attached on the workers and which global variables need to be exported.  That is all taken care of automatically by the **future** framework.
+
+
+
+## Q&A
+
+Q. _What are my options for parallelization?_<br>
+A. Everything in **future.apply** is processed through the [future] framework.  This means that all parallelization backends supported by the **parallel** package are supported out of the box, e.g. on your **local machine**, and on **local** or **remote** ad-hoc **compute clusters** (also in the **cloud**). Additional parallelization and distribution schemas are provided by backends such as **[future.callr]** (parallelization on your local machine) and **[future.batchtools]** (large-scale parallelization via **HPC job schedulers**).  For other alternatives, see the CRAN Page for the **[future]** package and the [High-Performance and Parallel Computing with R](https://cran.r-project.org/web/views/HighPerformanceComputing.html) CRAN Task View.
+
+Q. _Righty-oh, so how do I specify which parallelization backend to use?_<br>
+A. A fundamental design pattern of the future framework is that _the end user decides **how and where** to parallelize_ while _the developer decides **what** to parallelize_.  This means that you do _not_ specify the backend via some argument to the `future_nnn()` functions.  Instead, the backend is specified by the `plan()` function - you can almost think of it as a global option that the end user controls.  For example, `plan(multisession)` will parallelize on the local machine, so will `plan(future.callr::callr)`, whereas `plan(cluster, workers = c("n1", "n2", "remote.server.org"))` will parallelize on two local machines and one remote machine. Using `plan(future.batchtools::batchtools_sge)` will distribute the processing on your SGE-supported compute cluster.  BTW, you can also have [nested parallelization strategies](https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html), e.g. `plan(list(tweak(cluster, workers = nodes), multisession))` where `nodes = c("n1", "n2", "remote.server.org")`.
+
+
+Q. _What about load balancing?_<br>
+A. The default behavior of all functions is to distribute **equally-sized chunks** of elements to each available background worker - such that each worker process exactly one chunk (= one future).  If the processing times vary significantly across chunks, you can increase the average number of chunks processed by each worker, e.g. to have them process two chunks on average, specify `future.scheduling = 2.0`.  Alternatively, you can specify the number of elements processed per chunk, e.g. `future.chunk.size = 10L` (an analog to the `chunk.size` argument added to the **parallel** package in R 3.5.0).
+
+Q. _What about random number generation (RNG)? I've heard it's tricky to get right when running in parallel._<br>
+A. Just add `future.seed = TRUE` and you're good. This will use **parallel safe** and **statistical sound** **L'Ecuyer-CMRG RNG**, which is a well-established parallel RNG algorithm and used by the **parallel** package.  The **future.apply** functions use this in a way that is also **invariant to** the future backend and the amount of "chunking" used.  To produce numerically reproducible results, set `set.seed(123)` before (as in the above example), or simply use `future.seed = 123`.
+
+Q. _What about global variables? Whenever I've tried to parallelize code before, I often ran into errors on "this or that variable is not found"._<br>
+A. This is very rarely a problem when using the [future] framework - things work out of the box.  **Global variables and packages** needed are **automatically identified** from static code inspection and passed on to the workers - even when the workers run on remote computers or in the cloud.
+
+
+_Happy futuring!_
+
+
+UPDATE 2022-12-11: Update examples that used the deprecated `multiprocess` future backend alias to use the `multisession` backend.
+
+## Links
+* future.apply package:
+  - CRAN page: https://cran.r-project.org/package=future.apply
+  - GitHub page: https://github.com/HenrikBengtsson/future.apply
+* future package:
+  - CRAN page: https://cran.r-project.org/package=future
+  - GitHub page: https://github.com/HenrikBengtsson/future
+* future.batchtools package:
+  - CRAN page: https://cran.r-project.org/package=future.batchtools
+  - GitHub page: https://github.com/HenrikBengtsson/future.batchtools
+* doFuture package:
+  - CRAN page: https://cran.r-project.org/package=doFuture
+  - GitHub page: https://github.com/HenrikBengtsson/doFuture
+
+
+## See also
+
+* [Delayed Future(Slides from eRum 2018)](/2018/06/18/future-erum2018-slides/), 2018-06-19
+* [future 1.8.0: Preparing for a Shiny Future](/2018/04/12/future-results/), 2018-04-12
+* [The Many-Faced Future](/2017/06/05/many-faced-future/), 2017-06-05
+* [future 1.3.0 Reproducible RNGs, future&#95;lapply() and More](/2017/02/19/future-rng/), 2017-02-19
+* [High-Performance Compute in R Using Futures](/2016/10/22/future-hpc/), 2016-10-22
+* [Remote Processing Using Futures](/2016/10/11/future-remotes/), 2016-10-11
+
+[future]: https://cran.r-project.org/package=future
+[future.apply]: https://cran.r-project.org/package=future.apply
+[future.batchtools]: https://cran.r-project.org/package=future.batchtools
+[future.callr]: https://cran.r-project.org/package=future.callr
+
+[Kolmogorov–Smirnov test]: https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test

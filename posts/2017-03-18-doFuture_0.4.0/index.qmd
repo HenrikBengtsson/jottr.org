@@ -1,0 +1,139 @@
+---
+title: "doFuture: A Universal Foreach Adaptor Ready to be Used by 1,000+ Packages"
+author: Henrik Bengtsson
+slug: "doFuture"
+aliases:
+ - /2017/03/dofuture-universal-foreach-adapator.html
+ - /2017/03/18/dofuture/
+date: 2017-03-18
+categories:
+ - R
+ - package
+ - future
+ - doFuture
+ - foreach
+ - parallel
+ - HPC
+ - asynchronous
+ - compute clusters
+ - cloud
+---
+
+[doFuture] 0.4.0 is available on CRAN.  The doFuture package provides a _universal_ [foreach] adaptor enabling  _any_ [future] backend to be used with the `foreach() %dopar% { ... }` construct.  As shown below, this will allow `foreach()` to parallelize on not only multiple cores, multiple background R sessions, and ad-hoc clusters, but also cloud-based clusters and high performance compute (HPC) environments.
+
+1,300+ R packages on CRAN and Bioconductor depend, directly or indirectly, on foreach for their parallel processing.  By using doFuture, a user has the option to parallelize those computations on more compute environments than previously supported, especially HPC clusters.  Notably, all [plyr] code with `.parallel = TRUE` will be able to take advantage of this without need for modifications - this is possible because internally plyr makes use of foreach for its parallelization.
+
+![ Programmer standing beside punched cards](resources/programmer_next_to_62500_punch_cards_SAGE.jpg)<br>
+_With doFuture, foreach can process your code in more places than ever before.  Alright, it may not be able to process [this programmer's 62,500 punched cards](http://www.computerhistory.org/revolution/memory-storage/8/326/924)._
+
+
+## What is new in doFuture 0.4.0?
+
+* **Load balancing**: The doFuture `%dopar%` backend will now partition all iterations (elements) and distribute them uniformly such that the each backend worker will receive exactly one partition equally sized to those sent to the other workers.  This approach speeds up the processing significantly when iterating over a large set of elements that each has a relatively small processing time.
+ 
+* **Globals**: Global variables and packages needed in order for external R workers to evaluate the foreach expression are now identified by the same algorithm as used for regular future constructs and `future::future_lapply()`.
+	
+For full details on updates, please see the [NEWS](https://cran.r-project.org/package=doFuture) file.  **The doFuture package installs out-of-the-box on all operating systems**.
+
+
+## A quick example
+Here is a bootstrap example using foreach adapted from `help("clusterApply", package = "parallel")`.  I use this example to illustrate how to perform `foreach()` iterations in parallel on a variety of backends.
+
+```
+library("boot")
+
+run <- function(...) {
+  cd4.rg <- function(data, mle) MASS::mvrnorm(nrow(data), mle$m, mle$v)
+  cd4.mle <- list(m = colMeans(cd4), v = var(cd4))
+  boot(cd4, corr, R = 10000, sim = "parametric", ran.gen = cd4.rg, mle = cd4.mle)
+}
+
+## Attach doFuture (and foreach), and tell foreach to use futures
+library("doFuture")
+registerDoFuture()
+
+## Sequentially on the local machine
+plan(sequential)
+system.time(boot <- foreach(i = 1:100, .packages = "boot") %dopar% { run() })
+##    user  system elapsed 
+## 298.728   0.601 304.242
+
+# In parallel on local machine (with 8 cores)
+plan(multisession)
+system.time(boot <- foreach(i = 1:100, .packages = "boot") %dopar% { run() })
+##    user  system elapsed 
+## 452.241   1.635  68.740
+
+# In parallel on the ad-hoc cluster machine (5 machines with 4 workers each)
+nodes <- rep(c("n1", "n2", "n3", "n4", "n5"), each = 4L)
+plan(cluster, workers = nodes)
+system.time(boot <- foreach(i = 1:100, .packages = "boot") %dopar% { run() })
+##    user  system elapsed
+##   2.046   0.188  22.227
+
+# In parallel on Google Compute Engine (10 r-base Docker containers)
+vms <- lapply(paste0("node", 1:10), FUN = googleComputeEngineR::gce_vm, template = "r-base")
+vms <- lapply(vms, FUN = gce_ssh_setup)
+vms <- as.cluster(vms, docker_image = "henrikbengtsson/r-base-future")
+plan(cluster, workers = vms)
+system.time(boot <- foreach(i = 1:100, .packages = "boot") %dopar% { run() })
+##    user  system elapsed
+##   0.952   0.040  26.269
+
+# In parallel on a HPC cluster with a TORQUE / PBS scheduler
+# (Note, the below timing includes waiting time on job queue)
+plan(future.BatchJobs::batchjobs_torque, workers = 10)
+system.time(boot <- foreach(i = 1:100, .packages = "boot") %dopar% { run() })
+##    user  system elapsed
+##  15.568   6.778  52.024
+```
+
+
+## About `.export` and `.packages`
+
+When using `doFuture::registerDoFuture()`, there is no need to manually specify which global variables (argument `.export`) to export.  By default, the doFuture backend automatically identifies and exports all globals needed. This is done using recursive static-code inspection.  The same is true for packages that need to be attached; those will also be handled automatically and there is no need to specify them manually via argument `.packages`.  This is in line with how it works for regular future constructs, e.g. `y %<-% { a * sum(x) }`.
+
+Having said this, you may still want to specify arguments `.export` and `.packages` because of the risk that your `foreach()` statement may not work with other foreach adaptors, e.g. [doParallel] and [doSNOW].  Exactly when and where a failure may occur depends on the nestedness of your code and the location of your global variables.  Specifying `.export` and `.packages` manually skips such automatic identification.
+
+Finally, I recommend that you as a developer always try to write your code in such way the users can choose their own futures: The developer decides _what_ should be parallelized - the user chooses _how_.
+
+Happy futuring!
+
+
+UPDATE 2022-12-11: Update examples that used the deprecated `multiprocess` future backend alias to use the `multisession` backend.
+
+## Links
+* doFuture package:
+  - CRAN page: https://cran.r-project.org/package=doFuture
+  - GitHub page: https://github.com/HenrikBengtsson/doFuture
+* future package:
+  - CRAN page: https://cran.r-project.org/package=future
+  - GitHub page: https://github.com/HenrikBengtsson/future
+* future.BatchJobs package (enhancing [BatchJobs]):
+  - CRAN page: https://cran.r-project.org/package=future.BatchJobs
+  - GitHub page: https://github.com/HenrikBengtsson/future.BatchJobs
+* future.batchtools package (enhancing [batchtools]):
+  - CRAN page: coming soon
+  - GitHub page: https://github.com/HenrikBengtsson/future.batchtools
+* googleComputeEngineR package:
+  - CRAN page: https://cran.r-project.org/package=googleComputeEngineR
+  - GitHub page: https://cloudyr.github.io/googleComputeEngineR
+  
+## See also
+
+* [future: Reproducible RNGs, future_lapply() and more](/2017/02/future-reproducible-rngs-futurelapply.html), 2017-02-19
+* [Remote Processing Using Futures](/2016/10/remote-processing-using-futures.html), 2016-10-21
+* [A Future for R: Slides from useR 2016](/2016/07/a-future-for-r-slides-from-user-2016.html), 2016-07-02
+
+[doFuture]: https://cran.r-project.org/package=doFuture
+[future]: https://cran.r-project.org/package=future
+[future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
+[future.batchtools]: https://github.com/HenrikBengtsson/future.batchtools
+[globals]: https://cran.r-project.org/package=globals
+[BatchJobs]: https://cran.r-project.org/package=BatchJobs
+[batchtools]: https://cran.r-project.org/package=batchtools
+[foreach]: https://cran.r-project.org/package=foreach
+[doParallel]: https://cran.r-project.org/package=doParallel
+[doSNOW]: https://cran.r-project.org/package=doSNOW
+[plyr]: https://cran.r-project.org/package=plyr
+[googleComputeEngineR]: https://cran.r-project.org/package=googleComputeEngineR

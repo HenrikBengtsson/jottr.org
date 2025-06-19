@@ -1,0 +1,76 @@
+---
+title: "A Future for R: Slides from useR 2016"
+author: Henrik Bengtsson
+slug: "future-useR2016-slides"
+aliases:
+ - /2016/07/a-future-for-r-slides-from-user-2016.html
+ - /2016/07/02/future-user2016-slides/
+date: 2016-07-02
+categories:
+ - R
+ - package
+ - future
+ - useR
+ - talk
+ - presentation
+ - slides
+ - asynchronous
+ - parallel processing
+ - remote evaluation
+ - remote graphics
+ - video
+ 
+---
+
+ 
+Unless you count DSC 2003 in Vienna, last week's [useR] conference at Stanford was my very first time at useR.  It was a great event, it was awesome to meet our lovely and vibrant R community in real life, which we otherwise only get know from online interactions, and of course it was very nice to meet old friends and make new ones.
+
+![Classical illustration of a hover car above the tree taking of from a yard with a house](resources/hover_craft_car_photo_picture.jpg)<br>
+_The future is promising._
+
+
+At the end of the second day, I presented _A Future for R_ (18 min talk; slides below) on how you can use the [future] package for asynchronous (parallel and distributed) processing using a single unified API regardless of what backend you have available, e.g. multicore, multisession, ad hoc cluster, and job schedulers.  I ended with a teaser on how futures can be used for much more than speeding up your code, e.g. generating graphics remotely and displaying it locally.
+
+Here's an example using two futures that process data in parallel:
+```r
+> library("future")
+> plan(multisession)       ## Parallel processing
+> a %<-% slow_sum(1:50)    ## These two assignments are
+> b %<-% slow_sum(51:100)  ## non-blocking and in parallel
+> y <- a + b               ## Waits for a and b to be resolved
+> y
+[1] 5050
+```
+
+Below are different formats of my talk (18 slides + 9 appendix slides) on 2016-06-28:
+
+* [HTML](http://www.aroma-project.org/share/presentations/BengtssonH_20160628-useR2016/BengtssonH_20160628-A_Future_for_R,useR2016.html) (incremental slides; requires online access)
+* [HTML](http://www.aroma-project.org/share/presentations/BengtssonH_20160628-useR2016/BengtssonH_20160628-A_Future_for_R,useR2016,flat.html) (non-incremental slides; requires online access)
+* [PDF](http://www.aroma-project.org/share/presentations/BengtssonH_20160628-useR2016/BengtssonH_20160628-A_Future_for_R,useR2016.pdf) (incremental slides)
+* [PDF](http://www.aroma-project.org/share/presentations/BengtssonH_20160628-useR2016/BengtssonH_20160628-A_Future_for_R,useR2016,flat.pdf) (non-incremental slides)
+* [Markdown](http://www.aroma-project.org/share/presentations/BengtssonH_20160628-useR2016/BengtssonH_20160628-A_Future_for_R,useR2016,pure.md) (screen reader friendly)
+* [Channel 9](https://channel9.msdn.com/Events/useR-international-R-User-conference/useR2016/A-Future-for-R) or [YouTube](https://www.youtube.com/watch?v=K8KYi9AFRlk) (video recording)
+
+May the future be with you!
+
+
+UPDATE 2022-12-11: Update examples that used the deprecated `multiprocess` future backend alias to use the `multisession` backend.
+
+## Links
+* useR 2016:
+  - Conference site: http://user2016.org/
+  - Talk abstract: https://user2016.sched.org/event/7BZK/a-future-for-r
+* future package:
+  - CRAN page: https://cran.r-project.org/package=future
+  - GitHub page: https://github.com/HenrikBengtsson/future
+* future.BatchJobs package:
+  - CRAN page: https://cran.r-project.org/package=future.BatchJobs
+  - GitHub page: https://github.com/HenrikBengtsson/future.BatchJobs
+* doFuture package:
+  - CRAN page: https://cran.r-project.org/package=doFuture
+  - GitHub page: https://github.com/HenrikBengtsson/doFuture
+
+
+[future]: https://cran.r-project.org/package=future
+[useR]: http://user2016.org/
+

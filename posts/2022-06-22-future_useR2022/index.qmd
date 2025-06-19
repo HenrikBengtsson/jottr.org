@@ -1,0 +1,64 @@
+---
+title: "useR! 2022: My 'Futureverse: Profile Parallel Code' Slides"
+author: Henrik Bengtsson
+slug: "future-useR2022-slides"
+date: 2022-06-23 17:00:00 -0700
+aliases:
+ - /2022/06/23/future-user2022-slides/
+categories:
+ - R
+ - R
+ - package
+ - future
+ - useR
+ - talk
+ - presentation
+ - slides
+ - asynchronous
+ - parallel processing
+ - remote evaluation
+ - compute clusters
+ - HPC
+ - profiling
+ - video
+ 
+---
+
+
+<figure style="margin-top: 3ex;">
+<img src="resources/BengtssonH_20220622-Future-useR2022_slide18.png" alt="Screenshot of Slide #18 in my presentation. A graphical time-chart representation of the events that takes place when calling the following code in R: plan(cluster, workers = 2); fs <- lapply(1:2, function(x) future(slow(x)); vs <- value(fs); There are two futures displayed in the time chart. Each future is represented by a blue, horizontal 'lifespan' bar. The second future starts slightly after the first one. Each future is evaluated in a separate worker, which is represented as pink horizontal 'evaluate' bar. The two 'lifespan' and the two 'evaluation' bars are overlapping indicating they run in parallel." style="width: 100%; margin: 0;"/>
+<figcaption>
+Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk.
+</figcaption>
+</figure>
+
+
+
+<img src="resources/user2022-logo_450x300.webp" alt="The useR 2022 logo" style="width: 30%; float: right; margin: 2ex;"/>
+
+Below are the slides for my _Futureverse: Profile Parallel Code_ talk that I presented at the [useR! 2022](https://user2022.r-project.org/) conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+
+
+Title: Futureverse: Profile Parallel Code  
+Speaker: Henrik Bengtsson  
+Session: [#21: Parallel Computing](https://user2022.r-project.org/program/talks/#session-21-parallel-computing), chaired by Ilias Moutsopoulos  
+Slides: [HTML](https://docs.google.com/presentation/d/e/2PACX-1vTnpyj7qvyKr-COHaJAYjoGveoOJPYrstTmvC4farFk2vdwWb8O79kA5tn7klTS67_uoJJdKFPgKNql/pub?start=true&loop=false&delayms=60000&slide=id.gf778290f24_0_165), [PDF](/presentations/useR2022/BengtssonH_20220622-Future-useR2022.pdf) (24 slides)  
+Video: [official recording](https://www.youtube.com/watch?v=_lrPgNqT3SM&t=2528s)  (27m30s long starting at 42m10s)
+
+Abstract:
+
+"In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework. With these new, frequently requested features, we can study how and where our computational resources are used. With the help of visualization (e.g., ggplot2 and Shiny), we can identify bottlenecks in our code and parallel setup. For example, if we find that some parallel workers are more idle than expected, we can tweak settings to improve the overall CPU utilization and thereby increase the total throughput and decrease the turnaround time (latency). These new benchmarking tools work out of the box on existing code and packages that build on the future package, including future.apply, furrr, and doFuture.
+
+The future framework, available on CRAN since 2016, has been used by hundreds of R packages and is among the top 1% of most downloaded packages. It is designed to unify and leverage common parallelization frameworks in R and to make new and existing R code faster with minimal efforts of the developer. The futureverse allows you, the developer, to stay with your favorite programming style, and end-users are free to choose the parallel backend to use (e.g., on a local machine, across multiple machines, in the cloud, or on a high-performance computing (HPC) cluster)."
+
+---
+
+I want to send out a big thank you to useR! organizers, staff, and volunteers, and everyone else who contributed to this event.
+
+/Henrik
+
+## Links
+
+* useR! 2022: https://user2022.r-project.org/
+* **futureverse** website: https://www.futureverse.org/
+* **future** package [CRAN](https://cran.r-project.org/package=future), [GitHub](https://github.com/HenrikBengtsson/future), [pkgdown](https://future.futureverse.org/)

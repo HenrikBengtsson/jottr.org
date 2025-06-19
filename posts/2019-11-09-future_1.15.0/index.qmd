@@ -1,0 +1,104 @@
+---
+title: "future 1.15.0 - Lazy Futures are Now Launched if Queried"
+author: Henrik Bengtsson
+slug: "resolved-launches-lazy-futures"
+date: 2019-11-09 11:00:00 -0800
+aliases:
+ - /2019/11/09/resolved-launches-lazy-futures/
+categories:
+ - R
+ - package
+ - future
+ - future.apply
+ - future.batchtools
+ - future.callr
+ - doFuture
+ - foreach
+ - progressr
+ - parallel
+ - HPC
+ - asynchronous
+ - compute clusters
+ - cloud
+---
+
+!["Lazy dog does not want to leave park"](resources/lazy_dog_in_park.gif)<br>
+<small><em>No dogs were harmed while making this release</em></small>
+
+**[future]** 1.15.0 is now on CRAN, accompanied by a recent, related update of **[future.callr]** 0.5.0.  The main update is a change to the Future API:
+
+
+ <center>
+  `resolved()` will now also launch lazy futures
+ </center>
+<br> 
+
+Although this change does not look much to the world, I'd like to think of this as part of a young person slowly finding themselves.  This change in behavior helps us in cases where we create lazy futures upfront;
+```r
+fs <- lapply(X, future, lazy = TRUE)
+```
+Such futures remain dormant until we call `value()` on them, or, as of this release, when we call `resolved()` on them.  Contrary to `value()`, `resolved()` is a non-blocking function that allows us to check in on one or more futures to see if they are resolved or not.  So, we can now do:
+
+```r
+while (!all(resolved(fs))) {
+  do_something_else()
+}
+```
+
+to run that loop until all futures are resolved. Any lazy future that is still dormant will be launched when queried the first time.  Previously, we would have had to write specialized code for the `lazy=TRUE` case to trigger lazy futures to launch.  If not, the above loop would have run forever.  This change means that the above design pattern works the same regardless of whether we use `lazy=TRUE` or `lazy=FALSE` (default).  There is now one less thing to worry about when working with futures.  Less mental friction should be good.
+
+
+## What else?
+
+The Future API now guarantees that `value()` relays the "visibility" of a future's value.  For example,
+
+```r
+> f <- future(invisible(42))
+> value(f)
+> v <- value(f)
+> v
+[1] 42
+```
+
+Other than that, I have fixed several non-critical bugs and improved some documentation.  See `news(package="future")` or [NEWS](https://cran.r-project.org/web/packages/future/NEWS) for all updates.
+
+
+## What's next?
+
+ * I'll be talking about futures at [rstudio::conf 2020](https://rstudio.com/conference/) (San Francisco, CA, USA) at the end of January 2020.  Please come and say hi - I am keen to hear your R story.
+
+ * I will wrap up the deliverables for the project [Future Minimal API: Specification with Backend Conformance Test Suite](https://github.com/HenrikBengtsson/future.tests) sponsored by the R Consortium.  This project helps to robustify the future ecosystem and validate that all backends fulfill the Future API specification.  It also serves to refine the Future API specifications.  For example, the above change to `resolved()` resulted from this project.
+
+ * The maintainers of **[foreach]** plan to harmonize how `foreach()` identifies global variables with how the **future** framework identifies them.  The idea is to migrate **[foreach]** to use the same approach as **future**, which relies on the **[globals]** package.  If you're curious, you can find out more about this over at the [foreach issue tracker](https://github.com/RevolutionAnalytics/foreach/issues).  Yeah, the foreach issue tracker is a fairly recent thing - it's a great addition.
+
+ * The **[progressr]** package (GitHub only) is a proof-of-concept and a working _prototype_ showing how to signal progress updates when doing parallel processing. It works out of the box with the core Future API and higher-level Future APIs such as **[future.apply]**, **[foreach]** with **[doFuture]**, **[furrr]**, and **[plyr]** - regardless of what parallel backend is being used. It should also work with all known non-parallel map-reduce frameworks, including **base** `lapply()` and **[purrr]**.  For parallel processing, the "granularity" of progress updates varies with the type of parallel worker used.  Right now, you will get live updates for sequential processing, whereas for parallel processing the updates will come in chunks along with the value whenever it is collected for a particular future.  I'm working on adding support for "live" progress updates also for some parallel backends including when running on local and remote workers.
+
+ 
+
+Happy futuring!
+
+
+## Links
+* **future** package: [CRAN](https://cran.r-project.org/package=future), [GitHub](https://github.com/HenrikBengtsson/future)
+* **future.batchtools** package: [CRAN](https://cran.r-project.org/package=future.batchtools), [GitHub](https://github.com/HenrikBengtsson/future.batchtools)
+* **future.callr** package: [CRAN](https://cran.r-project.org/package=future.callr), [GitHub](https://github.com/HenrikBengtsson/future.callr)
+* **future.apply** package: [CRAN](https://cran.r-project.org/package=future.apply), [GitHub](https://github.com/HenrikBengtsson/future.apply)
+* **doFuture** package: [CRAN](https://cran.r-project.org/package=doFuture), [GitHub](https://github.com/HenrikBengtsson/doFuture) (a **[foreach]** adapter)
+* **progressr** package: [GitHub](https://github.com/HenrikBengtsson/progressr)
+* <a href="https://www.videoman.gr/en/70385" target="_blank">"So, what happened to the dog?"</a>
+
+[future]: https://cran.r-project.org/package=future
+[future.apply]: https://cran.r-project.org/package=future.apply
+[future.batchtools]: https://cran.r-project.org/package=future.batchtools
+[future.callr]: https://cran.r-project.org/package=future.callr
+[globals]: https://cran.r-project.org/package=globals
+[batchtools]: https://cran.r-project.org/package=batchtools
+[doFuture]: https://cran.r-project.org/package=doFuture
+[progressr]: https://github.com/HenrikBengtsson/progressr
+[foreach]: https://cran.r-project.org/package=foreach
+[furrr]: https://cran.r-project.org/package=furrr
+[purrr]: https://cran.r-project.org/package=purrr
+[plyr]: https://cran.r-project.org/package=plyr
+
+[GitHub]: https://github.com/HenrikBengtsson/future
+[Twitter]: https://twitter.com/henrikbengtsson

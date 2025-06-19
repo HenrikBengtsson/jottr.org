@@ -1,0 +1,158 @@
+---
+title: "High-Performance Compute in R Using Futures"
+author: Henrik Bengtsson
+slug: "future-hpc"
+date: 2016-10-22
+aliases:
+ - /2016/10/22/future-hpc/
+categories:
+ - R
+ - package
+ - future
+ - future.BatchJobs
+ - future.batchtools
+ - asynchronous
+ - parallel processing
+ - HPC
+---
+
+A new version of the [future.BatchJobs] package has been released and is available on CRAN.  With a single change of settings, it allows you to switch from running an analysis sequentially on a local machine to running it in parallel on a compute cluster.
+
+![A room with a classical mainframe computer and work desks](resources/future_mainframe_red.jpg)<br>
+_Our different futures can easily be resolved on high-performance compute clusters._
+
+
+## Requirements
+
+The future.BatchJobs package implements the Future API, as defined by the [future] package, on top of the API provided by the [BatchJobs] package.  These packages and their dependencies install out-of-the-box on all operating systems.  
+
+Installing the package is all that is needed in order to give it a test ride.  If you have access to a compute cluster that uses one of the common job schedulers, such as [TORQUE (PBS)], [Slurm], [Sun/Oracle Grid Engine (SGE)], [Load Sharing Facility (LSF)] or [OpenLava], then you're ready to take it for a serious ride.  If your cluster uses another type of scheduler, it is possible to configure it to work also there.  If you don't have access to a compute cluster right now, you can still try future.BatchJobs by simply using `plan(batchjobs_local)` in the below example - all futures ("jobs") will then be processed sequentially on your local machine (*).
+
+
+<small>
+(*) For those of you who are already familiar with the [future] package - yes, if you're only going to run locally, then you can equally well use `plan(sequential)` or `plan(multisession)`, but for the sake of demonstrating future.BatchJobs per se, I suggest using `plan(batchjobs_local)` because it will use the BatchJobs machinery underneath.
+</small>
+
+
+## Example: Extracting text and generating images from PDFs
+
+Imagine we have a large set of PDF documents from which we would like to extract the text and also generate PNG images for each of the pages.  Below, I will show how this can be easily done in R thanks to the [pdftools] package written by [Jeroen Ooms](https://github.com/jeroenooms).  I will also show how we can speed up the processing by using futures that are resolved in parallel either on the local machine or, as shown here, distributed on a compute cluster.
+
+```r
+library("pdftools")
+library("future.BatchJobs")
+library("listenv")
+
+## Process all PDFs on local TORQUE cluster
+plan(batchjobs_torque)
+
+## PDF documents to process
+pdfs <- dir(path = rev(.libPaths())[1], recursive = TRUE,
+            pattern = "[.]pdf$", full.names = TRUE)
+pdfs <- pdfs[basename(dirname(pdfs)) == "doc"]
+print(pdfs)
+
+## For each PDF ...
+docs <- listenv()
+for (ii in seq_along(pdfs)) {
+  pdf <- pdfs[ii]
+  message(sprintf("%d. Processing %s", ii, pdf))
+  name <- tools::file_path_sans_ext(basename(pdf))
+
+  docs[[name]] %<-% {
+    path <- file.path("output", name)
+    dir.create(path, recursive = TRUE, showWarnings = FALSE)
+    
+    ## (a) Extract the text and write to file
+    content <- pdf_text(pdf)
+    txt <- file.path(path, sprintf("%s.txt", name))
+    cat(content, file = txt)
+  
+    ## (b) Create a PNG file per page
+    pngs <- listenv()
+    for (jj in seq_along(content)) {
+      pngs[[jj]] %<-% {
+        img <- pdf_render_page(pdf, page = jj)
+        png <- file.path(path, sprintf("%s_p%03d.png", name, jj))
+        png::writePNG(img, png)
+        png
+      }
+    }
+
+    list(pdf = pdf, txt = txt, pngs = unlist(pngs))
+  }
+}
+
+## Resolve everything if not already done
+docs <- as.list(docs)
+
+str(docs)
+```
+As true for all code using the Future API, as a user you always have full control on how futures should be resolved.  For instance, you can choose to run the above on your local machine, still via the BatchJobs framework, by using `plan(batchjobs_local)`.  You could even skip the future.BatchJobs package and use what is available in the future package alone, e.g. `library("future")` and `plan(multisession)`.
+
+As emphasized in for instance the [Remote Processing Using Futures] blog post and in the vignettes of the [future] package, there is no need to manually identify and manually export variables and functions that need to be available to the external R processes resolving the futures.  Such global variables are automatically identified by the future package and exported when necessary.
+
+
+## Futures may be nested
+Note how we used nested futures in the above example, where we create one future per PDF and for each PDF we, in turn, create one future per PNG.  The design of the Future API is such that the user should have full control on how each level of futures is resolved.  In other words, it is the user and not the developer who should decide what is specified in `plan()`.
+
+For futures, if nothing is specified, then sequential processing is always used for resolving futures.  In the above example, we specified `plan(batchjobs_torque)`, which means that the outer loop of futures is processed as individual jobs on the cluster.  Each of these futures will be resolved in a separate R process.  Next, since we didn't specify how the inner loop of futures should be processed, these will be resolved sequentially as part of these individual R processes.
+
+However, we could also choose to have the futures in the inner loop be resolved as individual jobs on the scheduler, which can be done as:
+```r
+plan(list(batchjobs_torque, batchjobs_torque))
+```
+This would cause each PDF to be submitted as an individual job, which when launched on a compute node by scheduler will start by extract the plain text of the document and write it to file.  When this is done, the job continues by generating a PDF image file for each page, which is done via individual jobs on the scheduler.
+
+Exactly what strategies to use for resolving the different levels of futures depends on how long they take to process.  If the amount of processing needed for a future is really long, then it makes sense to submit it the scheduler whereas if it is really quick it probably makes more sense to process it on the current machine either using parallel futures or no futures at all.  For instance, in our example, we could also have chosen to generate the PNGs in parallel on the same compute node that extracted the text.  Such a configuration could look like:
+```r
+plan(list(
+  tweak(batchjobs_torque, resources = "nodes=1:ppn=12"),
+  multisession
+))
+```
+This setup tells the scheduler that each job should be allocated 12 cores that the individual R processes then may use in parallel.  The future package and the `multisession` configuration will automatically detect how many cores it was allocated by the scheduler.
+
+There are numerous other ways to control how and where futures are resolved.  See the vignettes of the [future] and the [future.BatchJobs] packages for more details.   Also, if you read the above and thought that this may result in an explosion of futures created recursively that will bring down your computer or your cluster, don't worry.  It's built into the core of future package to prevent this from happening.
+
+
+## What's next?
+The future.BatchJobs package simply implements the Future API (as defined by the future package) on top of the API provided by the awesome BatchJobs package.  The creators of that package are working on the next generation of their tool - the [batchtools] package.  I've already started on the corresponding future.batchtools package so that you and your users can switch over to using `plan(batchtools_torque)` - it'll be as simple as that.
+
+
+Happy futuring!
+
+
+UPDATE 2022-12-11: Update examples that used the deprecated `multiprocess` future backend alias to use the `multisession` backend.
+
+
+## Links
+* future package:
+  - CRAN page: https://cran.r-project.org/package=future
+  - GitHub page: https://github.com/HenrikBengtsson/future
+* future.BatchJobs package:
+  - CRAN page: https://cran.r-project.org/package=future.BatchJobs
+  - GitHub page: https://github.com/HenrikBengtsson/future.BatchJobs
+* doFuture package:
+  - CRAN page: https://cran.r-project.org/package=doFuture
+  - GitHub page: https://github.com/HenrikBengtsson/doFuture
+
+## See also
+* [A Future for R: Slides from useR 2016], 2016-07-02
+* [Remote Processing Using Futures], 2016-10-11
+
+Keywords: R, future, future.BatchJobs, BatchJobs, package, CRAN, asynchronous, parallel processing, distributed processing, high-performance compute, HPC, compute cluster, TORQUE, PBS, Slurm, SGE, LSF, OpenLava
+
+[BatchJobs]: https://cran.r-project.org/package=BatchJobs
+[batchtools]: https://github.com/mllg/batchtools
+[future]: https://cran.r-project.org/package=future
+[future.BatchJobs]: https://cran.r-project.org/package=future.BatchJobs
+[TORQUE (PBS)]: https://en.wikipedia.org/wiki/TORQUE
+[Slurm]: https://en.wikipedia.org/wiki/Slurm_Workload_Manager
+[Sun/Oracle Grid Engine (SGE)]: https://en.wikipedia.org/wiki/Oracle_Grid_Engine
+[Load Sharing Facility (LSF)]: https://en.wikipedia.org/wiki/Platform_LSF
+[OpenLava]: https://en.wikipedia.org/wiki/OpenLava
+[pdftools]: https://cran.r-project.org/package=pdftools
+[png]: https://cran.r-project.org/package=png
+[A Future for R: Slides from useR 2016]: /2016/07/a-future-for-r-slides-from-user-2016.html
+[Remote Processing Using Futures]: /2016/10/remote-processing-using-futures.html
