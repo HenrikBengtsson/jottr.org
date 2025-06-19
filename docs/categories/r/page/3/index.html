@@ -271,63 +271,6 @@ if (!doNotTrack) {
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://www.jottr.org/2018/06/23/future.apply_1.0.0/">
-          future.apply - Parallelize Any Base R Apply Function
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2018-06-23T00:00:00Z">
-        
-  June 23, 2018
-
-      </time>
-    
-    
-  
-  
-    <span>in</span>
-    
-      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
-    
-  
-
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        Got compute?
-future.apply 1.0.0 - Apply Function to Elements in Parallel using Futures - is on CRAN. With this milestone release, all* base R apply functions now have corresponding futurized implementations. This makes it easier than ever before to parallelize your existing apply(), lapply(), mapply(), &hellip; code - just prepend future_ to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using plan(multisession) it&rsquo;ll run in parallel.
-      
-      <p>
-        <a href="https://www.jottr.org/2018/06/23/future.apply_1.0.0/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-            
-              
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
         <a class="link-unstyled" href="https://www.jottr.org/2018/06/18/future-erum2018-slides/">
           Delayed Future(Slides from eRum 2018)
         </a>
@@ -1394,6 +1337,64 @@ Going from 5,000 to 6,000 packages took 355 days - which means that it on averag
       
       <p>
         <a href="https://www.jottr.org/2014/10/29/milestone-cran-6000/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2014/06/17/matrixna-wrong-way/">
+          Pitfall: Did You Really Mean to Use matrix(nrow, ncol)?
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2014-06-17T00:00:00Z">
+        
+  June 17, 2014
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+        Are you a good R citizen and preallocates your matrices? If you are allocating a numeric matrix in one of the following two ways, then you are doing it the wrong way!
+x &lt;- matrix(nrow = 500, ncol = 100) or
+x &lt;- matrix(NA, nrow = 500, ncol = 100) Why? Because it is counter productive. And why is that? In the above, x becomes a logical matrix, and not a numeric matrix as intended.
+      
+      <p>
+        <a href="https://www.jottr.org/2014/06/17/matrixna-wrong-way/" class="postShorten-excerpt_link link">Continue reading</a>
         
       </p>
     </div>

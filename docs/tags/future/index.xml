@@ -6,19 +6,7 @@
     <description>Recent content in future on JottR</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/future/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Futureverse - Ten Years Anniversary</title>
-      <link>https://www.jottr.org/2025/06/19/futureverse-10-years/</link>
-      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.jottr.org/2025/06/19/futureverse-10-years/</guid>
-      <description> The future package was first released on CRAN ten years ago today. Little did I know how big the uptake would be.
-aa
-ss
-Links parallelly package: CRAN, GitHub, pkgdown future package: CRAN, GitHub, pkgdown Futureverse: https://www.futureverse.org </description>
-    </item>
-    
+    <lastBuildDate>Mon, 22 May 2023 18:00:00 -0700</lastBuildDate><atom:link href="https://www.jottr.org/tags/future/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Edmonton R User Group Meetup: Futureverse - A Unifying Parallelization Framework in R for Everyone</title>
       <link>https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/</link>

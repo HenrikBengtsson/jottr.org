@@ -5,35 +5,10 @@
     <description>Recent content in R on JottR</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate>
     
         <atom:link href="https://www.jottr.org/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Futureverse - Ten Years Anniversary</title>
-      <link>https://www.jottr.org/2025/06/19/futureverse-10-years/</link>
-      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.jottr.org/2025/06/19/futureverse-10-years/</guid>
-      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
- &lt;center&gt;
-   &lt;img src=&#34;https://www.jottr.org/post/future-logo-balloons.png&#34; alt=&#34;The &#39;future&#39; hexlogo balloon wall&#34;/&gt;
- &lt;/center&gt;
-&lt;/div&gt;
-&lt;p&gt;The &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; package was first released on CRAN ten years ago
-today. Little did I know how big the uptake would be.&lt;/p&gt;
-&lt;p&gt;aa&lt;/p&gt;
-&lt;img src=&#34;https://www.jottr.org/post/future-logo-balloons.png&#34; alt=&#34;The future hexlogo balloon wall&#34;/&gt;
-&lt;p&gt;ss&lt;/p&gt;
-&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;parallelly&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=parallelly&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/parallelly&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;future&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/future&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://future.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Futureverse&lt;/strong&gt;: &lt;a href=&#34;https://www.futureverse.org&#34;&gt;https://www.futureverse.org&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
     
     <item>
       <title>parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely</title>

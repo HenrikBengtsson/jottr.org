@@ -3,51 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.jottr.org/categories/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://www.jottr.org/tags/compute-clusters/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/tags/future/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/tags/futureverse/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/2025/06/19/futureverse-10-years/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://www.jottr.org/tags/hpc/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://www.jottr.org/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/tags/parallel/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/tags/parallel-processing/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/tags/parallelly/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/post/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/tags/r/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/categories/r/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jottr.org/tags/</loc>
-    <lastmod>2025-06-19T00:00:00+00:00</lastmod>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://www.jottr.org/tags/package/</loc>
     <lastmod>2023-07-01T18:00:00+02:00</lastmod>
   </url><url>
+    <loc>https://www.jottr.org/tags/parallel/</loc>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.jottr.org/tags/parallel-processing/</loc>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.jottr.org/tags/parallelly/</loc>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
+  </url><url>
     <loc>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</loc>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.jottr.org/post/</loc>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.jottr.org/tags/r/</loc>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.jottr.org/categories/r/</loc>
+    <lastmod>2023-07-01T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.jottr.org/tags/</loc>
     <lastmod>2023-07-01T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://www.jottr.org/2023/06/26/dofuture/</loc>
@@ -69,6 +60,9 @@
     <lastmod>2023-05-22T18:00:00-07:00</lastmod>
   </url><url>
     <loc>https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/</loc>
+    <lastmod>2023-05-22T18:00:00-07:00</lastmod>
+  </url><url>
+    <loc>https://www.jottr.org/tags/future/</loc>
     <lastmod>2023-05-22T18:00:00-07:00</lastmod>
   </url><url>
     <loc>https://www.jottr.org/tags/presentation/</loc>
