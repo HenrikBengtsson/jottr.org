@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Henrik Bengtsson">
+<meta name="dcterms.date" content="2022-12-06">
+
+<title>Please Avoid detectCores() in your R Packages – JottR</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ef56b68f8fa1e9d2ba328e99e439f80.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-f24d578da0cfce9e4db84296152f6ef4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-ca404243ea749ede64fd415d859f8b38.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-f24d578da0cfce9e4db84296152f6ef4.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/bootstrap-icons-1.13.1/bootstrap-icons.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeDefault = queryPrefersDark.matches;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    queryPrefersDark.addEventListener("change", e => {
+      if(window.localStorage.getItem("quarto-color-scheme") !== null)
+        return;
+      const alternate = e.matches
+      toggleColorMode(alternate);
+      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
+      toggleGiscusIfUsed(alternate, darkModeDefault);
+    });
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">JottR</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/HenrikBengtsson"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://mastodon.social/@henrikbengtsson"> <i class="bi bi-mastodon" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://bsky.app/profile/henrikbengtsson.bsky.social"> 
+<span class="menu-text"><i class="bi-bluesky " style="" role="img" aria-hidden="true"></i></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://x.com/henrikbengtsson"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Please Avoid detectCores() in your R Packages</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">package</div>
+                <div class="quarto-category">parallel</div>
+                <div class="quarto-category">parallelly</div>
+                <div class="quarto-category">detectCores</div>
+                <div class="quarto-category">availableCores</div>
+                <div class="quarto-category">parallel processing</div>
+                <div class="quarto-category">compute clusters</div>
+                <div class="quarto-category">HPC</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Henrik Bengtsson </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 6, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<p>The <code>detectCores()</code> function of the <strong>parallel</strong> package is probably one of the most used functions when it comes to setting the number of parallel workers to use in R. In this blog post, I’ll try to explain why using it is not always a good idea. Already now, I am going to make a bold request and ask you to:</p>
+<blockquote class="blockquote">
+<p>Please <em>avoid</em> using <code>parallel::detectCores()</code> in your package!</p>
+</blockquote>
+<p>By reading this blog post, I hope you become more aware of the different problems that arise from using <code>detectCores()</code> and how they might affect you and the users of your code.</p>
+<figure style="margin-top: 3ex;" class="figure">
+<p><img src="resources/detectCores_bad_vs_good.png" alt="Screenshots of two terminal-based, colored graphs each showing near 100% load on all 24 CPU cores. The load bars to the left are mostly red, whereas the ones to the right are most green. There is a shrug emoji, with the text 'do you want this?' pointing to the left and the text 'or that?' pointing to the right, located inbetween the two graphs." style="width: 100%; margin: 0; margin-bottom: 2ex;" class="figure-img"></p>
+<figcaption style="font-style: italic">
+<p>Figure&nbsp;1: Using <code>detectCores()</code> risks overloading the machine where R runs, even more so if there are other things already running. The machine seen at the left is heavily loaded, because too many parallel processes compete for the 24 CPU cores available, which results in an extensive amount of kernel context switching (red), which wastes precious CPU cycles. The machine to the right is near-perfectly loaded at 100%, where none of the processes use more than they may use (mostly green).</p>
+</figcaption>
+</figure>
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>If you don’t have time to read everything, but will take my word that we should avoid <code>detectCores()</code>, then the quick summary is that you basically have two choices for the number of parallel workers to use by default;</p>
+<ol type="1">
+<li><p>Have your code run with a single core by default (i.e.&nbsp;sequentially), or</p></li>
+<li><p>replace all <code>parallel::detectCores()</code> with <a href="https://parallelly.futureverse.org/reference/availableCores.html"><code>parallelly::availableCores()</code></a>.</p></li>
+</ol>
+<p>I’m in the conservative camp and recommend the first alternative. Using sequential processing by default, where the user has to make an explicit choice to run in parallel, significantly lowers the risk for clogging up the CPUs (left panel in Figure&nbsp;1), especially when there are other things running on the same machine.</p>
+<p>The second alternative is useful if you’re not ready to make the move to run sequentially by default. The <code>availableCores()</code> function of the <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> package is fully backward compatible with <code>detectCores()</code>, while it avoids the most common problems that comes with <code>detectCores()</code>, plus it is agile to a lot more CPU-related settings, including settings that the end-user, the systems administrator, job schedulers and Linux containers control. It is designed to take care of common overuse issues so that you do not have to spend time worry about them.</p>
+</section>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>There are several problems with using <code>detectCores()</code> from the <strong>parallel</strong> package for deciding how many parallel workers to use. But before we get there, I want you to know that we find this function commonly used in R script and R packages, and frequently suggested in tutorials. So, do not feel ashamed if you use it.</p>
+<p>If we scan the code of the R packages on CRAN (e.g.&nbsp;by <a href="https://github.com/search?q=org%3Acran+language%3Ar+%22detectCores%28%29%22&amp;type=code">searching GitHub</a><sup>1</sup>), or on Bioconductor (e.g.&nbsp;by <a href="https://code.bioconductor.org/search/search?q=detectCores%28%29)">searching Bioc::CodeSearch</a>) we find many cases where <code>detectCores()</code> is used. Here are some variants we see in the wild:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>())</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(<span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">mclapply</span>(..., <span class="at">mc.cores =</span> <span class="fu">detectCores</span>())</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">registerDoParallel</span>(<span class="fu">detectCores</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We also find functions that let the user choose the number of workers via some argument, which defaults to <code>detectCores()</code>. Sometimes the default is explicit, as in:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fast_fcn <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">ncores =</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>()) {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ncores <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and sometimes it’s implicit, as in:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fast_fcn <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">ncores =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.null</span>(ncores)) </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    ncores <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (ncores <span class="sc">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(ncores)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    ...</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>As we will see next, all the above examples are potentially buggy and might result in run-time errors.</p>
+</section>
+<section id="common-mistakes-when-using-detectcores" class="level2">
+<h2 class="anchored" data-anchor-id="common-mistakes-when-using-detectcores">Common mistakes when using detectCores()</h2>
+<section id="issue-1-detectcores-may-return-a-missing-value" class="level3">
+<h3 class="anchored" data-anchor-id="issue-1-detectcores-may-return-a-missing-value">Issue 1: detectCores() may return a missing value</h3>
+<p>A small, but important detail about <code>detectCores()</code> that is often missed is the following section in <code>help("detectCores", package = "parallel")</code>:</p>
+<blockquote class="blockquote">
+<p><strong>Value</strong></p>
+<p>An integer, <strong>NA if the answer is unknown</strong>.</p>
+</blockquote>
+<p>Because of this, we cannot rely on:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>to always work, i.e.&nbsp;we might end up with errors like:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>workers <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">makeCluster</span>(ncores)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">makePSOCKcluster</span>(<span class="at">names =</span> spec, ...) <span class="sc">:</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  numeric <span class="st">'names'</span> must be <span class="sc">&gt;=</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We need to account for this, especially as package developers. One way to handle it is simply by using:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">is.na</span>(ncores)) ncores <span class="ot">&lt;-</span> <span class="dv">1</span>L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or, by using the following shorter, but also harder to understand, one-liner:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">1</span>L, <span class="fu">detectCores</span>(), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This construct is guaranteed to always return at least one core.</p>
+<p><em>Shameless advertisement for the <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> package</em>: In contrast to <code>detectCores()</code>, <code>parallelly::availableCores()</code> handles the above case automatically, and it guarantees to always return at least one core.</p>
+</section>
+<section id="issue-2-detectcores-may-return-one" class="level3">
+<h3 class="anchored" data-anchor-id="issue-2-detectcores-may-return-one">Issue 2: detectCores() may return one</h3>
+<p>Although it’s rare to run into hardware with single-core CPUs these days, you might run into a virtual machine (VM) configured to have a single core. Because of this, you cannot reliably use:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">2</span>L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>in your code. If you use these constructs, a user of your code might end up with zero or a negative number of cores here, which another way we can end up with an error downstream. A real-world example of this problem can be found in continous integration (CI) services, e.g.&nbsp;<code>detectCores()</code> returns 2 in GitHub Actions jobs. So, we need to account also for this case, which we can do by using the above <code>max()</code> solution, e.g.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">1</span>L, <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">2</span>L, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is guaranteed to always return at least one.</p>
+<p><em>Shameless advertisement for the <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> package</em>: In contrast, <code>parallelly::availableCores()</code> handles this case via argument <code>omit</code>, which makes it easier to understand the code, e.g.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">availableCores</span>(<span class="at">omit =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This construct is guaranteed to return at least one core, e.g.&nbsp;if there are one, two, or three CPU cores on this machine, <code>ncores</code> will be one in all three cases.</p>
+</section>
+<section id="issue-3-detectcores-may-return-too-many-cores" class="level3">
+<h3 class="anchored" data-anchor-id="issue-3-detectcores-may-return-too-many-cores">Issue 3: detectCores() may return too many cores</h3>
+<p>When we use PSOCK, SOCK, or MPI clusters as defined by the <strong>parallel</strong> package, the communication between the main R session and the parallel workers is done via R socket connection. Low-level functions <code>parallel::makeCluster()</code>, <code>parallelly::makeClusterPSOCK()</code>, and legacy <code>snow::makeCluster()</code> create these types of clusters. In turn, there are higher-level functions that rely on these low-level functions, e.g.&nbsp;<code>doParallel::registerDoParallel()</code> uses <code>parallel::makeCluster()</code> if you are on MS Windows, <code>BiocParallel::SnowParam()</code> uses <code>snow::makeCluster()</code>, and <code>plan(multisession)</code> and <code>plan(cluster)</code> of the <strong><a href="https://future.futureverse.org">future</a></strong> package uses <code>parallelly::makeClusterPSOCK()</code>.</p>
+<p>R has a limit in the number of connections it can have open at any time. As of R 4.2.2, <a href="https://github.com/HenrikBengtsson/Wishlist-for-R/issues/28">the limit is 125 open connections</a>. Because of this, we can use at most 125 parallel PSOCK, SOCK, or MPI workers. In practice, this limit is lower, because some connections may already be in use elsewhere. To find the current number of free connections, we can use <a href="https://parallelly.futureverse.org/reference/availableConnections.html"><code>parallelly::freeConnections()</code></a>. If we try to launch a cluster with too many workers, there will not be enough connections available for the communication and the setup of the cluster will fail. For example, a user running on a 192-core machine will get errors such as:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cl <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">makeCluster</span>(<span class="fu">detectCores</span>())</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>Error <span class="cf">in</span> <span class="fu">socketAccept</span>(<span class="at">socket =</span> socket, <span class="at">blocking =</span> <span class="cn">TRUE</span>, <span class="at">open =</span> <span class="st">"a+b"</span>,  <span class="sc">:</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  all connections are <span class="cf">in</span> use</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>and</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> cl <span class="ot">&lt;-</span> parallelly<span class="sc">::</span><span class="fu">makeClusterPSOCK</span>(<span class="fu">detectCores</span>())</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Error<span class="sc">:</span> Cannot create <span class="dv">192</span> parallel PSOCK nodes. Each node needs</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>one connection, but there are only <span class="dv">124</span> connections left out of</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>the maximum <span class="dv">128</span> available on this R installation</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Thus, if we use <code>detectCores()</code>, our R code will not work on larger, modern machines. This is a problem that will become more and more common as more users get access to more powerful computers. Hopefully, R will increase this connection limit in a future release, but until then, you as the developer are responsible to handle also this case. To make your code agile to this limit, also if R increases it, you can use:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="dv">1</span>L, <span class="fu">detectCores</span>(), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">min</span>(parallelly<span class="sc">::</span><span class="fu">freeConnections</span>(), ncores)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is guaranteed to return at least zero (sic!) and never more than what is required to create a PSOCK, SOCK, and MPI cluster with than many parallel workers.</p>
+<p><em>Shameless advertisement for the <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> package</em>: In the upcoming <strong>parallelly</strong> 1.33.0 version, you can use <code>parallelly::availableCores(constraints = "connections")</code> to limit the result to the current number of available R connections. In addition, you can control the maximum number of cores that <code>availableCores()</code> returns by setting R option <code>parallelly.availableCores.system</code>, or environment variable <code>R_PARALLELLY_AVAILABLECORES_SYSTEM</code>, e.g.&nbsp;<code>R_PARALLELLY_AVAILABLECORES_SYSTEM=120</code>.</p>
+</section>
+</section>
+<section id="issue-4-detectcores-does-not-give-the-number-of-allowed-cores" class="level2">
+<h2 class="anchored" data-anchor-id="issue-4-detectcores-does-not-give-the-number-of-allowed-cores">Issue 4: detectCores() does not give the number of “allowed” cores</h2>
+<p>There’s a note in <code>help("detectCores", package = "parallel")</code> that touches on the above problems, but also on other important limitations that we should know of:</p>
+<blockquote class="blockquote">
+<p><strong>Note</strong></p>
+<p>This [= <code>detectCores()</code>] is not suitable for use directly for the <code>mc.cores</code> argument of <code>mclapply</code> nor specifying the number of cores in <code>makeCluster</code>. First because it may return <code>NA</code>, second because it does not give the number of <em>allowed</em> cores, and third because on Sparc Solaris and some Windows boxes it is not reasonable to try to use all the logical CPUs at once.</p>
+</blockquote>
+<p><strong>When is this relevant? The answer is: Always!</strong> This is because as package developers, we cannot really know when this occurs, because we never know on what type of hardware and system our code will run. So, we have to account for these unknowns too.</p>
+<p>Let’s look at some real-world case where using <code>detectCores()</code> can become a real issue.</p>
+<section id="a.-a-personal-computer" class="level3">
+<h3 class="anchored" data-anchor-id="a.-a-personal-computer">4a. A personal computer</h3>
+<p>A user might want to run other software tools at the same time while running the R analysis. A very common pattern we find in R code is to save one core for other purposes, say, browsing the web, e.g.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ncores <span class="ot">&lt;-</span> <span class="fu">detectCores</span>() <span class="sc">-</span> <span class="dv">1</span>L</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is a good start. It is the first step toward your software tool acknowledging that there might be other things running on the same machine. However, contrary to end-users, we as package developers cannot know how many cores the user needs, or wishes, to set aside. Because of this, it is better to let the user make this decision.</p>
+<p>A related scenario is when the user wants to run two concurrent R sessions on the same machine, both using your code. If your code assumes it can use all cores on the machine (i.e.&nbsp;<code>detectCores()</code> cores), the user will end up running the machine at 200% of its capacity. Whenever we use over 100% of the available CPU resources, we get penalized and waste our computational cycles on overhead from context switching, sub-optimal memory access, and more. This is where we end up with the situation illustrated in the left part of Figure&nbsp;1.</p>
+<p>Note also that users might not know that they use an R function that runs on all cores by default. They might not even be aware that this is a problem. Now, imagine if the user runs three or four such R sessions, resulting in a 300-400% CPU load. This is when things start to run slowly. The computer will be sluggish, maybe unresponsive, and mostly likely going to get very hot (“we’re frying the computer”). By the time the four concurrent R processes complete, the user might have been able to finish six to eight similar processes if they would not have been fighting each other for the limited CPU resources.</p>
+<!--
+If this happens on a shared system, the user might get an email from
+the systems adminstrator asking you why they are "trying to fry the
+computer".  The user gets blamed for something that is our fault - it
+is us that decided to run on `detectCores()` CPU cores by default.
+
+This leads us to another scenario where a user might run into a case
+where the CPUs are overwhelmed because a software tool assumes it has
+exclusive right to all cores.  
+-->
+</section>
+<section id="b.-a-shared-computer" class="level3">
+<h3 class="anchored" data-anchor-id="b.-a-shared-computer">4b. A shared computer</h3>
+<p>In the academia and the industry, it is common that several users share the same compute server or set of compute nodes. It might be as simple as they SSH into a shared machine with many cores and large amounts of memory to run their analysis there. On such setups, load balancing between users is often based on an honor system, where each user checks how many resources are available before launching an analysis. This helps to make sure they don’t end up using too many cores, or too much memory, slowing down the computer for everyone else.</p>
+<div style="width: 38%; float: right;">
+<figure style="margin-left: 2ex; margin-top: 1ex;" class="figure">
+<img src="resources/detectCores_bad.png" alt="The left-handside graph of Figure 1, which shows mostly red bars at near 100% load for 24 CPU cores." style="width: 100%; margin: 0; margin-bottom: 2ex;" class="figure-img">
+<figcaption>
+Figure 2: Overusing the CPU cores brings everything to a halt.
+</figcaption>
+</figure>
+</div>
+<p>Now, imagine they run a software tool that uses all CPU cores by default. In that case, there is a significant risk they will step on the other users’ processes, slowing everything down for everyone, especially if there is already a big load on the machine. From my experience in academia, this happens frequently. The user causing the problem is often not aware, because they just launch the problematic software with the default settings, leave it running, with a plan to coming back to it a few hours or a few days later. In the meantime, other users might wonder why their command-line prompts become sluggish or even non-responsive, and their analyses suddenly take forever to complete. Eventually, someone or something alerts the systems administrators to the problem, who end up having to drop everything else and start troubleshooting. This often results in them terminating the wild-running processes and reaching out to the user who runs the problematic software, which leads to a large amount of time and resources being wasted among users and administrators. All this is only because we designed our R package to use all cores by default. This is not a made-up toy story; it is a very likely scenario that happens on shared servers if you make <code>detectCores()</code> the default in your R code.</p>
+<p><em>Shameless advertisement for the <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> package</em>: In contrast to <code>detectCores()</code>, if you use <code>parallelly::availableCores()</code> the user, or the systems administrator, can limit the default number of CPU cores returned by setting environment variable <code>R_PARALLELLY_AVAILABLECORES_FALLBACK</code>. For instance, by setting it to <code>R_PARALLELLY_AVAILABLECORES_FALLBACK=2</code> centrally, <code>availableCores()</code> will, unless there are other settings that allow the process to use more, return two cores regardless how many CPU cores the machine has. This will lower the damage any single process can inflict on the system. It will take many such processes running at the same time in order for them to have an overall a negative impact. The risk for that to happen by mistake is much lower than when using <code>detectCores()</code> by default.</p>
+</section>
+<section id="c.-a-shared-compute-cluster-with-many-machines" class="level3">
+<h3 class="anchored" data-anchor-id="c.-a-shared-compute-cluster-with-many-machines">4c. A shared compute cluster with many machines</h3>
+<p>Other, larger compute systems, often referred to as high-performance compute (HPC) cluster, have a job scheduler for running scripts in batches distributed across multiple machines. When users submit their scripts to the scheduler’s job queue, they request how many cores and how much memory each job requires. For example, a user on a Slurm cluster can request that their <code>run_my_rscript.sh</code> script gets to run with 48 CPU cores and 256 GiB of RAM by submitting it to the scheduler as:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sbatch</span> <span class="at">--cpus-per-task</span><span class="op">=</span>48 <span class="at">--mem</span><span class="op">=</span>256G run_my_rscript.sh</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The scheduler keeps track of all running and queued jobs, and when enough compute slots are freed up, it will launch the next job in the queue, giving it the compute resources it requested. This is a very convenient and efficient way to batch process a large amount of analyses coming from many users.</p>
+<p>However, just like with a shared server, it is important that the software tools running this way respect the compute resources that the job scheduler allotted to the job. The <code>detectCores()</code> function does <em>not</em> know about job schedulers - all it does is return the number of CPU cores on the current machine regardless of how many cores the job has been allotted by the scheduler. So, if your R package uses <code>detectCores()</code> cores by default, then it will overuse the CPUs and slow things down for everyone running on the same compute node. Again, when this happens, it often slows everything done and triggers lots of wasted user and admin efforts spent on troubleshooting and communication back and forth.</p>
+<p><em>Shameless advertisement for the <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> package</em>: In contrast, <code>parallelly::availableCores()</code> respects the number of CPU slots that the job scheduler has given to the job. It recognizes environment variables set by our most common HPC schedulers, including Fujitsu Technical Computing Suite (PJM), Grid Engine (SGE), Load Sharing Facility (LSF), PBS/Torque, and Simple Linux Utility for Resource Management (Slurm).</p>
+</section>
+<section id="d.-running-r-via-cgroups-on-in-a-linux-container" class="level3">
+<h3 class="anchored" data-anchor-id="d.-running-r-via-cgroups-on-in-a-linux-container">4d. Running R via CGroups on in a Linux container</h3>
+<p>This far, we have been concerned about the overuse of the CPU cores affecting other processes and other users running on the same machine. Some systems are configured to protect against misbehaving software from affecting other users. In Linux, this can be done with so-called control groups (“cgroups”), where a process gets allotted a certain amount of CPU cores. If the process uses too many parallel workers, they cannot break out from the sandbox set up by cgroups. From the outside, it will look like the process uses its maximum amount of allocated CPU cores. Some HPC job schedulers have this feature enabled, but not all of them. You find the same feature for Linux containers, e.g.&nbsp;we can limit the number of CPU cores, or throttle the CPU load, using command-line options when you launch a Docker container, e.g.&nbsp;<code>docker run --cpuset-cpus=0-2,8 …</code> or <code>docker run --cpu=3.4 …</code>.</p>
+<p>So, if you are a user on a system where compute resources are compartmentalized this way, you run a much lower risk for wreaking havoc on a shared system. That is good news, but if you run too many parallel workers, that is, try to use more cores than available to you, then you will clog up your own analysis. The behavior would be the same as if you request 96 parallel workers on your local eight-core notebook (the scenario in the left panel of Figure&nbsp;1), with the exception that you will not overheat the computer.</p>
+<p>The problem with <code>detectCores()</code> is that it returns the number of CPU cores on the hardware, regardless of the cgroups settings. So, if your R process is limited to eight cores by cgroups, and you use <code>ncores = detectCores()</code> on a 96-core machine, you will end up running 96 parallel workers fighting for the resources on eight cores. A real-world example of this happens for those of you who have a free account on RStudio Cloud. In that case, you are given only a single CPU core to run your R code on, but the underlying machine typically has 16 cores. If you use <code>detectCores()</code> there, you will end up creating 16 parallel workers, running on the same CPU core, which is a very ineffecient way to run the code.</p>
+<p><em>Shameless advertisement for the <strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> package</em>: In contrast to <code>detectCores()</code>, <code>parallelly::availableCores()</code> respects cgroups, and will return eight cores instead of 96 in the above example, and a single core on a free RStudio Cloud account.</p>
+</section>
+</section>
+<section id="my-opinionated-recommendation" class="level2">
+<h2 class="anchored" data-anchor-id="my-opinionated-recommendation">My opinionated recommendation</h2>
+<div style="width: 38%; float: right;">
+<figure style="margin-left: 2ex; margin-top: 1ex;" class="figure">
+<img src="resources/detectCores_good.png" alt="The right-handside graph of Figure 1, which shows mostly green bars at near 100% load for 24 CPU cores." style="width: 100%; margin: 0; margin-bottom: 2ex;" class="figure-img">
+<figcaption>
+Figure 3: If we avoid overusing the CPU cores, then everything will run much smoother and much faster.
+</figcaption>
+</figure>
+</div>
+<p>As developers, I think we should at least be aware of these problems, and acknowledge that they exist and they are indeed real problem that people run into “out there”. We should also accept that we cannot predict on what type of compute environment our R code will run on. Unfortunately, I don’t have a magic solution that addresses all the problems reported here. That said, I think the best we can do is to be conservative and don’t make hard-coded decisions on parallelization in our R packages and R scripts.</p>
+<p>Because of this, I argue that <strong>the safest is to design your R package to run sequentially by default (e.g.&nbsp;<code>ncores = 1L</code>), and leave it to the user to decide on the number of parallel workers to use.</strong></p>
+<p>The <strong>second-best alternative</strong> that I can come up with, is to replace <code>detectCores()</code> with <code>availableCores()</code>, e.g.&nbsp;<code>ncores = parallelly::availableCores()</code>. It is designed to respect common system and R settings that control the number of allowed CPU cores. It also respects R options and environment variables commonly used to limit CPU usage, including those set by our most common HPC job schedulers. In addition, it is possible to control the <em>fallback</em> behavior so that it uses only a few cores when nothing else being set. For example, if the environment variable <code>R_PARALLELLY_AVAILABLECORES_FALLBACK</code> is set to <code>2</code>, then <code>availableCores()</code> returns two cores by default, unless other settings allowing more are available. A conservative systems administrator may want to set <code>export R_PARALLELLY_AVAILABLECORES_FALLBACK=1</code> in <code>/etc/profile.d/single-core-by-default.sh</code>. To see other benefits from using <code>availableCores()</code>, see <a href="https://parallelly.futureverse.org" class="uri">https://parallelly.futureverse.org</a>.</p>
+<p>Believe it or not, there’s actually more to be said on this topic, but I think this is already more than a mouthful, so I will save that for another blog post. If you made it this far, I applaud you and I thank you for your interest. If you agree, or disagree, or have additional thoughts around this, please feel free to reach out on the <a href="https://github.com/HenrikBengtsson/future/discussions/">Future Discussions Forum</a>.</p>
+<p>Over and out,</p>
+<p>Henrik</p>
+<p><small><sup>1</sup> Searching code on GitHub, requires you to log in to GitHub.</small></p>
+<p>UPDATE 2022-12-06: <a href="https://github.com/HenrikBengtsson/future/discussions/656">Alex Chubaty pointed out another problem</a>, where <code>detectCores()</code> can be too large on modern machines, e.g.&nbsp;machines with 128 or 192 CPU cores. I’ve added Section ‘Issue 3: detectCores() may return too many cores’ explaining and addressing this problem.</p>
+<p>UPDATE 2022-12-11: Mention upcoming <code>parallelly::availableCores(constraints = "connections")</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/www\.jottr\.org\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
