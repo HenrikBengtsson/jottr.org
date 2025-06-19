@@ -28,6 +28,11 @@ canonifyurls = true
 ## Recommended by blogdown:
 ignoreFiles = ["_cache$", "\\.Rmd$", "\\.Rmarkdown$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
 [permalinks]
   post = "/:year/:month/:day/:slug/"
 
