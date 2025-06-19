@@ -17,6 +17,7 @@
 # * https://github.com/yixuan/hugo-blog-en
 ## baseURL = "/"
 baseURL = "https://www.jottr.org/"
+publishDir = "docs"
 languageCode = "en-us"
 defaultContentLanguage = "en-us"
 title = "JottR"
