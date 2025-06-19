@@ -7,7 +7,6 @@ aliases:
  - /2023/06/26/dofuture/
 categories:
  - R
- - R
  - package
  - parallel
  - foreach
