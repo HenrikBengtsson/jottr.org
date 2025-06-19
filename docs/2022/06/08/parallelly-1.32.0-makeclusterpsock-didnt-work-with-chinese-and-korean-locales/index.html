@@ -317,11 +317,15 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <!-- raw HTML omitted -->
+              <div style="padding: 2ex; float: right;"/>
+ <center>
+   <img src="https://www.jottr.org/post/parallelly-logo.png" alt="The 'parallelly' hexlogo"/>
+ </center>
+</div>
 <p><strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> 1.32.0 is on CRAN.  This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused <code>makeClusterPSOCK()</code>, and therefore also <code>future::plan(&quot;multisession&quot;)</code>, to fail with an error.  For other updates, please see <a href="https://parallelly.futureverse.org/news/index.html">NEWS</a>.</p>
 <p>The <strong>parallelly</strong> package enhances the <strong>parallel</strong> package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, <strong>parallelly</strong> provides the things that you would otherwise expect to find in the <strong>parallel</strong> package.  The <strong><a href="https://future.futureverse.org">future</a></strong> package relies on the <strong>parallelly</strong> package internally for local and remote parallelization.</p>
 <h2 id="important-bug-fix-for-chinese-and-korean-users">Important bug fix for Chinese and Korean users</h2>
-<p>It turns out that <a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html"><code>makeClusterPSOCK()</code></a> has never<!-- raw HTML omitted -->[1]<!-- raw HTML omitted --> worked for users that have their computers set to use a Korean (<code>LANGUAGE=ko</code>), a Simplified Chinese (<code>LANGUAGE=zh_CN</code>), or a Traditional Chinese (Taiwan) (<code>LANGUAGE=zh_TW</code>) locale.  For example,</p>
+<p>It turns out that <a href="https://parallelly.futureverse.org/reference/makeClusterPSOCK.html"><code>makeClusterPSOCK()</code></a> has never<sup>[1]</sup> worked for users that have their computers set to use a Korean (<code>LANGUAGE=ko</code>), a Simplified Chinese (<code>LANGUAGE=zh_CN</code>), or a Traditional Chinese (Taiwan) (<code>LANGUAGE=zh_TW</code>) locale.  For example,</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">Sys.setLanguage</span>(<span style="color:#e6db74">&#34;zh_CN&#34;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallelly)
 </span></span><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> parallelly<span style="color:#f92672">::</span><span style="color:#a6e22e">makeClusterPSOCK</span>(<span style="color:#ae81ff">2</span>)
@@ -339,8 +343,9 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; 추가정보: 경고메시지(들): </span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">#&gt; add_cluster_session_info(cl[ii])에서: 강제형변환에 의해 생성된 NA 입니다</span>
 </span></span></code></pre></div><p>So, if you run into these errors, upgrade to the latest version of <strong>parallelly</strong>, e.g. <code>update.packages()</code>, restart R, and it will work as you would expect.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--
+Source: https://chinesefor.us/lessons/say-sorry-chinese-apologize-duibuqi/ and https://www.wikihow.com/Apologize-in-Korean
+-->
 <p>To prevent this from happening again, I am now making sure to always check the package with also these locales, in addition to English.  CRAN already checks packages <a href="https://cran.r-project.org/web/checks/check_flavors.html">with different English and German locales</a>.</p>
 <p>I am sorry, 对不起, 미안해요, about this.  Hopefully, it&rsquo;ll work smoother from now on.</p>
 <p>Happy parallelization!</p>
@@ -349,7 +354,7 @@ if (!doNotTrack) {
 <li><strong>parallelly</strong> package: <a href="https://cran.r-project.org/package=parallelly">CRAN</a>, <a href="https://github.com/HenrikBengtsson/parallelly">GitHub</a>, <a href="https://parallelly.futureverse.org">pkgdown</a></li>
 <li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a>, <a href="https://future.futureverse.org">pkgdown</a></li>
 </ul>
-<p><!-- raw HTML omitted -->[1]<!-- raw HTML omitted --> The last time it worked was with <strong>future</strong> 1.4.0 (2017-03-13), when this function was still part of the <strong>future</strong> package.</p>
+<p><sup>[1]</sup> The last time it worked was with <strong>future</strong> 1.4.0 (2017-03-13), when this function was still part of the <strong>future</strong> package.</p>
 
               
             </div>

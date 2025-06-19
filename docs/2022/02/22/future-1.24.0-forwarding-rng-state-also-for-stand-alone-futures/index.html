@@ -8,26 +8,18 @@
 <meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
 <meta name="author" content="Henrik Bengtsson">
 <meta name="keywords" content="">
-<meta name="description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
-int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
-future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
+<meta name="description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.">
 
 
-<meta property="og:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
-int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
-future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
+<meta property="og:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="future 1.24.0: Forwarding RNG State also for Stand-Alone Futures">
 <meta name="twitter:title" content="future 1.24.0: Forwarding RNG State also for Stand-Alone Futures">
 <meta property="og:url" content="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/">
 <meta property="twitter:url" content="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/">
 <meta property="og:site_name" content="JottR">
-<meta property="og:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
-int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
-future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
-<meta name="twitter:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
-int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
-future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).">
+<meta property="og:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.">
+<meta name="twitter:description" content="future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.">
 <meta property="og:locale" content="en-us">
 
   
@@ -316,14 +308,19 @@ if (!doNotTrack) {
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p><strong><a href="https://future.futureverse.org">future</a></strong> 1.24.0 is on CRAN.  It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to <code>plan()</code> and <code>tweaks()</code>, and some bug fixes.  Below are the most important changes.</p>
-<!-- raw HTML omitted -->
+<figure style="padding: 2ex; float: right;"/>
+<center>
+  <img src="https://www.jottr.org/post/xkcd_221-random_number.png" alt="A one-box XKCD comic with the following handwritten code:
 <p>int getRandomNumber()
 {
 return 4;  // chosen by fair dice roll.
 // guaranteed to be random.
 }
 &ldquo;/&gt;</p>
-<!-- raw HTML omitted -->
+ </center>
+ <figcaption style="font-size: small; font-style: italic;">One of many possible random number generators. This one was carefully designed by <a href="https://xkcd.com/221/">XKCD</a> [CC BY-NC 2.5].
+ </figcaption>
+</figure>
 <h2 id="future-seed--true-updates-rng-state">future(&hellip;, seed = TRUE) updates RNG state</h2>
 <p>In <strong>future</strong> (&lt; 1.24.0), using <a href="https://future.futureverse.org/reference/future.html"><code>future(..., seed = TRUE)</code></a> would <em>not</em> forward the state of the random number generator (RNG).  For example, if we generated random numbers in individual futures this way, they would become <em>identical</em>, e.g.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>f <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future</span>(<span style="color:#a6e22e">rnorm</span>(n <span style="color:#f92672">=</span> <span style="color:#ae81ff">1L</span>), seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)

@@ -361,14 +361,10 @@ Links YEGRUG: https://yegrug.github.io/ Futureverse website: https://www.futurev
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+        Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
 Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.
       
       <p>
         <a href="https://www.jottr.org/2022/06/23/future-user2022-slides/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -424,9 +420,8 @@ Abstract:
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+        !["Short-loop artsy animation: Flying through colorful, sparkling lights positioned in circles with star-like lights on a black background in the distance"](/post/sparkles-through-space.gif) future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
 Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &ldquo;tee&rdquo;, any output produced by futures.
-The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.
       
       <p>
         <a href="https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -482,8 +477,9 @@ The default is split = FALSE for which standard output and conditions are captur
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package
+        parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency.
       
       <p>
         <a href="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -595,7 +591,7 @@ The functions in the parallelly package used to be part of the future package
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.
+        !["Animation of green Japanese Kana symbols raining down in parallel on a black background inspired by The Matrix movie"](/post/Digital_rain_animation_medium_letters_clear.gif) Parallel 'Digital Rain' by [Jahobr](https://commons.wikimedia.org/w/index.php?curid=63377054) After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.
       
       <p>
         <a href="https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -709,7 +705,7 @@ values() for lists and other containers was renamed to value() to simplify the A
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        I presented Future: Simple Async, Parallel &amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
+        Design: Dan LaBar I presented Future: Simple Async, Parallel &amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
 HTML (incremental Google Slides; requires online access) PDF (flat slides) Video with closed captions (official rstudio::conf recording) First of all, a big thank you goes out to Dan LaBar (@embiggenData) for proposing and contributing the original design of the future hex sticker.
       
       <p>
@@ -768,7 +764,7 @@ HTML (incremental Google Slides; requires online access) PDF (flat slides) Video
       
         No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;
       
       <p>
         <a href="https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/" class="postShorten-excerpt_link link">Continue reading</a>

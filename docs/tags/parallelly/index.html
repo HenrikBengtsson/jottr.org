@@ -271,6 +271,65 @@ if (!doNotTrack) {
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2025/06/19/futureverse-10-years/">
+          Futureverse - Ten Years Anniversary
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2025-06-19T00:00:00Z">
+        
+  June 19, 2025
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+         The future package was first released on CRAN ten years ago today. Little did I know how big the uptake would be.
+aa
+ss
+Links parallelly package: CRAN, GitHub, pkgdown future package: CRAN, GitHub, pkgdown Futureverse: https://www.futureverse.org 
+      
+      <p>
+        <a href="https://www.jottr.org/2025/06/19/futureverse-10-years/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
         <a class="link-unstyled" href="https://www.jottr.org/2023/07/01/parallelly-managing-workers/">
           parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely
         </a>
@@ -757,11 +816,9 @@ Faster setup of local, parallel workers In R 4.0.0, which was released in May 20
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+        A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA's Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
 makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.
       
       <p>
         <a href="https://www.jottr.org/2021/04/30/parallelly-1.25.0/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -817,9 +874,8 @@ ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few c
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+        !["Short-loop artsy animation: Flying through colorful, sparkling lights positioned in circles with star-like lights on a black background in the distance"](/post/sparkles-through-space.gif) future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
 Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &ldquo;tee&rdquo;, any output produced by futures.
-The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.
       
       <p>
         <a href="https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -875,8 +931,9 @@ The default is split = FALSE for which standard output and conditions are captur
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package
+        parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency.
       
       <p>
         <a href="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/" class="postShorten-excerpt_link link">Continue reading</a>

@@ -6,7 +6,19 @@
     <description>Recent content in Posts on JottR</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Futureverse - Ten Years Anniversary</title>
+      <link>https://www.jottr.org/2025/06/19/futureverse-10-years/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2025/06/19/futureverse-10-years/</guid>
+      <description> The future package was first released on CRAN ten years ago today. Little did I know how big the uptake would be.
+aa
+ss
+Links parallelly package: CRAN, GitHub, pkgdown future package: CRAN, GitHub, pkgdown Futureverse: https://www.futureverse.org </description>
+    </item>
+    
     <item>
       <title>parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely</title>
       <link>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</link>
@@ -79,14 +91,10 @@ By reading this blog post, I hope you become more aware of the different problem
       <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/06/23/future-user2022-slides/</guid>
-      <description>Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+      <description>Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
-Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&amp;ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.</description>
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos</description>
     </item>
     
     <item>
@@ -135,9 +143,7 @@ Since my previous post on parallelly in November 2021, I&amp;rsquo;ve fixed a fe
       <pubDate>Tue, 22 Feb 2022 13:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/</guid>
-      <description>future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
-int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &amp;ldquo;/&amp;gt;
-future(&amp;hellip;, seed = TRUE) updates RNG state In future (&amp;lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).</description>
+      <description>future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.</description>
     </item>
     
     <item>
@@ -199,11 +205,9 @@ Faster setup of local, parallel workers In R 4.0.0, which was released in May 20
       <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2021/04/30/parallelly-1.25.0/</guid>
-      <description>parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+      <description>A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA&#39;s Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
-makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &amp;lt;- parallel::detectCores() It&amp;rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.</description>
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers</description>
     </item>
     
     <item>
@@ -233,9 +237,7 @@ To wrap up the three-and-a-half year long life of future.BatchJobs, the very las
       <pubDate>Sat, 19 Dec 2020 10:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/12/19/future-eurobioc2020-slides/</guid>
-      <description>I presented Future: A Simple, Extendable, Generic Framework for Parallel Processing in R at the European Bioconductor Meeting 2020, which took place online during the week of December 14-18, 2020.
-You&amp;rsquo;ll find my slides (39 slides + Q&amp;amp;A slides; 35 minutes) below:
-Title &amp;amp; Abstract HTML (Google Slides; requires online access) PDF (flat slides) Video (YouTube) I want to thank the organizers for inviting me to this Bioconductor conference. The Bioconductor Project provides a powerful and an important technical and social environment for developing and conducting computational research in bioinformatics and genomics.</description>
+      <description> </description>
     </item>
     
     <item>
@@ -254,9 +256,8 @@ HTML (incremental Google Slides; requires online access) PDF (flat slides) Video
       <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</guid>
-      <description>future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
-Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &amp;ldquo;tee&amp;rdquo;, any output produced by futures.
-The default is split = FALSE for which standard output and conditions are captured by the future and only relayed after the future has been resolved, i.</description>
+      <description>![&#34;Short-loop artsy animation: Flying through colorful, sparkling lights positioned in circles with star-like lights on a black background in the distance&#34;](/post/sparkles-through-space.gif) future 1.20.1 is on CRAN. It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.
+Interactive debugging First out among the new features, and a long-running feature request, is the addition of argument split to plan(), which allows us to split, or &amp;ldquo;tee&amp;rdquo;, any output produced by futures.</description>
     </item>
     
     <item>
@@ -265,8 +266,9 @@ The default is split = FALSE for which standard output and conditions are captur
       <pubDate>Wed, 04 Nov 2020 18:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/</guid>
-      <description>I&amp;rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&amp;rsquo;re like me and concerned about bloating package dependencies, I&amp;rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&amp;rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package</description>
+      <description>parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&amp;rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&amp;rsquo;re like me and concerned about bloating package dependencies, I&amp;rsquo;m sure you immediately wondered why I chose to introduce a new dependency.</description>
     </item>
     
     <item>
@@ -284,7 +286,7 @@ The functions in the parallelly package used to be part of the future package</d
       <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
-      <description>After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
+      <description>![&#34;Animation of green Japanese Kana symbols raining down in parallel on a black background inspired by The Matrix movie&#34;](/post/Digital_rain_animation_medium_letters_clear.gif) Parallel &#39;Digital Rain&#39; by [Jahobr](https://commons.wikimedia.org/w/index.php?curid=63377054) After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
     </item>
     
     <item>
@@ -293,7 +295,7 @@ The functions in the parallelly package used to be part of the future package</d
       <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</guid>
-      <description>If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+      <description>![&#34;An animated close-up of a spinning roulette wheel&#34;](/post/DistortedRecentEland_50pct.gif) If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
 if (interactive()) { invisible(addTaskCallback(local({ last &amp;lt;- .GlobalEnv$.Random.seed function(...) { curr &amp;lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &amp;lt;- &amp;#34;TRACKER: .Random.seed changed&amp;#34; if (requireNamespace(&amp;#34;crayon&amp;#34;, quietly=TRUE)) msg &amp;lt;- crayon::blurred(msg) message(msg) last &amp;lt;&amp;lt;- curr } TRUE } }), name = &amp;#34;RNG tracker&amp;#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .</description>
     </item>
     
@@ -314,7 +316,7 @@ values() for lists and other containers was renamed to value() to simplify the A
       <pubDate>Sat, 04 Jul 2020 17:30:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/07/04/progressr-erum2020-slides/</guid>
-      <description>I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
+      <description>Source: Wiktionary.org I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
 Abstract HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (starts at 00h49m58s) I am grateful for everyone involved who made e-Rum 2020 possible. I cannot imagine having to cancel the on-site Milano conference that had planned for more than a year and then start over to re-organize and create a fabulous online experience for ~1,500 participants in such short notice.</description>
     </item>
     
@@ -324,7 +326,7 @@ Abstract HTML (incremental Google Slides; requires online access) PDF (flat slid
       <pubDate>Sat, 01 Feb 2020 19:30:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</guid>
-      <description>I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
+      <description>Design: Dan LaBar I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
 HTML (incremental Google Slides; requires online access) PDF (flat slides) Video with closed captions (official rstudio::conf recording) First of all, a big thank you goes out to Dan LaBar (@embiggenData) for proposing and contributing the original design of the future hex sticker.</description>
     </item>
     
@@ -336,7 +338,7 @@ HTML (incremental Google Slides; requires online access) PDF (flat slides) Video
       <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
       <description>No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
     </item>
     
     <item>

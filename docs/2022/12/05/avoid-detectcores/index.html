@@ -332,8 +332,10 @@ make a bold request and ask you to:</p>
 <p>By reading this blog post, I hope you become more aware of the
 different problems that arise from using <code>detectCores()</code> and how they
 might affect you and the users of your code.</p>
-<!-- raw HTML omitted -->
-<p>Figure 1: Using <!-- raw HTML omitted -->detectCores()<!-- raw HTML omitted --> risks overloading the
+<figure style="margin-top: 3ex;">
+<img src="https://www.jottr.org/post/detectCores_bad_vs_good.png" alt="Screenshots of two terminal-based, colored graphs each showing near 100% load on all 24 CPU cores. The load bars to the left are mostly red, whereas the ones to the right are most green. There is a shrug emoji, with the text \"do you want this?\" pointing to the left and the text "or that?" pointing to the right, located inbetween the two graphs." style="width: 100%; margin: 0; margin-bottom: 2ex;"/>
+<figcaption style="font-style: italic">
+<p>Figure 1: Using <code>detectCores()</code> risks overloading the
 machine where R runs, even more so if there are other things already
 running.  The machine seen at the left is heavily loaded, because too
 many parallel processes compete for the 24 CPU cores available, which
@@ -341,7 +343,8 @@ results in an extensive amount of kernel context switching (red),
 which wastes precious CPU cycles.  The machine to the right is
 near-perfectly loaded at 100%, where none of the processes use more
 than they may use (mostly green).</p>
-<!-- raw HTML omitted -->
+</figcaption>
+</figure>
 <h2 id="tldr">TL;DR</h2>
 <p>If you don&rsquo;t have time to read everything, but will take my word that
 we should avoid <code>detectCores()</code>, then the quick summary is that you
@@ -378,7 +381,7 @@ But before we get there, I want you to know that we find this function
 commonly used in R script and R packages, and frequently suggested in
 tutorials. So, do not feel ashamed if you use it.</p>
 <p>If we scan the code of the R packages on CRAN (e.g. by <a href="https://github.com/search?q=org%3Acran+language%3Ar+%22detectCores%28%29%22&amp;type=code">searching
-GitHub</a><!-- raw HTML omitted -->1<!-- raw HTML omitted -->), or on Bioconductor (e.g. by [searching
+GitHub</a><sup>1</sup>), or on Bioconductor (e.g. by [searching
 Bioc::CodeSearch]) we find many cases where <code>detectCores()</code> is used.
 Here are some variants we see in the wild:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>cl <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">makeCluster</span>(<span style="color:#a6e22e">detectCores</span>())
@@ -554,8 +557,16 @@ mostly likely going to get very hot (&ldquo;we&rsquo;re frying the computer&rdqu
 the time the four concurrent R processes complete, the user might have
 been able to finish six to eight similar processes if they would not
 have been fighting each other for the limited CPU resources.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--
+If this happens on a shared system, the user might get an email from
+the systems adminstrator asking you why they are "trying to fry the
+computer".  The user gets blamed for something that is our fault - it
+is us that decided to run on `detectCores()` CPU cores by default.
+
+This leads us to another scenario where a user might run into a case
+where the CPUs are overwhelmed because a software tool assumes it has
+exclusive right to all cores.  
+-->
 <h3 id="4b-a-shared-computer">4b. A shared computer</h3>
 <p>In the academia and the industry, it is common that several users
 share the same compute server or set of compute nodes.  It might be
@@ -566,7 +577,14 @@ user checks how many resources are available before launching an
 analysis. This helps to make sure they don’t end up using too many
 cores, or too much memory, slowing down the computer for everyone
 else.</p>
-<!-- raw HTML omitted -->
+<div style="width: 38%; float: right;">
+<figure style="margin-top: 1ex;">
+<img src="https://www.jottr.org/post/detectCores_bad.png" alt="The left-handside graph of Figure 1, which shows mostly red bars at near 100% load for 24 CPU cores." style="width: 100%; margin: 0; margin-bottom: 2ex;"/>
+<figcaption>
+Figure 2: Overusing the CPU cores brings everything to a halt.
+</figcaption>
+</figure>
+</div>
 <p>Now, imagine they run a software tool that uses all CPU cores by
 default.  In that case, there is a significant risk they will step on
 the other users&rsquo; processes, slowing everything down for everyone,
@@ -671,7 +689,15 @@ contrast to <code>detectCores()</code>, <code>parallelly::availableCores()</code
 cgroups, and will return eight cores instead of 96 in the above
 example, and a single core on a free RStudio Cloud account.</p>
 <h2 id="my-opinionated-recommendation">My opinionated recommendation</h2>
-<!-- raw HTML omitted -->
+<div style="width: 38%; float: right;">
+<figure style="margin-top: 1ex;">
+<img src="https://www.jottr.org/post/detectCores_good.png" alt="The right-handside graph of Figure 1, which shows mostly green bars at near 100% load for 24 CPU cores." style="width: 100%; margin: 0; margin-bottom: 2ex;"/>
+<figcaption>
+Figure 3: If we avoid overusing the CPU cores, then everything will run
+much smoother and much faster.
+</figcaption>
+</figure>
+</div>
 <p>As developers, I think we should at least be aware of these problems,
 and acknowledge that they exist and they are indeed real problem that
 people run into &ldquo;out there&rdquo;.  We should also accept that we cannot
@@ -706,8 +732,8 @@ thoughts around this, please feel free to reach out on the [Future
 Discussions Forum].</p>
 <p>Over and out,</p>
 <p>Henrik</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted --> Searching code on GitHub, requires you to log in to
-GitHub.<!-- raw HTML omitted --></p>
+<p><small><sup>1</sup> Searching code on GitHub, requires you to log in to
+GitHub.</small></p>
 <p>UPDATE 2022-12-06: [Alex Chubaty pointed out another problem], where
 <code>detectCores()</code> can be too large on modern machines, e.g. machines
 with 128 or 192 CPU cores.  I&rsquo;ve added Section &lsquo;Issue 3: detectCores()

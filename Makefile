@@ -17,3 +17,8 @@ check_links:
 
 render:
 	@Rscript -e "blogdown::build_site()"
+
+deploy:
+	git commit -am "deploy"
+	git push
+

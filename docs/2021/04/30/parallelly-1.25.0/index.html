@@ -8,34 +8,26 @@
 <meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
 <meta name="author" content="Henrik Bengtsson">
 <meta name="keywords" content="">
-<meta name="description" content="parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+<meta name="description" content="A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA&#39;s Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
-makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.">
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers">
 
 
-<meta property="og:description" content="parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+<meta property="og:description" content="A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA&#39;s Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
-makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.">
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers">
 <meta property="og:type" content="article">
 <meta property="og:title" content="parallelly 1.25.0: availableCores(omit=n) and, Finally, Built-in SSH Support for MS Windows 10 Users">
 <meta name="twitter:title" content="parallelly 1.25.0: availableCores(omit=n) and, Finally, Built-in SSH Support for MS Windows 10 Users">
 <meta property="og:url" content="https://www.jottr.org/2021/04/30/parallelly-1.25.0/">
 <meta property="twitter:url" content="https://www.jottr.org/2021/04/30/parallelly-1.25.0/">
 <meta property="og:site_name" content="JottR">
-<meta property="og:description" content="parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+<meta property="og:description" content="A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA&#39;s Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
-makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.">
-<meta name="twitter:description" content="parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers">
+<meta name="twitter:description" content="A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA&#39;s Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
-makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.">
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers">
 <meta property="og:locale" content="en-us">
 
   
@@ -331,7 +323,12 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <!-- raw HTML omitted -->
+              <center>
+<img src="https://www.jottr.org/post/nasa-climate-ice-core-small.jpg" alt="A 25-cm long ice core is held in front of the camera on a sunny day. The background is an endless snow-covered flat landscape and a bright blue sky." style="width: 65%;"/><br/>
+<small><em>A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core<br/>
+<small>(Image credit: Ludovic Brucker, NASA's Goddard Space Flight Center)</small>
+</em></small>
+</center>
 <p><strong><a href="https://cran.r-project.org/package=parallelly">parallelly</a></strong> 1.25.0 is on CRAN.  It comes with two major improvements:</p>
 <ul>
 <li>

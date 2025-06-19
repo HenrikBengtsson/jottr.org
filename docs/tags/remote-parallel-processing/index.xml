@@ -13,11 +13,9 @@
       <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2021/04/30/parallelly-1.25.0/</guid>
-      <description>parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+      <description>A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA&#39;s Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
-makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &amp;lt;- parallel::detectCores() It&amp;rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.</description>
+makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers</description>
     </item>
     
   </channel>

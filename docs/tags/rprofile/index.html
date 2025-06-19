@@ -298,7 +298,7 @@ if (!doNotTrack) {
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+        !["An animated close-up of a spinning roulette wheel"](/post/DistortedRecentEland_50pct.gif) If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
 if (interactive()) { invisible(addTaskCallback(local({ last &lt;- .GlobalEnv$.Random.seed function(...) { curr &lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &lt;- &#34;TRACKER: .Random.seed changed&#34; if (requireNamespace(&#34;crayon&#34;, quietly=TRUE)) msg &lt;- crayon::blurred(msg) message(msg) last &lt;&lt;- curr } TRUE } }), name = &#34;RNG tracker&#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .
       
       <p>

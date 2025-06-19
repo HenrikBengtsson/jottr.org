@@ -313,7 +313,11 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <!-- raw HTML omitted -->
+              <div style="padding: 2ex; float: right;"/>
+ <center>
+   <img src="https://www.jottr.org/post/parallelly-logo.png" alt="The 'parallelly' hexlogo"/>
+ </center>
+</div>
 <p><strong><a href="https://parallelly.futureverse.org">parallelly</a></strong> 1.29.0 is on CRAN.  The <strong>parallelly</strong> package enhances the <strong>parallel</strong> package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, <strong>parallelly</strong> provides the things that you would otherwise expect to find in the <strong>parallel</strong> package.  The <strong><a href="https://future.futureverse.org">future</a></strong> package rely on the <strong>parallelly</strong> package internally for local and remote parallelization.</p>
 <p>Since my <a href="https://www.jottr.org/2021/06/10/parallelly-1.26.0/">previous post on <strong>parallelly</strong></a> five months ago, the <strong>parallelly</strong> package had some bugs fixed, and it gained a few new features;</p>
 <ul>
@@ -419,8 +423,22 @@ automatically respect the Bioconductor settings.</p>
 <p>Function <a href="https://parallelly.futureverse.org/reference/availableWorkers.html"><code>availableWorkers()</code></a>, which relies on <code>availableCores()</code> as a
 fallback, is therefore also agile to these Bioconductor environment
 variables.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--
+## Improvements to makeClusterPSOCK() arguments 'rscript' and 'rscript_envs'
+
+
+Three improvements to [`makeClusterPSOCK()`] has been made:
+
+ * A `*` value in argument `rscript` to `makeClusterPSOCK()` expands to
+   the corrent `Rscript` executable
+ 
+ * Argument `rscript_envs` of `makeClusterPSOCK()` can be used to unset
+   environment variables onthe parallel workers
+ 
+ * On Unix, the _communication latency_ between the main R session and
+   the parallel workers is not much smaller when using
+   `makeClusterPSOCK()`
+-->
 <h2 id="makeclusterpsock-rscript--">makeClusterPSOCK(&hellip;, rscript = &ldquo;*&rdquo;)</h2>
 <p>Argument <code>rscript</code> of <code>makeClusterPSOCK()</code> can be used to control
 exactly which <code>Rscript</code> executable is used to launch the parallel
@@ -533,8 +551,19 @@ as above, I get:</p>
 </span></span></code></pre></div><p>If you&rsquo;re using <strong><a href="https://future.futureverse.org">future</a></strong> with <code>plan(multisession)</code> or
 <code>plan(cluster)</code>, you&rsquo;re already benefitting from the performance gain,
 because those rely on <code>parallelly::makeClusterPSOCK()</code> internally.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--
+avoid a quite large latency in the communication between parallel workers and the main R session
+ 
+```r
+gg <- plot(res) + labs(x = element_blank()) + theme(text = element_text(size = 20)) + theme(legend.position = "none")
+ggsave("parallelly_faster_turnarounds-figure.png", plot = gg, width = 7.0, height = 5.0)
+```
+
+<center>
+<img src="https://www.jottr.org/post/parallelly_faster_turnarounds-figure.png" alt="..." style="width: 65%;"/><br/>
+</center>
+<small><em>Figure: ...<br/></em></small>
+-->
 <p>(**) <em>Technical details</em>: Options <code>socketOptions</code> sets the default
 value of argument <code>options</code> of <code>base::socketConnection()</code>.  The
 default is <code>NULL</code>, but if we set it to <code>&quot;no-delay&quot;</code>, the created TCP
@@ -568,8 +597,12 @@ set to a port number.</p>
 </li>
 </ul>
 <p>For all other bug fixes and updates, please see <a href="https://parallelly.futureverse.org/news/index.html">NEWS</a>.</p>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--
+<center>
+<img src="https://www.jottr.org/post/parallelly_faster_turnarounds.png" alt="..." style="width: 65%;"/><br/>
+</center>
+<small><em>Figure: Our parallel results are now turned around much faster on Linux than before.<br/></em></small>
+-->
 <p>Over and out!</p>
 <h2 id="links">Links</h2>
 <ul>
@@ -577,8 +610,24 @@ set to a port number.</p>
 <li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a>, <a href="https://future.futureverse.org">pkgdown</a></li>
 <li><strong>future.apply</strong> package: <a href="https://cran.r-project.org/package=future.apply">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future.apply">GitHub</a>, <a href="https://future.apply.futureverse.org">pkgdown</a></li>
 </ul>
-<!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+<!--
+nworkers <- 4L
+cl_parallel   <- parallel::makeCluster(nworkers)
+cl_parallelly <- parallelly::makeClusterPSOCK(nworkers)
+
+plan(cluster, workers = cl_parallel)
+stats <- bench::mark(iterations = 100L,
+    parallel = { f <- cluster(iris, workers = cl_parallel); value(f) },
+  parallelly = { f <- cluster(iris, workers = cl_parallelly); value(f) }
+)
+
+plan(cluster, workers = cl_parallelly)
+stats2 <- bench::mark(iterations = 10L,
+  parallelly = { f <- future(iris); value(f) }
+)
+
+stats <- rbind(stats1, stats2)
+-->
 
               
             </div>

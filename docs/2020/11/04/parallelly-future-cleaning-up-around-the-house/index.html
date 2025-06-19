@@ -8,22 +8,26 @@
 <meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
 <meta name="author" content="Henrik Bengtsson">
 <meta name="keywords" content="">
-<meta name="description" content="I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package">
+<meta name="description" content="parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency.">
 
 
-<meta property="og:description" content="I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package">
+<meta property="og:description" content="parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="parallelly, future - Cleaning Up Around the House">
 <meta name="twitter:title" content="parallelly, future - Cleaning Up Around the House">
 <meta property="og:url" content="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/">
 <meta property="twitter:url" content="https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/">
 <meta property="og:site_name" content="JottR">
-<meta property="og:description" content="I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package">
-<meta name="twitter:description" content="I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package">
+<meta property="og:description" content="parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency.">
+<meta name="twitter:description" content="parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency.">
 <meta property="og:locale" content="en-us">
 
   
@@ -319,8 +323,16 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+              <blockquote cite="https://www.merriam-webster.com/dictionary/parallelly" style="font-size: 150%">
+<strong>parallelly</strong> adverb<br>
+par·​al·​lel·​ly | \  ˈpa-rə-le(l)li \ <br> 
+Definition: in a parallel manner
+</blockquote>
+<blockquote cite="https://www.merriam-webster.com/dictionary/future" style="font-size: 150%">
+<strong>future</strong> noun<br>
+fu·​ture | \ ˈfyü-chər \ <br> 
+Definition: existing or occurring at a later time
+</blockquote>
 <p>I&rsquo;ve cleaned up around the house - with the recent release of <strong><a href="https://cran.r-project.org/package=future">future</a></strong> 1.20.1, the package gained a dependency on the new <strong><a href="https://cran.r-project.org/package=parallelly">parallelly</a></strong> package.  Now, if you&rsquo;re like me and concerned about bloating package dependencies, I&rsquo;m sure you immediately wondered why I chose to introduce a new dependency.  I&rsquo;ll try to explain this below, but let me be start by clarifying a few things:</p>
 <ul>
 <li>
@@ -353,7 +365,9 @@ if (!doNotTrack) {
 <p>For users of the future framework, maybe the most important reason for this migration is <em>speedier implementation of improvements and feature requests for the <strong>future</strong> package and the future ecosystem</em>.  Over the years, many discussions around enhancing <strong>future</strong> came down to enhancing the functions that are now part of the <strong>parallelly</strong> package, especially for adding new features to <code>makeClusterPSOCK()</code>, which is the internal work horse for setting up &lsquo;multisession&rsquo; parallel workers but also used explicitly by many when setting up other types of &lsquo;cluster&rsquo; workers.
 The roles and responsibility of the <strong>parallelly</strong> and <strong>future</strong> packages are well separated, which should make it straightforward to further improve on these functions.  For example, if we want to introduce a new argument to <code>makeClusterPSOCK()</code>, or change one of its defaults (e.g. use the faster <code>useXDR = FALSE</code>), we can now discuss and test them quicker and often without having to bring in futures into the discussion.  Don&rsquo;t worry - <strong>parallelly</strong> will undergo the same, <a href="https://www.jottr.org/2020/11/04/trust-the-future/">strict validation process as the <strong>future</strong> package</a> does to avoid introducing breaking changes to the future framework.  For example, reverse-dependency checks will be run on first (e.g. <strong>future</strong>), and second (e.g. <strong>future.apply</strong>, <strong>furrr</strong>, <strong>doFuture</strong>, <strong>drake</strong>, <strong>mlr3</strong>, <strong>plumber</strong>, <strong>promises</strong>,and  <strong>Seurat</strong>) generation dependencies.</p>
 <p>Happy parallelly futuring!</p>
-<!-- raw HTML omitted -->
+<small>
+<sup>*</sup> I'll try to make another post in a couple of days covering the new features that comes with **future** 1.20.1. Stay tuned.
+</small>
 <h2 id="links">Links</h2>
 <ul>
 <li><strong>future</strong> package: <a href="https://cran.r-project.org/package=future">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future">GitHub</a></li>

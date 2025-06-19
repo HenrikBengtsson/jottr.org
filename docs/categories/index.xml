@@ -5,10 +5,35 @@
     <description>Recent content in Categories on JottR</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://www.jottr.org/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Futureverse - Ten Years Anniversary</title>
+      <link>https://www.jottr.org/2025/06/19/futureverse-10-years/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2025/06/19/futureverse-10-years/</guid>
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/future-logo-balloons.png&#34; alt=&#34;The &#39;future&#39; hexlogo balloon wall&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; package was first released on CRAN ten years ago
+today. Little did I know how big the uptake would be.&lt;/p&gt;
+&lt;p&gt;aa&lt;/p&gt;
+&lt;img src=&#34;https://www.jottr.org/post/future-logo-balloons.png&#34; alt=&#34;The future hexlogo balloon wall&#34;/&gt;
+&lt;p&gt;ss&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;parallelly&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=parallelly&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/parallelly&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;future&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/future&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://future.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Futureverse&lt;/strong&gt;: &lt;a href=&#34;https://www.futureverse.org&#34;&gt;https://www.futureverse.org&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
     
     <item>
       <title>parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely</title>
@@ -16,7 +41,11 @@
       <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
       
       <guid>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/parallelly-logo.png&#34; alt=&#34;The &#39;parallelly&#39; hexlogo&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; 1.36.0 is on CRAN since May 2023. The &lt;strong&gt;parallelly&lt;/strong&gt;
 package is part of the &lt;a href=&#34;https://www.futureverse.org&#34;&gt;Futureverse&lt;/a&gt; and enhances the &lt;strong&gt;parallel&lt;/strong&gt;
 package of base R, e.g. it adds several features you&amp;rsquo;d otherwise
@@ -222,7 +251,11 @@ strategy for doing so before we can implement it.&lt;/p&gt;
       <pubDate>Mon, 26 Jun 2023 19:00:00 +0200</pubDate>
       
       <guid>https://www.jottr.org/2023/06/26/dofuture/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;margin: 2ex; width: 100%;&#34;/&gt;
+&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/dopar-to-dofuture.png&#34; alt=&#34;Two lines of code, where the first line shows &#39;y &lt;- foreach(...) %dopar% { ... }&#39;. The second line &#39;y &lt;- foreach(...) %dofuture% { ... }&#39;. The %dopar% operator is crossed out and there is a line down to %dofuture% directly below.&#34; style=&#34;width: 80%; border: 1px solid black;&#34;/&gt;
+&lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://doFuture.futureverse.org&#34;&gt;doFuture&lt;/a&gt;&lt;/strong&gt; 1.0.0 is on CRAN since March 2023. It introduces a new
 &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=foreach&#34;&gt;foreach&lt;/a&gt;&lt;/strong&gt; operator &lt;code&gt;%dofuture%&lt;/code&gt;, which makes it even easier to
 use &lt;code&gt;foreach()&lt;/code&gt; to parallelize via the &lt;strong&gt;future&lt;/strong&gt; ecosystem. This
@@ -595,7 +628,11 @@ forum&lt;/a&gt;.&lt;/p&gt;
       <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2023/05/22/future-yegrug-2023-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;margin: 2ex; width: 100%;&#34;/&gt;
+&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/YEGRUG_20230522.jpeg&#34; alt=&#34;The YEGRUG poster slide for the Futureverse presentation on 2023-05-22&#34; style=&#34;width: 80%; border: 1px solid black;&#34;/&gt;
+&lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;Below are the slides from my presentation at the &lt;a href=&#34;https://www.meetup.com/edmonton-r-user-group-yegrug/events/fxvdbtyfchbhc/&#34;&gt;Edmonton R User Group Meetup (YEGRUG)&lt;/a&gt; on May 22, 2023:&lt;/p&gt;
 &lt;p&gt;Title: Futureverse - A Unifying Parallelization Framework in R for Everyone&lt;br&gt;
 Speaker: Henrik Bengtsson&lt;br&gt;
@@ -618,7 +655,11 @@ Video: &lt;a href=&#34;https://www.youtube.com/watch?v=6Dp6zMelrmg&#34;&gt;offic
       <pubDate>Wed, 18 Jan 2023 14:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2023/01/18/parallelly-1.34.0-support-for-cgroups-v2-killing-parallel-workers-and-more/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/parallelly-logo.png&#34; alt=&#34;The &#39;parallelly&#39; hexlogo&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;With the recent releases of &lt;strong&gt;&lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; 1.33.0 (2022-12-13) and
 1.34.0 (2023-01-13), &lt;a href=&#34;https://parallelly.futureverse.org/reference/availableCores.html&#34;&gt;&lt;code&gt;availableCores()&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://parallelly.futureverse.org/reference/availableWorkers.html&#34;&gt;&lt;code&gt;availableWorkers()&lt;/code&gt;&lt;/a&gt;
 gained better support for Linux CGroups, options for avoiding running
@@ -724,7 +765,11 @@ example,&lt;/p&gt;
 bars.  Vice versa, &lt;strong&gt;cli&lt;/strong&gt; can now report on progress via the
 &lt;strong&gt;progressr&lt;/strong&gt; framework.  Here are the details.  For other updates to
 &lt;strong&gt;progressr&lt;/strong&gt;, see &lt;a href=&#34;https://progressr.futureverse.org/news/index.html&#34;&gt;NEWS&lt;/a&gt;.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/three_in_chinese.gif&#34; alt=&#34;Three strokes writing three in Chinese&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;The &lt;strong&gt;progressr&lt;/strong&gt; package, part of the &lt;a href=&#34;https://www.futureverse.org&#34;&gt;futureverse&lt;/a&gt;, provides a
 minimal API for reporting progress updates in R. The design is to
 separate the representation of progress updates from how they are
@@ -853,8 +898,10 @@ make a bold request and ask you to:&lt;/p&gt;
 &lt;p&gt;By reading this blog post, I hope you become more aware of the
 different problems that arise from using &lt;code&gt;detectCores()&lt;/code&gt; and how they
 might affect you and the users of your code.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;Figure 1: Using &lt;!-- raw HTML omitted --&gt;detectCores()&lt;!-- raw HTML omitted --&gt; risks overloading the
+&lt;figure style=&#34;margin-top: 3ex;&#34;&gt;
+&lt;img src=&#34;https://www.jottr.org/post/detectCores_bad_vs_good.png&#34; alt=&#34;Screenshots of two terminal-based, colored graphs each showing near 100% load on all 24 CPU cores. The load bars to the left are mostly red, whereas the ones to the right are most green. There is a shrug emoji, with the text \&#34;do you want this?\&#34; pointing to the left and the text &#34;or that?&#34; pointing to the right, located inbetween the two graphs.&#34; style=&#34;width: 100%; margin: 0; margin-bottom: 2ex;&#34;/&gt;
+&lt;figcaption style=&#34;font-style: italic&#34;&gt;
+&lt;p&gt;Figure 1: Using &lt;code&gt;detectCores()&lt;/code&gt; risks overloading the
 machine where R runs, even more so if there are other things already
 running.  The machine seen at the left is heavily loaded, because too
 many parallel processes compete for the 24 CPU cores available, which
@@ -862,7 +909,8 @@ results in an extensive amount of kernel context switching (red),
 which wastes precious CPU cycles.  The machine to the right is
 near-perfectly loaded at 100%, where none of the processes use more
 than they may use (mostly green).&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;h2 id=&#34;tldr&#34;&gt;TL;DR&lt;/h2&gt;
 &lt;p&gt;If you don&amp;rsquo;t have time to read everything, but will take my word that
 we should avoid &lt;code&gt;detectCores()&lt;/code&gt;, then the quick summary is that you
@@ -899,7 +947,7 @@ But before we get there, I want you to know that we find this function
 commonly used in R script and R packages, and frequently suggested in
 tutorials. So, do not feel ashamed if you use it.&lt;/p&gt;
 &lt;p&gt;If we scan the code of the R packages on CRAN (e.g. by &lt;a href=&#34;https://github.com/search?q=org%3Acran+language%3Ar+%22detectCores%28%29%22&amp;amp;type=code&#34;&gt;searching
-GitHub&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;1&lt;!-- raw HTML omitted --&gt;), or on Bioconductor (e.g. by [searching
+GitHub&lt;/a&gt;&lt;sup&gt;1&lt;/sup&gt;), or on Bioconductor (e.g. by [searching
 Bioc::CodeSearch]) we find many cases where &lt;code&gt;detectCores()&lt;/code&gt; is used.
 Here are some variants we see in the wild:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cl &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;makeCluster&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;detectCores&lt;/span&gt;())
@@ -1075,8 +1123,16 @@ mostly likely going to get very hot (&amp;ldquo;we&amp;rsquo;re frying the compu
 the time the four concurrent R processes complete, the user might have
 been able to finish six to eight similar processes if they would not
 have been fighting each other for the limited CPU resources.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+If this happens on a shared system, the user might get an email from
+the systems adminstrator asking you why they are &#34;trying to fry the
+computer&#34;.  The user gets blamed for something that is our fault - it
+is us that decided to run on `detectCores()` CPU cores by default.
+
+This leads us to another scenario where a user might run into a case
+where the CPUs are overwhelmed because a software tool assumes it has
+exclusive right to all cores.  
+--&gt;
 &lt;h3 id=&#34;4b-a-shared-computer&#34;&gt;4b. A shared computer&lt;/h3&gt;
 &lt;p&gt;In the academia and the industry, it is common that several users
 share the same compute server or set of compute nodes.  It might be
@@ -1087,7 +1143,14 @@ user checks how many resources are available before launching an
 analysis. This helps to make sure they don’t end up using too many
 cores, or too much memory, slowing down the computer for everyone
 else.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;div style=&#34;width: 38%; float: right;&#34;&gt;
+&lt;figure style=&#34;margin-top: 1ex;&#34;&gt;
+&lt;img src=&#34;https://www.jottr.org/post/detectCores_bad.png&#34; alt=&#34;The left-handside graph of Figure 1, which shows mostly red bars at near 100% load for 24 CPU cores.&#34; style=&#34;width: 100%; margin: 0; margin-bottom: 2ex;&#34;/&gt;
+&lt;figcaption&gt;
+Figure 2: Overusing the CPU cores brings everything to a halt.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
 &lt;p&gt;Now, imagine they run a software tool that uses all CPU cores by
 default.  In that case, there is a significant risk they will step on
 the other users&amp;rsquo; processes, slowing everything down for everyone,
@@ -1192,7 +1255,15 @@ contrast to &lt;code&gt;detectCores()&lt;/code&gt;, &lt;code&gt;parallelly::avai
 cgroups, and will return eight cores instead of 96 in the above
 example, and a single core on a free RStudio Cloud account.&lt;/p&gt;
 &lt;h2 id=&#34;my-opinionated-recommendation&#34;&gt;My opinionated recommendation&lt;/h2&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;div style=&#34;width: 38%; float: right;&#34;&gt;
+&lt;figure style=&#34;margin-top: 1ex;&#34;&gt;
+&lt;img src=&#34;https://www.jottr.org/post/detectCores_good.png&#34; alt=&#34;The right-handside graph of Figure 1, which shows mostly green bars at near 100% load for 24 CPU cores.&#34; style=&#34;width: 100%; margin: 0; margin-bottom: 2ex;&#34;/&gt;
+&lt;figcaption&gt;
+Figure 3: If we avoid overusing the CPU cores, then everything will run
+much smoother and much faster.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;/div&gt;
 &lt;p&gt;As developers, I think we should at least be aware of these problems,
 and acknowledge that they exist and they are indeed real problem that
 people run into &amp;ldquo;out there&amp;rdquo;.  We should also accept that we cannot
@@ -1227,8 +1298,8 @@ thoughts around this, please feel free to reach out on the [Future
 Discussions Forum].&lt;/p&gt;
 &lt;p&gt;Over and out,&lt;/p&gt;
 &lt;p&gt;Henrik&lt;/p&gt;
-&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;1&lt;!-- raw HTML omitted --&gt; Searching code on GitHub, requires you to log in to
-GitHub.&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;&lt;small&gt;&lt;sup&gt;1&lt;/sup&gt; Searching code on GitHub, requires you to log in to
+GitHub.&lt;/small&gt;&lt;/p&gt;
 &lt;p&gt;UPDATE 2022-12-06: [Alex Chubaty pointed out another problem], where
 &lt;code&gt;detectCores()&lt;/code&gt; can be too large on modern machines, e.g. machines
 with 128 or 192 CPU cores.  I&amp;rsquo;ve added Section &amp;lsquo;Issue 3: detectCores()
@@ -1251,8 +1322,13 @@ may return too many cores&amp;rsquo; explaining and addressing this problem.&lt;
       <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/06/23/future-user2022-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;figure style=&#34;margin-top: 3ex;&#34;&gt;
+&lt;img src=&#34;https://www.jottr.org/post/BengtssonH_20220622-Future-useR2022_slide18.png&#34; alt=&#34;Screenshot of Slide #18 in my presentation. A graphical time-chart representation of the events that takes place when calling the following code in R: plan(cluster, workers = 2); fs &lt;- lapply(1:2, function(x) future(slow(x)); vs &lt;- value(fs); There are two futures displayed in the time chart. Each future is represented by a blue, horizontal &#39;lifespan&#39; bar. The second future starts slightly after the first one. Each future is evaluated in a separate worker, which is represented as pink horizontal &#39;evaluate&#39; bar. The two &#39;lifespan&#39; and the two &#39;evaluation&#39; bars are overlapping indicating they run in parallel.&#34; style=&#34;width: 100%; margin: 0;&#34;/&gt;
+&lt;figcaption&gt;
+Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;img src=&#34;https://www.jottr.org/post/user2022-logo_450x300.webp&#34; alt=&#34;The useR 2022 logo&#34; style=&#34;width: 30%; float: right; margin: 2ex;&#34;/&gt;
 &lt;p&gt;Below are the slides for my &lt;em&gt;Futureverse: Profile Parallel Code&lt;/em&gt; talk that I presented at the &lt;a href=&#34;https://user2022.r-project.org/&#34;&gt;useR! 2022&lt;/a&gt; conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.&lt;/p&gt;
 &lt;p&gt;Title: Futureverse: Profile Parallel Code&lt;br&gt;
 Speaker: Henrik Bengtsson&lt;br&gt;
@@ -1280,7 +1356,11 @@ Video: &lt;a href=&#34;https://www.youtube.com/watch?v=_lrPgNqT3SM&amp;amp;t=252
       <pubDate>Thu, 09 Jun 2022 13:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/06/09/parallelly-support-for-fujitsu-technical-computing-suite-high-performance-compute-hpc-environments/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/parallelly-logo.png&#34; alt=&#34;The &#39;parallelly&#39; hexlogo&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; 1.32.0 is now on CRAN. One of the major updates is that &lt;code&gt;availableCores()&lt;/code&gt; and &lt;code&gt;availableWorkers()&lt;/code&gt;, and therefore also the &lt;strong&gt;future&lt;/strong&gt; framework, gained support for the &amp;lsquo;Fujitsu Technical Computing Suite&amp;rsquo; job scheduler. For other updates, please see &lt;a href=&#34;https://parallelly.futureverse.org/news/index.html&#34;&gt;NEWS&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The &lt;strong&gt;parallelly&lt;/strong&gt; package enhances the &lt;strong&gt;parallel&lt;/strong&gt; package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, &lt;strong&gt;parallelly&lt;/strong&gt; provides the things that you would otherwise expect to find in the &lt;strong&gt;parallel&lt;/strong&gt; package.  The &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; package relies on the &lt;strong&gt;parallelly&lt;/strong&gt; package internally for local and remote parallelization.&lt;/p&gt;
 &lt;h2 id=&#34;support-for-the-fujitsu-technical-computing-suite&#34;&gt;Support for the Fujitsu Technical Computing Suite&lt;/h2&gt;
@@ -1334,11 +1414,15 @@ cl &amp;lt;- makeClusterPSOCK(availableWorkers())
       <pubDate>Wed, 08 Jun 2022 14:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/06/08/parallelly-1.32.0-makeclusterpsock-didnt-work-with-chinese-and-korean-locales/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/parallelly-logo.png&#34; alt=&#34;The &#39;parallelly&#39; hexlogo&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; 1.32.0 is on CRAN.  This release fixes an important bug that affected users running with the Simplified Chinese, Traditional Chinese (Taiwan), or Korean locale. The bug caused &lt;code&gt;makeClusterPSOCK()&lt;/code&gt;, and therefore also &lt;code&gt;future::plan(&amp;quot;multisession&amp;quot;)&lt;/code&gt;, to fail with an error.  For other updates, please see &lt;a href=&#34;https://parallelly.futureverse.org/news/index.html&#34;&gt;NEWS&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The &lt;strong&gt;parallelly&lt;/strong&gt; package enhances the &lt;strong&gt;parallel&lt;/strong&gt; package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, &lt;strong&gt;parallelly&lt;/strong&gt; provides the things that you would otherwise expect to find in the &lt;strong&gt;parallel&lt;/strong&gt; package.  The &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; package relies on the &lt;strong&gt;parallelly&lt;/strong&gt; package internally for local and remote parallelization.&lt;/p&gt;
 &lt;h2 id=&#34;important-bug-fix-for-chinese-and-korean-users&#34;&gt;Important bug fix for Chinese and Korean users&lt;/h2&gt;
-&lt;p&gt;It turns out that &lt;a href=&#34;https://parallelly.futureverse.org/reference/makeClusterPSOCK.html&#34;&gt;&lt;code&gt;makeClusterPSOCK()&lt;/code&gt;&lt;/a&gt; has never&lt;!-- raw HTML omitted --&gt;[1]&lt;!-- raw HTML omitted --&gt; worked for users that have their computers set to use a Korean (&lt;code&gt;LANGUAGE=ko&lt;/code&gt;), a Simplified Chinese (&lt;code&gt;LANGUAGE=zh_CN&lt;/code&gt;), or a Traditional Chinese (Taiwan) (&lt;code&gt;LANGUAGE=zh_TW&lt;/code&gt;) locale.  For example,&lt;/p&gt;
+&lt;p&gt;It turns out that &lt;a href=&#34;https://parallelly.futureverse.org/reference/makeClusterPSOCK.html&#34;&gt;&lt;code&gt;makeClusterPSOCK()&lt;/code&gt;&lt;/a&gt; has never&lt;sup&gt;[1]&lt;/sup&gt; worked for users that have their computers set to use a Korean (&lt;code&gt;LANGUAGE=ko&lt;/code&gt;), a Simplified Chinese (&lt;code&gt;LANGUAGE=zh_CN&lt;/code&gt;), or a Traditional Chinese (Taiwan) (&lt;code&gt;LANGUAGE=zh_TW&lt;/code&gt;) locale.  For example,&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;Sys.setLanguage&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;zh_CN&amp;#34;&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(parallelly)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;cl &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; parallelly&lt;span style=&#34;color:#f92672&#34;&gt;::&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;makeClusterPSOCK&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;)
@@ -1356,8 +1440,9 @@ cl &amp;lt;- makeClusterPSOCK(availableWorkers())
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#&amp;gt; 추가정보: 경고메시지(들): &lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;#&amp;gt; add_cluster_session_info(cl[ii])에서: 강제형변환에 의해 생성된 NA 입니다&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;So, if you run into these errors, upgrade to the latest version of &lt;strong&gt;parallelly&lt;/strong&gt;, e.g. &lt;code&gt;update.packages()&lt;/code&gt;, restart R, and it will work as you would expect.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+Source: https://chinesefor.us/lessons/say-sorry-chinese-apologize-duibuqi/ and https://www.wikihow.com/Apologize-in-Korean
+--&gt;
 &lt;p&gt;To prevent this from happening again, I am now making sure to always check the package with also these locales, in addition to English.  CRAN already checks packages &lt;a href=&#34;https://cran.r-project.org/web/checks/check_flavors.html&#34;&gt;with different English and German locales&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I am sorry, 对不起, 미안해요, about this.  Hopefully, it&amp;rsquo;ll work smoother from now on.&lt;/p&gt;
 &lt;p&gt;Happy parallelization!&lt;/p&gt;
@@ -1366,7 +1451,7 @@ cl &amp;lt;- makeClusterPSOCK(availableWorkers())
 &lt;li&gt;&lt;strong&gt;parallelly&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=parallelly&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/parallelly&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;future&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/future&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://future.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;!-- raw HTML omitted --&gt;[1]&lt;!-- raw HTML omitted --&gt; The last time it worked was with &lt;strong&gt;future&lt;/strong&gt; 1.4.0 (2017-03-13), when this function was still part of the &lt;strong&gt;future&lt;/strong&gt; package.&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;[1]&lt;/sup&gt; The last time it worked was with &lt;strong&gt;future&lt;/strong&gt; 1.4.0 (2017-03-13), when this function was still part of the &lt;strong&gt;future&lt;/strong&gt; package.&lt;/p&gt;
 </description>
     </item>
     
@@ -1376,7 +1461,11 @@ cl &amp;lt;- makeClusterPSOCK(availableWorkers())
       <pubDate>Fri, 03 Jun 2022 13:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/06/03/progressr-0.10.1/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/three_in_chinese.gif&#34; alt=&#34;Three strokes writing three in Chinese&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://progressr.futureverse.org&#34;&gt;progressr&lt;/a&gt;&lt;/strong&gt; 0.10.1 is on CRAN. I dedicate this release to all &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=plyr&#34;&gt;plyr&lt;/a&gt;&lt;/strong&gt; users and developers out there.&lt;/p&gt;
 &lt;p&gt;The &lt;strong&gt;progressr&lt;/strong&gt; package provides a minimal API for reporting progress updates in R. The design is to separate the representation of progress updates from how they are presented. What type of progress to signal is controlled by the developer. How these progress updates are rendered is controlled by the end user. For instance, some users may prefer visual feedback, such as a horizontal progress bar in the terminal, whereas others may prefer auditory feedback.  The &lt;strong&gt;progressr&lt;/strong&gt; package works also when processing R in parallel or distributed using the &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; framework.&lt;/p&gt;
 &lt;h2 id=&#34;plyr--future--progressr--parallel-progress-reporting&#34;&gt;&lt;strong&gt;plyr&lt;/strong&gt; + &lt;strong&gt;future&lt;/strong&gt; + &lt;strong&gt;progressr&lt;/strong&gt; ⇒ parallel progress reporting&lt;/h2&gt;
@@ -1426,7 +1515,11 @@ cl &amp;lt;- makeClusterPSOCK(availableWorkers())
       <pubDate>Fri, 22 Apr 2022 11:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/04/22/parallelly-1.31.1/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/parallelly-logo.png&#34; alt=&#34;The &#39;parallelly&#39; hexlogo&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; 1.31.1 is on CRAN.  The &lt;strong&gt;parallelly&lt;/strong&gt; package enhances the &lt;strong&gt;parallel&lt;/strong&gt; package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, &lt;strong&gt;parallelly&lt;/strong&gt; provides the things that you would otherwise expect to find in the &lt;strong&gt;parallel&lt;/strong&gt; package.  The &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; package relies on the &lt;strong&gt;parallelly&lt;/strong&gt; package internally for local and remote parallelization.&lt;/p&gt;
 &lt;p&gt;Since my &lt;a href=&#34;https://www.jottr.org/2021/11/22/parallelly-1.29.0/&#34;&gt;previous post on &lt;strong&gt;parallelly&lt;/strong&gt;&lt;/a&gt; in November 2021, I&amp;rsquo;ve fixed a few bugs and added some new features to the package;&lt;/p&gt;
 &lt;ul&gt;
@@ -1489,14 +1582,19 @@ An alternative to limit the CPU resources, is to throttle the average CPU load. 
       
       <guid>https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/</guid>
       <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; 1.24.0 is on CRAN.  It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to &lt;code&gt;plan()&lt;/code&gt; and &lt;code&gt;tweaks()&lt;/code&gt;, and some bug fixes.  Below are the most important changes.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;figure style=&#34;padding: 2ex; float: right;&#34;/&gt;
+&lt;center&gt;
+  &lt;img src=&#34;https://www.jottr.org/post/xkcd_221-random_number.png&#34; alt=&#34;A one-box XKCD comic with the following handwritten code:
 &lt;p&gt;int getRandomNumber()
 {
 return 4;  // chosen by fair dice roll.
 // guaranteed to be random.
 }
 &amp;ldquo;/&amp;gt;&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+ &lt;/center&gt;
+ &lt;figcaption style=&#34;font-size: small; font-style: italic;&#34;&gt;One of many possible random number generators. This one was carefully designed by &lt;a href=&#34;https://xkcd.com/221/&#34;&gt;XKCD&lt;/a&gt; [CC BY-NC 2.5].
+ &lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;h2 id=&#34;future-seed--true-updates-rng-state&#34;&gt;future(&amp;hellip;, seed = TRUE) updates RNG state&lt;/h2&gt;
 &lt;p&gt;In &lt;strong&gt;future&lt;/strong&gt; (&amp;lt; 1.24.0), using &lt;a href=&#34;https://future.futureverse.org/reference/future.html&#34;&gt;&lt;code&gt;future(..., seed = TRUE)&lt;/code&gt;&lt;/a&gt; would &lt;em&gt;not&lt;/em&gt; forward the state of the random number generator (RNG).  For example, if we generated random numbers in individual futures this way, they would become &lt;em&gt;identical&lt;/em&gt;, e.g.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;f &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;future&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;rnorm&lt;/span&gt;(n &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1L&lt;/span&gt;), seed &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TRUE&lt;/span&gt;)
@@ -1554,7 +1652,11 @@ The more I dug into the problem, the further down I ended up in a rabbit hole.  
       <pubDate>Fri, 07 Jan 2022 14:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2022/01/07/future-during-2021/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/paragliding_mount_tamalpais_20220101.jpg&#34; alt=&#34;First person view while paragliding during a sunny day with blue skies. The pilot&#39;s left hand with a glove can be seen pulling the left break with lines going up to the white, left wing tip above. The pilot is in a left turn high above the mountain side with open patched of grass among the tree. Two other paragliders further down can be seen in the distance. Down below, to the left, there is a long ocean beach slowly curving up towards a point in the horizon. Inside the beach, there is a lagoon. Part of the mountain ridge can be seen to the right.&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;Happy New Year!  I made some updates to the future framework during
 2021 that involve overall improvements and essential preparations to
 go forward with some exciting new features that I&amp;rsquo;m keen to work on
@@ -1819,7 +1921,11 @@ Twitter&lt;/a&gt;.&lt;/p&gt;
       <pubDate>Mon, 22 Nov 2021 21:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2021/11/22/parallelly-1.29.0/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;padding: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/parallelly-logo.png&#34; alt=&#34;The &#39;parallelly&#39; hexlogo&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://parallelly.futureverse.org&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; 1.29.0 is on CRAN.  The &lt;strong&gt;parallelly&lt;/strong&gt; package enhances the &lt;strong&gt;parallel&lt;/strong&gt; package - our built-in R package for parallel processing - by improving on existing features and by adding new ones.  Somewhat simplified, &lt;strong&gt;parallelly&lt;/strong&gt; provides the things that you would otherwise expect to find in the &lt;strong&gt;parallel&lt;/strong&gt; package.  The &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; package rely on the &lt;strong&gt;parallelly&lt;/strong&gt; package internally for local and remote parallelization.&lt;/p&gt;
 &lt;p&gt;Since my &lt;a href=&#34;https://www.jottr.org/2021/06/10/parallelly-1.26.0/&#34;&gt;previous post on &lt;strong&gt;parallelly&lt;/strong&gt;&lt;/a&gt; five months ago, the &lt;strong&gt;parallelly&lt;/strong&gt; package had some bugs fixed, and it gained a few new features;&lt;/p&gt;
 &lt;ul&gt;
@@ -1925,8 +2031,22 @@ automatically respect the Bioconductor settings.&lt;/p&gt;
 &lt;p&gt;Function &lt;a href=&#34;https://parallelly.futureverse.org/reference/availableWorkers.html&#34;&gt;&lt;code&gt;availableWorkers()&lt;/code&gt;&lt;/a&gt;, which relies on &lt;code&gt;availableCores()&lt;/code&gt; as a
 fallback, is therefore also agile to these Bioconductor environment
 variables.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+## Improvements to makeClusterPSOCK() arguments &#39;rscript&#39; and &#39;rscript_envs&#39;
+
+
+Three improvements to [`makeClusterPSOCK()`] has been made:
+
+ * A `*` value in argument `rscript` to `makeClusterPSOCK()` expands to
+   the corrent `Rscript` executable
+ 
+ * Argument `rscript_envs` of `makeClusterPSOCK()` can be used to unset
+   environment variables onthe parallel workers
+ 
+ * On Unix, the _communication latency_ between the main R session and
+   the parallel workers is not much smaller when using
+   `makeClusterPSOCK()`
+--&gt;
 &lt;h2 id=&#34;makeclusterpsock-rscript--&#34;&gt;makeClusterPSOCK(&amp;hellip;, rscript = &amp;ldquo;*&amp;rdquo;)&lt;/h2&gt;
 &lt;p&gt;Argument &lt;code&gt;rscript&lt;/code&gt; of &lt;code&gt;makeClusterPSOCK()&lt;/code&gt; can be used to control
 exactly which &lt;code&gt;Rscript&lt;/code&gt; executable is used to launch the parallel
@@ -2039,8 +2159,19 @@ as above, I get:&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If you&amp;rsquo;re using &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; with &lt;code&gt;plan(multisession)&lt;/code&gt; or
 &lt;code&gt;plan(cluster)&lt;/code&gt;, you&amp;rsquo;re already benefitting from the performance gain,
 because those rely on &lt;code&gt;parallelly::makeClusterPSOCK()&lt;/code&gt; internally.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+avoid a quite large latency in the communication between parallel workers and the main R session
+ 
+```r
+gg &lt;- plot(res) + labs(x = element_blank()) + theme(text = element_text(size = 20)) + theme(legend.position = &#34;none&#34;)
+ggsave(&#34;parallelly_faster_turnarounds-figure.png&#34;, plot = gg, width = 7.0, height = 5.0)
+```
+
+&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/parallelly_faster_turnarounds-figure.png&#34; alt=&#34;...&#34; style=&#34;width: 65%;&#34;/&gt;&lt;br/&gt;
+&lt;/center&gt;
+&lt;small&gt;&lt;em&gt;Figure: ...&lt;br/&gt;&lt;/em&gt;&lt;/small&gt;
+--&gt;
 &lt;p&gt;(**) &lt;em&gt;Technical details&lt;/em&gt;: Options &lt;code&gt;socketOptions&lt;/code&gt; sets the default
 value of argument &lt;code&gt;options&lt;/code&gt; of &lt;code&gt;base::socketConnection()&lt;/code&gt;.  The
 default is &lt;code&gt;NULL&lt;/code&gt;, but if we set it to &lt;code&gt;&amp;quot;no-delay&amp;quot;&lt;/code&gt;, the created TCP
@@ -2074,8 +2205,12 @@ set to a port number.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;For all other bug fixes and updates, please see &lt;a href=&#34;https://parallelly.futureverse.org/news/index.html&#34;&gt;NEWS&lt;/a&gt;.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/parallelly_faster_turnarounds.png&#34; alt=&#34;...&#34; style=&#34;width: 65%;&#34;/&gt;&lt;br/&gt;
+&lt;/center&gt;
+&lt;small&gt;&lt;em&gt;Figure: Our parallel results are now turned around much faster on Linux than before.&lt;br/&gt;&lt;/em&gt;&lt;/small&gt;
+--&gt;
 &lt;p&gt;Over and out!&lt;/p&gt;
 &lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
 &lt;ul&gt;
@@ -2083,8 +2218,24 @@ set to a port number.&lt;/p&gt;
 &lt;li&gt;&lt;strong&gt;future&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/future&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://future.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;future.apply&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=future.apply&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/future.apply&#34;&gt;GitHub&lt;/a&gt;, &lt;a href=&#34;https://future.apply.futureverse.org&#34;&gt;pkgdown&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+nworkers &lt;- 4L
+cl_parallel   &lt;- parallel::makeCluster(nworkers)
+cl_parallelly &lt;- parallelly::makeClusterPSOCK(nworkers)
+
+plan(cluster, workers = cl_parallel)
+stats &lt;- bench::mark(iterations = 100L,
+    parallel = { f &lt;- cluster(iris, workers = cl_parallel); value(f) },
+  parallelly = { f &lt;- cluster(iris, workers = cl_parallelly); value(f) }
+)
+
+plan(cluster, workers = cl_parallelly)
+stats2 &lt;- bench::mark(iterations = 10L,
+  parallelly = { f &lt;- future(iris); value(f) }
+)
+
+stats &lt;- rbind(stats1, stats2)
+--&gt;
 </description>
     </item>
     
@@ -2095,7 +2246,10 @@ set to a port number.&lt;/p&gt;
       
       <guid>https://www.jottr.org/2021/08/23/matrixstats-gsoc-2021/</guid>
       <description>&lt;p&gt;&lt;em&gt;Author: Angelina Panagopoulou, GSoC student developer, undergraduate in the Department of Informatics &amp;amp; Telecommunications (DIT), University of Athens, Greece&lt;/em&gt;&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/2048px-GSoC_logo.svg.png&#34; alt=&#34;Google Summer of Code logo&#34; style=&#34;width: 40%&#34;/&gt;
+&lt;!-- Image source: https://commons.wikimedia.org/wiki/File:GSoC_logo.svg --&gt;
+&lt;/center&gt;
 &lt;p&gt;We are glad to announce recent CRAN releases of &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=matrixStats&#34;&gt;matrixStats&lt;/a&gt;&lt;/strong&gt; with support for handling and returning name attributes.  This feature is added to make &lt;strong&gt;matrixStats&lt;/strong&gt; functions handle names in the same manner as the corresponding base R functions. In particular, the behavior of &lt;strong&gt;matrixStats&lt;/strong&gt; functions is now the same as the &lt;code&gt;apply()&lt;/code&gt; function in R, resolving previous lack of, or inconsistent, handling of row and column names. The added support for &lt;code&gt;names&lt;/code&gt; and &lt;code&gt;dimnames&lt;/code&gt; attributes has already reached a wide, active user base, while at the same time we expect to attract users and developers who lack this feature and therefore could not use &lt;strong&gt;matrixStats&lt;/strong&gt; package for their needs.&lt;/p&gt;
 &lt;p&gt;The &lt;strong&gt;matrixStats&lt;/strong&gt; package provides high-performing functions operating on rows and columns of matrices. These functions are optimized such that both memory use and processing time are minimized. In order to minimize the overhead of handling name attributes, the naming support is implemented in native (C) code, where possible. In &lt;strong&gt;matrixStats&lt;/strong&gt; (&amp;gt;= 0.60.0), handling of row and column names is optional.  This is done to allow for maximum performance where needed.  In addition, in order to avoid breaking some scripts and packages that rely on the previous semi-inconsistent behavior of functions, special care has been taken to ensure backward compatibility by default for the time being. We have validated the correctness of these newly implemented features by extending existing package tests to check name attributes, measuring the code coverage with the &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=covr&#34;&gt;covr&lt;/a&gt;&lt;/strong&gt; package, and checking all 358 reverse-dependency packages using the &lt;strong&gt;&lt;a href=&#34;https://github.com/r-lib/revdepcheck&#34;&gt;revdepcheck&lt;/a&gt;&lt;/strong&gt; package.&lt;/p&gt;
 &lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
@@ -2188,7 +2342,12 @@ Department of Informatics &amp;amp; Telecommunications (DIT) in University of At
 &lt;p&gt;If you&amp;rsquo;re curious what &lt;strong&gt;progressr&lt;/strong&gt; is about, have a look at my &lt;a href=&#34;https://www.jottr.org/2020/07/04/progressr-erum2020-slides/&#34;&gt;e-Rum 2020 presentation&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&#34;progress-updates-in-rstudios-job-interface&#34;&gt;Progress updates in RStudio&amp;rsquo;s job interface&lt;/h2&gt;
 &lt;p&gt;If you&amp;rsquo;re using RStudio Console, you can now report on progress in the RStudio&amp;rsquo;s job interface as long as the progress originates from a &lt;strong&gt;progressr&lt;/strong&gt;-signalling function.  I’ve shown an example of this in Figure 1.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;figure style=&#34;margin-top: 3ex;&#34;&gt;
+&lt;img src=&#34;https://www.jottr.org/post/progressr-rstudio.png&#34; alt=&#34;A screenshot of the upper part of the RStudio Console panel.  Below the title bar, which says &#39;R 4.1.0 ~/&#39;, there is a row with the text &#39;Console 05:50:51 PM&#39; left of a green progress bar at 30% followed by the text &#39;0:03&#39;.  Below these two lines are the R commands called this far, which are the same as in the below example. Following the commands, is output &#39;M: Added value 1&#39;,  &#39;M: Added value 2&#39;, and  &#39;M: Added value 3&#39;, from the first steps that have completed this far.&#34;/&gt;
+&lt;figcaption&gt;
+Figure 1: The RStudio job interface can show progress bars and we can use it with **progressr**.  The progress bar title - &#34;Console 05:50:51 PM&#34; - shows at what time the progress began.  The &#39;0:03&#39; shows for how long the progress has been running - here 3 seconds.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;p&gt;To try this yourself, run the below in the RStudio Console.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(progressr)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;handlers&lt;/span&gt;(global &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TRUE&lt;/span&gt;)
@@ -2208,7 +2367,21 @@ Department of Informatics &amp;amp; Telecommunications (DIT) in University of At
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  })
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;})
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;will start out as in the left panel of Figure 2, and, as soon as the first progress signal is received, the &amp;lsquo;detail&amp;rsquo; part is updated with &lt;code&gt;x=1&lt;/code&gt; as shown in the right panel.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;figure style=&#34;margin-top: 3ex;&#34;&gt;
+&lt;table style=&#34;margin: 1ex;&#34;&gt;
+&lt;tr style=&#34;margin: 1ex;&#34;&gt;
+&lt;td&gt;
+&lt;img src=&#34;https://www.jottr.org/post/withProgressShiny_A_x=0.png&#34; alt=&#34;A Shiny progress bar panel with a progress bar at 0% on top, with &#39;Calculation in progress&#39; written in a bold large font, with &#39;Starting ...&#39; written in a normal small font below.&#34;/&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;https://www.jottr.org/post/withProgressShiny_A_x=1.png&#34; alt=&#34;A Shiny progress bar panel with a progress bar at 10% on top, with &#39;Calculation in progress&#39; written in a bold large font, with &#39;x=1&#39; written in a normal small font below.&#34;/&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;figcaption&gt;
+Figure 2: A Shiny progress panel that start out with the &#39;message&#39; part displaying &#34;Calculation in progress&#34; and the &#39;detail&#39; part displaying &#34;Starting ...&#34; (left), and whose &#39;detail&#39; part is updated to &#34;x=1&#34; (right) as soon the first progress update comes in.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;p&gt;Prior to this new release, the default behavior was to update the &amp;lsquo;message&amp;rsquo; part of the Shiny progress panel.  To revert to the old behavior, set argument &lt;code&gt;inputs&lt;/code&gt; as in:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;X &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;10&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;withProgressShiny&lt;/span&gt;(message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;Starting ...&amp;#34;&lt;/span&gt;,
@@ -2221,7 +2394,21 @@ Department of Informatics &amp;amp; Telecommunications (DIT) in University of At
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  })
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}, inputs &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;list&lt;/span&gt;(message &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;message&amp;#34;&lt;/span&gt;, detail &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;NULL&lt;/span&gt;))
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This results in what you see in Figure 3.  I think that the new behavior, as shown in Figure 2, looks better and makes more sense.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;figure style=&#34;margin-top: 3ex;&#34;&gt;
+&lt;table style=&#34;margin: 1ex;&#34;&gt;
+&lt;tr style=&#34;margin: 1ex;&#34;&gt;
+&lt;td&gt;
+&lt;img src=&#34;https://www.jottr.org/post/withProgressShiny_B_x=0.png&#34; alt=&#34;A Shiny progress bar panel with a progress bar at 0% on top, with &#39;Starting ...&#39; written in a bold large font, with &#39;Calculation in progress&#39; written to the right of it and wrapping onto the next row.&#34;/&gt;
+&lt;/td&gt;
+&lt;td&gt;
+&lt;img src=&#34;https://www.jottr.org/post/withProgressShiny_B_x=1.png&#34; alt=&#34;A Shiny progress bar panel with a progress bar at 10% on top, with &#39;x=1&#39; written in a bold large font, with &#39;Calculation in progress&#39; written to the right of it.&#34;/&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;figcaption&gt;
+Figure 3: A Shiny progress panel that start out with the &#39;message&#39; part displaying &#34;Starting ...&#34; and the &#39;detail&#39; part displaying &#34;Calculation in progress&#34; (left), and whose &#39;message&#39; part is updated to &#34;x=1&#34; (right) as soon the first progress update comes in.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;h2 id=&#34;update-to-a-specific-amount-of-total-progress&#34;&gt;Update to a specific amount of total progress&lt;/h2&gt;
 &lt;p&gt;When using &lt;strong&gt;progressr&lt;/strong&gt;, we start out by creating a progressor function that we then call to signal progress.  For example, if we do:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;my_slow_fun &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;function&lt;/span&gt;() {
@@ -2289,7 +2476,10 @@ Department of Informatics &amp;amp; Telecommunications (DIT) in University of At
 &lt;/ul&gt;
 &lt;h2 id=&#34;faster-setup-of-local-parallel-workers&#34;&gt;Faster setup of local, parallel workers&lt;/h2&gt;
 &lt;p&gt;In R 4.0.0, which was released in May 2020, &lt;code&gt;parallel::makeCluster(n)&lt;/code&gt; gained the power of setting up the &lt;code&gt;n&lt;/code&gt; local cluster nodes all at the same time, which greatly reduces to total setup time.  Previously, because it was setting up the workers one after the other, which involved a lot of waiting for each worker to get ready.  You can read about the details in the &lt;a href=&#34;https://developer.r-project.org/Blog/public/2020/03/17/socket-connections-update/index.html&#34;&gt;Socket Connections Update&lt;/a&gt; blog post by Tomas Kalibera and Luke Tierney on 2020-03-17.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/parallelly_faster_setup_of_cluster.png&#34; alt=&#34;An X-Y graph with &#39;Total setup time (s)&#39; on the vertical axis ranging from 0 to 55, and &#39;Number of cores&#39; on the horizontal axis ranging from 0 to 128. Two smooth curves, which look very linear with intersection at the origin and unnoticeable variance, are drawn for the two setup strategies &#39;sequential&#39; and &#39;parallel&#39;. The &#39;sequential&#39; line is much steeper.&#34; style=&#34;width: 65%;&#34;/&gt;&lt;br/&gt;
+&lt;/center&gt;
+&lt;small&gt;&lt;em&gt;Figure: The total setup time versus the number of local cluster workers for the &#34;sequential&#34; setup strategy (red) and the new &#34;parallel&#34; strategy (turquoise). Data were collected on a 128-core Linux machine.&lt;br/&gt;&lt;/em&gt;&lt;/small&gt;
 &lt;p&gt;With this release of &lt;strong&gt;parallelly&lt;/strong&gt;, &lt;code&gt;parallelly::makeClusterPSOCK(n)&lt;/code&gt; gained the same skills.  I benchmarked the new, default &amp;ldquo;parallel&amp;rdquo; setup strategy against the previous &amp;ldquo;sequential&amp;rdquo; strategy on a CentOS 7 Linux machine with 128 CPU cores and 512 GiB RAM while the machine was idle.  I ran these benchmarks five times, which are summarized as smooth curves in the above figure. The variance between the replicate runs is tiny and the smooth curves appear almost linear.  Assuming a linear relationship between setup time and number of cluster workers, a linear fit of gives a speedup of approximately 50 times on this machine.  It took 52 seconds to set up 122 (sic!) workers when using the &amp;ldquo;sequential&amp;rdquo; approach, whereas it took only 1.1 seconds with the &amp;ldquo;parallel&amp;rdquo; approach.  Not surprisingly, rerunning these benchmarks with &lt;code&gt;parallel::makePSOCKcluster()&lt;/code&gt; instead gives nearly identical results.&lt;/p&gt;
 &lt;p&gt;Importantly, the &amp;ldquo;parallel&amp;rdquo; setup strategy, which is the new default, can only be used when setting up parallel workers running on the local machine.  When setting up workers on external or remote machines, the &amp;ldquo;sequential&amp;rdquo; setup strategy will still be used.&lt;/p&gt;
 &lt;p&gt;If you&amp;rsquo;re using &lt;strong&gt;&lt;a href=&#34;https://future.futureverse.org&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; and use&lt;/p&gt;
@@ -2325,7 +2515,12 @@ Department of Informatics &amp;amp; Telecommunications (DIT) in University of At
       <pubDate>Fri, 30 Apr 2021 15:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2021/04/30/parallelly-1.25.0/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/nasa-climate-ice-core-small.jpg&#34; alt=&#34;A 25-cm long ice core is held in front of the camera on a sunny day. The background is an endless snow-covered flat landscape and a bright blue sky.&#34; style=&#34;width: 65%;&#34;/&gt;&lt;br/&gt;
+&lt;small&gt;&lt;em&gt;A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core&lt;br/&gt;
+&lt;small&gt;(Image credit: Ludovic Brucker, NASA&#39;s Goddard Space Flight Center)&lt;/small&gt;
+&lt;/em&gt;&lt;/small&gt;
+&lt;/center&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=parallelly&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; 1.25.0 is on CRAN.  It comes with two major improvements:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -2459,7 +2654,10 @@ learn more about Kubernetes, which I&amp;rsquo;ve done, but note that there&amp;
 troubleshooting tips can be found in my &lt;a href=&#34;https://github.com/paciorek/future-kubernetes&#34;&gt;future-kubernetes&lt;/a&gt; repository.&lt;/p&gt;
 &lt;h2 id=&#34;how-it-works-briefly&#34;&gt;How it works (briefly)&lt;/h2&gt;
 &lt;p&gt;This diagram in Figure 1 outlines the pieces of the setup.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;figure&gt;
+&lt;img src=&#34;https://www.jottr.org/post/k8s.png&#34; alt=&#34;Overview of using future on a Kubernetes cluster&#34; width=&#34;700&#34;/&gt;
+&lt;figcaption style=&#34;font-style: italic;&#34;&gt;Figure 1. Overview of using future on a Kubernetes cluster&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;p&gt;Work on a Kubernetes cluster is divided amongst &lt;em&gt;pods&lt;/em&gt;, which carry out
 the components of your work and can communicate with each other. A pod is
 basically a Linux container. (Strictly speaking a pod can contain multiple
@@ -2583,7 +2781,10 @@ tools such as &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=f
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;output &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;future_sapply&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;40&lt;/span&gt;, &lt;span style=&#34;color:#a6e22e&#34;&gt;function&lt;/span&gt;(i) &lt;span style=&#34;color:#a6e22e&#34;&gt;mean&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;rnorm&lt;/span&gt;(&lt;span style=&#34;color:#ae81ff&#34;&gt;1e7&lt;/span&gt;)), future.seed &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TRUE&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Note that all of this assumes you&amp;rsquo;re working interactively, but you can always reconnect to the RStudio Server instance after closing the browser, and any long-running code should continue running even if you close the browser.&lt;/p&gt;
 &lt;p&gt;Figure 2 shows a screenshot of the RStudio interface.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;figure&gt;
+&lt;img src=&#34;https://www.jottr.org/post/rstudio.png&#34; alt=&#34;RStudio interface, demonstrating use of future commands&#34; width=&#34;700&#34;/&gt;
+&lt;figcaption style=&#34;font-style: italic;&#34;&gt;Figure 2. Screenshot of the RStudio interface&lt;/figcaption&gt;
+&lt;/figure&gt;
 &lt;h3 id=&#34;working-with-files&#34;&gt;Working with files&lt;/h3&gt;
 &lt;p&gt;Note that &lt;code&gt;/home/rstudio&lt;/code&gt; will be your default working directory in RStudio and the RStudio Server process will be running as the user &lt;code&gt;rstudio&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;You can use &lt;code&gt;/tmp&lt;/code&gt; and &lt;code&gt;/home/rstudio&lt;/code&gt; for files, both within RStudio and within code running on the workers, but note that files (even in &lt;code&gt;/home/rstudio&lt;/code&gt;) are not shared between workers nor between the workers and the RStudio Server pod.&lt;/p&gt;
@@ -2758,7 +2959,11 @@ workers as needed based on the number of workers requested via
       <pubDate>Fri, 08 Jan 2021 09:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;width: 40%; margin: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/sign_out_of_service_do_not_use.png&#34; alt=&#34;Sign: Out of Service - Do not use!&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;This is an announcement that &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.BatchJobs&#34;&gt;future.BatchJobs&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;A Future API for Parallel and Distributed Processing using BatchJobs&lt;/em&gt; has been archived on CRAN.  The package has been deprecated for years with a recommendation of using &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.batchtools&#34;&gt;future.batchtools&lt;/a&gt;&lt;/strong&gt; instead.  The latter has been on CRAN since June 2017 and builds upon the &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=batchtools&#34;&gt;batchtools&lt;/a&gt;&lt;/strong&gt; package, which itself supersedes the &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=BatchJobs&#34;&gt;BatchJobs&lt;/a&gt;&lt;/strong&gt; package.&lt;/p&gt;
 &lt;p&gt;To wrap up the three-and-a-half year long life of &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.BatchJobs&#34;&gt;future.BatchJobs&lt;/a&gt;&lt;/strong&gt;, the very last version, 0.17.0, reached CRAN on 2021-01-04 and passed on CRAN checks as of 2020-01-08, when the the package was requested to be formally archived.  All versions ever existing on CRAN can be found at &lt;a href=&#34;https://cran.r-project.org/src/contrib/Archive/future.BatchJobs/&#34;&gt;https://cran.r-project.org/src/contrib/Archive/future.BatchJobs/&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Archiving the &lt;strong&gt;future.BatchJobs&lt;/strong&gt; package will speed up new releases of the &lt;strong&gt;future&lt;/strong&gt; package.  In the past, some of the &lt;strong&gt;future&lt;/strong&gt; releases required internal updates to reverse packages dependencies such as &lt;strong&gt;future.BatchJobs&lt;/strong&gt; to be rolled out on CRAN first in order for &lt;strong&gt;future&lt;/strong&gt; to pass the CRAN incoming checks.&lt;/p&gt;
@@ -2810,7 +3015,12 @@ Henrik&lt;/p&gt;
       <pubDate>Sat, 19 Dec 2020 10:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/12/19/future-eurobioc2020-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;width: 40%; margin: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/LukeZapia_20201218-EuroBioc2020-future_mindmap.jpg&#34; alt=&#34;A hand-drawn summary of Henrik Bengtsson&#39;s future talk at the European Bioconductor Meeting 2020 in the form of a mindmap on a whileboard&#34; style=&#34;border: 1px solid #666;/&gt;
+   &lt;span style=&#34;font-size: 80%; font-style: italic;&#34;&gt;&lt;a href=&#34;https://twitter.com/_lazappi_&#34;&gt;Luke Zappia&lt;/a&gt;&#39;s summary of the talk&lt;/span&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;I presented &lt;em&gt;Future: A Simple, Extendable, Generic Framework for Parallel Processing in R&lt;/em&gt; at the &lt;a href=&#34;https://eurobioc2020.bioconductor.org/&#34;&gt;European Bioconductor Meeting 2020&lt;/a&gt;, which took place online during the week of December 14-18, 2020.&lt;/p&gt;
 &lt;p&gt;You&amp;rsquo;ll find my slides (39 slides + Q&amp;amp;A slides; 35 minutes) below:&lt;/p&gt;
 &lt;ul&gt;
@@ -2848,7 +3058,11 @@ Henrik&lt;/p&gt;
       <pubDate>Thu, 12 Nov 2020 19:30:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/11/12/future-nycmeetup-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;width: 35%; margin: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/poster-for-nycmeetup2020-talk.png&#34; alt=&#34;The official poster for this New York Open Statistical Programming Meetup&#34;/&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;I presented &lt;em&gt;Future: Simple, Friendly Parallel Processing for R&lt;/em&gt; (67 minutes; 59 slides + Q&amp;amp;A slides) at &lt;a href=&#34;https://nyhackr.org/&#34;&gt;New York Open Statistical Programming Meetup&lt;/a&gt;, on November 9, 2020:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/1E2Gcm33_uMrhQL7jLzodlMXUefnSshHUdYsoXWAkFYE/edit?usp=sharing&#34;&gt;HTML&lt;/a&gt; (incremental Google Slides; requires online access)&lt;/li&gt;
@@ -2884,7 +3098,9 @@ Henrik&lt;/p&gt;
       <pubDate>Fri, 06 Nov 2020 13:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/11/06/future-1.20.1-the-future-just-got-a-bit-brighter/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;center&gt;
+![&#34;Short-loop artsy animation: Flying through colorful, sparkling lights positioned in circles with star-like lights on a black background in the distance&#34;](/post/sparkles-through-space.gif)
+&lt;/center&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; 1.20.1 is on CRAN.  It adds some new features, deprecates old and unwanted behaviors, adds a couple of vignettes, and fixes a few bugs.&lt;/p&gt;
 &lt;h1 id=&#34;interactive-debugging&#34;&gt;Interactive debugging&lt;/h1&gt;
 &lt;p&gt;First out among the new features, and a long-running feature request, is the addition of argument &lt;code&gt;split&lt;/code&gt; to &lt;code&gt;plan()&lt;/code&gt;, which allows us to split, or &amp;ldquo;tee&amp;rdquo;, any output produced by futures.&lt;/p&gt;
@@ -3027,8 +3243,16 @@ Henrik&lt;/p&gt;
       <pubDate>Wed, 04 Nov 2020 18:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;blockquote cite=&#34;https://www.merriam-webster.com/dictionary/parallelly&#34; style=&#34;font-size: 150%&#34;&gt;
+&lt;strong&gt;parallelly&lt;/strong&gt; adverb&lt;br&gt;
+par·​al·​lel·​ly | \  ˈpa-rə-le(l)li \ &lt;br&gt; 
+Definition: in a parallel manner
+&lt;/blockquote&gt;
+&lt;blockquote cite=&#34;https://www.merriam-webster.com/dictionary/future&#34; style=&#34;font-size: 150%&#34;&gt;
+&lt;strong&gt;future&lt;/strong&gt; noun&lt;br&gt;
+fu·​ture | \ ˈfyü-chər \ &lt;br&gt; 
+Definition: existing or occurring at a later time
+&lt;/blockquote&gt;
 &lt;p&gt;I&amp;rsquo;ve cleaned up around the house - with the recent release of &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; 1.20.1, the package gained a dependency on the new &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=parallelly&#34;&gt;parallelly&lt;/a&gt;&lt;/strong&gt; package.  Now, if you&amp;rsquo;re like me and concerned about bloating package dependencies, I&amp;rsquo;m sure you immediately wondered why I chose to introduce a new dependency.  I&amp;rsquo;ll try to explain this below, but let me be start by clarifying a few things:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -3061,7 +3285,9 @@ Henrik&lt;/p&gt;
 &lt;p&gt;For users of the future framework, maybe the most important reason for this migration is &lt;em&gt;speedier implementation of improvements and feature requests for the &lt;strong&gt;future&lt;/strong&gt; package and the future ecosystem&lt;/em&gt;.  Over the years, many discussions around enhancing &lt;strong&gt;future&lt;/strong&gt; came down to enhancing the functions that are now part of the &lt;strong&gt;parallelly&lt;/strong&gt; package, especially for adding new features to &lt;code&gt;makeClusterPSOCK()&lt;/code&gt;, which is the internal work horse for setting up &amp;lsquo;multisession&amp;rsquo; parallel workers but also used explicitly by many when setting up other types of &amp;lsquo;cluster&amp;rsquo; workers.
 The roles and responsibility of the &lt;strong&gt;parallelly&lt;/strong&gt; and &lt;strong&gt;future&lt;/strong&gt; packages are well separated, which should make it straightforward to further improve on these functions.  For example, if we want to introduce a new argument to &lt;code&gt;makeClusterPSOCK()&lt;/code&gt;, or change one of its defaults (e.g. use the faster &lt;code&gt;useXDR = FALSE&lt;/code&gt;), we can now discuss and test them quicker and often without having to bring in futures into the discussion.  Don&amp;rsquo;t worry - &lt;strong&gt;parallelly&lt;/strong&gt; will undergo the same, &lt;a href=&#34;https://www.jottr.org/2020/11/04/trust-the-future/&#34;&gt;strict validation process as the &lt;strong&gt;future&lt;/strong&gt; package&lt;/a&gt; does to avoid introducing breaking changes to the future framework.  For example, reverse-dependency checks will be run on first (e.g. &lt;strong&gt;future&lt;/strong&gt;), and second (e.g. &lt;strong&gt;future.apply&lt;/strong&gt;, &lt;strong&gt;furrr&lt;/strong&gt;, &lt;strong&gt;doFuture&lt;/strong&gt;, &lt;strong&gt;drake&lt;/strong&gt;, &lt;strong&gt;mlr3&lt;/strong&gt;, &lt;strong&gt;plumber&lt;/strong&gt;, &lt;strong&gt;promises&lt;/strong&gt;,and  &lt;strong&gt;Seurat&lt;/strong&gt;) generation dependencies.&lt;/p&gt;
 &lt;p&gt;Happy parallelly futuring!&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;small&gt;
+&lt;sup&gt;*&lt;/sup&gt; I&#39;ll try to make another post in a couple of days covering the new features that comes with **future** 1.20.1. Stay tuned.
+&lt;/small&gt;
 &lt;h2 id=&#34;links&#34;&gt;Links&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;future&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/future&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
@@ -3076,7 +3302,9 @@ The roles and responsibility of the &lt;strong&gt;parallelly&lt;/strong&gt; and 
       <pubDate>Wed, 04 Nov 2020 14:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/11/04/trust-the-future/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;center&gt;
+&lt;img src=&#34;https://www.jottr.org/post/you_dont_have_to_worry_about_your_future.jpg&#34; alt=&#34;A fortune cookie that reads &#39;You do not have to worry about your future&#39;&#34; style=&#34;border: solid 1px; max-width: 70%&#34;/&gt;
+&lt;/center&gt;
 &lt;p&gt;Each time we use R to analyze data, we rely on the assumption that functions used produce correct results.  If we can&amp;rsquo;t make this assumption, we have to spend a lot of time validating every nitty detail.  Luckily, we don&amp;rsquo;t have to do this.  There are many reasons for why we can comfortably use R for our analyses and some of them are unique to R.  Here are some I could think of while writing this blog post - I&amp;rsquo;m sure I forgot something:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -3201,7 +3429,10 @@ of the &lt;em&gt;Future API&lt;/em&gt; and the future ecosystem at large.&lt;/p&
       <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;center&gt;
+![&#34;Animation of green Japanese Kana symbols raining down in parallel on a black background inspired by The Matrix movie&#34;](/post/Digital_rain_animation_medium_letters_clear.gif)
+&lt;small&gt;&lt;em&gt;Parallel &#39;Digital Rain&#39; by [Jahobr](https://commons.wikimedia.org/w/index.php?curid=63377054)&lt;/em&gt;&lt;/small&gt;
+&lt;/center&gt;
 &lt;p&gt;After two-and-a-half months, &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; 1.19.1 is now on CRAN.  As usual, there are some bug fixes and minor improvements here and there (&lt;a href=&#34;https://cran.r-project.org/web/packages/future/NEWS&#34;&gt;NEWS&lt;/a&gt;), including things needed by the next version of &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=furrr&#34;&gt;furrr&lt;/a&gt;&lt;/strong&gt;.  For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, &lt;code&gt;future::availableCores()&lt;/code&gt; will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.&lt;/p&gt;
 &lt;p&gt;With all that said, the most significant update is that &lt;strong&gt;an informative warning is now given if random numbers were produced unexpectedly&lt;/strong&gt;.  Here &amp;ldquo;unexpectedly&amp;rdquo; means that the developer did not declare that their code needs random numbers.&lt;/p&gt;
 &lt;p&gt;If you are just interested in the updates regarding random numbers and how to make sure your code is compliant, skip down to the section on &amp;lsquo;&lt;a href=&#34;#random-number-generation-in-the-future-framework&#34;&gt;Random Number Generation in the Future Framework&lt;/a&gt;&amp;rsquo;.  If you are curious how R generates random numbers and how that matters when we use parallel processing, keep on reading.&lt;/p&gt;
@@ -3359,7 +3590,9 @@ In statistics, we need random numbers in simulation studies, bootstrap, and perm
       <pubDate>Mon, 21 Sep 2020 18:45:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;center&gt;
+![&#34;An animated close-up of a spinning roulette wheel&#34;](/post/DistortedRecentEland_50pct.gif)
+&lt;/center&gt;
 &lt;p&gt;If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session.  Add the following to your &lt;code&gt;~/.Rprofile&lt;/code&gt;(*):&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;if &lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;interactive&lt;/span&gt;()) {
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;  &lt;span style=&#34;color:#a6e22e&#34;&gt;invisible&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;addTaskCallback&lt;/span&gt;(&lt;span style=&#34;color:#a6e22e&#34;&gt;local&lt;/span&gt;({
@@ -3479,7 +3712,12 @@ name of the function and the index of the chunk, e.g. &amp;lsquo;future_lapply-3
       <pubDate>Sat, 04 Jul 2020 17:30:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/07/04/progressr-erum2020-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;width: 25%; margin: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/three_in_chinese.gif&#34; alt=&#34;Animated strokes for writing three in Chineses; one, two, three strokes&#34;/&gt;
+   &lt;span style=&#34;font-size: 80%; font-style: italic;&#34;&gt;Source: &lt;a href=&#34;https://en.wiktionary.org/wiki/File:%E4%B8%89-order.gif&#34;&gt;Wiktionary.org&lt;/a&gt;&lt;/span&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;I presented &lt;em&gt;Progressr: An Inclusive, Unifying API for Progress Updates&lt;/em&gt; (15 minutes; 20 slides) at &lt;a href=&#34;https://2020.erum.io/&#34;&gt;e-Rum 2020&lt;/a&gt;, on June 17, 2020:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.jottr.org/presentations/eRum2020/BengtssonH_20200617-progressr-An_Inclusive,_Unifying_API_for_Progress_Updates.abstract.txt&#34;&gt;Abstract&lt;/a&gt;&lt;/li&gt;
@@ -3516,14 +3754,19 @@ name of the function and the index of the chunk, e.g. &amp;lsquo;future_lapply-3
       <pubDate>Sat, 01 Feb 2020 19:30:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;div style=&#34;width: 25%; margin: 2ex; float: right;&#34;/&gt;
+ &lt;center&gt;
+   &lt;img src=&#34;https://www.jottr.org/post/future-logo.png&#34; alt=&#34;The future logo&#34;/&gt;
+   &lt;span style=&#34;font-size: 80%; font-style: italic;&#34;&gt;Design: &lt;a href=&#34;https://twitter.com/embiggenData&#34;&gt;Dan LaBar&lt;/a&gt;&lt;/span&gt;
+ &lt;/center&gt;
+&lt;/div&gt;
 &lt;p&gt;I presented &lt;em&gt;Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New?&lt;/em&gt; at &lt;a href=&#34;https://rstudio.com/conference/&#34;&gt;rstudio::conf 2020&lt;/a&gt; in San Francisco, USA, on January 29, 2020.  Below are the slides for my talk (17 slides; ~18+2 minutes):&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://docs.google.com/presentation/d/1Wn5S91UGIOrc4IyXoV074ij5vGF8I0Km0tCfintyIa4/present?includes_info_params=1&amp;amp;eisi=CM2mhIXwsecCFQyuJgodBQAJ8A#slide=id.p&#34;&gt;HTML&lt;/a&gt; (incremental Google Slides; requires online access)&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://www.jottr.org/presentations/rstudioconf2020/BengtssonH_20200129-future-rstudioconf2020.pdf&#34;&gt;PDF&lt;/a&gt; (flat slides)&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;https://resources.rstudio.com/rstudio-conf-2020/future-simple-async-parallel-amp-distributed-processing-in-r-whats-next-henrik-bengtsson&#34;&gt;Video&lt;/a&gt; with closed captions (official rstudio::conf recording)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;First of all, a big thank you goes out to Dan LaBar (&lt;!-- raw HTML omitted --&gt;@embiggenData&lt;!-- raw HTML omitted --&gt;) for proposing and contributing the original design of the future hex sticker. All credits to Dan. (You can blame me for the tweaked background.)&lt;/p&gt;
+&lt;p&gt;First of all, a big thank you goes out to Dan LaBar (&lt;a href=&#34;https://twitter.com/embiggenData&#34;&gt;@embiggenData&lt;/a&gt;) for proposing and contributing the original design of the future hex sticker. All credits to Dan. (You can blame me for the tweaked background.)&lt;/p&gt;
 &lt;p&gt;This was my first rstudio::conf and it was such a pleasure to be part of it.  I&amp;rsquo;d like to thank &lt;a href=&#34;https://blog.rstudio.com/2020/01/29/rstudio-pbc&#34;&gt;RStudio, PBC&lt;/a&gt; for the invitation to speak and everyone who contributed to the conference - organizers, staff, speakers, poster presenters, and last but not the least, all the wonderful participants.  Each one of you makes our R community what it is today.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Happy futuring!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;- Henrik&lt;/p&gt;
@@ -3562,9 +3805,11 @@ name of the function and the index of the chunk, e.g. &amp;lsquo;future_lapply-3
       
       <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://www.jottr.org/post/lazy_dog_in_park.gif&#34; alt=&#34;&amp;amp;ldquo;Lazy dog does not want to leave park&amp;amp;rdquo;&#34;&gt;
-&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;No dogs were harmed while making this release&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;small&gt;&lt;em&gt;No dogs were harmed while making this release&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; 1.15.0 is now on CRAN, accompanied by a recent, related update of &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.callr&#34;&gt;future.callr&lt;/a&gt;&lt;/strong&gt; 0.5.0.  The main update is a change to the Future API:&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+ &lt;center&gt;
+  `resolved()` will now also launch lazy futures
+ &lt;/center&gt;
 &lt;p&gt;Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves.  This change in behavior helps us in cases where we create lazy futures upfront;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;fs &lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;lapply&lt;/span&gt;(X, future, lazy &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;TRUE&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Such futures remain dormant until we call &lt;code&gt;value()&lt;/code&gt; on them, or, as of this release, when we call &lt;code&gt;resolved()&lt;/code&gt; on them.  Contrary to &lt;code&gt;value()&lt;/code&gt;, &lt;code&gt;resolved()&lt;/code&gt; is a non-blocking function that allows us to check in on one or more futures to see if they are resolved or not.  So, we can now do:&lt;/p&gt;
@@ -3604,7 +3849,7 @@ name of the function and the index of the chunk, e.g. &amp;lsquo;future_lapply-3
 &lt;li&gt;&lt;strong&gt;future.apply&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=future.apply&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/future.apply&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;doFuture&lt;/strong&gt; package: &lt;a href=&#34;https://cran.r-project.org/package=doFuture&#34;&gt;CRAN&lt;/a&gt;, &lt;a href=&#34;https://github.com/HenrikBengtsson/doFuture&#34;&gt;GitHub&lt;/a&gt; (a &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=foreach&#34;&gt;foreach&lt;/a&gt;&lt;/strong&gt; adapter)&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;progressr&lt;/strong&gt; package: &lt;a href=&#34;https://github.com/HenrikBengtsson/progressr&#34;&gt;GitHub&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;!-- raw HTML omitted --&gt;&amp;ldquo;So, what happened to the dog?&amp;quot;&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.videoman.gr/en/70385&#34; target=&#34;_blank&#34;&gt;&amp;ldquo;So, what happened to the dog?&amp;quot;&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 </description>
     </item>
@@ -3615,7 +3860,7 @@ name of the function and the index of the chunk, e.g. &amp;lsquo;future_lapply-3
       <pubDate>Fri, 12 Jul 2019 16:00:00 +0200</pubDate>
       
       <guid>https://www.jottr.org/2019/07/12/future-user2019-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;img src=&#34;https://www.jottr.org/post/useR2019-logo_400x400.jpg&#34; alt=&#34;The useR 2019 logo&#34; style=&#34;width: 30%; float: right; margin: 2ex;&#34;/&gt;
 &lt;p&gt;Below are the slides for my &lt;em&gt;Future: Simple Parallel and Distributed Processing in R&lt;/em&gt; that I presented at the &lt;a href=&#34;https://user2019.r-project.org/&#34;&gt;useR! 2019&lt;/a&gt; conference in Toulouse, France on July 9-12, 2019.&lt;/p&gt;
 &lt;p&gt;My talk (25 slides; ~15+3 minutes):&lt;/p&gt;
 &lt;ul&gt;
@@ -3713,7 +3958,7 @@ I think, therefore I R.
       <pubDate>Thu, 16 May 2019 12:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2019/05/16/future-satrdayla2019-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;img src=&#34;https://www.jottr.org/post/SatRdayLA2019-Logo.png&#34; alt=&#34;The satRday LA 2019 logo&#34; style=&#34;width: 30%; float: right; margin: 2ex;&#34;/&gt;
 &lt;p&gt;A bit late but here are my slides on &lt;em&gt;Future: Friendly Parallel Processing in R for Everyone&lt;/em&gt; that I presented at the &lt;a href=&#34;https://losangeles2019.satrdays.org/&#34;&gt;satRday LA 2019&lt;/a&gt; conference in Los Angeles, CA, USA on April 6, 2019.&lt;/p&gt;
 &lt;p&gt;My talk (33 slides; ~45 minutes):&lt;/p&gt;
 &lt;ul&gt;
@@ -3759,7 +4004,7 @@ I think, therefore I R.
       <pubDate>Thu, 07 Mar 2019 12:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2019/03/07/future-satrdayparis2019-slides/</guid>
-      <description>&lt;!-- raw HTML omitted --&gt;
+      <description>&lt;img src=&#34;https://www.jottr.org/post/satRdayParis2019-logo.png&#34; alt=&#34;The satRday Paris 2019 logo&#34; style=&#34;width: 30%; float: right; margin: 2ex;&#34;/&gt;
 &lt;p&gt;Below are links to my slides from my talk on &lt;em&gt;Future: Friendly Parallel Processing in R for Everyone&lt;/em&gt; that I presented last month at the &lt;a href=&#34;https://paris2019.satrdays.org/&#34;&gt;satRday Paris 2019&lt;/a&gt; conference in Paris, France (February 23, 2019).&lt;/p&gt;
 &lt;p&gt;My talk (32 slides; ~40 minutes):&lt;/p&gt;
 &lt;ul&gt;
@@ -4307,8 +4552,8 @@ Hostname: n3 (x = 5)
       <guid>https://www.jottr.org/2018/07/21/suppressgraphics/</guid>
       <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=R.devices&#34;&gt;R.devices&lt;/a&gt;&lt;/strong&gt; 2.16.0 - &lt;em&gt;Unified Handling of Graphics Devices&lt;/em&gt; - is on CRAN.  With this release, you can now easily &lt;strong&gt;suppress unwanted graphics&lt;/strong&gt;, e.g. graphics produced by one of those do-everything-in-one-call functions that we all bump into once in a while.  To suppress graphics, the &lt;strong&gt;R.devices&lt;/strong&gt; package provides graphics device &lt;code&gt;nulldev()&lt;/code&gt;, and function &lt;code&gt;suppressGraphics()&lt;/code&gt;, which both send any produced graphics into the void.  This works on all operating systems, including Windows.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://www.jottr.org/post/guillaume_nery_into_the_void_2.gif&#34; alt=&#34;&amp;amp;ldquo;Into the void&amp;amp;rdquo;&#34;&gt;
-&lt;!-- raw HTML omitted --&gt;&lt;em&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uQITWbAaDx0&#34;&gt;Guillaume Nery base jumping at Dean&amp;rsquo;s Blue Hole, filmed on breath hold by Julie Gautier&lt;/a&gt;&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;small&gt;&lt;em&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=uQITWbAaDx0&#34;&gt;Guillaume Nery base jumping at Dean&amp;rsquo;s Blue Hole, filmed on breath hold by Julie Gautier&lt;/a&gt;&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;
+&lt;!-- GIF from https://blog.francetvinfo.fr/l-instit-humeurs/2013/09/01/vis-ma-vie-dinstit-en-gif-anime-9.html --&gt;
 &lt;h2 id=&#34;examples&#34;&gt;Examples&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(R.devices)
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;nulldev&lt;/span&gt;()
@@ -4394,8 +4639,9 @@ Hostname: n3 (x = 5)
       <guid>https://www.jottr.org/2018/06/23/future.apply_1.0.0/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;https://www.jottr.org/post/future.apply_1.0.0-htop_32cores.png&#34; alt=&#34;0% to 100% utilization&#34;&gt;
 &lt;em&gt;Got compute?&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.apply&#34;&gt;future.apply&lt;/a&gt; 1.0.0 - &lt;em&gt;Apply Function to Elements in Parallel using Futures&lt;/em&gt; - is on CRAN.  With this milestone release, all&lt;!-- raw HTML omitted --&gt;*&lt;!-- raw HTML omitted --&gt; base R apply functions now have corresponding futurized implementations.  This makes it easier than ever before to parallelize your existing &lt;code&gt;apply()&lt;/code&gt;, &lt;code&gt;lapply()&lt;/code&gt;, &lt;code&gt;mapply()&lt;/code&gt;, &amp;hellip; code - just prepend &lt;code&gt;future_&lt;/code&gt; to an apply call that takes a long time to complete. That&amp;rsquo;s it! The default is sequential processing but by using &lt;code&gt;plan(multisession)&lt;/code&gt; it&amp;rsquo;ll run in parallel.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.apply&#34;&gt;future.apply&lt;/a&gt; 1.0.0 - &lt;em&gt;Apply Function to Elements in Parallel using Futures&lt;/em&gt; - is on CRAN.  With this milestone release, all&lt;sup&gt;*&lt;/sup&gt; base R apply functions now have corresponding futurized implementations.  This makes it easier than ever before to parallelize your existing &lt;code&gt;apply()&lt;/code&gt;, &lt;code&gt;lapply()&lt;/code&gt;, &lt;code&gt;mapply()&lt;/code&gt;, &amp;hellip; code - just prepend &lt;code&gt;future_&lt;/code&gt; to an apply call that takes a long time to complete. That&amp;rsquo;s it! The default is sequential processing but by using &lt;code&gt;plan(multisession)&lt;/code&gt; it&amp;rsquo;ll run in parallel.&lt;/p&gt;
+&lt;br&gt;
+_Table: All future\_nnn() functions in the **future.apply** package.  Each function takes the same arguments as the corresponding **base** function does._&lt;br&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -4405,44 +4651,44 @@ Hostname: n3 (x = 5)
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;apply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;apply()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;Apply Functions Over Array Margins&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;lapply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;lapply()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;Apply a Function over a List or Vector&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;sapply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;sapply()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;- &amp;quot; -&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;vapply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;vapply()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;- &amp;quot; -&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;replicate()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;replicate()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;- &amp;quot; -&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;mapply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;mapply()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;Apply a Function to Multiple List or Vector Arguments&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;Map()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;Map()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;- &amp;quot; -&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;eapply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;eapply()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;Apply a Function Over Values in an Environment&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;&lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;tapply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;future_&lt;strong&gt;tapply()&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
 &lt;td&gt;Apply a Function Over a Ragged Array&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;&lt;!-- raw HTML omitted --&gt;*&lt;!-- raw HTML omitted --&gt; &lt;!-- raw HTML omitted --&gt;future_&lt;!-- raw HTML omitted --&gt;rapply()&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt; - Recursively Apply a Function to a List - is yet to be implemented.&lt;/p&gt;
+&lt;p&gt;&lt;sup&gt;*&lt;/sup&gt; &lt;code&gt;future_&lt;strong&gt;rapply()&lt;/strong&gt;&lt;/code&gt; - Recursively Apply a Function to a List - is yet to be implemented.&lt;/p&gt;
 &lt;h2 id=&#34;a-motivating-example&#34;&gt;A Motivating Example&lt;/h2&gt;
 &lt;p&gt;In the &lt;strong&gt;parallel&lt;/strong&gt; package there is an example - in &lt;code&gt;?clusterApply&lt;/code&gt; - showing how to perform bootstrap simulations in parallel.  After some small modifications to clarify the steps, it looks like the following:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(parallel)
@@ -4501,15 +4747,15 @@ Hostname: n3 (x = 5)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The difference between the sequential base-R implementation and the &lt;strong&gt;future.apply&lt;/strong&gt; implementation is minimal.  The &lt;strong&gt;future.apply&lt;/strong&gt; package is attached, the parallel plan of four workers is set up, and the &lt;code&gt;apply()&lt;/code&gt; function is replaced by &lt;code&gt;future_apply()&lt;/code&gt;, where we specify &lt;code&gt;future.seed = TRUE&lt;/code&gt; to get statistical sound and numerically reproducible parallel random number generation (RNG).
 More importantly, notice how there is no need to worry about which packages need to be attached on the workers and which global variables need to be exported.  That is all taken care of automatically by the &lt;strong&gt;future&lt;/strong&gt; framework.&lt;/p&gt;
 &lt;h2 id=&#34;qa&#34;&gt;Q&amp;amp;A&lt;/h2&gt;
-&lt;p&gt;Q. &lt;em&gt;What are my options for parallelization?&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Q. &lt;em&gt;What are my options for parallelization?&lt;/em&gt;&lt;br&gt;
 A. Everything in &lt;strong&gt;future.apply&lt;/strong&gt; is processed through the &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt; framework.  This means that all parallelization backends supported by the &lt;strong&gt;parallel&lt;/strong&gt; package are supported out of the box, e.g. on your &lt;strong&gt;local machine&lt;/strong&gt;, and on &lt;strong&gt;local&lt;/strong&gt; or &lt;strong&gt;remote&lt;/strong&gt; ad-hoc &lt;strong&gt;compute clusters&lt;/strong&gt; (also in the &lt;strong&gt;cloud&lt;/strong&gt;). Additional parallelization and distribution schemas are provided by backends such as &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.callr&#34;&gt;future.callr&lt;/a&gt;&lt;/strong&gt; (parallelization on your local machine) and &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future.batchtools&#34;&gt;future.batchtools&lt;/a&gt;&lt;/strong&gt; (large-scale parallelization via &lt;strong&gt;HPC job schedulers&lt;/strong&gt;).  For other alternatives, see the CRAN Page for the &lt;strong&gt;&lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt;&lt;/strong&gt; package and the &lt;a href=&#34;https://cran.r-project.org/web/views/HighPerformanceComputing.html&#34;&gt;High-Performance and Parallel Computing with R&lt;/a&gt; CRAN Task View.&lt;/p&gt;
-&lt;p&gt;Q. &lt;em&gt;Righty-oh, so how do I specify which parallelization backend to use?&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Q. &lt;em&gt;Righty-oh, so how do I specify which parallelization backend to use?&lt;/em&gt;&lt;br&gt;
 A. A fundamental design pattern of the future framework is that &lt;em&gt;the end user decides &lt;strong&gt;how and where&lt;/strong&gt; to parallelize&lt;/em&gt; while &lt;em&gt;the developer decides &lt;strong&gt;what&lt;/strong&gt; to parallelize&lt;/em&gt;.  This means that you do &lt;em&gt;not&lt;/em&gt; specify the backend via some argument to the &lt;code&gt;future_nnn()&lt;/code&gt; functions.  Instead, the backend is specified by the &lt;code&gt;plan()&lt;/code&gt; function - you can almost think of it as a global option that the end user controls.  For example, &lt;code&gt;plan(multisession)&lt;/code&gt; will parallelize on the local machine, so will &lt;code&gt;plan(future.callr::callr)&lt;/code&gt;, whereas &lt;code&gt;plan(cluster, workers = c(&amp;quot;n1&amp;quot;, &amp;quot;n2&amp;quot;, &amp;quot;remote.server.org&amp;quot;))&lt;/code&gt; will parallelize on two local machines and one remote machine. Using &lt;code&gt;plan(future.batchtools::batchtools_sge)&lt;/code&gt; will distribute the processing on your SGE-supported compute cluster.  BTW, you can also have &lt;a href=&#34;https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html&#34;&gt;nested parallelization strategies&lt;/a&gt;, e.g. &lt;code&gt;plan(list(tweak(cluster, workers = nodes), multisession))&lt;/code&gt; where &lt;code&gt;nodes = c(&amp;quot;n1&amp;quot;, &amp;quot;n2&amp;quot;, &amp;quot;remote.server.org&amp;quot;)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Q. &lt;em&gt;What about load balancing?&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Q. &lt;em&gt;What about load balancing?&lt;/em&gt;&lt;br&gt;
 A. The default behavior of all functions is to distribute &lt;strong&gt;equally-sized chunks&lt;/strong&gt; of elements to each available background worker - such that each worker process exactly one chunk (= one future).  If the processing times vary significantly across chunks, you can increase the average number of chunks processed by each worker, e.g. to have them process two chunks on average, specify &lt;code&gt;future.scheduling = 2.0&lt;/code&gt;.  Alternatively, you can specify the number of elements processed per chunk, e.g. &lt;code&gt;future.chunk.size = 10L&lt;/code&gt; (an analog to the &lt;code&gt;chunk.size&lt;/code&gt; argument added to the &lt;strong&gt;parallel&lt;/strong&gt; package in R 3.5.0).&lt;/p&gt;
-&lt;p&gt;Q. &lt;em&gt;What about random number generation (RNG)? I&amp;rsquo;ve heard it&amp;rsquo;s tricky to get right when running in parallel.&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Q. &lt;em&gt;What about random number generation (RNG)? I&amp;rsquo;ve heard it&amp;rsquo;s tricky to get right when running in parallel.&lt;/em&gt;&lt;br&gt;
 A. Just add &lt;code&gt;future.seed = TRUE&lt;/code&gt; and you&amp;rsquo;re good. This will use &lt;strong&gt;parallel safe&lt;/strong&gt; and &lt;strong&gt;statistical sound&lt;/strong&gt; &lt;strong&gt;L&amp;rsquo;Ecuyer-CMRG RNG&lt;/strong&gt;, which is a well-established parallel RNG algorithm and used by the &lt;strong&gt;parallel&lt;/strong&gt; package.  The &lt;strong&gt;future.apply&lt;/strong&gt; functions use this in a way that is also &lt;strong&gt;invariant to&lt;/strong&gt; the future backend and the amount of &amp;ldquo;chunking&amp;rdquo; used.  To produce numerically reproducible results, set &lt;code&gt;set.seed(123)&lt;/code&gt; before (as in the above example), or simply use &lt;code&gt;future.seed = 123&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Q. &lt;em&gt;What about global variables? Whenever I&amp;rsquo;ve tried to parallelize code before, I often ran into errors on &amp;ldquo;this or that variable is not found&amp;rdquo;.&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;Q. &lt;em&gt;What about global variables? Whenever I&amp;rsquo;ve tried to parallelize code before, I often ran into errors on &amp;ldquo;this or that variable is not found&amp;rdquo;.&lt;/em&gt;&lt;br&gt;
 A. This is very rarely a problem when using the &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt; framework - things work out of the box.  &lt;strong&gt;Global variables and packages&lt;/strong&gt; needed are &lt;strong&gt;automatically identified&lt;/strong&gt; from static code inspection and passed on to the workers - even when the workers run on remote computers or in the cloud.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Happy futuring!&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;UPDATE 2022-12-11: Update examples that used the deprecated &lt;code&gt;multiprocess&lt;/code&gt; future backend alias to use the &lt;code&gt;multisession&lt;/code&gt; backend.&lt;/p&gt;
@@ -4729,7 +4975,12 @@ A. This is very rarely a problem when using the &lt;a href=&#34;https://cran.r-p
 &lt;h1 id=&#34;references&#34;&gt;References&lt;/h1&gt;
 &lt;p&gt;J. von Neumann et al., The mean square successive difference. &lt;em&gt;Annals of Mathematical Statistics&lt;/em&gt;, 1941, 12, 153-162.&lt;/p&gt;
 &lt;h1 id=&#34;session-information&#34;&gt;Session information&lt;/h1&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;details&gt;
+```r
+&gt; sessionInfo()
+R version 3.4.4 (2018-03-15)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 16.04.4 LTS
 &lt;p&gt;Matrix products: default
 BLAS: /usr/lib/atlas-base/atlas/libblas.so.3.0
 LAPACK: /usr/lib/atlas-base/atlas/liblapack.so.3.0&lt;/p&gt;
@@ -5272,7 +5523,9 @@ However, since last year, the BatchJobs package has been decommissioned and the 
 &lt;h2 id=&#34;requirements&#34;&gt;Requirements&lt;/h2&gt;
 &lt;p&gt;The future.BatchJobs package implements the Future API, as defined by the &lt;a href=&#34;https://cran.r-project.org/package=future&#34;&gt;future&lt;/a&gt; package, on top of the API provided by the &lt;a href=&#34;https://cran.r-project.org/package=BatchJobs&#34;&gt;BatchJobs&lt;/a&gt; package.  These packages and their dependencies install out-of-the-box on all operating systems.&lt;/p&gt;
 &lt;p&gt;Installing the package is all that is needed in order to give it a test ride.  If you have access to a compute cluster that uses one of the common job schedulers, such as &lt;a href=&#34;https://en.wikipedia.org/wiki/TORQUE&#34;&gt;TORQUE (PBS)&lt;/a&gt;, &lt;a href=&#34;https://en.wikipedia.org/wiki/Slurm_Workload_Manager&#34;&gt;Slurm&lt;/a&gt;, &lt;a href=&#34;https://en.wikipedia.org/wiki/Oracle_Grid_Engine&#34;&gt;Sun/Oracle Grid Engine (SGE)&lt;/a&gt;, &lt;a href=&#34;https://en.wikipedia.org/wiki/Platform_LSF&#34;&gt;Load Sharing Facility (LSF)&lt;/a&gt; or &lt;a href=&#34;https://en.wikipedia.org/wiki/OpenLava&#34;&gt;OpenLava&lt;/a&gt;, then you&amp;rsquo;re ready to take it for a serious ride.  If your cluster uses another type of scheduler, it is possible to configure it to work also there.  If you don&amp;rsquo;t have access to a compute cluster right now, you can still try future.BatchJobs by simply using &lt;code&gt;plan(batchjobs_local)&lt;/code&gt; in the below example - all futures (&amp;ldquo;jobs&amp;rdquo;) will then be processed sequentially on your local machine (*).&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;small&gt;
+(*) For those of you who are already familiar with the [future] package - yes, if you&#39;re only going to run locally, then you can equally well use `plan(sequential)` or `plan(multisession)`, but for the sake of demonstrating future.BatchJobs per se, I suggest using `plan(batchjobs_local)` because it will use the BatchJobs machinery underneath.
+&lt;/small&gt;
 &lt;h2 id=&#34;example-extracting-text-and-generating-images-from-pdfs&#34;&gt;Example: Extracting text and generating images from PDFs&lt;/h2&gt;
 &lt;p&gt;Imagine we have a large set of PDF documents from which we would like to extract the text and also generate PNG images for each of the pages.  Below, I will show how this can be easily done in R thanks to the &lt;a href=&#34;https://cran.r-project.org/package=pdftools&#34;&gt;pdftools&lt;/a&gt; package written by &lt;a href=&#34;https://github.com/jeroenooms&#34;&gt;Jeroen Ooms&lt;/a&gt;.  I will also show how we can speed up the processing by using futures that are resolved in parallel either on the local machine or, as shown here, distributed on a compute cluster.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;library&lt;/span&gt;(&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pdftools&amp;#34;&lt;/span&gt;)
@@ -6124,8 +6377,9 @@ I benchmarked across a wide range of interval choices using the &lt;a href=&#34;
 &lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;[1] R.cache_0.10.0 R.rsp_0.19.0   tools_3.1.0   
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;reproducibility&#34;&gt;Reproducibility&lt;/h3&gt;
 &lt;p&gt;This report was generated from an RSP-embedded Markdown &lt;a href=&#34;https://gist.github.com/HenrikBengtsson/854d13a11a33b3d43ec3/raw/matrixNA.md.rsp&#34;&gt;document&lt;/a&gt; using &lt;a href=&#34;http://cran.r-project.org/package=R.rsp&#34;&gt;R.rsp&lt;/a&gt; v0.19.0.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+It can be recompiled as `R.rsp::rfile(&#34;https://gist.github.com/HenrikBengtsson/854d13a11a33b3d43ec3/raw/matrixNA.md.rsp&#34;)`.
+--&gt;
 </description>
     </item>
     
@@ -6294,8 +6548,9 @@ I benchmarked across a wide range of interval choices using the &lt;a href=&#34;
 and graphics using &lt;a href=&#34;http://cran.r-project.org/package=ggplot2&#34;&gt;ggplot2&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;reproducibility&#34;&gt;Reproducibility&lt;/h3&gt;
 &lt;p&gt;This report was generated from an RSP-embedded Markdown &lt;a href=&#34;https://gist.github.com/HenrikBengtsson/854d13a11a33b3d43ec3/raw/captureOutput.md.rsp&#34;&gt;document&lt;/a&gt; using &lt;a href=&#34;http://cran.r-project.org/package=R.rsp&#34;&gt;R.rsp&lt;/a&gt; v0.18.2.&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;!-- raw HTML omitted --&gt;
+&lt;!--
+It can be recompiled as `R.rsp::rfile(&#34;https://gist.github.com/HenrikBengtsson/854d13a11a33b3d43ec3/raw/captureOutput.md.rsp&#34;)`.
+--&gt;
 </description>
     </item>
     

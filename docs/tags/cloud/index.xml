@@ -26,7 +26,7 @@ This allows you to easily doing parallel computing in R in the cloud. One advant
       <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
       <description>No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
     </item>
     
     <item>

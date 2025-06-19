@@ -6,7 +6,19 @@
     <description>Recent content in compute clusters on JottR</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/compute-clusters/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/compute-clusters/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Futureverse - Ten Years Anniversary</title>
+      <link>https://www.jottr.org/2025/06/19/futureverse-10-years/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/2025/06/19/futureverse-10-years/</guid>
+      <description> The future package was first released on CRAN ten years ago today. Little did I know how big the uptake would be.
+aa
+ss
+Links parallelly package: CRAN, GitHub, pkgdown future package: CRAN, GitHub, pkgdown Futureverse: https://www.futureverse.org </description>
+    </item>
+    
     <item>
       <title>parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely</title>
       <link>https://www.jottr.org/2023/07/01/parallelly-managing-workers/</link>
@@ -59,14 +71,10 @@ By reading this blog post, I hope you become more aware of the different problem
       <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/06/23/future-user2022-slides/</guid>
-      <description>Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+      <description>Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
-Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&amp;ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.</description>
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos</description>
     </item>
     
     <item>
@@ -75,8 +83,9 @@ Abstract:
       <pubDate>Wed, 04 Nov 2020 18:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/11/04/parallelly-future-cleaning-up-around-the-house/</guid>
-      <description>I&amp;rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&amp;rsquo;re like me and concerned about bloating package dependencies, I&amp;rsquo;m sure you immediately wondered why I chose to introduce a new dependency. I&amp;rsquo;ll try to explain this below, but let me be start by clarifying a few things:
-The functions in the parallelly package used to be part of the future package</description>
+      <description>parallelly adverb
+par·​al·​lel·​ly | \ ˈpa-rə-le(l)li \ Definition: in a parallel manner future noun
+fu·​ture | \ ˈfyü-chər \ Definition: existing or occurring at a later time I&amp;rsquo;ve cleaned up around the house - with the recent release of future 1.20.1, the package gained a dependency on the new parallelly package. Now, if you&amp;rsquo;re like me and concerned about bloating package dependencies, I&amp;rsquo;m sure you immediately wondered why I chose to introduce a new dependency.</description>
     </item>
     
     <item>
@@ -96,7 +105,7 @@ values() for lists and other containers was renamed to value() to simplify the A
       <pubDate>Sat, 01 Feb 2020 19:30:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</guid>
-      <description>I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
+      <description>Design: Dan LaBar I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
 HTML (incremental Google Slides; requires online access) PDF (flat slides) Video with closed captions (official rstudio::conf recording) First of all, a big thank you goes out to Dan LaBar (@embiggenData) for proposing and contributing the original design of the future hex sticker.</description>
     </item>
     
@@ -108,7 +117,7 @@ HTML (incremental Google Slides; requires online access) PDF (flat slides) Video
       <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
       <description>No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
     </item>
     
     <item>

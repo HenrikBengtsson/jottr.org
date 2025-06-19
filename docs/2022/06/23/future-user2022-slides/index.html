@@ -8,46 +8,30 @@
 <meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
 <meta name="author" content="Henrik Bengtsson">
 <meta name="keywords" content="">
-<meta name="description" content="Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+<meta name="description" content="Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
-Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.">
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos">
 
 
-<meta property="og:description" content="Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+<meta property="og:description" content="Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
-Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.">
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos">
 <meta property="og:type" content="article">
 <meta property="og:title" content="useR! 2022: My &#39;Futureverse: Profile Parallel Code&#39; Slides">
 <meta name="twitter:title" content="useR! 2022: My &#39;Futureverse: Profile Parallel Code&#39; Slides">
 <meta property="og:url" content="https://www.jottr.org/2022/06/23/future-user2022-slides/">
 <meta property="twitter:url" content="https://www.jottr.org/2022/06/23/future-user2022-slides/">
 <meta property="og:site_name" content="JottR">
-<meta property="og:description" content="Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+<meta property="og:description" content="Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
-Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.">
-<meta name="twitter:description" content="Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos">
+<meta name="twitter:description" content="Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
-Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.">
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos">
 <meta property="og:locale" content="en-us">
 
   
@@ -351,8 +335,13 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <!-- raw HTML omitted -->
-<!-- raw HTML omitted -->
+              <figure style="margin-top: 3ex;">
+<img src="https://www.jottr.org/post/BengtssonH_20220622-Future-useR2022_slide18.png" alt="Screenshot of Slide #18 in my presentation. A graphical time-chart representation of the events that takes place when calling the following code in R: plan(cluster, workers = 2); fs <- lapply(1:2, function(x) future(slow(x)); vs <- value(fs); There are two futures displayed in the time chart. Each future is represented by a blue, horizontal 'lifespan' bar. The second future starts slightly after the first one. Each future is evaluated in a separate worker, which is represented as pink horizontal 'evaluate' bar. The two 'lifespan' and the two 'evaluation' bars are overlapping indicating they run in parallel." style="width: 100%; margin: 0;"/>
+<figcaption>
+Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk.
+</figcaption>
+</figure>
+<img src="https://www.jottr.org/post/user2022-logo_450x300.webp" alt="The useR 2022 logo" style="width: 30%; float: right; margin: 2ex;"/>
 <p>Below are the slides for my <em>Futureverse: Profile Parallel Code</em> talk that I presented at the <a href="https://user2022.r-project.org/">useR! 2022</a> conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.</p>
 <p>Title: Futureverse: Profile Parallel Code<br>
 Speaker: Henrik Bengtsson<br>

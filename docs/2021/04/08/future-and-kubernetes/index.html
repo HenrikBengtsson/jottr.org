@@ -374,7 +374,10 @@ learn more about Kubernetes, which I&rsquo;ve done, but note that there&rsquo;s 
 troubleshooting tips can be found in my <a href="https://github.com/paciorek/future-kubernetes">future-kubernetes</a> repository.</p>
 <h2 id="how-it-works-briefly">How it works (briefly)</h2>
 <p>This diagram in Figure 1 outlines the pieces of the setup.</p>
-<!-- raw HTML omitted -->
+<figure>
+<img src="https://www.jottr.org/post/k8s.png" alt="Overview of using future on a Kubernetes cluster" width="700"/>
+<figcaption style="font-style: italic;">Figure 1. Overview of using future on a Kubernetes cluster</figcaption>
+</figure>
 <p>Work on a Kubernetes cluster is divided amongst <em>pods</em>, which carry out
 the components of your work and can communicate with each other. A pod is
 basically a Linux container. (Strictly speaking a pod can contain multiple
@@ -498,7 +501,10 @@ tools such as <strong><a href="https://cran.r-project.org/package=future.apply">
 </span></span><span style="display:flex;"><span>output <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">future_sapply</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">40</span>, <span style="color:#a6e22e">function</span>(i) <span style="color:#a6e22e">mean</span>(<span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">1e7</span>)), future.seed <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
 </span></span></code></pre></div><p>Note that all of this assumes you&rsquo;re working interactively, but you can always reconnect to the RStudio Server instance after closing the browser, and any long-running code should continue running even if you close the browser.</p>
 <p>Figure 2 shows a screenshot of the RStudio interface.</p>
-<!-- raw HTML omitted -->
+<figure>
+<img src="https://www.jottr.org/post/rstudio.png" alt="RStudio interface, demonstrating use of future commands" width="700"/>
+<figcaption style="font-style: italic;">Figure 2. Screenshot of the RStudio interface</figcaption>
+</figure>
 <h3 id="working-with-files">Working with files</h3>
 <p>Note that <code>/home/rstudio</code> will be your default working directory in RStudio and the RStudio Server process will be running as the user <code>rstudio</code>.</p>
 <p>You can use <code>/tmp</code> and <code>/home/rstudio</code> for files, both within RStudio and within code running on the workers, but note that files (even in <code>/home/rstudio</code>) are not shared between workers nor between the workers and the RStudio Server pod.</p>

@@ -324,7 +324,12 @@ if (!doNotTrack) {
 <p>If you&rsquo;re curious what <strong>progressr</strong> is about, have a look at my <a href="https://www.jottr.org/2020/07/04/progressr-erum2020-slides/">e-Rum 2020 presentation</a>.</p>
 <h2 id="progress-updates-in-rstudios-job-interface">Progress updates in RStudio&rsquo;s job interface</h2>
 <p>If you&rsquo;re using RStudio Console, you can now report on progress in the RStudio&rsquo;s job interface as long as the progress originates from a <strong>progressr</strong>-signalling function.  I’ve shown an example of this in Figure 1.</p>
-<!-- raw HTML omitted -->
+<figure style="margin-top: 3ex;">
+<img src="https://www.jottr.org/post/progressr-rstudio.png" alt="A screenshot of the upper part of the RStudio Console panel.  Below the title bar, which says 'R 4.1.0 ~/', there is a row with the text 'Console 05:50:51 PM' left of a green progress bar at 30% followed by the text '0:03'.  Below these two lines are the R commands called this far, which are the same as in the below example. Following the commands, is output 'M: Added value 1',  'M: Added value 2', and  'M: Added value 3', from the first steps that have completed this far."/>
+<figcaption>
+Figure 1: The RStudio job interface can show progress bars and we can use it with **progressr**.  The progress bar title - "Console 05:50:51 PM" - shows at what time the progress began.  The '0:03' shows for how long the progress has been running - here 3 seconds.
+</figcaption>
+</figure>
 <p>To try this yourself, run the below in the RStudio Console.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(progressr)
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">handlers</span>(global <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
@@ -344,7 +349,21 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>  })
 </span></span><span style="display:flex;"><span>})
 </span></span></code></pre></div><p>will start out as in the left panel of Figure 2, and, as soon as the first progress signal is received, the &lsquo;detail&rsquo; part is updated with <code>x=1</code> as shown in the right panel.</p>
-<!-- raw HTML omitted -->
+<figure style="margin-top: 3ex;">
+<table style="margin: 1ex;">
+<tr style="margin: 1ex;">
+<td>
+<img src="https://www.jottr.org/post/withProgressShiny_A_x=0.png" alt="A Shiny progress bar panel with a progress bar at 0% on top, with 'Calculation in progress' written in a bold large font, with 'Starting ...' written in a normal small font below."/>
+</td>
+<td>
+<img src="https://www.jottr.org/post/withProgressShiny_A_x=1.png" alt="A Shiny progress bar panel with a progress bar at 10% on top, with 'Calculation in progress' written in a bold large font, with 'x=1' written in a normal small font below."/>
+</td>
+</tr>
+</table>
+<figcaption>
+Figure 2: A Shiny progress panel that start out with the 'message' part displaying "Calculation in progress" and the 'detail' part displaying "Starting ..." (left), and whose 'detail' part is updated to "x=1" (right) as soon the first progress update comes in.
+</figcaption>
+</figure>
 <p>Prior to this new release, the default behavior was to update the &lsquo;message&rsquo; part of the Shiny progress panel.  To revert to the old behavior, set argument <code>inputs</code> as in:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>X <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">10</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">withProgressShiny</span>(message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Starting ...&#34;</span>,
@@ -357,7 +376,21 @@ if (!doNotTrack) {
 </span></span><span style="display:flex;"><span>  })
 </span></span><span style="display:flex;"><span>}, inputs <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(message <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;message&#34;</span>, detail <span style="color:#f92672">=</span> <span style="color:#66d9ef">NULL</span>))
 </span></span></code></pre></div><p>This results in what you see in Figure 3.  I think that the new behavior, as shown in Figure 2, looks better and makes more sense.</p>
-<!-- raw HTML omitted -->
+<figure style="margin-top: 3ex;">
+<table style="margin: 1ex;">
+<tr style="margin: 1ex;">
+<td>
+<img src="https://www.jottr.org/post/withProgressShiny_B_x=0.png" alt="A Shiny progress bar panel with a progress bar at 0% on top, with 'Starting ...' written in a bold large font, with 'Calculation in progress' written to the right of it and wrapping onto the next row."/>
+</td>
+<td>
+<img src="https://www.jottr.org/post/withProgressShiny_B_x=1.png" alt="A Shiny progress bar panel with a progress bar at 10% on top, with 'x=1' written in a bold large font, with 'Calculation in progress' written to the right of it."/>
+</td>
+</tr>
+</table>
+<figcaption>
+Figure 3: A Shiny progress panel that start out with the 'message' part displaying "Starting ..." and the 'detail' part displaying "Calculation in progress" (left), and whose 'message' part is updated to "x=1" (right) as soon the first progress update comes in.
+</figcaption>
+</figure>
 <h2 id="update-to-a-specific-amount-of-total-progress">Update to a specific amount of total progress</h2>
 <p>When using <strong>progressr</strong>, we start out by creating a progressor function that we then call to signal progress.  For example, if we do:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>my_slow_fun <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">function</span>() {

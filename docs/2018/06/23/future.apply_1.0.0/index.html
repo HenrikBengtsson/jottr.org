@@ -333,8 +333,9 @@ if (!doNotTrack) {
             <div class="main-content-wrap">
               <p><img src="https://www.jottr.org/post/future.apply_1.0.0-htop_32cores.png" alt="0% to 100% utilization">
 <em>Got compute?</em></p>
-<p><a href="https://cran.r-project.org/package=future.apply">future.apply</a> 1.0.0 - <em>Apply Function to Elements in Parallel using Futures</em> - is on CRAN.  With this milestone release, all<!-- raw HTML omitted -->*<!-- raw HTML omitted --> base R apply functions now have corresponding futurized implementations.  This makes it easier than ever before to parallelize your existing <code>apply()</code>, <code>lapply()</code>, <code>mapply()</code>, &hellip; code - just prepend <code>future_</code> to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using <code>plan(multisession)</code> it&rsquo;ll run in parallel.</p>
-<!-- raw HTML omitted -->
+<p><a href="https://cran.r-project.org/package=future.apply">future.apply</a> 1.0.0 - <em>Apply Function to Elements in Parallel using Futures</em> - is on CRAN.  With this milestone release, all<sup>*</sup> base R apply functions now have corresponding futurized implementations.  This makes it easier than ever before to parallelize your existing <code>apply()</code>, <code>lapply()</code>, <code>mapply()</code>, &hellip; code - just prepend <code>future_</code> to an apply call that takes a long time to complete. That&rsquo;s it! The default is sequential processing but by using <code>plan(multisession)</code> it&rsquo;ll run in parallel.</p>
+<br>
+_Table: All future\_nnn() functions in the **future.apply** package.  Each function takes the same arguments as the corresponding **base** function does._<br>
 <table>
 <thead>
 <tr>
@@ -344,44 +345,44 @@ if (!doNotTrack) {
 </thead>
 <tbody>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->apply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>apply()</strong></code></td>
 <td>Apply Functions Over Array Margins</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->lapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>lapply()</strong></code></td>
 <td>Apply a Function over a List or Vector</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->sapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>sapply()</strong></code></td>
 <td>- &quot; -</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->vapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>vapply()</strong></code></td>
 <td>- &quot; -</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->replicate()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>replicate()</strong></code></td>
 <td>- &quot; -</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->mapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>mapply()</strong></code></td>
 <td>Apply a Function to Multiple List or Vector Arguments</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->Map()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>Map()</strong></code></td>
 <td>- &quot; -</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->eapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>eapply()</strong></code></td>
 <td>Apply a Function Over Values in an Environment</td>
 </tr>
 <tr>
-<td><!-- raw HTML omitted -->future_<!-- raw HTML omitted -->tapply()<!-- raw HTML omitted --><!-- raw HTML omitted --></td>
+<td><code>future_<strong>tapply()</strong></code></td>
 <td>Apply a Function Over a Ragged Array</td>
 </tr>
 </tbody>
 </table>
-<p><!-- raw HTML omitted -->*<!-- raw HTML omitted --> <!-- raw HTML omitted -->future_<!-- raw HTML omitted -->rapply()<!-- raw HTML omitted --><!-- raw HTML omitted --> - Recursively Apply a Function to a List - is yet to be implemented.</p>
+<p><sup>*</sup> <code>future_<strong>rapply()</strong></code> - Recursively Apply a Function to a List - is yet to be implemented.</p>
 <h2 id="a-motivating-example">A Motivating Example</h2>
 <p>In the <strong>parallel</strong> package there is an example - in <code>?clusterApply</code> - showing how to perform bootstrap simulations in parallel.  After some small modifications to clarify the steps, it looks like the following:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">library</span>(parallel)
@@ -440,15 +441,15 @@ if (!doNotTrack) {
 </span></span></code></pre></div><p>The difference between the sequential base-R implementation and the <strong>future.apply</strong> implementation is minimal.  The <strong>future.apply</strong> package is attached, the parallel plan of four workers is set up, and the <code>apply()</code> function is replaced by <code>future_apply()</code>, where we specify <code>future.seed = TRUE</code> to get statistical sound and numerically reproducible parallel random number generation (RNG).
 More importantly, notice how there is no need to worry about which packages need to be attached on the workers and which global variables need to be exported.  That is all taken care of automatically by the <strong>future</strong> framework.</p>
 <h2 id="qa">Q&amp;A</h2>
-<p>Q. <em>What are my options for parallelization?</em><!-- raw HTML omitted -->
+<p>Q. <em>What are my options for parallelization?</em><br>
 A. Everything in <strong>future.apply</strong> is processed through the <a href="https://cran.r-project.org/package=future">future</a> framework.  This means that all parallelization backends supported by the <strong>parallel</strong> package are supported out of the box, e.g. on your <strong>local machine</strong>, and on <strong>local</strong> or <strong>remote</strong> ad-hoc <strong>compute clusters</strong> (also in the <strong>cloud</strong>). Additional parallelization and distribution schemas are provided by backends such as <strong><a href="https://cran.r-project.org/package=future.callr">future.callr</a></strong> (parallelization on your local machine) and <strong><a href="https://cran.r-project.org/package=future.batchtools">future.batchtools</a></strong> (large-scale parallelization via <strong>HPC job schedulers</strong>).  For other alternatives, see the CRAN Page for the <strong><a href="https://cran.r-project.org/package=future">future</a></strong> package and the <a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html">High-Performance and Parallel Computing with R</a> CRAN Task View.</p>
-<p>Q. <em>Righty-oh, so how do I specify which parallelization backend to use?</em><!-- raw HTML omitted -->
+<p>Q. <em>Righty-oh, so how do I specify which parallelization backend to use?</em><br>
 A. A fundamental design pattern of the future framework is that <em>the end user decides <strong>how and where</strong> to parallelize</em> while <em>the developer decides <strong>what</strong> to parallelize</em>.  This means that you do <em>not</em> specify the backend via some argument to the <code>future_nnn()</code> functions.  Instead, the backend is specified by the <code>plan()</code> function - you can almost think of it as a global option that the end user controls.  For example, <code>plan(multisession)</code> will parallelize on the local machine, so will <code>plan(future.callr::callr)</code>, whereas <code>plan(cluster, workers = c(&quot;n1&quot;, &quot;n2&quot;, &quot;remote.server.org&quot;))</code> will parallelize on two local machines and one remote machine. Using <code>plan(future.batchtools::batchtools_sge)</code> will distribute the processing on your SGE-supported compute cluster.  BTW, you can also have <a href="https://cran.r-project.org/web/packages/future/vignettes/future-3-topologies.html">nested parallelization strategies</a>, e.g. <code>plan(list(tweak(cluster, workers = nodes), multisession))</code> where <code>nodes = c(&quot;n1&quot;, &quot;n2&quot;, &quot;remote.server.org&quot;)</code>.</p>
-<p>Q. <em>What about load balancing?</em><!-- raw HTML omitted -->
+<p>Q. <em>What about load balancing?</em><br>
 A. The default behavior of all functions is to distribute <strong>equally-sized chunks</strong> of elements to each available background worker - such that each worker process exactly one chunk (= one future).  If the processing times vary significantly across chunks, you can increase the average number of chunks processed by each worker, e.g. to have them process two chunks on average, specify <code>future.scheduling = 2.0</code>.  Alternatively, you can specify the number of elements processed per chunk, e.g. <code>future.chunk.size = 10L</code> (an analog to the <code>chunk.size</code> argument added to the <strong>parallel</strong> package in R 3.5.0).</p>
-<p>Q. <em>What about random number generation (RNG)? I&rsquo;ve heard it&rsquo;s tricky to get right when running in parallel.</em><!-- raw HTML omitted -->
+<p>Q. <em>What about random number generation (RNG)? I&rsquo;ve heard it&rsquo;s tricky to get right when running in parallel.</em><br>
 A. Just add <code>future.seed = TRUE</code> and you&rsquo;re good. This will use <strong>parallel safe</strong> and <strong>statistical sound</strong> <strong>L&rsquo;Ecuyer-CMRG RNG</strong>, which is a well-established parallel RNG algorithm and used by the <strong>parallel</strong> package.  The <strong>future.apply</strong> functions use this in a way that is also <strong>invariant to</strong> the future backend and the amount of &ldquo;chunking&rdquo; used.  To produce numerically reproducible results, set <code>set.seed(123)</code> before (as in the above example), or simply use <code>future.seed = 123</code>.</p>
-<p>Q. <em>What about global variables? Whenever I&rsquo;ve tried to parallelize code before, I often ran into errors on &ldquo;this or that variable is not found&rdquo;.</em><!-- raw HTML omitted -->
+<p>Q. <em>What about global variables? Whenever I&rsquo;ve tried to parallelize code before, I often ran into errors on &ldquo;this or that variable is not found&rdquo;.</em><br>
 A. This is very rarely a problem when using the <a href="https://cran.r-project.org/package=future">future</a> framework - things work out of the box.  <strong>Global variables and packages</strong> needed are <strong>automatically identified</strong> from static code inspection and passed on to the workers - even when the workers run on remote computers or in the cloud.</p>
 <p><em>Happy futuring!</em></p>
 <p>UPDATE 2022-12-11: Update examples that used the deprecated <code>multiprocess</code> future backend alias to use the <code>multisession</code> backend.</p>

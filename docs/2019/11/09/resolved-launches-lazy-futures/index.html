@@ -10,12 +10,12 @@
 <meta name="keywords" content="">
 <meta name="description" content="No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
 
 
 <meta property="og:description" content="No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="future 1.15.0 - Lazy Futures are Now Launched if Queried">
 <meta name="twitter:title" content="future 1.15.0 - Lazy Futures are Now Launched if Queried">
@@ -24,10 +24,10 @@ Although this change does not look much to the world, I&rsquo;d like to think of
 <meta property="og:site_name" content="JottR">
 <meta property="og:description" content="No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
 <meta name="twitter:description" content="No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;">
 <meta property="og:locale" content="en-us">
 
   
@@ -332,9 +332,11 @@ if (!doNotTrack) {
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
               <p><img src="https://www.jottr.org/post/lazy_dog_in_park.gif" alt="&amp;ldquo;Lazy dog does not want to leave park&amp;rdquo;">
-<!-- raw HTML omitted --><!-- raw HTML omitted -->No dogs were harmed while making this release<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<small><em>No dogs were harmed while making this release</em></small></p>
 <p><strong><a href="https://cran.r-project.org/package=future">future</a></strong> 1.15.0 is now on CRAN, accompanied by a recent, related update of <strong><a href="https://cran.r-project.org/package=future.callr">future.callr</a></strong> 0.5.0.  The main update is a change to the Future API:</p>
-<!-- raw HTML omitted -->
+ <center>
+  `resolved()` will now also launch lazy futures
+ </center>
 <p>Although this change does not look much to the world, I&rsquo;d like to think of this as part of a young person slowly finding themselves.  This change in behavior helps us in cases where we create lazy futures upfront;</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>fs <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lapply</span>(X, future, lazy <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
 </span></span></code></pre></div><p>Such futures remain dormant until we call <code>value()</code> on them, or, as of this release, when we call <code>resolved()</code> on them.  Contrary to <code>value()</code>, <code>resolved()</code> is a non-blocking function that allows us to check in on one or more futures to see if they are resolved or not.  So, we can now do:</p>
@@ -374,7 +376,7 @@ if (!doNotTrack) {
 <li><strong>future.apply</strong> package: <a href="https://cran.r-project.org/package=future.apply">CRAN</a>, <a href="https://github.com/HenrikBengtsson/future.apply">GitHub</a></li>
 <li><strong>doFuture</strong> package: <a href="https://cran.r-project.org/package=doFuture">CRAN</a>, <a href="https://github.com/HenrikBengtsson/doFuture">GitHub</a> (a <strong><a href="https://cran.r-project.org/package=foreach">foreach</a></strong> adapter)</li>
 <li><strong>progressr</strong> package: <a href="https://github.com/HenrikBengtsson/progressr">GitHub</a></li>
-<li><!-- raw HTML omitted -->&ldquo;So, what happened to the dog?&quot;<!-- raw HTML omitted --></li>
+<li><a href="https://www.videoman.gr/en/70385" target="_blank">&ldquo;So, what happened to the dog?&quot;</a></li>
 </ul>
 
               

@@ -271,6 +271,65 @@ if (!doNotTrack) {
     
     <div class="postShorten-header">
       <h1 class="postShorten-title" itemprop="headline">
+        <a class="link-unstyled" href="https://www.jottr.org/2025/06/19/futureverse-10-years/">
+          Futureverse - Ten Years Anniversary
+        </a>
+      </h1>
+      
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2025-06-19T00:00:00Z">
+        
+  June 19, 2025
+
+      </time>
+    
+    
+  
+  
+    <span>in</span>
+    
+      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
+    
+  
+
+  </div>
+
+    </div>
+    <div class="postShorten-excerpt" itemprop="articleBody">
+      
+         The future package was first released on CRAN ten years ago today. Little did I know how big the uptake would be.
+aa
+ss
+Links parallelly package: CRAN, GitHub, pkgdown future package: CRAN, GitHub, pkgdown Futureverse: https://www.futureverse.org 
+      
+      <p>
+        <a href="https://www.jottr.org/2025/06/19/futureverse-10-years/" class="postShorten-excerpt_link link">Continue reading</a>
+        
+      </p>
+    </div>
+  </div>
+  
+</article>
+
+            
+              
+  
+    
+      
+        
+      
+    
+  
+
+
+  
+
+<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+  <div class="postShorten-wrap">
+    
+    <div class="postShorten-header">
+      <h1 class="postShorten-title" itemprop="headline">
         <a class="link-unstyled" href="https://www.jottr.org/2023/07/01/parallelly-managing-workers/">
           parallelly: Querying, Killing and Cloning Parallel Workers Running Locally or Remotely
         </a>
@@ -646,14 +705,10 @@ By reading this blog post, I hope you become more aware of the different problem
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+        Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
 Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.
       
       <p>
         <a href="https://www.jottr.org/2022/06/23/future-user2022-slides/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -938,8 +993,6 @@ Since my previous post on parallelly in November 2021, I&rsquo;ve fixed a few bu
     <div class="postShorten-excerpt" itemprop="articleBody">
       
         future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
-int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
-future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).
       
       <p>
         <a href="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -1283,11 +1336,9 @@ Faster setup of local, parallel workers In R 4.0.0, which was released in May 20
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        parallelly 1.25.0 is on CRAN. It comes with two major improvements:
+        A piece of an ice core - more pleasing to look at than yet another illustration of a CPU core (Image credit: Ludovic Brucker, NASA's Goddard Space Flight Center) parallelly 1.25.0 is on CRAN. It comes with two major improvements:
 You can now use availableCores(omit = n) to ask for all but n CPU cores
 makeClusterPSOCK() can finally use the built-in SSH client on MS Windows 10 to set up remote workers
-availableCores(omit = n) is your new friend When running R code in parallel, many choose to parallelize on as many CPU cores as possible, e.g.
-ncores &lt;- parallel::detectCores() It&rsquo;s also common to leave out a few cores so that we can still use the computer for other basic tasks, e.
       
       <p>
         <a href="https://www.jottr.org/2021/04/30/parallelly-1.25.0/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -1349,63 +1400,6 @@ This allows you to easily doing parallel computing in R in the cloud. One advant
       
       <p>
         <a href="https://www.jottr.org/2021/04/08/future-and-kubernetes/" class="postShorten-excerpt_link link">Continue reading</a>
-        
-      </p>
-    </div>
-  </div>
-  
-</article>
-
-            
-              
-  
-    
-      
-        
-      
-    
-  
-
-
-  
-
-<article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-  <div class="postShorten-wrap">
-    
-    <div class="postShorten-header">
-      <h1 class="postShorten-title" itemprop="headline">
-        <a class="link-unstyled" href="https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/">
-          future.BatchJobs - End-of-Life Announcement
-        </a>
-      </h1>
-      
-  <div class="postShorten-meta post-meta">
-    
-      <time itemprop="datePublished" datetime="2021-01-08T09:00:00-08:00">
-        
-  January 8, 2021
-
-      </time>
-    
-    
-  
-  
-    <span>in</span>
-    
-      <a class="category-link" href="https://www.jottr.org/categories/r">R</a>
-    
-  
-
-  </div>
-
-    </div>
-    <div class="postShorten-excerpt" itemprop="articleBody">
-      
-        This is an announcement that future.BatchJobs - A Future API for Parallel and Distributed Processing using BatchJobs has been archived on CRAN. The package has been deprecated for years with a recommendation of using future.batchtools instead. The latter has been on CRAN since June 2017 and builds upon the batchtools package, which itself supersedes the BatchJobs package.
-To wrap up the three-and-a-half year long life of future.BatchJobs, the very last version, 0.
-      
-      <p>
-        <a href="https://www.jottr.org/2021/01/08/future.batchjobs-end-of-life-announcement/" class="postShorten-excerpt_link link">Continue reading</a>
         
       </p>
     </div>

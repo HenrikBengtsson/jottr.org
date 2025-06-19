@@ -6,22 +6,76 @@
     <description>Recent content in Tags on JottR</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Jul 2023 18:00:00 +0200</lastBuildDate><atom:link href="https://www.jottr.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Jun 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.jottr.org/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>compute clusters</title>
       <link>https://www.jottr.org/tags/compute-clusters/</link>
-      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
       
       <guid>https://www.jottr.org/tags/compute-clusters/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>future</title>
+      <link>https://www.jottr.org/tags/future/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/future/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>futureverse</title>
+      <link>https://www.jottr.org/tags/futureverse/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/futureverse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>HPC</title>
       <link>https://www.jottr.org/tags/hpc/</link>
-      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
       
       <guid>https://www.jottr.org/tags/hpc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parallel</title>
+      <link>https://www.jottr.org/tags/parallel/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/parallel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parallel processing</title>
+      <link>https://www.jottr.org/tags/parallel-processing/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/parallel-processing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>parallelly</title>
+      <link>https://www.jottr.org/tags/parallelly/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/parallelly/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://www.jottr.org/tags/r/</link>
+      <pubDate>Thu, 19 Jun 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.jottr.org/tags/r/</guid>
       <description></description>
     </item>
     
@@ -31,42 +85,6 @@
       <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
       
       <guid>https://www.jottr.org/tags/package/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>parallel</title>
-      <link>https://www.jottr.org/tags/parallel/</link>
-      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
-      
-      <guid>https://www.jottr.org/tags/parallel/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>parallel processing</title>
-      <link>https://www.jottr.org/tags/parallel-processing/</link>
-      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
-      
-      <guid>https://www.jottr.org/tags/parallel-processing/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>parallelly</title>
-      <link>https://www.jottr.org/tags/parallelly/</link>
-      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
-      
-      <guid>https://www.jottr.org/tags/parallelly/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>https://www.jottr.org/tags/r/</link>
-      <pubDate>Sat, 01 Jul 2023 18:00:00 +0200</pubDate>
-      
-      <guid>https://www.jottr.org/tags/r/</guid>
       <description></description>
     </item>
     
@@ -112,15 +130,6 @@
       <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/tags/edmonton-r-user-group-meetup/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>future</title>
-      <link>https://www.jottr.org/tags/future/</link>
-      <pubDate>Mon, 22 May 2023 18:00:00 -0700</pubDate>
-      
-      <guid>https://www.jottr.org/tags/future/</guid>
       <description></description>
     </item>
     

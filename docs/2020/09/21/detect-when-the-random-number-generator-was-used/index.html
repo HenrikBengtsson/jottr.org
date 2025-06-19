@@ -8,11 +8,11 @@
 <meta name="generator" content="Hugo 0.111.3 with theme Tranquilpeak 0.4.6-BETA">
 <meta name="author" content="Henrik Bengtsson">
 <meta name="keywords" content="">
-<meta name="description" content="If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+<meta name="description" content="![&#34;An animated close-up of a spinning roulette wheel&#34;](/post/DistortedRecentEland_50pct.gif) If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
 if (interactive()) { invisible(addTaskCallback(local({ last &lt;- .GlobalEnv$.Random.seed function(...) { curr &lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &lt;- &#34;TRACKER: .Random.seed changed&#34; if (requireNamespace(&#34;crayon&#34;, quietly=TRUE)) msg &lt;- crayon::blurred(msg) message(msg) last &lt;&lt;- curr } TRUE } }), name = &#34;RNG tracker&#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .">
 
 
-<meta property="og:description" content="If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+<meta property="og:description" content="![&#34;An animated close-up of a spinning roulette wheel&#34;](/post/DistortedRecentEland_50pct.gif) If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
 if (interactive()) { invisible(addTaskCallback(local({ last &lt;- .GlobalEnv$.Random.seed function(...) { curr &lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &lt;- &#34;TRACKER: .Random.seed changed&#34; if (requireNamespace(&#34;crayon&#34;, quietly=TRUE)) msg &lt;- crayon::blurred(msg) message(msg) last &lt;&lt;- curr } TRUE } }), name = &#34;RNG tracker&#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Detect When the Random Number Generator Was Used">
@@ -20,9 +20,9 @@ if (interactive()) { invisible(addTaskCallback(local({ last &lt;- .GlobalEnv$.Ra
 <meta property="og:url" content="https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/">
 <meta property="twitter:url" content="https://www.jottr.org/2020/09/21/detect-when-the-random-number-generator-was-used/">
 <meta property="og:site_name" content="JottR">
-<meta property="og:description" content="If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+<meta property="og:description" content="![&#34;An animated close-up of a spinning roulette wheel&#34;](/post/DistortedRecentEland_50pct.gif) If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
 if (interactive()) { invisible(addTaskCallback(local({ last &lt;- .GlobalEnv$.Random.seed function(...) { curr &lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &lt;- &#34;TRACKER: .Random.seed changed&#34; if (requireNamespace(&#34;crayon&#34;, quietly=TRUE)) msg &lt;- crayon::blurred(msg) message(msg) last &lt;&lt;- curr } TRUE } }), name = &#34;RNG tracker&#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .">
-<meta name="twitter:description" content="If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+<meta name="twitter:description" content="![&#34;An animated close-up of a spinning roulette wheel&#34;](/post/DistortedRecentEland_50pct.gif) If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
 if (interactive()) { invisible(addTaskCallback(local({ last &lt;- .GlobalEnv$.Random.seed function(...) { curr &lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &lt;- &#34;TRACKER: .Random.seed changed&#34; if (requireNamespace(&#34;crayon&#34;, quietly=TRUE)) msg &lt;- crayon::blurred(msg) message(msg) last &lt;&lt;- curr } TRUE } }), name = &#34;RNG tracker&#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .">
 <meta property="og:locale" content="en-us">
 
@@ -313,7 +313,9 @@ if (!doNotTrack) {
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <!-- raw HTML omitted -->
+              <center>
+!["An animated close-up of a spinning roulette wheel"](/post/DistortedRecentEland_50pct.gif)
+</center>
 <p>If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session.  Add the following to your <code>~/.Rprofile</code>(*):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">if </span>(<span style="color:#a6e22e">interactive</span>()) {
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">invisible</span>(<span style="color:#a6e22e">addTaskCallback</span>(<span style="color:#a6e22e">local</span>({

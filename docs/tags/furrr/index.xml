@@ -22,7 +22,7 @@
       <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
-      <description>After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
+      <description>![&#34;Animation of green Japanese Kana symbols raining down in parallel on a black background inspired by The Matrix movie&#34;](/post/Digital_rain_animation_medium_letters_clear.gif) Parallel &#39;Digital Rain&#39; by [Jahobr](https://commons.wikimedia.org/w/index.php?curid=63377054) After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
     </item>
     
   </channel>

@@ -22,7 +22,7 @@
       <pubDate>Tue, 22 Sep 2020 19:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/</guid>
-      <description>After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
+      <description>![&#34;Animation of green Japanese Kana symbols raining down in parallel on a black background inspired by The Matrix movie&#34;](/post/Digital_rain_animation_medium_letters_clear.gif) Parallel &#39;Digital Rain&#39; by [Jahobr](https://commons.wikimedia.org/w/index.php?curid=63377054) After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.</description>
     </item>
     
     <item>
@@ -44,7 +44,7 @@ values() for lists and other containers was renamed to value() to simplify the A
       <guid>https://www.jottr.org/2019/11/09/resolved-launches-lazy-futures/</guid>
       <description>No dogs were harmed while making this release
 future 1.15.0 is now on CRAN, accompanied by a recent, related update of future.callr 0.5.0. The main update is a change to the Future API:
-Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
+`resolved()` will now also launch lazy futures Although this change does not look much to the world, I&amp;rsquo;d like to think of this as part of a young person slowly finding themselves. This change in behavior helps us in cases where we create lazy futures upfront;</description>
     </item>
     
     <item>

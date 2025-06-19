@@ -29,14 +29,10 @@ Links YEGRUG: https://yegrug.github.io/ Futureverse website: https://www.futurev
       <pubDate>Thu, 23 Jun 2022 17:00:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2022/06/23/future-user2022-slides/</guid>
-      <description>Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
+      <description>Figure 1: A time chart of logged events for two futures resolved by two parallel workers. This is a screenshot of Slide #18 in my talk. Below are the slides for my Futureverse: Profile Parallel Code talk that I presented at the useR! 2022 conference online and hosted by the Department of Biostatistics at Vanderbilt University Medical Center.
 Title: Futureverse: Profile Parallel Code
 Speaker: Henrik Bengtsson
-Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos
-Slides: HTML, PDF (24 slides)
-Video: official recording (27m30s long starting at 42m10s)
-Abstract:
-&amp;ldquo;In this presentation, I share recent enhancements that allow developers and end-users to profile R code running in parallel via the future framework.</description>
+Session: #21: Parallel Computing, chaired by Ilias Moutsopoulos</description>
     </item>
     
     <item>
@@ -45,9 +41,7 @@ Abstract:
       <pubDate>Sat, 19 Dec 2020 10:00:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/12/19/future-eurobioc2020-slides/</guid>
-      <description>I presented Future: A Simple, Extendable, Generic Framework for Parallel Processing in R at the European Bioconductor Meeting 2020, which took place online during the week of December 14-18, 2020.
-You&amp;rsquo;ll find my slides (39 slides + Q&amp;amp;A slides; 35 minutes) below:
-Title &amp;amp; Abstract HTML (Google Slides; requires online access) PDF (flat slides) Video (YouTube) I want to thank the organizers for inviting me to this Bioconductor conference. The Bioconductor Project provides a powerful and an important technical and social environment for developing and conducting computational research in bioinformatics and genomics.</description>
+      <description> </description>
     </item>
     
     <item>
@@ -66,7 +60,7 @@ HTML (incremental Google Slides; requires online access) PDF (flat slides) Video
       <pubDate>Sat, 04 Jul 2020 17:30:00 -0700</pubDate>
       
       <guid>https://www.jottr.org/2020/07/04/progressr-erum2020-slides/</guid>
-      <description>I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
+      <description>Source: Wiktionary.org I presented Progressr: An Inclusive, Unifying API for Progress Updates (15 minutes; 20 slides) at e-Rum 2020, on June 17, 2020:
 Abstract HTML (incremental Google Slides; requires online access) PDF (flat slides) Video (starts at 00h49m58s) I am grateful for everyone involved who made e-Rum 2020 possible. I cannot imagine having to cancel the on-site Milano conference that had planned for more than a year and then start over to re-organize and create a fabulous online experience for ~1,500 participants in such short notice.</description>
     </item>
     
@@ -76,7 +70,7 @@ Abstract HTML (incremental Google Slides; requires online access) PDF (flat slid
       <pubDate>Sat, 01 Feb 2020 19:30:00 -0800</pubDate>
       
       <guid>https://www.jottr.org/2020/02/01/future-rstudioconf2020-slides/</guid>
-      <description>I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
+      <description>Design: Dan LaBar I presented Future: Simple Async, Parallel &amp;amp; Distributed Processing in R Why and What’s New? at rstudio::conf 2020 in San Francisco, USA, on January 29, 2020. Below are the slides for my talk (17 slides; ~18+2 minutes):
 HTML (incremental Google Slides; requires online access) PDF (flat slides) Video with closed captions (official rstudio::conf recording) First of all, a big thank you goes out to Dan LaBar (@embiggenData) for proposing and contributing the original design of the future hex sticker.</description>
     </item>
     

@@ -299,8 +299,6 @@ if (!doNotTrack) {
     <div class="postShorten-excerpt" itemprop="articleBody">
       
         future 1.24.0 is on CRAN. It comes with one significant update related to random number generation, further deprecation of legacy future strategies, a slight improvement to plan() and tweaks(), and some bug fixes. Below are the most important changes.
-int getRandomNumber() { return 4; // chosen by fair dice roll. // guaranteed to be random. } &ldquo;/&gt;
-future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using future(..., seed = TRUE) would not forward the state of the random number generator (RNG).
       
       <p>
         <a href="https://www.jottr.org/2022/02/22/future-1.24.0-forwarding-rng-state-also-for-stand-alone-futures/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -356,7 +354,7 @@ future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using f
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.
+        !["Animation of green Japanese Kana symbols raining down in parallel on a black background inspired by The Matrix movie"](/post/Digital_rain_animation_medium_letters_clear.gif) Parallel 'Digital Rain' by [Jahobr](https://commons.wikimedia.org/w/index.php?curid=63377054) After two-and-a-half months, future 1.19.1 is now on CRAN. As usual, there are some bug fixes and minor improvements here and there (NEWS), including things needed by the next version of furrr. For those of you who use Slurm or LSF/OpenLava as a scheduler on your high-performance compute (HPC) cluster, future::availableCores() will now do a better job respecting the CPU resources that those schedulers allocate for your R jobs.
       
       <p>
         <a href="https://www.jottr.org/2020/09/22/push-for-statistical-sound-rng/" class="postShorten-excerpt_link link">Continue reading</a>
@@ -412,7 +410,7 @@ future(&hellip;, seed = TRUE) updates RNG state In future (&lt; 1.24.0), using f
     </div>
     <div class="postShorten-excerpt" itemprop="articleBody">
       
-        If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
+        !["An animated close-up of a spinning roulette wheel"](/post/DistortedRecentEland_50pct.gif) If you ever need to figure out if a function call in R generated a random number or not, here is a simple trick that you can use in an interactive R session. Add the following to your ~/.Rprofile(*):
 if (interactive()) { invisible(addTaskCallback(local({ last &lt;- .GlobalEnv$.Random.seed function(...) { curr &lt;- .GlobalEnv$.Random.seed if (!identical(curr, last)) { msg &lt;- &#34;TRACKER: .Random.seed changed&#34; if (requireNamespace(&#34;crayon&#34;, quietly=TRUE)) msg &lt;- crayon::blurred(msg) message(msg) last &lt;&lt;- curr } TRUE } }), name = &#34;RNG tracker&#34;)) } It works by checking whether or not the state of the random number generator (RNG), that is, .
       
       <p>
