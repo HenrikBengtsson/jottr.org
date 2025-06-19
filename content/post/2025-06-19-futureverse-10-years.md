@@ -41,20 +41,19 @@ discussions, bug reports, and feature requests. Thank you!
 To celebrate, I’m kicking off a series of posts over the next few
 weeks covering the latest improvements that make it easier than ever
 to scale existing code up or out on a parallel or distributed backend
-of your choice - also easier than what our trusty workhorses
+of your choice - and eventually easier than what our trusty workhorses
 **[future.apply]** and **[furrr]** offer.
 
 These gains come from a slow, multi-year process of remodelling:
-internal redesigns, working with package maintainers to retire
+internal redesigns, working with package maintainers to retire use of
 deprecated functions, releasing, fixing regressions, and repeating -
 all while end-users and most developers not noticing, except for a
-few.
-
-The first CRAN release where this work could be noticed was **future**
-1.40.0 (April 10), followed by regression fixes and additional
-features in 1.49.0 (May 9), and lately 1.57.0 (June 5, 2025). More
-polishing and features are coming before we hit **future** 2.0.0 – in
-the near future (pun firmly intended).
+few.  The first CRAN release where this work could be noticed was
+**future** 1.40.0 (April 10), followed by regression fixes and
+additional features in 1.49.0 (May 9), and lately 1.57.0 (June 5,
+2025). More polishing and features are coming before we hit **future**
+2.0.0 – in the near future (pun firmly intended).  Thanks for helping
+make future a cornerstone of scalable R programming.
 
 _Stay tuned and may the future be with you!_
 
@@ -64,4 +63,4 @@ Henrik
 [future.apply]: https://future.apply.futureverse.org
 [furrr]: https://furrr.futureverse.org
 [futureverse]: https://www.futureverse.org
-[useR! 2016]: 
+[useR! 2016]: https://www.jottr.org/2016/07/02/future-user2016-slides/
