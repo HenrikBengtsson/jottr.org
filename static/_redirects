@@ -2,3 +2,5 @@
 
 ## old blogger.com RSS feed (until 2018-03-23)
 /feeds/posts/default/-/R   /categories/r/index.xml    200
+/index.html   /post/index.html   302
+/   /post/   302
