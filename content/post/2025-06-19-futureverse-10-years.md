@@ -11,6 +11,7 @@ tags:
  - parallel
  - parallel processing
  - distributed processing
+ - future ten years
 ---
 
 <figure style="margin-top: 3ex;">
