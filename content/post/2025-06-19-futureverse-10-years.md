@@ -56,6 +56,11 @@ and additional features in 1.49.0 (May 9), and lately 1.57.0 (June 5,
 2.0.0 – in the near future (pun firmly intended).  Thanks for helping
 make future a cornerstone of scalable R programming.
 
+Posts in this series thus far:
+
+* 2025-06-23: [Future got better at finding global variables](/2025/06/23/future-got-better-at-finding-global-variables/)
+
+
 _Stay tuned and may the future be with you!_
 
 Henrik
