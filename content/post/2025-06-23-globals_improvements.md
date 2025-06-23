@@ -33,7 +33,7 @@ abstract syntax tree (AST) using a _depth-first-search_
 algorithm. **This new approach does a better job of emulating how the
 R engine identifies global variables, which results in an even
 smoother ride for anyone using futureverse for parallel and
-distributed processing.**  Previously, a tweaked search algorithm
+distributed processing.** ePreviously, a tweaked search algorithm
 adopted from `codetools::findGlobals()` was used. The **[codetools]**
 search algorithm is mainly designed for `R CMD check` to detect
 undefined variables being used in package code. To limit the number of
@@ -106,14 +106,15 @@ but would rarely, if at all, be spotted in real code. As a matter of
 fact, this is a distilled version of a large real-world scenario
 reported by at least one person. It's thanks to such feedback that we
 together can make improvements to the **futureverse** ecosystem 🙏 I
-cannot know for sure, but I'd expect this has indeed impacted several
-R developers - the **future** package is after all among the 0.6% most
-downloaded packages and there are [1,300 packages that "need"
-it](https://r-universe.dev/search?q=needs%3Afuture) as of May 2025.
-The above problem was fixed in **globals** 0.18.0 (2025-05-08) and
-**future** 1.49.0 (2025-05-09), which now make use of the new
-`findGlobals(..., method = "dfs")` search strategy internally. After
-updating these packages, the above code snippet gives us
+cannot know for sure, but I'd suspect this has impacted several R
+developers already - the **future** package is after all among the
+0.6% most downloaded packages and there are [1,300 packages that
+"need" it](https://r-universe.dev/search?q=needs%3Afuture) as of
+May 2025.  The above problem was fixed in **globals** 0.18.0
+(2025-05-08) and **future** 1.49.0 (2025-05-09), which now make use of
+the new `findGlobals(..., method = "dfs")` search strategy
+internally. After updating these packages, the above code snippet
+gives us
 
 ```r
 value(f)
