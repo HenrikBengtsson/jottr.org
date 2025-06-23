@@ -33,7 +33,7 @@ abstract syntax tree (AST) using a _depth-first-search_
 algorithm. **This new approach does a better job of emulating how the
 R engine identifies global variables, which results in an even
 smoother ride for anyone using futureverse for parallel and
-distributed processing.** ePreviously, a tweaked search algorithm
+distributed processing.** Previously, a tweaked search algorithm
 adopted from `codetools::findGlobals()` was used. The **[codetools]**
 search algorithm is mainly designed for `R CMD check` to detect
 undefined variables being used in package code. To limit the number of
