@@ -162,9 +162,9 @@ Henrik
 PS. Did you know that the **codetools** package is [written using
 literate
 programming](https://gitlab.com/luke-tierney/codetools/-/blob/master/noweb/codetools.nw?ref_type=heads)
-following the vision of Donald Knuth? It's almost like it was vibe
-coded, but with the large-language model (LLM) part being replaced by
-human knowledge and expertise 🤓
+following the vision of Donald Knuth? Neat, eh? And, it's almost like
+it was vibe coded, but with the large-language model (LLM) part being
+replaced by human knowledge and expertise 🤓
 
 [celebrates ten years on CRAN]: /2025/06/19/futureverse-10-years/
 [codetools]: https://cran.r-project.org/package=codetools
