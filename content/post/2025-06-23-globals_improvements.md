@@ -1,6 +1,6 @@
 ---
 title: "Future got better at finding global variables"
-date: 2025-06-22
+date: 2025-06-23
 categories:
  - R
 tags:
