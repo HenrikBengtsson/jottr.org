@@ -1,5 +1,5 @@
 ---
-title: "Future got better at finding global variables"
+title: "Future Got Better at Finding Global Variables"
 date: 2025-06-23
 categories:
  - R
