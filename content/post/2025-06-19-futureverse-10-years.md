@@ -58,7 +58,8 @@ make future a cornerstone of scalable R programming.
 
 Posts in this series thus far:
 
-* 2025-06-23: [Future got better at finding global variables](/2025/06/23/future-got-better-at-finding-global-variables/)
+* 2025-06-23: [Future Got Better at Finding Global Variables](/2025/06/23/future-got-better-at-finding-global-variables/)
+* 2025-06-25: [Setting Future Plans in R Functions — and Why You Probably Shouldn't](/2025/06/25/with-plan/)
 
 
 _Stay tuned and may the future be with you!_
