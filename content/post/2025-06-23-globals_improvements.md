@@ -17,7 +17,7 @@ tags:
 <a href="/2025/06/19/futureverse-10-years/"><img src="/post/future-logo-balloons.png" alt="The 'future' hexlogo balloon wall" style="width: 20%; padding-left: 2ex; padding-bottom: 2ex; float: right;"/></a>
 
 The **future** package [celebrates ten years on CRAN] as of June 19,
-2025. This is the first of a series of blog posts highlighting recent
+2025. This is the first in a series of blog posts highlighting recent
 improvements to the **[futureverse]** ecosystem.
 
 The **[globals]** package is part of the futureverse and has had two
