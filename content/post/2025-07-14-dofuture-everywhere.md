@@ -130,7 +130,7 @@ doFuture::registerDoFuture("%dofuture%")
 
 It might solve your problems, or at least, help you narrow them down.
 
-Also, this new **doFuture** feature lays some of the foundation for a
+Also, this new **doFuture** feature lays part of the foundation for a
 new Futureverse feature that I'm very excited about. But more about
 that later ...
 
