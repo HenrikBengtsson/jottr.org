@@ -67,8 +67,8 @@ using an explicit `%dofuture%`, or forcing it via
 
  * Message, warnings, and other types of conditions generated in
    parallel are relayed as-is regardless of parallel backend. This is
-   also true fo standard output produced by `print()`, `cat()`,
-   etc. When using foreach _without_ Futureverse
+   also true for standard output produced by `print()`, `cat()`,
+   `str()`, etc. When using foreach _without_ Futureverse
    (e.g. **doParallel**), such output is lost in the void. In
    contrast, when using **doFuture**, it just works. You can also use
    `capture.output()` and `withCallingHandlers()` as you would do when
@@ -94,8 +94,8 @@ using an explicit `%dofuture%`, or forcing it via
  
 In additions, it is possible to make:
  
- * Parallel random number generation (RNG) be done via consistently
-   via Futureverse, also when `%dopar%` is used
+ * Parallel random number generation (RNG) be done consistently via
+   Futureverse, also when `%dopar%` is used
 
  * Get near-live progress updates via the **[progressr]** package,
    also when `%dopar%` is used   
@@ -121,7 +121,7 @@ undone. Easy!
 
 If you find that some **foreach** code that you cannot modify, or
 package that uses it, fails, gives hard-to-troubleshoot errors, or
-produces unexpected results, then try with:
+does not output expected messages and warnings, then try with:
 
 ```r
 doFuture::registerDoFuture("%dofuture%")
@@ -133,7 +133,7 @@ Also, this new **doFuture** feature lays some of the foundation for a
 new Futureverse feature that I'm very excited about. But more about
 that later ...
 
-_Make the future be with you!_
+_May the future be with you!_
 
 Henrik
 
