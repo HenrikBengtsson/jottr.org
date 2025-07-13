@@ -95,17 +95,18 @@ using an explicit `%dofuture%`, or forcing it via
 In additions, it is possible to make:
  
  * Parallel random number generation (RNG) be done consistently via
-   Futureverse, also when `%dopar%` is used
+   Futureverse, also when `%dopar%` is used and the developer forgot
+   to use `%dorng%`
 
  * Get near-live progress updates via the **[progressr]** package,
-   also when `%dopar%` is used   
+   also when `%dopar%` is used
 
 
 ## For package developers 
 
 If you're a package developer and calls other packages that uses
 `foreach()` with `%dopar%` internally, but wish it was using
-`%dofuture%`, then you can add:
+`%dofuture%`, then you can add
 
 ```r
 with(doFuture::registerDoFuture("%dofuture%"), local = TRUE)
@@ -121,13 +122,13 @@ undone. Easy!
 
 If you find that some **foreach** code that you cannot modify, or
 package that uses it, fails, gives hard-to-troubleshoot errors, or
-does not output expected messages and warnings, then try with:
+does not output expected messages and warnings, then try with
 
 ```r
 doFuture::registerDoFuture("%dofuture%")
 ```
 
-It might solve your problem, or at least, help you narrow in on it.
+It might solve your problems, or at least, help you narrow them down.
 
 Also, this new **doFuture** feature lays some of the foundation for a
 new Futureverse feature that I'm very excited about. But more about
