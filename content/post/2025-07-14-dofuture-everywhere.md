@@ -1,6 +1,6 @@
 ---
 title: "foreach: Making All %dopar% Behave Like %dofuture% Everywhere"
-date: 2025-07-13
+date: 2025-07-14
 slug: dofuture-everywhere
 categories:
  - R
@@ -44,10 +44,10 @@ by registering
 doFuture::registerDoFuture("%dofuture%")
 ```
 
-Using `%dofuture%` instead of `%dopar%` comes with many benefits, as
-explained in my blog post [%dofuture% - a Better foreach()
-Parallelization Operator than %dopar%] from June
-2023. It is even better than:
+Using `%dofuture%` instead of `%dopar%` comes with many benefits. If
+you are interested in the details, please my blog post [%dofuture% - a
+Better foreach() Parallelization Operator than %dopar%] from June
+2023. This new approach can in some cases be better than using
 
 ```r
 doFuture::registerDoFuture()
