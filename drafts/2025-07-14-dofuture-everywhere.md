@@ -20,49 +20,45 @@ tags:
 <a href="/2025/06/19/futureverse-10-years/"><img src="/post/future-logo-balloons.png" alt="The 'future' hexlogo balloon wall" style="width: 20%; padding-left: 2ex; padding-bottom: 2ex; float: right;"/></a>
 
 The **future** package [celebrates ten years on CRAN] as of June 19,
-2025. This is the third in a series of blog posts highlighting recent
-improvements to the **[futureverse]** ecosystem.
+2025. I got a bit stalled over the holidays and going to the fantastic
+useR! 2025, but, as promised, here is the third in a series of blog
+posts highlighting recent improvements to the **[futureverse]**
+ecosystem.
 
-## TL;DR
+**[doFuture]** 1.10.0 is on CRAN as of May 2025 followed by two
+  bug-fix releases in June and July. It comes with several
+  improvements, but here I would like to focus on two new features:
 
-**[doFuture]** 1.10.0 is on CRAN as of May 2025. You can now make all
+ 1. `registerDoFuture("%dofuture%")`, and
 
-```r
-y <- foreach(...) %dopar% { ... }
-```
+ 2. `with(doFuture::registerDoFuture("%dofuture%"), local = TRUE)
 
-calls in existing R scripts and in R packages (e.g **[BiocParallel]**)
-behave as
 
-```r
-y <- foreach(...) %dofuture% { ... }
-```
+## Turn all %dopar% into %dofuture%
 
-by registering
+By registering
 
 ```r
 doFuture::registerDoFuture("%dofuture%")
 ```
 
-Using `%dofuture%` instead of `%dopar%` comes with many benefits. If
-you are interested in the details, please my blog post [%dofuture% - a
-Better foreach() Parallelization Operator than %dopar%] from June
-2023. This new approach can in some cases be better than using
+all existing code in scripts and packages that use `%dopar%` of
+**foreach** will behave as if they had used `%dofuture%` instead. This
+can be a step up from
 
 ```r
 doFuture::registerDoFuture()
 ```
 
-which you can read about in the 2017 blog post [doFuture: A Universal
+that will tell `%dopar%` to parallelize via the future framework,
+which you can read about in my 2017 blog post [doFuture: A Universal
 Foreach Adaptor Ready to be Used by 1,000+ Packages].
 
-
-## Benefits
-
-The benefits of using `%dofuture%` over `%dopar%` is that Futureverse
-takes care of even more things, which helps standardize and unify the
-behavior across `foreach(...) %dopar% { ... }` calls. For example,
-using an explicit `%dofuture%`, or forcing it via
+But, I believe it is better to use the `%dofuture%` operator with
+`foreach()` instead of `%dopar%`, because comes with more benefits. If
+you are interested in the details, please my blog post [%dofuture% - a
+Better foreach() Parallelization Operator than %dopar%] from June
+2023. For example, using an explicit `%dofuture%`, or forcing it via
 `doFuture::registerDoFuture("%dofuture%")`, results in:
 
  * Message, warnings, and other types of conditions generated in
