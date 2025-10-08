@@ -51,11 +51,10 @@ doFuture::registerDoFuture()
 ```
 
 which indeed tells `%dopar%` to parallelize via the future framework,
-but `%dofuture%` is even better. As I outline in my June 2023 blog
-post [%dofuture% - a Better foreach() Parallelization Operator than
-%dopar%], the `%dofuture%` operator comes with even more benefits. For
-example, using an explicit `%dofuture%`, or forcing it via
-`doFuture::registerDoFuture("%dofuture%")`, results in:
+but `%dofuture%` is even better - as I outline in my blog post
+'[%dofuture% - a Better foreach() Parallelization Operator than
+%dopar%].' For example, using an explicit `%dofuture%`, or forcing it
+via `doFuture::registerDoFuture("%dofuture%")`, results in:
 
  * Messages, warnings, and other types of conditions generated in
    parallel are relayed as-is regardless of parallel backend. This is
