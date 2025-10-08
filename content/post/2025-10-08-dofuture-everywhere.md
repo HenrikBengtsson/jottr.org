@@ -1,6 +1,6 @@
 ---
 title: "foreach: Making All %dopar% Behave Like %dofuture% Everywhere"
-date: 2025-07-14
+date: 2025-10-08
 slug: dofuture-everywhere
 categories:
  - R
@@ -21,9 +21,9 @@ tags:
 
 The **future** package [celebrates ten years on CRAN] as of June 19,
 2025. I got a bit stalled over the holidays and going to the fantastic
-useR! 2025, but, as promised, here is the third in a series of blog
-posts highlighting recent improvements to the **[futureverse]**
-ecosystem.
+useR! 2025 conference, but, as promised, here is the third in a series
+of blog posts highlighting recent improvements to the
+**[futureverse]** ecosystem.
 
 **[doFuture]** 1.10.0 is on CRAN as of May 2025 followed by two
   bug-fix releases in June and July. It comes with several
@@ -31,7 +31,7 @@ ecosystem.
 
  1. `registerDoFuture("%dofuture%")`, and
 
- 2. `with(doFuture::registerDoFuture("%dofuture%"), local = TRUE)
+ 2. `with(doFuture::registerDoFuture("%dofuture%"), local = TRUE)`
 
 
 ## Turn all %dopar% into %dofuture%
@@ -42,30 +42,26 @@ By registering
 doFuture::registerDoFuture("%dofuture%")
 ```
 
-all existing code in scripts and packages that use `%dopar%` of
-**foreach** will behave as if they had used `%dofuture%` instead. This
-can be a step up from
+all existing code in scripts and packages that uses `%dopar%` of
+**foreach** will behave as if `%dofuture%` was used instead. This can
+be a step up from
 
 ```r
 doFuture::registerDoFuture()
 ```
 
-that will tell `%dopar%` to parallelize via the future framework,
-which you can read about in my 2017 blog post [doFuture: A Universal
-Foreach Adaptor Ready to be Used by 1,000+ Packages].
-
-But, I believe it is better to use the `%dofuture%` operator with
-`foreach()` instead of `%dopar%`, because comes with more benefits. If
-you are interested in the details, please my blog post [%dofuture% - a
-Better foreach() Parallelization Operator than %dopar%] from June
-2023. For example, using an explicit `%dofuture%`, or forcing it via
+which indeed tells `%dopar%` to parallelize via the future framework,
+but `%dofuture%` is even better. As I outline in my June 2023 blog
+post [%dofuture% - a Better foreach() Parallelization Operator than
+%dopar%], the `%dofuture%` operator comes with even more benefits. For
+example, using an explicit `%dofuture%`, or forcing it via
 `doFuture::registerDoFuture("%dofuture%")`, results in:
 
- * Message, warnings, and other types of conditions generated in
+ * Messages, warnings, and other types of conditions generated in
    parallel are relayed as-is regardless of parallel backend. This is
    also true for standard output produced by `print()`, `cat()`,
    `str()`, etc. When using foreach _without_ Futureverse
-   (e.g. **doParallel**), such output is lost in the void. In
+   (e.g. **doParallel**), such output is lost to the void. In
    contrast, when using **doFuture**, it just works. You can also use
    `capture.output()` and `withCallingHandlers()` as you would do when
    you run things sequentially
@@ -100,9 +96,9 @@ In additions, it is possible to make:
 
 ## For package developers 
 
-If you're a package developer and calls other packages that uses
-`foreach()` with `%dopar%` internally, but wish it was using
-`%dofuture%`, then you can add
+If you're a developer and call another package that uses `foreach()`
+with `%dopar%` internally, but wish it was using `%dofuture%`, then
+you can add
 
 ```r
 with(doFuture::registerDoFuture("%dofuture%"), local = TRUE)
@@ -122,7 +118,17 @@ does not output expected messages and warnings, then try with
 
 ```r
 doFuture::registerDoFuture("%dofuture%")
+# code or functions that call foreach(...) %dopar% { ... }
 ```
+
+or
+
+```r
+with(doFuture::registerDoFuture("%dofuture%"), {
+  # code or functions that call foreach(...) %dopar% { ... }
+})
+```
+
 
 It might solve your problems, or at least, help you narrow them down.
 
