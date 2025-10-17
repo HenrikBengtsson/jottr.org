@@ -50,7 +50,7 @@ had to manually restart the future backends. This is no longer needed;
 ## Interrupts 🛑
 
 Below is a future that emulates how the evaluation of the R expression
-is interrupted in the middle of the evaluation:
+is interrupted in the midst of the evaluation:
 
 ```r
 library(future)
