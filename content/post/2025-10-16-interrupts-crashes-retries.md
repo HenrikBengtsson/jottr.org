@@ -178,7 +178,7 @@ future interrupted, retrying ...
 value: 3
 ```
 
-It is a fun excercise to write a help function `future_retry()` to
+It is a fun excercise to write a helper function `future_retry()` to
 simplify this as:
 
 ```r
