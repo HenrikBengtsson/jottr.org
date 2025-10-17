@@ -27,14 +27,14 @@ Retries 🔁
 
 The **future** package [celebrates ten years on CRAN] as of June 19,
 2025. I got a bit stalled over the holidays and going to the fantastic
-useR! 2025 conference, but, as promised, here is the third in a series
+useR! 2025 conference, but, as promised, here is the fourth in a series
 of blog posts highlighting recent improvements to the
 **[futureverse]** ecosystem.
 
 
 ## TL;DR
 
-In the past, futures that were interrupted and abruptly terminated
+In the past, futures that were interrupted or abruptly terminated
 were likely putting the future ecosystem in a corrupt state, where you
 had to manually restart the future backends. This is no longer needed;
 
@@ -49,7 +49,7 @@ had to manually restart the future backends. This is no longer needed;
 
 ## Interrupts 🛑
 
-Here is a future that emulates how the evaluation of the R expression
+Below is a future that emulates how the evaluation of the R expression
 is interrupted in the middle of the evaluation:
 
 ```r
@@ -78,8 +78,8 @@ v <- value(f)
 
 That R code produces an interrupt on itself like in the above example
 is less common, but it might happen if `plan(sequential)` is used and
-the user presses <kbd>Ctrl-C</kbd> (common), or uses another future
-backend and sends `kill -SIGINT <worker-pid>` (less common).
+the user presses <kbd>Ctrl-C</kbd> (common) or sends `kill -SIGINT
+<worker-pid>` (less common).
 
 There are also other ways to interrupt a future, but more on that in a
 future blog post.
@@ -87,7 +87,7 @@ future blog post.
 
 ## Crashed workers 💥
 
-Here is a future that emulates how the parallel worker abruptly
+Below is a future that emulates how the parallel worker abruptly
 terminates ("crashes") while the R expression is evaluated:
 
 ```r
@@ -98,10 +98,10 @@ f <- future({ a <- 42; tools::pskill(Sys.getpid()); 2 * a })
 ```
 
 Here `tools::pskill(Sys.getpid())` results in the parallel R worker
-process that evaluates that call to be killed. I reality, when a
+process that evaluates that call to be killed. In reality, when a
 parallel worker crashes, it may do so for various reasons. For
-instance, the R process might run out of memory and gets killed by the
-operating system (e.g. "OOM kill"). If running in a high-performance
+instance, the R process might run out of memory and get killed by the
+operating system ("OOM killer"). If running in a high-performance
 compute (HPC) environment, the job scheduler might terminate the
 parallel worker if the job uses more memory than requested, or it runs
 for longer than the requested run-time.  The user might also choose to
@@ -125,10 +125,10 @@ provide more information on what caused the problem.
 Crashed workers are automatically restarted by the future backend,
 meaning that we no longer have to manually restart our future backend,
 if one of the workers crashed. Note that it is only the parallel
-worker that is restart - the future itself is _not_ restarted.
+worker that is restarted - the future itself is _not_ restarted.
 
 
-## Retry an interrupted future 🔁
+## Retrying an interrupted future 🔁
 
 Regardless of why a future was interrupted, we can restart a future by
 first resetting it with `reset()`, and then trigger it to be
@@ -139,13 +139,14 @@ reasons, crashes the parallel worker 50% of the time it is called;
 
 ```r
 problematic_fcn <- function(x) {
-  if (proc.time()[3] %% 1 < 0.5) tools::pskill(Sys.getpid())
+  if (proc.time()[3] %% 1 < 0.5)
+    tools::pskill(Sys.getpid())
   sqrt(x)
 }
 ```
 
 If called in a parallel worker, we could retry, say, up to ten times,
-before giving up. This could be achieved by sometime like:
+before giving up. This could be achieved by something like:
 
 ```r
 library(future)
@@ -153,25 +154,26 @@ plan(multisession)
 
 f <- future({ problematic_fcn(9) })
 
-for (kk in 10:1) {
-  v <- tryCatch(value(f), FutureInterruptError = identity)
-  if (!inherits(v, "FutureInterruptError")) break
-  if (kk == 1) stop(v)
-  message("retrying, because ", conditionMessage(v))
-  f <- reset(f)
+for (kk in 10:1) 
+  tryCatch({
+    v <- value(f)
+    break
+  }, FutureInterruptError = function(e) {
+    if (kk == 1) stop(e)
+    message("future interrupted, retrying ...") 
+    f <- reset(f)
+  })
 }
+
 message("value: ", v)
 ```
 
 This might result in something like:
 
 ```
-retrying, because Future (<unnamed-159>) of class MultisessionFuture interrupted,
-  while running on 'localhost' (pid 552212)
-retrying, because Future (<unnamed-160>) of class MultisessionFuture interrupted,
-  while running on 'localhost' (pid 552788)
-retrying, because Future (<unnamed-161>) of class MultisessionFuture interrupted,
-  while running on 'localhost' (pid 552831)
+future interrupted, retrying ...
+future interrupted, retrying ...
+future interrupted, retrying ...
 value: 3
 ```
 
