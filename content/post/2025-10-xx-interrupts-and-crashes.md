@@ -97,17 +97,17 @@ f <- future({ a <- 42; tools::pskill(Sys.getpid()); 2 * a })
 
 Here `tools::pskill(Sys.getpid())` kills the R worker process
 evaluating the call.  In practice, a worker might crash for various
-reasons, e.g.
+reasons. For instance,
 
 * The R process may run out of memory and be killed by the OS ("OOM
   killer")
 
 * In an HPC environment, the job scheduler might terminate the worker
-  if it exceeds memory or runtime limits.
+  if it exceeds memory or runtime limits
 
 * The user might manually kill the worker (e.g., `kill -SIGQUIT
   <worker-pid>`) or cancel the HPC job (`scancel <job-id>` or `qdel
-  <job-id>`).
+  <job-id>`)
 
 Regardless how the parallel worker is terminated, requesting the value
 yields:
