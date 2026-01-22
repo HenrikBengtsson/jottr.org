@@ -99,7 +99,7 @@ Error in eval(quote({ : object 'x' not found
 
 This is because there are several different variables named `x`, and
 the one in the calling environment is "masked" by argument `x`, which
-results in `x` never be picked up and exported to the parallel worker.
+results in `x` never being picked up and exported to the parallel worker.
 
 It might look as if this type of code was carefully curated to fail,
 but would rarely, if at all, be spotted in real code. As a matter of
@@ -123,7 +123,7 @@ value(f)
 
 as we'd expect.
 
-Another corner-case bug fix, is where
+Another corner-case bug fix is where
 
 ```r
 library(future)

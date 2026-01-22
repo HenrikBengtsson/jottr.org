@@ -33,7 +33,7 @@ generated with ChatGPT.)</small>
 
 The **[future]** package turns ten years old today. I released version
 0.6.0 to CRAN on June 19, 2015, just days before I presented the
-package and sharing my visions at [useR! 2016]. I had no idea adoption
+package and shared my visions at [useR! 2016]. I had no idea adoption
 would snowball the way it has. It's been an exciting, fun journey, and
 the best part has been you - the users and developers who shaped the
 futureverse through questions, discussions, bug reports, and feature
@@ -48,7 +48,7 @@ trusty workhorses **[future.apply]** and **[furrr]** offer.
 These gains come from a slow, steady, multi-year process of
 remodelling: internal redesigns, working with package maintainers to
 retire use of deprecated functions, releasing, fixing regressions, and
-repeating - all while end-users and most developers not noticing,
+repeating - all while end-users and most developers did not notice,
 except for a few.  The first CRAN release where this work could be
 noticed was **future** 1.40.0 (April 10), followed by regression fixes
 and additional features in 1.49.0 (May 9), and lately 1.57.0 (June 5,

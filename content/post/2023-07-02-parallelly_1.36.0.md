@@ -36,14 +36,14 @@ notably,
   workers running on the same machine.
 
 * the [`killNode()`] function gained the power to terminate parallel
-  workers running also on remotes machines.
+  workers running also on remote machines.
 
 * the new function [`cloneNode()`] can be used to "restart" a cluster
   node, e.g. if a node was determined to no longer be alive by
-  `isNodeAlive()`, then `cloneNode()` can be called to launch an new
+  `isNodeAlive()`, then `cloneNode()` can be called to launch a new
   parallel worker on the same machine as the previous worker.
 
-* The `print()` functions for PSOCK clusters and PSOCK nodes reports
+* The `print()` functions for PSOCK clusters and PSOCK nodes report
   on the status of the parallel workers.
 
 
@@ -67,7 +67,7 @@ print(cl)
 
 We can check if these two parallel workers are running.  We can check
 this even if they are busy processing parallel tasks.  The way
-`isNodeAlive()` works is that it checks of the _process_ is running on
+`isNodeAlive()` works is that it checks if the _process_ is running on
 worker's machine, which is something that can be done even when the
 worker is busy. For example, let's check the first worker process that
 run on the current machine:
@@ -199,7 +199,7 @@ print(cl)
 ## platform x86_64-pc-linux-gnu)
 ```
 
-Now, consider we launching many heavy parallel tasks, where some of
+Now, consider launching many heavy parallel tasks, where some of
 them run on remote machines.  However, after some time, we realize
 that we have launched tasks that will take much longer to resolve than
 we first anticipated.  If we don't want to wait for this to resolve by
@@ -252,7 +252,7 @@ f <- future(slow_fcn(42))
 
 That post-mortem diagnostic is often enough to realize something quite
 exceptional has happened. It also gives us enough information to
-troubleshooting the problem further, e.g. if we keep seeing the same
+troubleshoot the problem further, e.g. if we keep seeing the same
 problem occurring over and over for a particular machine, it might
 suggest that there is an issue on that machine and we want to exclude
 it from further processing.

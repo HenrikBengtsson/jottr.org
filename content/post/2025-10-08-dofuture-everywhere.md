@@ -76,14 +76,14 @@ via `doFuture::registerDoFuture("%dofuture%")`, results in:
    informative error messages will be given, which helps to
    troubleshoot the underlying problem. Futureverse may also attempt
    to relaunch crashed parallel workers so that you do not have to
-   shut everything done and restart from scratch, which might be the
+   shut everything down and restart from scratch, which might be the
    case otherwise
  
  * Global variables and packages needed in the parallel tasks are
    identified automatically and consistently by Futureverse,
    regardless of which parallel backend is used
  
-In additions, it is possible to make:
+In addition, it is possible to make:
  
  * Parallel random number generation (RNG) be done consistently via
    Futureverse, also when `%dopar%` is used and the developer forgot
