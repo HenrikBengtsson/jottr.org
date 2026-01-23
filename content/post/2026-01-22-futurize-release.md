@@ -35,7 +35,8 @@ That's it -- a "magic" touch by one function! Easy!
 
 ## Unifying the ecosystem
 
-<img src="/post/futurize-workflow.png" alt="Diagram illustrating how sequential R map-reduce code can be parallelized with |> futurize(). On the left, sequential functions such as lapply(...), purrr::map(...), foreach(...) %do%, plyr::llply(...), and others flow into a central box labeled |> futurize() with magic-wand icons, indicating automatic transformation. On the right, the transformed code fans out to multiple parallel workers (Worker 1, Worker 2, Worker 3, ...), whose outputs are combined into a single 'Results' node." style="width: 100%; margin: 2em 0; border: 1px solid #eee; padding: 1em;"/>
+<img src="/post/futurize-workflow.png" alt="Diagram illustrating how sequential R map-reduce code can be parallelized with |> futurize(). On the left, sequential functions such as lapply(...), purrr::map(...), foreach(...) %do%, plyr::llply(...), and others flow into a central box labeled |> futurize() with magic-wand icons, indicating automatic transformation. On the right, the transformed code fans out to multiple parallel workers (Worker 1, Worker 2, Worker 3, ...), whose outputs are combined into a single 'Results' node." style="width: 100%; margin: 1em 0 1em 0; border: 10px solid #eee;"/>
+<br>
 
 One of the biggest hurdles in concurrent R programming has been the fragmentation of APIs and behavior. Packages such **[future.apply]**, **[furrr]**, and **[doFuture]** have partly addressed this. While they have simplified it for developers and users, they all require us to use slightly different function names and different parallelization arguments for controlling standard output, messages, warnings, and random number generation (RNG). `futurize()` changes this by providing **one unified interface** for all of them. It currently supports:
 
