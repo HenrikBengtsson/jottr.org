@@ -5,3 +5,6 @@
 .Ruserdata
 public/
 .Rdump
+
+/.quarto/
+**/*.quarto_ipynb
