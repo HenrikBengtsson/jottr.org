@@ -14,11 +14,13 @@ tags:
  - memory
 ---
 
+<img src="/post/oom-dialog-macos.png" alt="A macOS-style alert dialog with an R application icon marked by a red exclamation badge. The heading reads 'Out of memory' and the message below reads 'R cannot allocate a vector of size 7.5 GiB.' A blue OK button sits at the bottom." style="width: 50%; float: right; margin-left: 0.3em;"/>
+
+Fit a cross-validated elastic net with `cv.glmnet(x, y)` on a design matrix that comfortably fits in memory, and the call can still fail. The reason is that the function needs several times the size of `x` while it runs, and nothing anywhere in your script says so. This post is about giving that requirement a home - a _memory specification_, written in R next to the code that knows it - first for a plain sequential call, then for the same call running in parallel.
+
 {{< alert info >}}
 This post describes experimental ideas and future plans for the Futureverse ecosystem. With one exception - 'futurize()', which is on CRAN today - the features shown here are not yet implemented.
 {{< /alert >}}
-
-Fit a cross-validated elastic net with `cv.glmnet(x, y)` on a design matrix that comfortably fits in memory, and the call can still fail. The reason is that the function needs several times the size of `x` while it runs, and nothing anywhere in your script says so. This post is about giving that requirement a home - a _memory specification_, written in R next to the code that knows it - first for a plain sequential call, then for the same call running in parallel.
 
 
 ## TL;DR
