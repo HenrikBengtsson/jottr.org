@@ -262,6 +262,7 @@ plan(multisession, workers = parallelly::availableCores(max = (32 - 8) / 9.4))
 #> 2 workers
 ```
 
+Here we're using `availableCores()` from the **[parallelly]** package, which respects common CPU allocations, while also limiting it manually via a custom memory-limit equation.
 Two concurrent parallel tasks is the best guess you have. However, with the above resource specifications, `futurize()` could probably do better and fit additional cross-validation models concurrently, especially the smaller ones.
 
 
@@ -307,6 +308,7 @@ Henrik
 [Futureverse]: https://www.futureverse.org
 [Resource Project]: https://www.futureverse.org/roadmap/resources.html
 [glmnet]: https://glmnet.stanford.edu
+[parallelly]: https://parallelly.futureverse.org
 [future]: https://future.futureverse.org
 [futurize]: https://futurize.futureverse.org
 [future.batchtools]: https://future.batchtools.futureverse.org/
