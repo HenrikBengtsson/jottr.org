@@ -221,7 +221,7 @@ Even if a function does not carry a resource declaration, you can attach one you
 
 ```r
 cv.glmnet <- glmnet::cv.glmnet
-resources(cv.glmnet) <- quote(memory(4 * object.size(x)))
+resources(cv.glmnet) <- function(x, ...) memory(4 * object.size(x))
 ```
 
 That might be worth doing even for a single function in a single analysis script, preferably at the top of the script. It helps to gather such declarations in one place and avoids cluttering up the code, especially if the same function is used in multiple places.
